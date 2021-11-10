@@ -1,4 +1,4 @@
-# HelloWorld
+# EdgeIO-Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.9.
 
@@ -26,9 +26,11 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
-## SLA Configuration from Max 
+# SLA Configuration from Max
 
-# Documentation of EdgeIO-SLA (v0.3.0)
+In the Frontend it should be able tho input the data in a form and then this structure of the configuration is generated and can be sent to the root orchestrator.
+
+## Documentation of EdgeIO-SLA (v0.3.0)
 Example under *sla.json*
 
 - **api_version** : Version of SLA API; v0.3.0 as of now
