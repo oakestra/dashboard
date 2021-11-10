@@ -1,0 +1,309 @@
+<div class="content-cards">
+  <mat-card class="serviceCard">
+    <mat-card-title>Actions Buttons</mat-card-title>
+    <div>
+      <mat-tab-group animationDuration="0ms" class="mat-elevation-z4" mat-stretch-tabs>
+        <mat-tab label="FORM">
+
+          <form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+            <div class="w3-col l6 s12 leftInput">
+              <mat-form-field appearance="fill" class="full-width ">
+                <mat-label>Application ID</mat-label>
+                <input disabled matInput value="SET ID">
+              </mat-form-field>
+            </div>
+
+            <div class="w3-col l6 s12 rightInput">
+              <mat-form-field appearance="fill" class="full-width ">
+                <mat-label>Service ID</mat-label>
+                <input disabled matInput value="SET ID">
+              </mat-form-field>
+            </div>
+
+            <div class="w3-col l6 s12 leftInput">
+              <mat-form-field class="full-width">
+                <mat-label>Service Name</mat-label>
+                <input formControlName="microservice_name" matInput>
+              </mat-form-field>
+            </div>
+
+            <div class="w3-col l6 s12 rightInput">
+              <mat-form-field class="full-width">
+                <mat-label>Virtualization</mat-label>
+                <select formControlName="virtualization" matNativeControl required>
+                  <option value="container">Container</option>
+                  <option value="unikernel">Unikernel</option>
+                  <option value="vm">Vm</option>
+                </select>
+              </mat-form-field>
+            </div>
+
+            <mat-form-field class="full-width">
+              <mat-label>Description</mat-label>
+              <textarea cols="3" matInput placeholder="Description of the application"></textarea>
+            </mat-form-field>
+
+            <h4>Requirements:</h4>
+
+            <div class="w3-col l2 m4 s6 leftInput">
+              <mat-form-field class="full-width">
+                <mat-label>Memory</mat-label>
+                <input formControlName="memory" matInput min="0" placeholder="1024" type="number">
+                <p matSuffix>MB</p>
+              </mat-form-field>
+            </div>
+
+            <!--            // TODO fix responsive padding problem-->
+            <div class="w3-col l2 m4 s6 leftInput">
+              <mat-form-field class="full-width">
+                <mat-label>Vcpus</mat-label>
+                <input formControlName="vcpus" matInput min="0" type="number" value="1">
+              </mat-form-field>
+            </div>
+
+            <div class="w3-col l2 m4 s6 rightInput">
+              <mat-form-field class="full-width">
+                <mat-label>Vgpus</mat-label>
+                <input formControlName="vgpus" matInput min="0" type="number" value="0">
+              </mat-form-field>
+            </div>
+
+            <div class="w3-col l2 m4 s6 rightInput">
+              <mat-form-field class="full-width">
+                <mat-label>Vtpus</mat-label>
+                <input formControlName="vtpus" matInput min="0" type="number" value="0">
+              </mat-form-field>
+            </div>
+
+            <div class="w3-col l2 m4 s6 rightInput">
+              <mat-form-field class="full-width">
+                <mat-label>Bandwidth_in</mat-label>
+                <input formControlName="bandwidth_in" matInput min="0" type="number" value="0">
+                <p matSuffix>KB</p>
+              </mat-form-field>
+            </div>
+
+            <div class="w3-col l2 m4 s6 rightInput">
+              <mat-form-field class="full-width">
+                <mat-label>Bandwidth_out</mat-label>
+                <input formControlName="bandwidth_out" matInput min="0" type="number" value="0">
+                <p matSuffix>KB</p>
+              </mat-form-field>
+            </div>
+
+            <div class="w3-col l2 m4 s6">
+              <mat-form-field class="full-width">
+                <mat-label>Storage</mat-label>
+                <input formControlName="storage" matInput min="0" type="number" value="0">
+                <p matSuffix>MB</p>
+              </mat-form-field>
+            </div>
+
+            <mat-form-field class="full-width">
+              <mat-label>Code</mat-label>
+              <input formControlName="code" matInput placeholder="https://urlToCode" required type="url">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <mat-label>State</mat-label>
+              <input formControlName="state" matInput placeholder="https://urlToState" required type="url" value="">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <mat-label>Port</mat-label>
+              <input formControlName="port" matInput type="number">
+            </mat-form-field>
+
+            <mat-expansion-panel formGroupName="addresses">
+              <mat-expansion-panel-header>
+                <mat-panel-title>Addresses</mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <mat-form-field class="full-width">
+                <mat-label>RR-IP</mat-label>
+                <input formControlName="rr_ip" matInput type="text">
+              </mat-form-field>
+
+              <mat-form-field class="full-width">
+                <mat-label>Closest_ip</mat-label>
+                <input formControlName="closest_ip" matInput type="text">
+              </mat-form-field>
+
+              <!--              TODO Look up how to display this-->
+              <mat-form-field class="full-width">
+                <mat-label>Instances</mat-label>
+                <input formControlName="instances" matInput type="text">
+              </mat-form-field>
+            </mat-expansion-panel>
+
+            <br>
+
+            <div>
+              <p class="addButtonDiv">Files:</p>
+              <button (click)="addFileInput()" mat-icon-button type="button">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+            <!--            //ToDO add delete Function next to the File input. -->
+            <mat-form-field *ngFor="let f of fileArrayForm.controls; index as i" class="full-width"
+                            formGroupName="added_files">
+              <mat-label>File Url</mat-label>
+              <input [formControl]="$any(fileArrayForm).controls[i]" matInput
+                     placeholder="https://urlToFile" type="url" value="">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <mat-label>Args - Key Value</mat-label>
+              <input formControlName="args" matInput type="text" value="">
+            </mat-form-field>
+
+            <div>
+              <h4 class="addButtonDiv">Constraints:</h4>
+              <button (click)="addConstrains()" mat-icon-button type="button">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+
+            <div formArrayName="constraints">
+              <mat-card *ngFor="let cons of constraints.controls; let i = index">
+                <div [formGroupName]="i">
+                  <mat-radio-group formControlName="type">
+                    <mat-radio-button
+                      (change)="onRadioChange($event, i)"
+                      class="leftInput"
+                      value="latency">
+                      latency
+                    </mat-radio-button>
+                    <mat-radio-button (change)="onRadioChange($event, i)" class="rightInput" value="geo">
+                      geo
+                    </mat-radio-button>
+                  </mat-radio-group>
+                  <div *ngIf="canViewLatConstrains[i]" class="constraints">
+                    <mat-form-field class="full-width">
+                      <mat-label>Virtualization</mat-label>
+                      <select formControlName="area" matNativeControl required>
+                        <option value="munich1">Munich 1</option>
+                        <option value="munich2">Munich 2</option>
+                        <option value="frankfurt">Frankfurt</option>
+                      </select>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width">
+                      <mat-label>Threshold</mat-label>
+                      <input formControlName="threshold" matInput type="number" value="0">
+                      <p matSuffix>ms</p>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width">
+                      <mat-label>Rigidness</mat-label>
+                      <input formControlName="rigidness" matInput max="1" min="0" step="0.01" type="number" value="0">
+                      <p matSuffix>%</p>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width">
+                      <mat-label>Convergence Time</mat-label>
+                      <input formControlName="convergence_time" matInput type="number" value="300">
+                      <p matSuffix>sec</p>
+                    </mat-form-field>
+                  </div>
+                  <!--                    // TODO Add long and latitude as tupple to the Form-->
+                  <div *ngIf="!canViewLatConstrains[i]" class="constraints">
+
+                    <div class="w3-col l4 m4 s6">
+                      <mat-form-field class="full-width">
+                        <mat-label>Longitude</mat-label>
+                        <input matInput type="number">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="w3-col l4 m4 s6">
+                      <mat-form-field class="full-width">
+                        <mat-label>Latitude</mat-label>
+                        <input matInput type="number">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="w3-col l4 m4 s6">
+                      <!--                TODO Make Dialog with Map and Location selector -->
+                      <button mat-flat-button type="button">Select on map</button>
+                      <div id="map"></div>
+                    </div>
+
+                    <mat-form-field class="full-width">
+                      <mat-label>Threshold</mat-label>
+                      <input formControlName="threshold" matInput type="number">
+                      <p matSuffix>km</p>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width">
+                      <mat-label>Rigidness</mat-label>
+                      <input formControlName="rigidness" matInput max="100" min="0" type="number" value="0">
+                      <p matSuffix>%</p>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width">
+                      <mat-label>Convergence Time</mat-label>
+                      <input formControlName="convergence_time" matInput type="number" value="300">
+                      <p matSuffix>sec</p>
+                    </mat-form-field>
+
+                  </div>
+                </div>
+              </mat-card>
+            </div>
+
+            <div>
+              <h4 style="display: inline-block">Connectivity:</h4>
+              <button (click)="addConnectivity()" mat-icon-button type="button">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+
+            <div formArrayName="connectivity">
+
+              <div *ngFor="let conn of connectivity.controls; let i = index" id="contentInside">
+                <mat-card [formGroupName]="i" class="connectivityCard">
+                  <div class="w3-col s8">
+                    <mat-form-field class="full-width">
+                      <mat-label> target_microservice_id {{conn.value}}</mat-label>
+                      <select formControlName="target_microservice_id" matNativeControl required>
+<!--                        TODO Load dynamic options-->
+                        <option value="ID1">ID1</option>
+                        <option value="ID2">ID2</option>
+                        <option value="ID3">ID3</option>
+                      </select>
+                    </mat-form-field>
+                  </div>
+                  <div class="w3-col s4">
+                    <button (click)="deleteConnection(conn.value)" class="settingsButton" mat-flat-button type="button">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                    <button (click)="openDialog(i)" class="settingsButton" mat-flat-button type="button">
+                      <mat-icon>settings</mat-icon>
+                    </button>
+                  </div>
+                </mat-card>
+              </div>
+            </div>
+            <button color="primary" mat-button mat-flat-button type="submit">Deploy</button>
+          </form>
+        </mat-tab>
+
+        <mat-tab label="YAML">
+          <pre>{{jsonContent | json}}</pre>
+        </mat-tab>
+
+        <mat-tab label="FILE"> Content 2</mat-tab>
+
+      </mat-tab-group>
+    </div>
+  </mat-card>
+</div>
+
+
+
+
+
+
+

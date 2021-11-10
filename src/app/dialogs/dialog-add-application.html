@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Add Application</h2>
+<mat-dialog-content class="mat-typography">
+
+  <div class="w3-col l6 s12 m6">
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Application ID</mat-label>
+      <input matInput disabled [value]="local_data.id">
+    </mat-form-field>
+  </div>
+
+  <div class="w3-col l6 s12 m6">
+    <mat-form-field class="full-width">
+      <mat-label>Application Name</mat-label>
+      <input matInput [(ngModel)]="local_data.name">
+    </mat-form-field>
+  </div>
+
+  <div class="w3-col l12 s12 m12">
+  <mat-form-field class="full-width">
+    <mat-label>Description</mat-label>
+    <textarea matInput cols="2" [(ngModel)]="local_data.description"> </textarea>
+  </mat-form-field>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions class="alignRight">
+  <button mat-button (click)="doAction()" mat-flat-button color="primary">{{action}}</button>
+  <button mat-button (click)="closeDialog()" mat-flat-button color="primary">Cancel</button>
+  <button mat-button (click)="deleteApplication()" mat-flat-button color="warn" *ngIf="action ==='Update'">Delete</button>
+</mat-dialog-actions>
