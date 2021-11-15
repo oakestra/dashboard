@@ -30,6 +30,23 @@ import {DialogConnectionSettings} from "./dialogs/dialogConnectionSettings";
 import {HelpComponent} from './help/help.component';
 import {DialogAddApplicationView} from "./dialogs/dialogAddApplication";
 import {SharedIDService} from "./services/shared-id.service";
+import {MatMenuModule} from "@angular/material/menu";
+import {GraphComponent} from './graph/graph.component';
+// import {AngularFireModule} from "angularfire2";
+// import {environment} from "../environments/environment";
+import { environment } from '../environments/environment';
+// import { AngularFireModule } from '@angular/fire';
+import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
+import {AngularFireModule} from "@angular/fire/compat";
+
+
+
+//
+// import { AngularFireModule } from "@angular/fire";
+// import { AngularFireAuthModule } from "@angular/fire/auth";
+// import { AngularFirestoreModule } from '@angular/fire/firestore';
+
+
 
 @NgModule({
   declarations: [
@@ -40,7 +57,8 @@ import {SharedIDService} from "./services/shared-id.service";
     NavbarComponent,
     DialogConnectionSettings,
     HelpComponent,
-    DialogAddApplicationView
+    DialogAddApplicationView,
+    GraphComponent
   ],
   imports: [
     BrowserModule,
@@ -65,13 +83,20 @@ import {SharedIDService} from "./services/shared-id.service";
     MatExpansionModule,
     MatRadioModule,
     MatDialogModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    // AngularFireModule.initializeApp(environment.firebase),
+    // AngularFireDatabaseModule,
 
     RouterModule.forRoot([
       {path: '', component: DevHomeComponent},
+      //{path: 'test', component: GraphComponent},
+      {path: 'deploy/:id', component: DeployFormComponent},
       {path: 'deploy', component: DeployFormComponent},
       {path: 'help', component: HelpComponent},
       {path: '**', component: NotFoundComponent}
     ]),
+    MatMenuModule,
   ],
   providers: [
     JobService,

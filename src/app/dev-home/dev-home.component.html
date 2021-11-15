@@ -1,7 +1,7 @@
 <div class="content-cards">
   <mat-card class="serviceCard">
     <mat-card-title>Application: {{sharedService.sharedNode.name}}</mat-card-title>
-<!--    TODO Only for Demo later with the correct Application ID -> need Database -->
+    <!--    TODO Only for Demo later with the correct Application ID -> need Database -->
     <div *ngIf="sharedService.sharedNode.id == 12345">
       <mat-card *ngFor="let job of jobs">
 
@@ -14,9 +14,18 @@
         </div>
 
         <div class="w3-col s1">
-          <p>Settings</p>
+          <button [matMenuTriggerFor]="settings" mat-button>
+            <mat-icon style="display: block">more_vert</mat-icon>
+          </button>
+          <mat-menu #settings="matMenu">
+            <button mat-menu-item [routerLink]="['/deploy', job.job_name]">Edit</button>
+            <button mat-menu-item>Delete</button>
+          </mat-menu>
         </div>
       </mat-card>
+
+      <app-test-graph></app-test-graph>
+
     </div>
 
     <div *ngIf="sharedService.sharedNode.id != 12345" class="content mat-elevation-z8">

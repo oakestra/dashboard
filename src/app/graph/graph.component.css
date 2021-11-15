@@ -1,17 +1,3 @@
-@import "~bootstrap/dist/css/bootstrap.css";
-
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
-.alignRight {
-  text-align: right
-}
-
-.mat-dialog-actions {
-  justify-content: flex-end;
-}
-
-
-/*////////////////////////////////////////////////////*/
 svg {
   cursor: default;
   -webkit-user-select: none;
@@ -28,7 +14,7 @@ svg:not(.active):not(.ctrl) {
 path.link {
   fill: none;
   stroke: #888;
-  stroke-width: 5px;
+  stroke-width: 3px;
   cursor: default;
 }
 
@@ -37,7 +23,7 @@ svg:not(.active):not(.ctrl) path.link {
 }
 
 path.link.selected {
-  stroke-dasharray: 10, 2;
+  stroke-dasharray: 10,2;
 }
 
 path.link.dragline {
@@ -51,8 +37,13 @@ path.link.hidden {
 circle.node {
   stroke-width: 0px;
   cursor: pointer;
-  fill: #fff;
+  fill:#fff;
 }
+
+/*circle.node.reflexive {
+  stroke: #000 !important;
+  stroke-width: 2.5px;
+}*/
 
 text {
   font: 14px sans-serif;
@@ -62,4 +53,10 @@ text {
 text.id {
   text-anchor: middle;
   font-weight: bold;
+}
+
+.graph{
+  background: lightgray;
+  border: 2px solid #002b5c;
+  border-radius: 5px;
 }

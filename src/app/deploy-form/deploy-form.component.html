@@ -46,7 +46,7 @@
 
             <h4>Requirements:</h4>
 
-            <div class="w3-col l2 m4 s6 leftInput">
+            <div class="w3-col l3 m4 s6 leftInput">
               <mat-form-field class="full-width">
                 <mat-label>Memory</mat-label>
                 <input formControlName="memory" matInput min="0" placeholder="1024" type="number">
@@ -55,28 +55,28 @@
             </div>
 
             <!--            // TODO fix responsive padding problem-->
-            <div class="w3-col l2 m4 s6 leftInput">
+            <div class="w3-col l3 m4 s6 leftInput">
               <mat-form-field class="full-width">
                 <mat-label>Vcpus</mat-label>
                 <input formControlName="vcpus" matInput min="0" type="number" value="1">
               </mat-form-field>
             </div>
 
-            <div class="w3-col l2 m4 s6 rightInput">
+            <div class="w3-col l3 m4 s6 rightInput">
               <mat-form-field class="full-width">
                 <mat-label>Vgpus</mat-label>
                 <input formControlName="vgpus" matInput min="0" type="number" value="0">
               </mat-form-field>
             </div>
 
-            <div class="w3-col l2 m4 s6 rightInput">
+            <div class="w3-col l3 m4 s6 rightInput">
               <mat-form-field class="full-width">
                 <mat-label>Vtpus</mat-label>
                 <input formControlName="vtpus" matInput min="0" type="number" value="0">
               </mat-form-field>
             </div>
 
-            <div class="w3-col l2 m4 s6 rightInput">
+            <div class="w3-col l3 m4 s6">
               <mat-form-field class="full-width">
                 <mat-label>Bandwidth_in</mat-label>
                 <input formControlName="bandwidth_in" matInput min="0" type="number" value="0">
@@ -84,7 +84,7 @@
               </mat-form-field>
             </div>
 
-            <div class="w3-col l2 m4 s6 rightInput">
+            <div class="w3-col l3 m4 s6 rightInput">
               <mat-form-field class="full-width">
                 <mat-label>Bandwidth_out</mat-label>
                 <input formControlName="bandwidth_out" matInput min="0" type="number" value="0">
@@ -92,7 +92,7 @@
               </mat-form-field>
             </div>
 
-            <div class="w3-col l2 m4 s6">
+            <div class="w3-col l3 m4 s6 rightInput">
               <mat-form-field class="full-width">
                 <mat-label>Storage</mat-label>
                 <input formControlName="storage" matInput min="0" type="number" value="0">
@@ -254,7 +254,7 @@
             </div>
 
             <div>
-              <h4 style="display: inline-block">Connectivity:</h4>
+              <h4 class="addButtonDiv">Connectivity:</h4>
               <button (click)="addConnectivity()" mat-icon-button type="button">
                 <mat-icon>add</mat-icon>
               </button>
@@ -290,7 +290,7 @@
           </form>
         </mat-tab>
 
-        <mat-tab label="YAML">
+        <mat-tab label="JSON">
           <pre>{{jsonContent | json}}</pre>
         </mat-tab>
 

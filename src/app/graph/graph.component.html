@@ -1,0 +1,11 @@
+<button (click)="multipleFunctions()" color="primary" mat-button>{{showConButton}}</button>
+<div [style.display]=" showConnections ? '' : 'none'" class="wrapper" style="width: 100%; overflow: hidden;">
+  <div class="buttonSide" style="width: 20vw; float:left;">
+    <h3 id="testText">Select Node or Connection</h3>
+    <button mat-button id="editElement" (click)="delete()"><mat-icon>settings</mat-icon></button>
+    <button mat-button id="deleteLink" (click)="delete()"><mat-icon>delete</mat-icon></button>
+  </div>
+  <div class="graphSide" id="graph" style="overflow: hidden;">
+    <div class="graph"></div>
+  </div>
+</div>

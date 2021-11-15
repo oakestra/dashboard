@@ -1,5 +1,5 @@
 <mat-toolbar class="mat-elevation-z8">
-  <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+  <button (click)="sidenav.toggle()" *ngIf="sidenav.mode === 'over'" mat-icon-button>
     <mat-icon *ngIf="!sidenav.opened">
       menu
     </mat-icon>
@@ -9,70 +9,56 @@
   </button>
   EdgeIO Dashboard
   <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
-          routerLink="/deploy">
+  <button mat-icon-button routerLink="/deploy">
     <mat-icon>add_circle</mat-icon>
   </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+  <button [matMenuTriggerFor]="menu" mat-icon-button>
     <mat-icon>person</mat-icon>
   </button>
-  <!--  <button mat-button [matMenuTriggerFor]="menu">Menu</button>-->
-  <!--  <mat-menu #menu="matMenu">-->
-  <!--    <button mat-menu-item>Item 1</button>-->
-  <!--    <button mat-menu-item>Item 2</button>-->
-  <!--  </mat-menu>-->
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>Logout</button>
+  </mat-menu>
 </mat-toolbar>
 
 <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-
     <h4 class="name">Hello username</h4>
+
     <mat-divider></mat-divider>
 
-    <button mat-button class="menu-button" routerLink="/">
+    <button class="menu-button" mat-button routerLink="/">
       <span>Home</span>
     </button>
 
     <mat-divider></mat-divider>
     <h6>Application:</h6>
 
-    <div *ngFor="let app of applicationList" style="display: flex; justify-content: space-between;">
-      <mat-radio-group [(ngModel)]="active"
-                       (change)="handleChange()">
-        <mat-radio-button class="menu-button" [value]="app.id">
+    <div *ngFor="let app of app$ | async" style="display: flex; justify-content: space-between;">
+      <mat-radio-group (change)="handleChange()" [(ngModel)]="active">
+        <mat-radio-button [value]="app.id" class="menu-button">
           <span style="float: left">{{app.name}}</span>
         </mat-radio-button>
       </mat-radio-group>
-      <button mat-button style="float: right" (click)="openDialog('Update',app)">
+
+      <button (click)="openDialog('Update',app)" mat-button style="float: right">
         <span style="float: right"><mat-icon>settings</mat-icon></span>
       </button>
 
     </div>
-    <button mat-button (click)="openDialog('Add',{})" class="menu-button">
+    <button (click)="openDialog('Add',{})" class="menu-button" mat-button>
       <span><mat-icon>add</mat-icon></span>
-      <!--      <p>{{active}}</p>-->
     </button>
 
-
-    <!--    <mat-form-field class="menu-button" appearance="fill">-->
-    <!--      <mat-label class="appSelectLable">Application</mat-label>-->
-    <!--      <select class="appSelectLable" matNativeControl required>-->
-    <!--        <option value="app1">Application 1</option>-->
-    <!--        <option value="app2">Application 2</option>-->
-    <!--        <option value="app3">Application 3</option>-->
-    <!--      </select>-->
-    <!--    </mat-form-field>-->
-
     <mat-divider></mat-divider>
-    <button mat-button class="menu-button" routerLink="help">
+    <button class="menu-button" mat-button routerLink="help">
       <span>Help</span>
     </button>
 
   </mat-sidenav>
   <mat-sidenav-content>
+
     <router-outlet *ngIf="applicationList.length != 0"></router-outlet>
 
-    <!--          <dev-home></dev-home>-->
     <div *ngIf="applicationList.length == 0" class="content mat-elevation-z8">
       No Application created.
     </div>

@@ -79,4 +79,5 @@ td {
 
 .addButtonDiv {
   display: inline-block;
+  vertical-align: middle;
 }
