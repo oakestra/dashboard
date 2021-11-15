@@ -28,7 +28,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 # SLA Configuration from Max
 
-In the Frontend it should be able tho input the data in a form and then this structure of the configuration is generated and can be sent to the root orchestrator.
+In the Frontend it should be able to enter the data in a form and then this structure of the configuration is generated and can be sent to the root orchestrator.
 
 ## Documentation of EdgeIO-SLA (v0.3.0)
 Example under *sla.json*
