@@ -1,56 +1,66 @@
 import {Injectable} from '@angular/core';
-import {AngularFireDatabase} from "@angular/fire/compat/database";
-import {Application} from "../objects/application";
-import firebase from "firebase/compat";
-import App = firebase.app.App;
-import application from "@angular-devkit/build-angular/src/babel/presets/application";
+import {HttpClient} from "@angular/common/http";
+import {shareReplay} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class DbClientService {
 
-  itemsRef = this.db.list('/application');
-  items = this.itemsRef.valueChanges();
+  mongoUrl: string = "http://127.0.0.1:10011/frontend";
+  _applications$: any;
+  _jobs$: any;
 
-  private _applications$: any;
-
-  constructor(private db: AngularFireDatabase) {
-    this._applications$  = this.items;
-    // this._applications$  = db.list("/application").valueChanges();
+  constructor(private http: HttpClient) {
+    this._applications$ = this.http.get(this.mongoUrl + "/apps/get");
+    this._jobs$ = this.http.get(this.mongoUrl + "/jobs/get");
   }
 
   get applications$() {
     return this._applications$;
   }
 
-  addItem(data: any) {
-
-    let ref = this.db.database.ref("/application")
-    const usersRef = ref.child(data.id+"");
-    usersRef.set({
-      id: data.id,
-      name: data.name,
-      description: data.description,
-    });
+  addApplication(app: any) {
+    this._applications$ = this.http.post(this.mongoUrl + "/app/push", app)
   }
 
-  //TODO Make id as String
-  deleteItem(data: any) {
-    this.itemsRef.remove(data.id+'');
+  updateApplication(data: any) {
+    this._applications$ = this.http.post(this.mongoUrl + "/app/update", data)
   }
 
-  updateItem(data: any) {
-    this.itemsRef.update(data.id+'', {
-      id: data.id,
-      name: data.name,
-      description: data.description
-    });
+  deleteApplication(app: any) {
+    this._applications$ = this.http.post(this.mongoUrl + "/app/delete", app)
   }
 
-/*
-  deleteEverything() {
-    this.itemsRef.remove();
+  getAppById(id: any) {
+    return this.http.post(this.mongoUrl + "/app/get", {_id: id})
   }
-  */
+
+  get jobs$() {
+    return this._jobs$;
+  }
+
+  get allJobs() {
+    return this.http.get(this.mongoUrl + "/jobs/get");
+  }
+
+  //TODO Add description also to the DB but not to the sla
+  addJob(job: any) {
+    this._jobs$ = this.http.post(this.mongoUrl + "/job/push", job).pipe(shareReplay(1))
+    console.log("Added job to mongo")
+  }
+
+  updateJob(id: string, job: any) {
+    this._jobs$ = this.http.post(this.mongoUrl + "/job/update", {_id: {$oid: id}, job_sla: job}).subscribe(e => console.log(e))
+    console.log("Update")
+  }
+
+  deleteJob(job: any) {
+    this._jobs$ = this.http.post(this.mongoUrl + "/job/delete", job)
+  }
+
+  getJobByID(job: any) {
+    return this.http.post(this.mongoUrl + "/job/get", {_id: job})
+  }
 }

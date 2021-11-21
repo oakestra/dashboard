@@ -138,7 +138,7 @@ function restart() {
     // .attr('height', 60)
     // .attr('width', 120)
     .attr('class', 'node')
-    .attr('r', 30)
+    .attr('r', 40)
     .style('fill', function (d) {
       return (d === selected_node) ? d3.rgb(colors(d.id)).brighter().toString() : colors(d.id);
     })
@@ -150,6 +150,7 @@ function restart() {
       console.log("Jetzt hier");
       d3.select(this).attr('transform', 'scale(1.1)');
       if (!mousedown_node || d === mousedown_node) return;
+      d3.select(this).attr('transform', 'scale(2.1)');
       // enlarge target node
     })
     .on('mouseout', function (d) {
@@ -164,7 +165,7 @@ function restart() {
       mousedown_node = d;
       if (mousedown_node === selected_node) {
         selected_node = null;
-        d3.select(this).attr('transform', 'scale(0.5)');
+        // d3.select(this).attr('transform', 'scale(0.5)');
       } else selected_node = mousedown_node;
       selected_link = null;
       //d3.select(this).attr('transform', 'scale(2)');
@@ -204,9 +205,11 @@ function restart() {
       if (mousedown_node.id < mouseup_node.id) {
         source = mousedown_node;
         target = mouseup_node;
+        direction = 1
       } else {
         source = mouseup_node;
         target = mousedown_node;
+        direction = 0
       }
 
       var link;
@@ -230,16 +233,13 @@ function restart() {
 
   // show node IDs
 
-
-
   g.append('svg:text')
     .attr('x', 0)
     .attr('y', 4)
     .attr('class', 'id')
     .text(function (d) {
-      return d.id;
+      return shortenName(d.id);
     });
-
 
   // remove old nodes
   circle.exit().remove();
@@ -247,6 +247,14 @@ function restart() {
   // set the graph in motion
   force.start();
 
+}
+
+function shortenName(s) {
+  if (s.length > 10) {
+    return s.substring(0, Math.min(s.length, 10)) + "...";
+  } else {
+    return s;
+  }
 }
 
 function tick() {
@@ -354,7 +362,7 @@ function keydown() {
   }
 }
 
-function deleteLink(){
+function deleteLink() {
   if (selected_node) {
     nodes.splice(nodes.indexOf(selected_node), 1);
     spliceLinksForNode(selected_node);
@@ -381,10 +389,16 @@ function keyup() {
 function sendtoModelNode(node) {
   console.log(node);
   document.getElementById("testText").innerText = node.id;
+  document.getElementById("IdText").innerText = node.idNumber;
+  document.getElementById("typeText").innerText = "Node:";
+
 }
 
 function sendtoModelLink(link) {
   console.log(link);
+  document.getElementById("typeText").innerText = "Link:";
+  document.getElementById("IdLinkStart").innerText = link.source.idNumber;
+  document.getElementById("IdLinkTarget").innerText = link.target.idNumber;
   document.getElementById("testText").innerText = 'Link between "' + link.source.id + '" and "' + link.target.id + '"';
 }
 

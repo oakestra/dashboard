@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {JobService} from "../services/job.service";
-import {Job} from "../objects/job";
 import {SharedIDService} from "../services/shared-id.service";
-
-declare function start(nodes: any, links: any): void;
+import {DbClientService} from "../services/db-client.service";
+import {DataService} from "../services/data.service";
 
 @Component({
   selector: 'dev-home',
@@ -12,37 +10,39 @@ declare function start(nodes: any, links: any): void;
 })
 export class DevHomeComponent implements OnInit {
 
-  //activeApp: Application;
-  jobs: Job[] | undefined;
+  jobs$: any;
 
-  //private _showConButton = "Show Connection Graph";
-  private firstCall = true;
+  constructor(private service: DataService,
+              public sharedService: SharedIDService,
+              private dbService: DbClientService) {
+  }
 
-  constructor(private service: JobService, public sharedService: SharedIDService) {}
-
-  // Get alL Jobs in this Application
+  // Get alL Jobs in the Root
   ngOnInit(): void {
-
-    this.service.getAll().subscribe(data => {
-      this.jobs = data as Job[];
-    });
+    this.jobs$ = this.dbService.jobs$
   }
 
-  startGraph() {
-    this.firstCall = false;
-    console.log("start");
-
-    let nodes = [
-      {id: "Hello this is my long name"},
-      {id: "Y"},
-      {id: "Z"},
-      {id: "A"}
-    ];
-
-    let links = [
-      {source: nodes[0], target: nodes[1]},
-      {source: nodes[0], target: nodes[3]},
-    ];
-    start(nodes, links);
+  deleteJob(job: any) {
+    // TODO check if job is really deleted in the API
+    this.service.delete(job); // Delete in API
+    this.dbService.deleteJob(job); // Delete in local Database
+    this.jobs$ = this.dbService.jobs$;
   }
+
+  deleteJobWithGraph(id: string) {
+    let _id = {
+      $oid: id
+    }
+    // TODO Check how the API  wants the id
+    this.service.delete(id); // Delete in API
+    this.dbService.deleteJob({_id}); // Delete in local Database
+    this.jobs$ = this.dbService.jobs$;
+  }
+
+  sendSLAToAPI() {
+    console.log("send");
+    console.log(this.sharedService.sharedNode);
+    console.log(this.sharedService.sharedNode.name);
+  }
+
 }

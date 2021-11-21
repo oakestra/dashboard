@@ -5,7 +5,6 @@ import {AppComponent} from './app.component';
 import {DeployFormComponent} from './deploy-form/deploy-form.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import {JobService} from "./services/job.service";
 import {DevHomeComponent} from './dev-home/dev-home.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {NavbarComponent} from './navbar/navbar.component';
@@ -32,21 +31,7 @@ import {DialogAddApplicationView} from "./dialogs/dialogAddApplication";
 import {SharedIDService} from "./services/shared-id.service";
 import {MatMenuModule} from "@angular/material/menu";
 import {GraphComponent} from './graph/graph.component';
-// import {AngularFireModule} from "angularfire2";
-// import {environment} from "../environments/environment";
-import { environment } from '../environments/environment';
-// import { AngularFireModule } from '@angular/fire';
-import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
-import {AngularFireModule} from "@angular/fire/compat";
-
-
-
-//
-// import { AngularFireModule } from "@angular/fire";
-// import { AngularFireAuthModule } from "@angular/fire/auth";
-// import { AngularFirestoreModule } from '@angular/fire/firestore';
-
-
+import {DialogGraphConnectionSettings} from "./dialogs/dialogGraphConnectionSettings";
 
 @NgModule({
   declarations: [
@@ -56,6 +41,7 @@ import {AngularFireModule} from "@angular/fire/compat";
     NotFoundComponent,
     NavbarComponent,
     DialogConnectionSettings,
+    DialogGraphConnectionSettings,
     HelpComponent,
     DialogAddApplicationView,
     GraphComponent
@@ -83,10 +69,6 @@ import {AngularFireModule} from "@angular/fire/compat";
     MatExpansionModule,
     MatRadioModule,
     MatDialogModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    // AngularFireModule.initializeApp(environment.firebase),
-    // AngularFireDatabaseModule,
 
     RouterModule.forRoot([
       {path: '', component: DevHomeComponent},
@@ -99,7 +81,6 @@ import {AngularFireModule} from "@angular/fire/compat";
     MatMenuModule,
   ],
   providers: [
-    JobService,
     DataService,
     SharedIDService,
     {provide: ErrorHandler, useClass: AppErrorHandler}

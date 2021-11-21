@@ -3,7 +3,8 @@ import {MatRadioChange} from "@angular/material/radio";
 import {DialogConnectionSettings} from "../dialogs/dialogConnectionSettings";
 import {MatDialog} from "@angular/material/dialog";
 import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {DbClientService} from "../services/db-client.service";
 
 @Component({
   selector: 'deploy-form',
@@ -12,11 +13,21 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class DeployFormComponent implements OnInit {
 
-  jsonContent: string = "";
   form: FormGroup;
+
   fileArrayForm = new FormArray([]);
   canViewLatConstrains: boolean[] = [];
-  connectivityList: number[] = [];
+
+  job$: any;
+  service: any = null;
+
+  editingJob: boolean = false;
+  currentJobID: string = ""; // This one is uses to get the Job from the DB
+
+  allJobs$: any // For the Dropdown list of the connections
+
+  jsonContent = "load later here the correct sla";
+
   conConstrainsArray: FormArray[] = [new FormArray([new FormGroup({
     'type': new FormControl(0),
     'threshold': new FormControl(0),
@@ -24,9 +35,16 @@ export class DeployFormComponent implements OnInit {
     'convergence_time': new FormControl(0),
   })])];
 
-  constructor(public dialog: MatDialog, private fb: FormBuilder, private route: ActivatedRoute) {
-    console.log("Servus die Wadel");
+  constructor(public dialog: MatDialog,
+              private fb: FormBuilder,
+              private route: ActivatedRoute,
+              private dbService: DbClientService,
+              private router: Router) {
+
+    this.currentJobID = "not yet defined";
+
     this.form = fb.group({
+      'microserviceID': [],
       'microservice_name': [],
       'virtualization': [],
       'memory': [],
@@ -52,77 +70,58 @@ export class DeployFormComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.allJobs$ = this.dbService.allJobs
+
     this.route.paramMap.subscribe(pram => {
-      console.log(pram.get("id"));
+      if (pram.get("id") != null) {
+
+        this.editingJob = true;
+
+        this.currentJobID = pram.get("id")!; // Set the id to the id in the URL
+
+        this.form.get("microserviceID")?.setValue(this.currentJobID);
+
+        this.job$ = this.dbService.getJobByID(this.currentJobID);
+
+        this.job$.subscribe((data: any) => {
+          console.log(data)
+          this.service = data.job_sla;
+          console.log(this.service);
+          this.createEditFormGroup();
+        });
+
+      } else {
+        // new job is configured
+        this.service = true;
+      }
     })
-    this.createEditFormGroup();
   }
 
   createEditFormGroup(): void {
-    // TODO load the service from the Database
-    const service =
-      {
-        "microservice_name": "1",
-        "virtualization": "container",
-        "memory": 1,
-        "vcpus": 1,
-        "vgpus": 1,
-        "vtpus": 1,
-        "bandwidth_in": 1,
-        "bandwidth_out": 1,
-        "storage": 1,
-        "code": "1",
-        "state": "1",
-        "port": 1,
-        "addresses":
-          {
-            "rr_ip": "1",
-            "closest_ip": "1",
-            "instances": "1"
-          },
-        "added_files": [],
-        "constraints": [
-          {
-            "type": "latency",
-            "area": "munich2",
-            "threshold": 1,
-            "rigidness": 1,
-            "convergence_time": 1
-          }
-        ],
-        "connectivity": [
-          {
-            "target_microservice_id": "ID1",
-            "con_constraints": [
-              {
-                "type": "geo",
-                "threshold": 1,
-                "rigidness": 1,
-                "convergence_time": 1
-              }
-            ]
-          }
-        ],
-        "args": null
+
+    if (this.service.constraints != undefined) {
+      let constraintsNumber = this.service.constraints.length;
+      for (let i = 0; i < constraintsNumber; i++) {
+        this.addConstrains();
       }
-
-    let constraintsNumber = service.constraints.length;
-    for (let i = 0; i < constraintsNumber; i++) {
-      this.addConstrains();
     }
 
-    let connectivityNumber = service.connectivity.length;
-    for (let i = 0; i < connectivityNumber; i++) {
-      this.addConnectivity();
-      //this.addConConstrains(i);
+    if (this.service.connectivity != undefined) {
+      let connectivityNumber = this.service.connectivity.length;
+      for (let i = 0; i < connectivityNumber; i++) {
+        this.addConnectivity();
+      }
     }
 
-    let fileNumber = service.added_files.length;
-    for (let i = 0; i < fileNumber; i++) {
-      this.addFileInput();
+    if (this.service.added_files != undefined) {
+      let fileNumber = this.service.added_files.length;
+      for (let i = 0; i < fileNumber; i++) {
+        this.addFileInput();
+      }
     }
 
-    this.form.patchValue(service)
+    this.form.patchValue(this.service)
   }
 
   // For the constraints Radio Button
@@ -132,7 +131,6 @@ export class DeployFormComponent implements OnInit {
 
   // Add connectivity's between Services
   addConnectivity() {
-    //this.connectivityList.push(this.connectivityList.length);
 
     this.conConstrainsArray.push(new FormArray([]));
     let n = this.connectivity.length;
@@ -141,16 +139,13 @@ export class DeployFormComponent implements OnInit {
       'target_microservice_id': new FormControl(),
       'con_constraints': this.conConstrainsArray[n],
     }));
-
   }
 
-  //TODO Fix this
-  deleteConnection(obj: number) {
-    let index = this.connectivityList.indexOf(obj);
-    this.connectivityList.splice(index, 1);
+  deleteConnection(index: number) {
+    this.connectivity.controls.splice(index, 1)
   }
 
-  // TODO what should be done is the input is lat and longitude?
+  // TODO what should be done if the input is lat and longitude?
   addConstrains() {
 
     this.conConstrainsArray.push(new FormArray([new FormGroup({
@@ -180,10 +175,7 @@ export class DeployFormComponent implements OnInit {
   openDialog(index: number) {
 
     let data = this.conConstrainsArray[index].value[0];
-
-    const dialogRef = this.dialog.open(DialogConnectionSettings, {
-      data
-    });
+    const dialogRef = this.dialog.open(DialogConnectionSettings, {data});
 
     dialogRef.afterClosed().subscribe(result => {
       this.saveDialogData(result, index);
@@ -207,16 +199,6 @@ export class DeployFormComponent implements OnInit {
     }
   }
 
-  //
-  // addConConstrains(index: number) {
-  //   this.conConstrainsArray[index].push(new FormGroup({
-  //     'type': new FormControl(),
-  //     'threshold': new FormControl(),
-  //     'rigidness': new FormControl(),
-  //     'convergence_time': new FormControl(),
-  //   }));
-  //}
-
   get constraints() {
     return this.form.get("constraints") as FormArray
   }
@@ -226,8 +208,11 @@ export class DeployFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("Submitted");
-    console.log(this.form.value);
-    this.jsonContent = this.form.value;
+    if (this.editingJob) {
+      this.dbService.updateJob(this.currentJobID, this.form.value);
+    } else {
+      this.dbService.addJob(this.form.value);
+    }
+    this.router.navigate(['/']);
   }
 }

@@ -1,38 +1,50 @@
 <div class="content-cards">
   <mat-card class="serviceCard">
-    <mat-card-title>Application: {{sharedService.sharedNode.name}}</mat-card-title>
-    <!--    TODO Only for Demo later with the correct Application ID -> need Database -->
-    <div *ngIf="sharedService.sharedNode.id == 12345">
-      <mat-card *ngFor="let job of jobs">
 
-        <div class="w3-col s6">
-          <p>{{job.job_name}}</p>
-        </div>
+    <div *ngIf="sharedService.sharedNode != null">
+      <mat-card-title>Application: {{sharedService.sharedNode.name}}</mat-card-title>
+      <!--    TODO Only show Jobs witch are form the Application-->
+      <div>
+        <mat-card *ngFor="let job of jobs$ | async">
+          <div class="w3-col s6">
+            <p>{{job.job_sla.microservice_name}}</p>
+          </div>
 
-        <div class="w3-col s5 w3-left">
-          <p>{{job.status}}</p>
-        </div>
+          <div class="w3-col s5 w3-left">
+            <p>{{job.status}}</p>
+          </div>
 
-        <div class="w3-col s1">
-          <button [matMenuTriggerFor]="settings" mat-button>
-            <mat-icon style="display: block">more_vert</mat-icon>
+          <div class="w3-col s1">
+            <button [matMenuTriggerFor]="settings" mat-button>
+              <mat-icon style="display: block">more_vert</mat-icon>
+            </button>
+            <mat-menu #settings="matMenu">
+              <button [routerLink]="['/deploy', job._id.$oid]" mat-menu-item>Edit</button>
+              <button (click)="deleteJob(job)" mat-menu-item>Delete</button>
+            </mat-menu>
+          </div>
+        </mat-card>
+
+        <graph (updated)="deleteJobWithGraph($event)"></graph>
+
+        <div class="alignRight">
+          <button (click)="sendSLAToAPI()" class="alignRight" color="primary" mat-button mat-flat-button>Send to API
           </button>
-          <mat-menu #settings="matMenu">
-            <button mat-menu-item [routerLink]="['/deploy', job.job_name]">Edit</button>
-            <button mat-menu-item>Delete</button>
-          </mat-menu>
         </div>
-      </mat-card>
+      </div>
 
-      <app-test-graph></app-test-graph>
-
+      <!--    TODO Make api call which returns job count in this application -->
+      <div *ngIf="sharedService.sharedNode == null" class="content mat-elevation-z8">
+        <mat-card class="noJobCard">
+          No jobs created yet.
+        </mat-card>
+      </div>
     </div>
 
-    <div *ngIf="sharedService.sharedNode.id != 12345" class="content mat-elevation-z8">
-      <mat-card class="noJobCard">
-        No jobs created yet.
-      </mat-card>
+    <div *ngIf="sharedService.sharedNode == null" class="content mat-elevation-z8">
+      No Application selected.
     </div>
 
   </mat-card>
+
 </div>

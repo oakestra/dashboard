@@ -1,11 +1,11 @@
 <div class="content-cards">
   <mat-card class="serviceCard">
-    <mat-card-title>Actions Buttons</mat-card-title>
+    <mat-card-title>Deploy Job</mat-card-title>
     <div>
       <mat-tab-group animationDuration="0ms" class="mat-elevation-z4" mat-stretch-tabs>
         <mat-tab label="FORM">
 
-          <form (ngSubmit)="onSubmit()" [formGroup]="form">
+          <form (ngSubmit)="onSubmit()" *ngIf="service" [formGroup]="form">
 
             <div class="w3-col l6 s12 leftInput">
               <mat-form-field appearance="fill" class="full-width ">
@@ -17,7 +17,7 @@
             <div class="w3-col l6 s12 rightInput">
               <mat-form-field appearance="fill" class="full-width ">
                 <mat-label>Service ID</mat-label>
-                <input disabled matInput value="SET ID">
+                <input [value]="currentJobID" disabled matInput>
               </mat-form-field>
             </div>
 
@@ -183,6 +183,7 @@
                     <mat-form-field class="full-width">
                       <mat-label>Virtualization</mat-label>
                       <select formControlName="area" matNativeControl required>
+                        <!--                        // TODO Add the real locations -->
                         <option value="munich1">Munich 1</option>
                         <option value="munich2">Munich 2</option>
                         <option value="frankfurt">Frankfurt</option>
@@ -268,15 +269,15 @@
                     <mat-form-field class="full-width">
                       <mat-label> target_microservice_id {{conn.value}}</mat-label>
                       <select formControlName="target_microservice_id" matNativeControl required>
-<!--                        TODO Load dynamic options-->
-                        <option value="ID1">ID1</option>
-                        <option value="ID2">ID2</option>
-                        <option value="ID3">ID3</option>
+                        <!--                        TODO Simplify this variables-->
+                        <option *ngFor="let job of allJobs$ | async" [value]="job._id.$oid">
+                          {{job.job_sla.microservice_name}} (id: {{job._id.$oid}})
+                        </option>
                       </select>
                     </mat-form-field>
                   </div>
                   <div class="w3-col s4">
-                    <button (click)="deleteConnection(conn.value)" class="settingsButton" mat-flat-button type="button">
+                    <button (click)="deleteConnection(i)" class="settingsButton" mat-flat-button type="button">
                       <mat-icon>delete</mat-icon>
                     </button>
                     <button (click)="openDialog(i)" class="settingsButton" mat-flat-button type="button">
@@ -286,7 +287,8 @@
                 </mat-card>
               </div>
             </div>
-            <button color="primary" mat-button mat-flat-button type="submit">Deploy</button>
+              <button color="primary" mat-button mat-flat-button type="submit">Save</button>
+              <button class="cancel_buttons" color="primary" mat-button mat-flat-button routerLink="/" type="button">Cancel</button>
           </form>
         </mat-tab>
 

@@ -35,7 +35,7 @@
 
     <div *ngFor="let app of app$ | async" style="display: flex; justify-content: space-between;">
       <mat-radio-group (change)="handleChange()" [(ngModel)]="active">
-        <mat-radio-button [value]="app.id" class="menu-button">
+        <mat-radio-button [value]="app._id" class="menu-button">
           <span style="float: left">{{app.name}}</span>
         </mat-radio-button>
       </mat-radio-group>
@@ -57,10 +57,10 @@
   </mat-sidenav>
   <mat-sidenav-content>
 
-    <router-outlet *ngIf="applicationList.length != 0"></router-outlet>
-
-    <div *ngIf="applicationList.length == 0" class="content mat-elevation-z8">
-      No Application created.
+    <div *ngIf="sharedService.sharedNode == null" class="content mat-elevation-z8">
+      No Application selected.
     </div>
+    <router-outlet *ngIf="sharedService.sharedNode != null"></router-outlet>
+
   </mat-sidenav-content>
 </mat-sidenav-container>

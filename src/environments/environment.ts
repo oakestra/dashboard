@@ -4,15 +4,6 @@
 
 export const environment = {
   production: false,
-  firebase: {
-    apiKey: "AIzaSyA4wqVl5UHntpGNCDTrc5129c6am3tadnc",
-    authDomain: "ba-arbeit-331018.firebaseapp.com",
-    databaseURL: "https://ba-arbeit-331018-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "ba-arbeit-331018",
-    storageBucket: "ba-arbeit-331018.appspot.com",
-    messagingSenderId: "21007867133",
-    appId: "1:21007867133:web:130c7f21acd43a2976f294"
-  }
 };
 
 /*

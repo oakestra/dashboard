@@ -1,20 +1,21 @@
-import { Injectable } from '@angular/core';
-import {Application} from "../objects/application";
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class SharedIDService {
 
-  private _sharedNode: Application | undefined;
+  private _sharedNode: any = null;
 
-  constructor() { }
+  constructor() {}
 
-  public set sharedNode(value: Application) {
+  public set sharedNode(value: any) {
     this._sharedNode = value;
   }
 
-  public get sharedNode(): Application {
+  public get sharedNode(): any {
     return this._sharedNode!;
   }
 }
+

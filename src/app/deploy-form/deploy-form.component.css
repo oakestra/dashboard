@@ -1,4 +1,4 @@
-@import "https://www.w3schools.com/w3css/4/w3.css";
+@import 'https://www.w3schools.com/w3css/4/w3.css';
 
 mat-card {
   width: 100%;
@@ -80,4 +80,8 @@ td {
 .addButtonDiv {
   display: inline-block;
   vertical-align: middle;
+}
+
+.cancel_buttons{
+  margin-left: 8px;
 }

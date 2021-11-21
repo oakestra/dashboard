@@ -3,7 +3,6 @@ svg {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  -o-user-select: none;
   user-select: none;
 }
 
@@ -35,15 +34,10 @@ path.link.hidden {
 }
 
 circle.node {
-  stroke-width: 0px;
+  stroke-width: 0;
   cursor: pointer;
   fill:#fff;
 }
-
-/*circle.node.reflexive {
-  stroke: #000 !important;
-  stroke-width: 2.5px;
-}*/
 
 text {
   font: 14px sans-serif;
