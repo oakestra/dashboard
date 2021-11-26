@@ -12,6 +12,7 @@ import {MatIconModule} from "@angular/material/icon";
   imports: [
     RouterModule.forChild(routes),
     FormsModule,
+
     MatCardModule,
     MatButtonModule,
     MatIconModule,

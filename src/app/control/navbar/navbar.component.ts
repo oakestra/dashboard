@@ -21,6 +21,8 @@ export class NavbarComponent implements OnInit {
   app$: any;
   appSelected = false
 
+  username = ""
+
   constructor(private observer: BreakpointObserver,
               public dialog: MatDialog,
               public sharedService: SharedIDService,
@@ -30,6 +32,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.username = this.userService.getUsername()
   }
 
   ngAfterViewInit() {
