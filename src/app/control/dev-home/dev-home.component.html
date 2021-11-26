@@ -1,0 +1,41 @@
+<div class="content-cards">
+  <mat-card class="serviceCard">
+    <div *ngIf="sharedService.applicationObservable$ != null">
+      <mat-card-title>Application: {{appName}}</mat-card-title>
+      <div>
+        <mat-card *ngFor="let job of jobs$ | async">
+          <div class="w3-col s6">
+            <p>{{job.job_sla.microservice_name}}</p>
+          </div>
+
+          <div class="w3-col s5 w3-left">
+            <p>{{job.status}}</p>
+          </div>
+
+          <div class="w3-col s1">
+            <button [matMenuTriggerFor]="settings" mat-button>
+              <mat-icon style="display: block">more_vert</mat-icon>
+            </button>
+            <mat-menu #settings="matMenu">
+              <button [routerLink]="['/deploy', job._id.$oid]" mat-menu-item>Edit</button>
+              <button (click)="graph.delete(job._id.$oid)" mat-menu-item>Delete</button>
+            </mat-menu>
+          </div>
+        </mat-card>
+
+        <graph #graph (updated)="deleteJobWithGraph($event)"></graph>
+
+        <div class="alignRight">
+          <button (click)="sendSLAToAPI()" class="alignRight" color="primary" mat-button mat-flat-button>Send to API
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="generateJson">
+        <pre>{{jsonContent | json}}</pre>
+      </div>
+    </div>
+
+  </mat-card>
+
+</div>

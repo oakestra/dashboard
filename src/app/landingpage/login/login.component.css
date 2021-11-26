@@ -1,0 +1,10 @@
+.example-card{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 25%;
+  /*height: 70%;*/
+  margin-left: -12.5%;
+  margin-top: -40vh;
+}
+

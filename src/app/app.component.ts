@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: `
+    <router-outlet></router-outlet>
+    <!--    TODO Notifications are implemented in a later step-->
+    <!--    <simple-notifications [options]="notificationOptions"></simple-notifications>-->
+  `
 })
+
 export class AppComponent {
-  title = 'Daniel Mair Test';
 }

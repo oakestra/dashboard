@@ -2,13 +2,9 @@ import {ErrorHandler, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule} from "@angular/router";
 import {AppComponent} from './app.component';
-import {DeployFormComponent} from './deploy-form/deploy-form.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import {DevHomeComponent} from './dev-home/dev-home.component';
-import {NotFoundComponent} from './not-found/not-found.component';
-import {NavbarComponent} from './navbar/navbar.component';
-import {DataService} from "./services/data.service";
+import {DataService} from "./shared/modules/api/data.service";
 import {AppErrorHandler} from "./app-error-handler";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -25,26 +21,16 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatDialogModule} from "@angular/material/dialog";
-import {DialogConnectionSettings} from "./dialogs/dialogConnectionSettings";
-import {HelpComponent} from './help/help.component';
-import {DialogAddApplicationView} from "./dialogs/dialogAddApplication";
-import {SharedIDService} from "./services/shared-id.service";
+import {SharedIDService} from "./shared/modules/helper/shared-id.service";
 import {MatMenuModule} from "@angular/material/menu";
-import {GraphComponent} from './graph/graph.component';
-import {DialogGraphConnectionSettings} from "./dialogs/dialogGraphConnectionSettings";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {UserService} from "./shared/modules/auth/user.service";
+import {AuthService} from "./shared/modules/auth/auth.service";
+import {AuthGuardService} from "./shared/modules/auth/auth-guard.service";
 
 @NgModule({
   declarations: [
     AppComponent,
-    DeployFormComponent,
-    DevHomeComponent,
-    NotFoundComponent,
-    NavbarComponent,
-    DialogConnectionSettings,
-    DialogGraphConnectionSettings,
-    HelpComponent,
-    DialogAddApplicationView,
-    GraphComponent
   ],
   imports: [
     BrowserModule,
@@ -71,18 +57,28 @@ import {DialogGraphConnectionSettings} from "./dialogs/dialogGraphConnectionSett
     MatDialogModule,
 
     RouterModule.forRoot([
-      {path: '', component: DevHomeComponent},
-      //{path: 'test', component: GraphComponent},
-      {path: 'deploy/:id', component: DeployFormComponent},
-      {path: 'deploy', component: DeployFormComponent},
-      {path: 'help', component: HelpComponent},
-      {path: '**', component: NotFoundComponent}
+
+      {
+        path: 'control',
+        loadChildren: () => import('src/app/control/control.module').then(m => m.ControlModule),
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: '',
+        loadChildren: () => import('src/app/landingpage/landingpage.module').then(m => m.LandingPageModule),
+      },
+      {path: '**', pathMatch: 'full', redirectTo: '/'}
+
     ]),
     MatMenuModule,
+    MatProgressBarModule,
   ],
   providers: [
     DataService,
     SharedIDService,
+    UserService,
+    AuthService,
+    AuthGuardService,
     {provide: ErrorHandler, useClass: AppErrorHandler}
   ],
   bootstrap: [AppComponent]
