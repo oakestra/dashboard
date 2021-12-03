@@ -1,4 +1,5 @@
 <mat-toolbar class="mat-elevation-z8">
+
   <button (click)="sidenav.toggle()" *ngIf="sidenav.mode === 'over'" mat-icon-button>
     <mat-icon *ngIf="!sidenav.opened">
       menu
@@ -7,18 +8,22 @@
       close
     </mat-icon>
   </button>
+
   EdgeIO Dashboard
+
   <span class="example-spacer"></span>
+
   <button mat-icon-button routerLink="/control/deploy">
     <mat-icon>add_circle</mat-icon>
   </button>
+
   <button [matMenuTriggerFor]="menu" mat-icon-button>
     <mat-icon>person</mat-icon>
   </button>
+
   <mat-menu #menu="matMenu">
-    <button *ngIf="userService.loggedIn" mat-menu-item>Profile</button>
-    <button (click)="logout()" *ngIf="userService.loggedIn" mat-menu-item>Logout</button>
-    <button *ngIf="!userService.loggedIn" mat-menu-item routerLink="/login">Login</button>
+    <button mat-menu-item>Profile</button>
+    <button (click)="logout()" mat-menu-item>Logout</button>
   </mat-menu>
 </mat-toolbar>
 
@@ -53,6 +58,14 @@
 
     <mat-divider></mat-divider>
 
+    <h6>Admin</h6>
+
+    <button class="menu-button" mat-button routerLink="users">
+      <span>User Management</span>
+    </button>
+
+    <mat-divider></mat-divider>
+
     <button class="menu-button" mat-button routerLink="help">
       <span>Help</span>
     </button>
@@ -60,9 +73,9 @@
   </mat-sidenav>
   <mat-sidenav-content>
 
-    <div *ngIf="!appSelected" class="content mat-elevation-z8">
-      No Application selected.
-    </div>
+    <!--    <div *ngIf="!appSelected" class="content mat-elevation-z8">
+          No Application selected.
+        </div>-->
 
     <!--    TODO Make api call which returns selected job count in this application -->
 

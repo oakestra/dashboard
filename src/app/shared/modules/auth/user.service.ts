@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from "rxjs";
+import {Observable, of, throwError} from "rxjs";
 import {LoginRequest} from "../../../landingpage/login/login.component";
 import {ActivatedRoute, Router} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, map} from 'rxjs/operators';
 import {environment} from "../../../../environments/environment";
 import jwt_decode from 'jwt-decode';
@@ -15,7 +15,9 @@ export class UserService {
 
   loggedIn = false
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
+  constructor(private route: ActivatedRoute,
+              private http: HttpClient,
+              private router: Router) {
   }
 
   getUsername(): string {
@@ -23,14 +25,9 @@ export class UserService {
   }
 
   login(request: LoginRequest): Observable<boolean> {
-    console.log("UserService - starting LoginRequest")
-    console.log(request)
     return this.http.post<Response>(environment.apiUrl + "/auth/login", request).pipe(
       map((response: any) => {
-        console.log("UserService - request successful")
-        console.log(response)
         this.loggedIn = true
-
         this.setAuthToken(response.token);
         this.setRefreshToken(response.refresh_token);
         return true;
@@ -41,21 +38,18 @@ export class UserService {
         if (typeof (error._body) == 'object') {
           errorMsg.message = "Server is not running";
         } else {
-          console.log(error.error.message) // TODO Why two times error.
+          console.log(error) // TODO Why two times error.
           // server is running and returned a json string
           errorMsg = JSON.parse(error.error.message);
           console.log(errorMsg)
         }
-        //this.notify.error("Error", errorMsg.error || errorMsg.message);
-        return Observable.throw(error || 'Server error');
+        return throwError(error || 'Server error')
       }))
   }
 
   /** logs out the user */
   logout(): void {
     this.loggedIn = false
-
-    console.log("UserService - removing tokens");
     //this.log.debug("UserService - removing tokens");
     localStorage.removeItem('api_token');
     localStorage.removeItem('api_refresh_token')
@@ -67,43 +61,41 @@ export class UserService {
     return !this.isTokenExpired(this.getAuthTokenRaw());
   }
 
+  /** true if the refresh token is still valid */
   canRefresh(): boolean {
     return !this.isTokenExpired(this.getRefreshTokenRaw())
   }
 
   /** stores the token*/
   setAuthToken(token: string): void {
-    console.log("gesetzt")
     localStorage.setItem('api_token', token)
   }
 
   setRefreshToken(token: string): void {
     localStorage.setItem('api_refresh_token', token);
   }
-/*
-// TODO Add refereshToken to the Server
+
   private tryTokenRenewal(): Observable<boolean> {
-    console.log("UserService - reauth requested")
-    const authHeader = new Headers();
     const refreshToken = this.getRefreshTokenRaw();
-    authHeader.append('Authorization', 'Bearer ' + refreshToken.get());
-    console.log("request")
-    return this.http.post(environment.apiUrl + "/auth/refresh", {},
-      {headers: authHeader})
-      .map((response: Response) => {
-        console.log(response);
-        this.setAuthToken(response.json().token);
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + refreshToken,
+      }),
+    };
+
+    return this.http.post(environment.apiUrl + "/auth/refresh", {}, requestOptions).pipe(
+      map((response: any) => {
+        this.setAuthToken(response.token);
         return true;
-      }).catch((error) => {
+      }),
+      catchError((error) => {
         const errorMsg = JSON.parse(error._body);
-        this.notify.error("Error", errorMsg.error || errorMsg.message);
-        return Observable.throw(error || 'Server error')
-      })
+        //this.notify.error("Error", errorMsg.error || errorMsg.message);
+        return throwError(error || 'Server error')
+      }))
   }
 
- */
-
-/*
   renewToken(): Observable<boolean> {
     return this.tryTokenRenewal().pipe(map(
         (res) => {
@@ -112,13 +104,20 @@ export class UserService {
         }),
       catchError(
         (error: Error) => {
+          console.log(error)
           this.redirectToLogin()
           return of(false);
         })
     )
-  }*/
+  }
 
-  getDecodedAccessToken(token:any): any {
+  redirectToLogin(): void {
+    //this.notify.error("Error", "Your session has expired.");
+    this.logout();
+    this.router.navigate(['/'], {queryParams: {returnUrl: ''}});
+  }
+
+  getDecodedAccessToken(token: any): any {
     try {
       return jwt_decode(token);
     } catch (Error) {
@@ -133,7 +132,7 @@ export class UserService {
   }
 
   getRefreshTokenRaw(): string {
-    return this.getJWTTokenRaw('oeda_refresh_token');
+    return this.getJWTTokenRaw('api_refresh_token');
   }
 
   getJWTTokenRaw(key: string): string {
@@ -156,27 +155,11 @@ export class UserService {
     return d;
   };
 
-  isTokenExpired(token:any) {
+  isTokenExpired(token: any) {
     let d = this.getTokenExpirationDate(token);
-    console.log(d)
-    // let offsetSeconds = offsetSeconds || 0;
     if (d === null) return false;
-
     // Token expired?
     return !(d.valueOf() > (new Date().valueOf()));
   };
-
-
 }
 
-/** the format of tokens we use for auth*/
-export interface JWTToken {
-  id: string,
-  value: string,
-  roles: string[],
-  representsArtists: string[],
-  monitorsArtists: string[],
-  permissions: number,
-  exp: number,
-  nbf: number
-}

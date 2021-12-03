@@ -1,0 +1,39 @@
+@import "https://www.w3schools.com/w3css/4/w3.css";
+
+mat-card {
+  width: 100%;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  height: 50px;
+}
+
+mat-card-title {
+  background-color: #004a9f;
+  padding: 16px;
+  border-radius: 4px;
+  color: white;
+}
+
+mat-card p {
+  margin-bottom: 0;
+}
+
+.content-cards {
+  border-radius: 10px;
+  margin: 16px 16px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.serviceCard {
+  height: 100%;
+}
+
+.noJobCard {
+  text-align: center;
+  color: lightgray;
+  font-size: large;
+}
+
+

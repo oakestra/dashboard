@@ -10,22 +10,17 @@ import {Observable, of} from "rxjs";
 export class AuthGuardService implements CanActivate {
 
   constructor(private authService: AuthService,
-              private userService: UserService,
-              private router: Router) {
+              private userService: UserService) {
   }
-
 
   doUserCheck(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     if (!this.userService.isLoggedIn()) {
-      console.log("Kann aber vlt noch refreshen - TODO")
-      // TODO Implement token refresh
-      //if (this.userService.canRefresh()) {
-      //   return this.userService.renewToken();
-      // } else {
-      //   this.userService.redirectToLogin();
-      //   return Observable.of(false);
-      // }
-      return of(false)
+      if (this.userService.canRefresh()) {
+        return this.userService.renewToken();
+      } else {
+        this.userService.redirectToLogin();
+        return of(false);
+      }
     }
     //this.router.navigate(['/'], {queryParams: {returnUrl: state.url}}) to get to the requested link
     return of(true);

@@ -203,41 +203,53 @@
                 </button>
                 <input #fileUpload (change)="onFileSelected($event, i)" [accept]="requiredFileType" class="file-input"
                        type="file">
+
+                <button (click)="deleteFiles(i)" class="settingsButton" mat-flat-button type="button">
+                  <mat-icon>delete</mat-icon>
+                </button>
               </div>
 
             </div>
 
             <mat-form-field class="full-width">
               <mat-label>Args - Key Value</mat-label>
-              <input formControlName="args" matInput type="text" value="">
+              <input  matInput type="text" value="">
+<!--              <input formControlName="args" matInput type="text" value="">-->
             </mat-form-field>
 
             <div>
               <h4 class="addButtonDiv">Constraints:</h4>
-              <button (click)="addConstrains()" mat-icon-button type="button">
+              <button [matMenuTriggerFor]="selectConstrains" mat-icon-button type="button">
                 <mat-icon>add</mat-icon>
               </button>
+              <mat-menu #selectConstrains="matMenu" yPosition="above">
+                <button (click)="addConstrains('latency')" mat-menu-item type="button">Latency Constraints</button>
+                <button (click)="addConstrains('geo')" mat-menu-item type="button">Geo Constraints</button>
+              </mat-menu>
             </div>
 
             <div formArrayName="constraints">
               <mat-card *ngFor="let cons of constraints.controls; let i = index">
                 <div [formGroupName]="i">
-                  <mat-radio-group formControlName="type">
-                    <mat-radio-button
-                      (change)="onRadioChange($event, i)"
-                      class="leftInput"
-                      value="latency">
-                      latency
-                    </mat-radio-button>
-                    <mat-radio-button (change)="onRadioChange($event, i)" class="rightInput" value="geo">
-                      geo
-                    </mat-radio-button>
-                  </mat-radio-group>
+                  <!--                  <mat-radio-group formControlName="type">-->
+                  <!--                    <mat-radio-button (change)="onRadioChange($event, i)" class="leftInput" value="latency">-->
+                  <!--                      latency-->
+                  <!--                    </mat-radio-button>-->
+                  <!--                    <mat-radio-button (change)="onRadioChange($event, i)" class="rightInput" value="geo">-->
+                  <!--                      geo-->
+                  <!--                    </mat-radio-button>-->
+                  <!--                  </mat-radio-group>-->
                   <div *ngIf="canViewLatConstrains[i]" class="constraints">
+                    <div>
+                      <h5 class="addButtonDiv">Latency Constrains</h5>
+                      <button (click)="deleteConstrains(i)" mat-icon-button type="button">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
                     <mat-form-field class="full-width">
                       <mat-label>Virtualization</mat-label>
                       <select formControlName="area" matNativeControl required>
-                        <!--                        // TODO Add the real locations -->
+                        <!-- // TODO Add the real locations -->
                         <option value="munich1">Munich 1</option>
                         <option value="munich2">Munich 2</option>
                         <option value="frankfurt">Frankfurt</option>
@@ -264,19 +276,28 @@
                   </div>
                   <!--                    // TODO Add long and latitude as tupple to the Form-->
                   <div *ngIf="!canViewLatConstrains[i]" class="constraints">
-
-                    <div class="w3-col l4 m4 s6">
+                    <div>
+                      <h5 class="addButtonDiv">Geo Constrains</h5>
+                      <button (click)="deleteConstrains(i)" mat-icon-button type="button">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                    <div class="w3-col l4 m4 s6" style="padding-right: 16px">
                       <mat-form-field class="full-width">
                         <mat-label>Longitude</mat-label>
-                        <input matInput type="number">
+                        <input #long matInput type="number">
                       </mat-form-field>
                     </div>
 
                     <div class="w3-col l4 m4 s6">
                       <mat-form-field class="full-width">
                         <mat-label>Latitude</mat-label>
-                        <input matInput type="number">
+                        <input #lat matInput type="number">
                       </mat-form-field>
+                    </div>
+
+                    <div style="display: none">
+                      <input [ngModel]="'(' + long.value + ',' + lat.value + ')'" formControlName="location" matInput>
                     </div>
 
                     <!--                TODO Make Dialog with Map and Location selector -->

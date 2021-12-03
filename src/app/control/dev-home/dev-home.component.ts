@@ -20,7 +20,8 @@ export class DevHomeComponent implements OnInit {
 
   constructor(private service: DataService,
               public sharedService: SharedIDService,
-              private dbService: DbClientService) {
+              private dbService: DbClientService,
+              private apiService: DataService) {
   }
 
   // Get alL Jobs in the Root
@@ -28,14 +29,14 @@ export class DevHomeComponent implements OnInit {
     console.log("init")
     this.subscription = this.sharedService.applicationObservable$.subscribe(
       formData => {
-        this.data = formData;
-        console.log("in component brother, ");
-        console.log(this.data);
+        //this.data = formData;
+        //console.log(this.data);
         formData.subscribe((x: any) => {
           console.log(x)
           this.data = x
           this.appName = x.name
           this.jobs$ = this.dbService.getJobsOfApplication(x._id.$oid)
+          this.sharedService.setJobs(this.jobs$)
           console.log(this.appName)
         })
       });
@@ -62,15 +63,21 @@ export class DevHomeComponent implements OnInit {
 
     this.jsonContent = {
       "api_version": "v0.3.0",
-      "customerID": 10000000001,
-      "applications": {/*
-        "applicationID": this.sharedService.sharedNode._id.$oid,
-        "application_name": this.sharedService.sharedNode.name,
-        "application_desc": this.sharedService.sharedNode.description,*/
-        "microservices": [{}]
-      },
+      "customerID": "10000000001xyz",
+      "applications": [
+        {
+          "applicationID": this.data._id.$oid,
+          "application_name": this.data.name,
+          "application_namespace": "dev", // TODO Build input for the namespace
+          "application_desc": this.data.description,
+          "microservices": [{}]
+        },
+      ],
+      "args": []
     }
 
+
+    this.dbService.jobs$.subscribe((e: any) => console.log(e))
 
     this.dbService.jobs$.subscribe((data: any) => {
       let arr = []
@@ -78,13 +85,15 @@ export class DevHomeComponent implements OnInit {
         service.job_sla.microserviceID = service._id.$oid
         arr.push(service.job_sla)
       }
-      this.jsonContent.applications.microservices = arr
+      this.jsonContent.applications[0].microservices = arr
       this.jsonContent = this.cleanData(this.jsonContent)
+      this.dbService.generateJsonOnServer(this.jsonContent).subscribe(e => console.log(e))
     })
   }
 
   // deletes all null values form the JSON Object
   cleanData(o: any) {
+
     if (Object.prototype.toString.call(o) == "[object Array]") {
       for (let key = 0; key < o.length; key++) {
         this.cleanData(o[key]);
@@ -106,11 +115,13 @@ export class DevHomeComponent implements OnInit {
             delete o[key];
           }
         }
-        if (Object.prototype.toString.call(o[key]) == "[object Array]") {
-          if (o[key].length === 0) {
-            delete o[key];
-          }
-        }
+        /* Deletes empty array, but we need them
+       if (Object.prototype.toString.call(o[key]) == "[object Array]") {
+
+         if (o[key].length === 0) {
+           delete o[key];
+         }
+        } */
       }
     }
     return o;
@@ -120,5 +131,6 @@ export class DevHomeComponent implements OnInit {
     this.generateSLA()
     this.generateJson = true;
     console.log("send");
+
   }
 }

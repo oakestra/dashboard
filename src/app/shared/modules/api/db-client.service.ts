@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {shareReplay} from "rxjs/operators";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {map, shareReplay} from "rxjs/operators";
+import {Observable, of} from "rxjs";
+import {UserEntity, UserRole} from "../../../landingpage/login/login.component";
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +41,10 @@ export class DbClientService {
     return this.http.post(this.apiUrl + "/app/get", {_id: id})
   }
 
+  getApplicationsOfUser(userId: string) {
+    return this.http.get(this.apiUrl + "/app/get/" + userId);
+  }
+
   get jobs$() {
     return this._jobs$;
   }
@@ -53,15 +59,16 @@ export class DbClientService {
 
   //TODO Add description also to the DB but not to the sla
   addJob(job: any) {
-    this._jobs$ = this.http.post(this.apiUrl + "/job/push", job).pipe(shareReplay(1))
+    this._jobs$ = this.http.post(this.apiUrl + "/job/push", job).subscribe(e => console.log(e))
+    // this._jobs$ = this.http.post(this.apiUrl + "/job/push", job)//.pipe(shareReplay(1))
     console.log("Added job to mongo")
   }
 
   updateJob(id: string, job: any) {
-    console.log(job)
-    console.log(id)
-    this._jobs$ = this.http.post(this.apiUrl + "/job/update", {_id: {$oid: id}, job_sla: job})
-    console.log("Update")
+    this._jobs$ = this.http.post(this.apiUrl + "/job/update", {
+      _id: {$oid: id},
+      job_sla: job
+    }).subscribe(e => console.log(e))
   }
 
   deleteJob(job: any) {
@@ -72,7 +79,63 @@ export class DbClientService {
     return this.http.post(this.apiUrl + "/job/get", {_id: job})
   }
 
+  // fileUpload(data: any) {
+  //   return this.http.post(this.apiUrl + "/uploader", data)
+  // }
+
+
   fileUpload(data: any) {
-    return this.http.post(this.apiUrl + "/uploader", data)
+    this.http.post("http://127.0.0.1:10000/api/deploy", data).subscribe(x => console.log(x))
+    //return this.http.post(this.apiUrl + "/uploader", data)
   }
+
+
+  generateJsonOnServer(data: any) {
+    console.log(data)
+
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+
+    return this.http.post(this.apiUrl + "/file", data, requestOptions)
+  }
+
+  public registerUser(user: any): Observable<any> {
+    return this.http.post(this.apiUrl + "/auth/register", user);
+  }
+
+  public getUserID(username: string) {
+    return this.http.get(this.apiUrl + "/userByName/" + username);
+  }
+
+  public getAllUser() {
+    return this.http.get(this.apiUrl + "/user");
+  }
+
+  public deleteUser(user: UserEntity){
+    return this.http.post(this.apiUrl + "/user/delete",user)
+  }
+
+
+  public getAuthorization(username: string, token: any): Observable<{ roles: UserRole[] }> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+      }),
+    };
+    return this.http.get(this.apiUrl + "/userpermission/" + username, requestOptions).pipe(
+      map((authJSON: any) => {
+        console.log(authJSON)
+        const roles = Array<UserRole>();
+        for (const roleJSON of authJSON["roles"]) {
+          //roles.push(UserRole.fromJSON(roleJSON));
+        }
+        return {roles};
+      })
+    );
+  }
+
 }

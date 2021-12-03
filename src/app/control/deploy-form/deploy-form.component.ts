@@ -18,6 +18,10 @@ export class DeployFormComponent implements OnInit {
 
   form: FormGroup;
 
+  geoText = "Dan"
+
+  lat = 0
+
   fileArrayForm = new FormArray([]);
   canViewLatConstrains: boolean[] = [];
 
@@ -61,9 +65,10 @@ export class DeployFormComponent implements OnInit {
     })
 
     this.form = fb.group({
-      'applicationId': [],
+      // 'applicationId': [],
       'microserviceID': [],
       'microservice_name': [],
+      'microservice_namespace': "dev", //TODO Build input for this
       'virtualization': [],
       'memory': [],
       'vcpus': [],
@@ -87,7 +92,7 @@ export class DeployFormComponent implements OnInit {
       'added_files': this.fileArrayForm,
       'constraints': new FormArray([]),
       'connectivity': new FormArray([]),
-      'args': []
+      // 'args': []
     });
   }
 
@@ -122,7 +127,7 @@ export class DeployFormComponent implements OnInit {
     if (!this.service.constraints.empty) {
       let constraintsNumber = this.service.constraints.length;
       for (let i = 0; i < constraintsNumber; i++) {
-        this.addConstrains();
+        this.addConstrains(this.service.constraints[i].type);
       }
     }
 
@@ -160,29 +165,59 @@ export class DeployFormComponent implements OnInit {
 
   deleteConnection(index: number) {
     this.connectivity.controls.splice(index, 1)
-    this.connectivity.removeAt(index)
+    //this.connectivity.removeAt(index)
+  }
+
+  deleteFiles(index: number) {
+    this.fileArrayForm.controls.splice(index, 1)
+   // this.fileArrayForm.removeAt(index)
+  }
+
+  deleteConstrains(index: number) {
+    this.constraints.controls.splice(index, 1)
+    //this.constraints.removeAt(index)
+    this.canViewLatConstrains.splice(index,1)
   }
 
   // TODO what should be done if the input is lat and longitude?
-  addConstrains() {
+  addConstrains(type: string) {
+    /*
+        this.conConstrainsArray.push(new FormArray([new FormGroup({
+            'type': new FormControl(0),
+            'threshold': new FormControl(0),
+            'rigidness': new FormControl(0),
+            'convergence_time': new FormControl(0),
+          })])
+        )
+     */
+    let typeControl: any;
+    let area: any;
 
-    this.conConstrainsArray.push(new FormArray([new FormGroup({
-        'type': new FormControl(0),
-        'threshold': new FormControl(0),
-        'rigidness': new FormControl(0),
-        'convergence_time': new FormControl(0),
-      })])
-    )
+    if (type == "geo") {
+      // typeControl = 'type': new FormControl(["geo"])
+      //area = {'area': new FormControl()}
+      this.constraints.push(new FormGroup({
+        'type': new FormControl(["geo"]),
+        'location': new FormControl(),
+        'threshold': new FormControl(),
+        'rigidness': new FormControl(),
+        'convergence_time': new FormControl(),
+      }));
+      this.canViewLatConstrains?.push(false);
+      console.log("Geo")
 
-    this.constraints.push(new FormGroup({
-      'type': new FormControl(),
-      'area': new FormControl(),
-      'threshold': new FormControl(),
-      'rigidness': new FormControl(),
-      'convergence_time': new FormControl(),
-    }));
-
-    this.canViewLatConstrains?.push(true);
+    } else {
+      // typeControl = {'type': new FormControl(["latency"])}
+      // area = {'location': new FormControl()}
+      this.constraints.push(new FormGroup({
+        'type': new FormControl(["latency"]),
+        'area': new FormControl(),
+        'threshold': new FormControl(),
+        'rigidness': new FormControl(),
+        'convergence_time': new FormControl(),
+      }));
+      this.canViewLatConstrains?.push(true);
+    }
   }
 
   addFileInput() {
@@ -226,7 +261,6 @@ export class DeployFormComponent implements OnInit {
   }
 
 
-
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
     console.log(this.fileToUpload)
@@ -242,11 +276,14 @@ export class DeployFormComponent implements OnInit {
       formData.append("file", file);
 
       const path = this.dbService.fileUpload(formData)
-
+      //TODO Change back to original
+/*
       path.subscribe((x: any) => {
         this.fileArrayForm.controls[index] = new FormControl([x.path])
       })
-      console.log(this.fileArrayForm.controls)
+      console.log(this.fileArrayForm.controls)*/
+/////////////////////////////////////////////////////
+
 
       // this.uploadSub = upload$.subscribe(event => {
       //   if (event.type == HttpEventType.UploadProgress) {
@@ -269,7 +306,7 @@ export class DeployFormComponent implements OnInit {
   onSubmit() {
     let content = this.form.value
     content.applicationId = this.applicationId
-    console.log(this.applicationId)
+    //console.log(this.applicationId)
     console.log(this.form.value)
 
     if (this.editingJob) {

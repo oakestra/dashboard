@@ -28,6 +28,13 @@ import {MatInputModule} from "@angular/material/input";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatSelectModule} from "@angular/material/select";
+import {MatOptionModule} from "@angular/material/core";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatTableModule} from "@angular/material/table";
+import {UsersComponent} from "./users/users.component";
+import {MatChipsModule} from "@angular/material/chips";
+import {DialogEditUserView} from "./dialogs/dialogEditUser";
 
 
 @NgModule({
@@ -41,6 +48,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     HelpComponent,
     DialogAddApplicationView,
     GraphComponent,
+    UsersComponent,
+    DialogEditUserView
   ],
   imports: [
     CommonModule,
@@ -66,6 +75,11 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatExpansionModule,
     MatRadioModule,
     MatDialogModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatChipsModule,
   ],
 })
 export class ControlModule {

@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {UserService} from "../../shared/modules/auth/user.service";
 import {AuthService} from "../../shared/modules/auth/auth.service";
+import {DbClientService} from "../../shared/modules/api/db-client.service";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,9 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router,
               private userService : UserService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private dbService: DbClientService,
+              private datePipe: DatePipe) {
     this.user = this.create_user_entity();
   }
 
@@ -22,7 +26,6 @@ export class LoginComponent implements OnInit {
   }
 
   public submitLogin() {
-    console.log("Submit")
     if (this.user.name.length !== 0 && this.user.password.length !== 0) {
 
       const loginRequest: LoginRequest = {
@@ -34,10 +37,10 @@ export class LoginComponent implements OnInit {
         (userServiceResponse:any) => {
           if (userServiceResponse === true) {
             // TODO getAuthorization ausführen um die rechte des Users zu erhalten
-            //this.authService.getAuthorization().subscribe(() => {
+            this.authService.getAuthorization().subscribe(() => {
               this.router.navigate(['/control']);
               //ctrl.notify.success("Success", "You are signed-in successfully.");
-            //});
+            });
           }
         }
       )
@@ -57,8 +60,7 @@ export class LoginComponent implements OnInit {
       password: "1234",
       email: "",
       created_at: "",
-      db_configuration: new Map<string, string>(),
-      //roles: [],
+      roles: [],
     };
   }
 }
@@ -66,10 +68,9 @@ export class LoginComponent implements OnInit {
 export interface UserEntity {
   name: string;
   password: string;
-  db_configuration: Map<string, string>;
   email: string;
   created_at: string;
-  //roles: Array<UserRole>; TODO implement them
+  roles: Array<UserRole>;// TODO implement them
 }
 
 export interface LoginRequest {
@@ -78,79 +79,15 @@ export interface LoginRequest {
 }
 
 export class UserRole {
-  role_id: number;
+  //role_id: number;
   name: string;
   description: string;
-  basic: boolean;
-  permissions: []
+  //basic: boolean;
+  //permissions: []
   // permissions: Array<Permission>;
 
   constructor() {
-    this.role_id = 3 // von mir
     this.name = "";
     this.description = "";
-    this.permissions = [] // später ändern
-    this.basic = false;
   }
-
-}
-
-export class Permission {
-  /** allows access to the system status page */
-  // static FOUND_SYSINFO_READ = new Permission(0, "FOUND_SYSINFO_READ");
-
-  constructor() {}
-
-  id: number = 0;
-  name: PermissionName | undefined;
-  access_all: boolean = false;
-
-  static fromJSON(permissionJSON: any): Permission {
-    const permission = new Permission();
-    permission.id = permissionJSON.id;
-    for (let i = 0; i < PermissionNameString.NAME.length; ++i) {
-      if (PermissionNameString.NAME[i] === permissionJSON.name) {
-        permission.name = i;
-        break;
-      }
-    }
-    permission.access_all = permissionJSON.access_all;
-    return permission;
-  }
-
-  static toJSON(
-    id: number,
-    permissionName: PermissionName,
-    access_all: boolean,
-    is_active: boolean
-  ) {
-    return {
-      id: id,
-      name: PermissionNameString.NAME[permissionName],
-      access_all: access_all,
-      is_active: is_active,
-    };
-  }
-}
-
-export enum PermissionName {
-  GET_TARGETSYSTEM,
-  WRITE_TARGETSYSTEM,
-  DEL_TARGETSYSTEM,
-  GET_EXPERIMENT,
-  WRITE_EXPERIMENT,
-  DEL_EXPERIMENT,
-  WRITE_DATASTORAGE,
-}
-
-export class PermissionNameString {
-  static NAME = [
-    "GET_TARGETSYSTEM",
-    "WRITE_TARGETSYSTEM",
-    "DEL_TARGETSYSTEM",
-    "GET_EXPERIMENT",
-    "WRITE_EXPERIMENT",
-    "DEL_EXPERIMENT",
-    "WRITE_DATASTORAGE",
-  ];
 }

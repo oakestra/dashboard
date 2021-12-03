@@ -7,6 +7,7 @@ import {DialogAddApplicationView} from "../dialogs/dialogAddApplication";
 import {SharedIDService} from "../../shared/modules/helper/shared-id.service";
 import {DbClientService} from "../../shared/modules/api/db-client.service";
 import {UserService} from "../../shared/modules/auth/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -22,17 +23,25 @@ export class NavbarComponent implements OnInit {
   appSelected = false
 
   username = ""
+  userID = "";
 
   constructor(private observer: BreakpointObserver,
               public dialog: MatDialog,
               public sharedService: SharedIDService,
               private dbService: DbClientService,
-              public userService: UserService) {
-    this.app$ = dbService.applications$;
+              public userService: UserService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
     this.username = this.userService.getUsername()
+  // TODO make this better
+    this.dbService.getUserID(this.username).subscribe((data:any) => {
+      this.userID = data._id.$oid+"";
+      this.app$ = this.dbService.getApplicationsOfUser(this.userID)
+      console.log(this.username)
+      this.app$.subscribe((x:any) => console.log(x))
+    })
   }
 
   ngAfterViewInit() {
@@ -54,8 +63,9 @@ export class NavbarComponent implements OnInit {
     if (action == "Add") {
       obj._id = {$oid: ""}; // Only for the view, is then defined in the database
       obj.name = "";
+      obj.namespace = ""
       obj.description = "";
-      obj.microservices = [];
+      obj.userId = this.userID;
     }
 
     obj.action = action;
@@ -66,6 +76,7 @@ export class NavbarComponent implements OnInit {
         this.dbService.addApplication(result.data);
         this.app$ = this.dbService.applications$;
       } else if (result.event == 'Update') {
+        console.log(result.data)
         this.dbService.updateApplication(result.data);
         this.app$ = this.dbService.applications$;
       } else if (result.event == 'Delete') {
@@ -78,8 +89,8 @@ export class NavbarComponent implements OnInit {
   handleChange() {
     let application = this.dbService.getAppById(this.active.$oid);
     this.sharedService.selectApplication(application)
-
     this.appSelected = true
+    this.router.navigate(['/control']);
   }
 
   logout() {

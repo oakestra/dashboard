@@ -1,7 +1,8 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DbClientService} from "../../shared/modules/api/db-client.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogGraphConnectionSettings} from "../dialogs/dialogGraphConnectionSettings";
+import {SharedIDService} from "../../shared/modules/helper/shared-id.service";
 
 declare function start(nodes: any, links: any): void;
 
@@ -23,12 +24,17 @@ export class GraphComponent implements OnInit {
   @Output()
   updated = new EventEmitter<string>();
 
+
   constructor(private dbService: DbClientService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private sharedService: SharedIDService) {
+
   }
 
   ngOnInit(): void {
-    this.getNodes();
+    console.log("Jobs in Graph")
+    console.log(this.sharedService.jobs)
+    //this.getNodes();
   }
 
   openDialog(start: string, target: string) {
@@ -78,7 +84,11 @@ export class GraphComponent implements OnInit {
 
   //TODO change id to number and inNumber to id also in js file
   getNodes() {
-    this.dbService.jobs$.subscribe((data: any[]) => {
+    console.log(this.sharedService.jobs)
+    //this.sharedService.
+    //1this.dbService.getJobsOfApplication()
+    // this.dbService.jobs$.subscribe((data: any[]) => {
+    this.sharedService.jobs.subscribe((data: any[]) => {
       for (let job of data) {
         this.nodes.push({
           id: job.job_sla.microservice_name,
@@ -114,7 +124,8 @@ export class GraphComponent implements OnInit {
 
   multipleFunctions() {
     this.toggleConnection();
-    if (this.firstCall) this.start();
+    // if (this.firstCall) this.start();
+    this.start();
   }
 
   delete(id: any) {
@@ -128,6 +139,9 @@ export class GraphComponent implements OnInit {
   }
 
   start() {
+
+    this.getNodes();
+
     this.firstCall = false; // Wozu wird das gebraucht?
     let linksNew = [];
     let l = this.links;

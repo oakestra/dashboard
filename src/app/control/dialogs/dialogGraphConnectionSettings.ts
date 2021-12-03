@@ -13,7 +13,6 @@ import {MatRadioChange} from "@angular/material/radio";
 export class DialogGraphConnectionSettings {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    console.log(data);
   }
 
   canViewLatConstrains: boolean = true;

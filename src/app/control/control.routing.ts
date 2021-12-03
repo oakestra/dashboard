@@ -4,6 +4,7 @@ import {DevHomeComponent} from "./dev-home/dev-home.component";
 import {HelpComponent} from "./help/help.component";
 import {DeployFormComponent} from "./deploy-form/deploy-form.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
+import {UsersComponent} from "./users/users.component";
 
 export const routes: Routes = [
   {
@@ -26,6 +27,10 @@ export const routes: Routes = [
       {
         path: 'deploy',
         component: DeployFormComponent
+      },
+      {
+        path: 'users',
+        component: UsersComponent
       },
       {path: '**', component: NotFoundComponent}
     ]
