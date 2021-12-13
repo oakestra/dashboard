@@ -20,7 +20,8 @@ mat-card p {
 
 .content-cards {
   border-radius: 10px;
-  margin: 16px 16px 16px 32px;
+  margin: 16px;
+  margin-left: 32px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -36,8 +37,8 @@ mat-card p {
   font-size: large;
 }
 
-.Admin-Role{
-  background-color: red !important;
+.cancel_buttons{
+  margin-left: 8px;
 }
 
 

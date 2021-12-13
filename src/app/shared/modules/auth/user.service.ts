@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable, of, throwError} from "rxjs";
-import {LoginRequest} from "../../../landingpage/login/login.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, map} from 'rxjs/operators';
 import {environment} from "../../../../environments/environment";
 import jwt_decode from 'jwt-decode';
+import {LoginRequest} from "../api/api.service";
 
 
 @Injectable({
@@ -27,6 +27,8 @@ export class UserService {
   login(request: LoginRequest): Observable<boolean> {
     return this.http.post<Response>(environment.apiUrl + "/auth/login", request).pipe(
       map((response: any) => {
+        console.log("Tokens")
+        console.log(response)
         this.loggedIn = true
         this.setAuthToken(response.token);
         this.setRefreshToken(response.refresh_token);
@@ -38,9 +40,9 @@ export class UserService {
         if (typeof (error._body) == 'object') {
           errorMsg.message = "Server is not running";
         } else {
-          console.log(error) // TODO Why two times error.
+          console.log(error)
           // server is running and returned a json string
-          errorMsg = JSON.parse(error.error.message);
+          errorMsg = error.error.message;
           console.log(errorMsg)
         }
         return throwError(error || 'Server error')
@@ -53,7 +55,7 @@ export class UserService {
     //this.log.debug("UserService - removing tokens");
     localStorage.removeItem('api_token');
     localStorage.removeItem('api_refresh_token')
-    this.router.navigate(['/'])
+    this.router.navigate(['/'], { replaceUrl: true });
   }
 
   /** true if the user is logged in */
@@ -66,11 +68,12 @@ export class UserService {
     return !this.isTokenExpired(this.getRefreshTokenRaw())
   }
 
-  /** stores the token*/
+  /** stores the auth token*/
   setAuthToken(token: string): void {
     localStorage.setItem('api_token', token)
   }
 
+  /** stores the refresh token*/
   setRefreshToken(token: string): void {
     localStorage.setItem('api_refresh_token', token);
   }
@@ -79,7 +82,7 @@ export class UserService {
     const refreshToken = this.getRefreshTokenRaw();
     const requestOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + refreshToken,
       }),
     };
@@ -112,9 +115,10 @@ export class UserService {
   }
 
   redirectToLogin(): void {
+    console.log("Redict to login")
     //this.notify.error("Error", "Your session has expired.");
     this.logout();
-    this.router.navigate(['/'], {queryParams: {returnUrl: ''}});
+    this.router.navigate(['/']);
   }
 
   getDecodedAccessToken(token: any): any {
@@ -122,15 +126,17 @@ export class UserService {
       return jwt_decode(token);
     } catch (Error) {
       console.log(Error)
+      this.redirectToLogin()
       return null;
     }
   }
 
-  /** returns the token stored in localStorage */
+  /** returns the auth token stored in localStorage */
   getAuthTokenRaw(): string {
     return this.getJWTTokenRaw('api_token');
   }
 
+  /** returns the refresh token stored in localStorage */
   getRefreshTokenRaw(): string {
     return this.getJWTTokenRaw('api_refresh_token');
   }
@@ -138,6 +144,7 @@ export class UserService {
   getJWTTokenRaw(key: string): string {
     const token = localStorage.getItem(key);
     if (token == null || token.split('.').length !== 3) {
+      throwError("No refresh token found")
       return "" // Todo throw arrow
     } else {
       return token
@@ -147,12 +154,10 @@ export class UserService {
   private getTokenExpirationDate(token: any) {
     let decoded = this.getDecodedAccessToken(token);
 
-    if (typeof decoded.exp === "undefined") return null;
+    if (typeof decoded.exp === "undefined")
+      return null;
 
-    let d = new Date(0); // The 0 here is the key, which sets the date to the epoch
-    d.setUTCSeconds(decoded.exp);
-
-    return d;
+    return new Date(0).setUTCSeconds(decoded.exp);
   };
 
   isTokenExpired(token: any) {

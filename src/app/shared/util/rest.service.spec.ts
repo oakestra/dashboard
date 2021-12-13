@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DbClientService } from './db-client.service';
+import { RestService } from './rest.service';
 
-describe('DbClientService', () => {
-  let service: DbClientService;
+describe('RestService', () => {
+  let service: RestService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DbClientService);
+    service = TestBed.inject(RestService);
   });
 
   it('should be created', () => {

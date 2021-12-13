@@ -5,6 +5,8 @@ import {HelpComponent} from "./help/help.component";
 import {DeployFormComponent} from "./deploy-form/deploy-form.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {UsersComponent} from "./users/users.component";
+import {AuthGuardService} from "../shared/modules/auth/auth-guard.service";
+import {UserEditComponent} from "./users/user-edit/user-edit.component";
 
 export const routes: Routes = [
   {
@@ -14,23 +16,33 @@ export const routes: Routes = [
       {
         path: '',
         component: DevHomeComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        canActivate: [AuthGuardService]
       },
       {
         path: 'help',
         component: HelpComponent,
+        canActivate: [AuthGuardService]
       },
       {
         path: 'deploy/:id',
-        component: DeployFormComponent
+        component: DeployFormComponent,
+        canActivate: [AuthGuardService]
       },
       {
         path: 'deploy',
-        component: DeployFormComponent
+        component: DeployFormComponent,
+        canActivate: [AuthGuardService]
       },
       {
         path: 'users',
-        component: UsersComponent
+        component: UsersComponent,
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: 'profile',
+        component: UserEditComponent,
+        canActivate: [AuthGuardService]
       },
       {path: '**', component: NotFoundComponent}
     ]

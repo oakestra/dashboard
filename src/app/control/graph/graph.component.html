@@ -9,6 +9,8 @@
       <p #nodeID id="IdText"></p>
       <p #start id="IdLinkStart"></p>
       <p #target id="IdLinkTarget"></p>
+      <button (click)="openDialog(start.innerText, target.innerText)" id="deleteLink" mat-button style="display: none">
+      </button>
     </div>
     <div *ngIf="type.innerText.startsWith('Link') else nodeButtons">
       <button (click)="openDialog(start.innerText, target.innerText)" mat-button>
@@ -19,10 +21,10 @@
       </button>
     </div>
     <ng-template #nodeButtons>
-      <button id="editElement" mat-button routerLink="/deploy/{{nodeID.innerText}}">
+      <button id="editElement" mat-button routerLink="deploy/{{nodeID.innerText}}">
         <mat-icon>settings</mat-icon>
       </button>
-      <button (click)="delete(nodeID.innerText)" id="deleteLink" mat-button>
+      <button (click)="delete(nodeID.innerText)" mat-button>
         <mat-icon>delete</mat-icon>
       </button>
     </ng-template>

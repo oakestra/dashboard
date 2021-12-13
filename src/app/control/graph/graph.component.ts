@@ -1,8 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {DbClientService} from "../../shared/modules/api/db-client.service";
+import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {ApiService} from "../../shared/modules/api/api.service";
 import {MatDialog} from "@angular/material/dialog";
-import {DialogGraphConnectionSettings} from "../dialogs/dialogGraphConnectionSettings";
-import {SharedIDService} from "../../shared/modules/helper/shared-id.service";
+import {DialogGraphConnectionSettings} from "../dialogs/graph-content-connection/dialogGraphConnectionSettings";
 
 declare function start(nodes: any, links: any): void;
 
@@ -13,60 +12,91 @@ declare function deleteLink(): void;
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.css'],
 })
-export class GraphComponent implements OnInit {
+export class GraphComponent implements OnChanges {
 
   showConnections = false;
-  private firstCall = true; // to prevent reloading every time
-
   nodes: any [] = [];
   links: any[] = [];
 
   @Output()
   updated = new EventEmitter<string>();
 
+  @Input()
+  jobs: any
 
-  constructor(private dbService: DbClientService,
-              public dialog: MatDialog,
-              private sharedService: SharedIDService) {
-
+  constructor(public dialog: MatDialog,
+              public dbService: ApiService) {
   }
 
-  ngOnInit(): void {
-    console.log("Jobs in Graph")
-    console.log(this.sharedService.jobs)
-    //this.getNodes();
+  ngOnChanges() {
+    this.showConnections = false;
   }
 
-  openDialog(start: string, target: string) {
+  async openDialog(start: string, target: string) {
+    let job: any = await this.getJob(start)
+    let conn = this.findCorrectConstraint(target, job.job_sla.connectivity)
+    console.log(job)
+    console.log(conn)
+
     let data = {
       'start_serviceID': start,
       'targe_serviceID': target,
-      'type': "",
-      'threshold': 100,
+      'type': "geo",
+      'threshold': 0,
       'rigidness': 0.1,
       'convergence_time': 300,
     }
-
+    if (conn) {
+      data = {
+        'start_serviceID': start,
+        'targe_serviceID': target,
+        'type': conn.type,
+        'threshold': conn.threshold,
+        'rigidness': conn.rigidness,
+        'convergence_time': conn.convergence_time,
+      }
+    }
     const dialogRef = this.dialog.open(DialogGraphConnectionSettings, {data});
-
     dialogRef.afterClosed().subscribe(result => this.saveGraphConstrains(result));
   }
 
-  // TODO fix this, the db should be updated correct
-  async saveGraphConstrains(data: any) {
-    let newJob
-    let jobProm: any = await this.getJob(data.start_serviceID)
-    newJob = jobProm.job_sla
-    let index = newJob.connectivity.findIndex((d: any) => d.target_microservice_id == data.targe_serviceID)
-    newJob.connectivity[index] = {
-      target_microservice_id: data.targe_serviceID,
-      con_constraints: {
-        'type': data.type,
-        'threshold': data.threshold,
-        'rigidness': data.rigidness,
-        'convergence_time': data.convergence_time,
+  findCorrectConstraint(target: string, arr: any) {
+    let conn = null
+    for (let a of arr) {
+      if (a.target_microservice_id == target) {
+        conn = a.con_constraints;
       }
-    };
+    }
+    return conn
+  }
+
+  async saveGraphConstrains(data: any) {
+    let jobProm: any = await this.getJob(data.start_serviceID)
+    let newJob = jobProm.job_sla
+    let index = newJob.connectivity.findIndex((d: any) => d.target_microservice_id == data.targe_serviceID)
+    console.log(index)
+    if (index < 0) {
+      newJob.connectivity.push({
+        target_microservice_id: data.targe_serviceID,
+        con_constraints: {
+          'type': data.type,
+          'threshold': data.threshold,
+          'rigidness': data.rigidness,
+          'convergence_time': data.convergence_time
+        }
+      })
+    } else {
+      newJob.connectivity[index] = {
+        target_microservice_id: data.targe_serviceID,
+        con_constraints: {
+          'type': data.type,
+          'threshold': data.threshold,
+          'rigidness': data.rigidness,
+          'convergence_time': data.convergence_time,
+        }
+      };
+    }
+
     this.update(data.start_serviceID, newJob)
   }
 
@@ -79,39 +109,36 @@ export class GraphComponent implements OnInit {
   }
 
   update(id: string, job: any) {
-    this.dbService.updateJob(id, job)
+    // let newJob = {
+    //   _id: {$oid: id},
+    //   job_sla: job
+    // }
+    this.dbService.updateJob(job);
   }
 
   //TODO change id to number and inNumber to id also in js file
   getNodes() {
-    console.log(this.sharedService.jobs)
-    //this.sharedService.
-    //1this.dbService.getJobsOfApplication()
-    // this.dbService.jobs$.subscribe((data: any[]) => {
-    this.sharedService.jobs.subscribe((data: any[]) => {
-      for (let job of data) {
-        this.nodes.push({
-          id: job.job_sla.microservice_name,
-          idNumber: job._id.$oid
-        });
-      }
-    });
+    this.nodes = []
+    for (let job of this.jobs) {
+      this.nodes.push({
+        id: job.microservice_name,
+        idNumber: job._id.$oid
+      });
+    }
     this.calculateLinks();
   }
 
   calculateLinks() {
-    this.dbService.jobs$.subscribe((data: any[]) => {
-      for (let job of data) {
-        if (job.job_sla.connectivity != undefined) {
-          for (let targetJob of job.job_sla.connectivity) {
-            this.links.push({
-              source: job._id.$oid,
-              target: targetJob.target_microservice_id
-            })
-          }
+    for (let job of this.jobs) {
+      if (job.connectivity != undefined) {
+        for (let targetJob of job.connectivity) {
+          this.links.push({
+            source: job._id.$oid,
+            target: targetJob.target_microservice_id
+          })
         }
       }
-    });
+    }
   }
 
   toggleConnection() {
@@ -124,25 +151,27 @@ export class GraphComponent implements OnInit {
 
   multipleFunctions() {
     this.toggleConnection();
-    // if (this.firstCall) this.start();
+    this.getNodes();
     this.start();
   }
 
   delete(id: any) {
     this.updated.emit(id);
     this.deleteOnlyLink()
-    this.ngOnInit()
   }
 
   deleteOnlyLink() {
     deleteLink(); // Call function in graph.js
   }
 
+  print(start: string, target: string) {
+    console.log("Test if function is executed")
+    console.log(start)
+    console.log(target)
+  }
+
   start() {
 
-    this.getNodes();
-
-    this.firstCall = false; // Wozu wird das gebraucht?
     let linksNew = [];
     let l = this.links;
     let n = this.nodes;

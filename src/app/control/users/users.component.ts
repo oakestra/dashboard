@@ -1,12 +1,11 @@
 import {Component, OnInit} from "@angular/core";
-import {UserEntity, UserRole} from "../../landingpage/login/login.component";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DataService} from "../../shared/modules/api/data.service";
 import {FormControl} from "@angular/forms";
-import {DbClientService} from "../../shared/modules/api/db-client.service";
+import {ApiService, UserEntity, UserRole} from "../../shared/modules/api/api.service";
 import {MatDialog} from "@angular/material/dialog";
-import {DialogEditUserView} from "../dialogs/dialogEditUser";
+import {DialogEditUserView} from "../dialogs/edit-user/dialogEditUser";
 import {DatePipe} from "@angular/common";
+import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
 
 @Component({
   templateUrl: './users.component.html',
@@ -30,14 +29,12 @@ export class UsersComponent implements OnInit {
   dropdown = new FormControl();
   dropdownList: string[] = [];
 
-
-  // TODO use only one API
-  constructor(private api: DataService,
-              private router: Router,
+  constructor(private router: Router,
               private route: ActivatedRoute,
-              private dbService: DbClientService,
+              private api: ApiService,
               private dialog: MatDialog,
-              private datePipe: DatePipe
+              private datePipe: DatePipe,
+              private notifyService: NotificationService
   ) {
   }
 
@@ -45,6 +42,7 @@ export class UsersComponent implements OnInit {
     this.api.getRoles().subscribe(
       (data: any) => {
         this.roles = data.roles;
+
         this.roles.forEach((role) => {
           this.dropdownList.push(role.name)
         })
@@ -55,9 +53,7 @@ export class UsersComponent implements OnInit {
   }
 
   loadData(): void {
-    this.dbService.getAllUser().subscribe((users: any) => {
-      //this.users = this.utilService.format_date(users, 'created_at', null);
-
+    this.api.getAllUser().subscribe((users: any) => {
       this.users = users;
       this.route.queryParams.subscribe(params => {
         // TODO Implement filter later
@@ -130,12 +126,12 @@ export class UsersComponent implements OnInit {
 
   deleteUser(user: UserEntity): void {
 
-    this.dbService.deleteUser(user).subscribe(() => {
-        //this.notify.success("User " + user.name + " deleted successfully!");
+    this.api.deleteUser(user).subscribe(() => {
+        this.notifyService.notify(Type.success, "User " + user.name + " deleted successfully!")
         this.loadData();
       },
-      (error: Error) => {
-        //this.notify.success("Error: Deleting user " + user.name + " failed!");
+      (_error: Error) => {
+        this.notifyService.notify(Type.error, "Error: Deleting user " + user.name + " failed!")
       })
   }
 
@@ -151,6 +147,7 @@ export class UsersComponent implements OnInit {
     let data = {
       "obj": obj,
       "action": action,
+      "roles": this.roles,
     }
     const dialogRef = this.dialog.open(DialogEditUserView, {data: data});
 
@@ -159,27 +156,31 @@ export class UsersComponent implements OnInit {
         console.log(result.data)
         this.addUser(result.data)
       } else if (result.event == 'edit') {
-
+        this.updateUser(result.data)
       }
     });
+  }
+
+  updateUser(user: UserEntity) {
+    this.api.updateUser(user).subscribe(() => this.loadData())
   }
 
   addUser(user: UserEntity) {
     console.log(user.name)
     if (user.name.length !== 0 && user.password.length !== 0) {
       user.created_at = this.datePipe.transform((new Date), 'dd/MM/yyyy HH:mm')!;
-      this.dbService.registerUser(user).subscribe(
-        (result: any) => {
-          //this.notify.success("Success", "You are registered successfully.");
+      this.api.registerUser(user).subscribe(
+        () => {
+          this.notifyService.notify(Type.success,  "You are registered successfully.")
           this.loadData()
         }, error1 => {
           if (!error1.hasOwnProperty("_body")) {
-            //this.notify.error("Error", "Server is not running.");
+            this.notifyService.notify(Type.error,  "Server is not running.")
           }
         }
       )
     } else {
-      //this.notify.error("Error", "Please provide valid inputs for login.");
+      this.notifyService.notify(Type.error,  "Please provide valid inputs for login.")
     }
   }
 }

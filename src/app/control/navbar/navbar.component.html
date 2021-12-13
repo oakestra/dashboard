@@ -22,9 +22,10 @@
   </button>
 
   <mat-menu #menu="matMenu">
-    <button mat-menu-item>Profile</button>
+    <button mat-menu-item routerLink="/control/profile">Profile</button>
     <button (click)="logout()" mat-menu-item>Logout</button>
   </mat-menu>
+
 </mat-toolbar>
 
 <mat-sidenav-container>
@@ -40,29 +41,31 @@
     <mat-divider></mat-divider>
     <h6>Application:</h6>
 
-    <div *ngFor="let app of app$ | async" style="display: flex; justify-content: space-between;">
+    <div *ngFor="let app of app " style="display: flex; justify-content: space-between;align-items: center">
+
       <mat-radio-group (change)="handleChange()" [(ngModel)]="active">
         <mat-radio-button [value]="app._id" class="menu-button">
           <span style="float: left">{{app.name}}</span>
         </mat-radio-button>
       </mat-radio-group>
 
-      <button (click)="openDialog('Update',app)" mat-button style="float: right">
-        <span style="float: right"><mat-icon>settings</mat-icon></span>
+      <button (click)="openDialog('Update',app)" mat-icon-button>
+        <mat-icon>settings</mat-icon>
       </button>
     </div>
 
-    <button (click)="openDialog('Add',{})" class="menu-button" mat-button>
-      <span><mat-icon>add</mat-icon></span>
+    <button (click)="openDialog('Add',{})" class="menu-button" mat-icon-button>
+      <mat-icon>add</mat-icon>
     </button>
 
-    <mat-divider></mat-divider>
+    <div *ngIf="isAdmin">
+      <mat-divider></mat-divider>
+      <h6>Admin</h6>
 
-    <h6>Admin</h6>
-
-    <button class="menu-button" mat-button routerLink="users">
-      <span>User Management</span>
-    </button>
+      <button (click)="show()" class="menu-button" mat-button routerLink="users">
+        <span>User Management</span>
+      </button>
+    </div>
 
     <mat-divider></mat-divider>
 
@@ -73,17 +76,11 @@
   </mat-sidenav>
   <mat-sidenav-content>
 
-    <!--    <div *ngIf="!appSelected" class="content mat-elevation-z8">
-          No Application selected.
-        </div>-->
+    <div *ngIf="!appSelected && !settings" class="content mat-elevation-z8">
+      No Application selected.
+    </div>
 
-    <!--    TODO Make api call which returns selected job count in this application -->
-
-    <!--    <div *ngIf="jobCount == 0" class="content mat-elevation-z8">-->
-    <!--      No Job created.-->
-    <!--    </div>-->
-
-    <router-outlet *ngIf="appSelected"></router-outlet>
+    <router-outlet *ngIf="appSelected || settings"></router-outlet>
 
   </mat-sidenav-content>
 </mat-sidenav-container>

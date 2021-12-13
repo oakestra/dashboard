@@ -14,43 +14,48 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class DialogEditUserView {
 
   action: string;
-  title : string
+  title: string
   local_data: any;
   roles: FormGroup;
 
+  rolDB: any;
+
   constructor(
     public dialogRef: MatDialogRef<DialogEditUserView>,
-    private fb:FormBuilder,
+    private fb: FormBuilder,
     //@Optional() is used to prevent error if no data is passed
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
-    console.log("Dialog Data")
+
     this.local_data = data.obj;
     this.action = data.action;
-    console.log(this.local_data.roles);
+    this.rolDB = data.roles;
 
-    if(this.action == "edit"){
-      this.title = "Editing user..."
+    this.title = "Editing user..."
+
+    if (this.action == "edit") {
       this.roles = fb.group({
-        'admin': this.local_data.roles.some((r:any) => r.name == 'Admin_Role'),
-        'application_Provider': this.local_data.roles.some((r:any) => r.name == 'application_Provider'),
-        'service_Provider': this.local_data.roles.some((r:any) => r.name == 'service_Provider'),})
+        'Admin_Role': this.local_data.roles.some((r: any) => r.name == 'Admin_Role'),
+        'Application_Provider': this.local_data.roles.some((r: any) => r.name == 'Application_Provider'),
+        'Infrastructure_Provider': this.local_data.roles.some((r: any) => r.name == 'Infrastructure_Provider'),
+      })
 
-    }else {
-      this.title = "Creating user..."
-
+    } else {
       this.roles = fb.group({
-        'admin': false,
-        'application_Provider': false,
-        'service_Provider': false,})
+        'Admin_Role': false,
+        'Application_Provider': false,
+        'Infrastructure_Provider': false
+      })
     }
   }
 
   doAction() {
 
-    let roles = Object.entries(this.roles.getRawValue())
-    console.log(roles)
+    let roles = this.roles.value
 
-    // TODO Add Roles to the user data
+    for (let r of this.rolDB) {
+      if (roles[r.name])
+        this.local_data.roles.push(r)
+    }
     this.dialogRef.close({event: this.action, data: this.local_data});
   }
 

@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>Connection settings</h2>
+<mat-dialog-content class="mat-typography">
+
+  <div class="full-width w3-row" style="display: flex; padding-top: 20px;">
+
+    <div class="w3-col s12 l4 m4">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Application ID</mat-label>
+        <input disabled matInput value="SET ID">
+      </mat-form-field>
+    </div>
+
+    <mat-radio-group [(ngModel)]="data.type" required style="flex: 1">
+      <div class="w3-col l4 m4" style="float: right;">
+        <mat-radio-button (change)="onRadioChange($event)" id="dialog-radio" value="latency">latency</mat-radio-button>
+      </div>
+      <div class="w3-col l4 m4" style="float: right; ">
+        <mat-radio-button (change)="onRadioChange($event)" style="border-color:black" value="geo">geo</mat-radio-button>
+      </div>
+    </mat-radio-group>
+
+  </div>
+
+  <div class="full-width w3-row">
+
+    <div class="w3-col s12 m4 l4" style="padding-right: 10px">
+      <mat-form-field class="full-width">
+        <mat-label>Threshold</mat-label>
+        <input [(ngModel)]="data.threshold" matInput type="number">
+        <p matSuffix>ms</p>
+      </mat-form-field>
+    </div>
+
+    <div class="w3-col s12 m4 l4">
+      <mat-form-field class="full-width">
+        <mat-label>Rigidness</mat-label>
+        <input [(ngModel)]="data.rigidness" matInput max="100" min="0" type="number">
+        <p matSuffix>%</p>
+      </mat-form-field>
+    </div>
+
+    <div class="w3-col s12 m4 l4" style="padding-left: 10px">
+      <mat-form-field class="full-width">
+        <mat-label>Convergence Time</mat-label>
+        <input [(ngModel)]="data.convergence_time" matInput type="number">
+        <p matSuffix>sec</p>
+      </mat-form-field>
+    </div>
+
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button [mat-dialog-close]="data" color="primary" mat-button mat-flat-button>Save</button>
+</mat-dialog-actions>

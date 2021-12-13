@@ -2,9 +2,9 @@
 <mat-dialog-content class="mat-typography">
 
   <div class="w3-col l6 s12 m6">
-    <mat-form-field [appearance] = "action == 'add'? 'legacy' : 'fill'" class="full-width" style="padding-right: 8px">
+    <mat-form-field [appearance]="action == 'add'? 'legacy' : 'fill'" class="full-width" style="padding-right: 8px">
       <mat-label>Username</mat-label>
-      <input [(ngModel)]="local_data.name" [disabled] = "action == 'edit'" matInput>
+      <input [(ngModel)]="local_data.name" [disabled]="action == 'edit'" matInput>
     </mat-form-field>
   </div>
 
@@ -27,13 +27,13 @@
     <h3>Roles</h3>
     <section [formGroup]="roles" class="example-section">
       <p>
-        <mat-checkbox formControlName="admin">Admin</mat-checkbox>
+        <mat-checkbox formControlName="Admin_Role">Admin</mat-checkbox>
       </p>
       <p>
-        <mat-checkbox formControlName="application_Provider">Application_Provider</mat-checkbox>
+        <mat-checkbox formControlName="Application_Provider">Application_Provider</mat-checkbox>
       </p>
       <p>
-        <mat-checkbox formControlName="service_Provider">Service_Provider</mat-checkbox>
+        <mat-checkbox formControlName="Infrastructure_Provider">Infrastructure_Provider</mat-checkbox>
       </p>
     </section>
   </div>

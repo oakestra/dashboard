@@ -7,6 +7,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {SharedModule} from "./shared/sheard.module";
 import {routes} from "./app.routes";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {routes} from "./app.routes";
     BrowserAnimationsModule,
     SharedModule.forRoot(),
     RouterModule.forRoot(routes),
+    MatSnackBarModule
   ],
   providers: [
     // should be empty as we import all global services through "SharedModule.forRoot()"

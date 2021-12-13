@@ -15,9 +15,9 @@ export class SharedIDService {
     this.applicationService.next(data);
   }
 
-  jobs:any
-  setJobs(jobs: any){
-    this.jobs = jobs;
-  }
+  // jobs:any
+  // setJobs(jobs: any){
+  //   this.jobs = jobs;
+  // }
 }
 

@@ -5,10 +5,10 @@ import {DeployFormComponent} from "./deploy-form/deploy-form.component";
 import {DevHomeComponent} from "./dev-home/dev-home.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {NavbarComponent} from "./navbar/navbar.component";
-import {DialogConnectionSettings} from "./dialogs/dialogConnectionSettings";
-import {DialogGraphConnectionSettings} from "./dialogs/dialogGraphConnectionSettings";
+import {DialogConnectionSettings} from "./dialogs/content-connection/dialogConnectionSettings";
+import {DialogGraphConnectionSettings} from "./dialogs/graph-content-connection/dialogGraphConnectionSettings";
 import {HelpComponent} from "./help/help.component";
-import {DialogAddApplicationView} from "./dialogs/dialogAddApplication";
+import {DialogAddApplicationView} from "./dialogs/add-appllication/dialogAddApplication";
 import {GraphComponent} from "./graph/graph.component";
 import {RouterModule} from "@angular/router";
 import {MatMenuModule} from "@angular/material/menu";
@@ -34,10 +34,15 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
 import {UsersComponent} from "./users/users.component";
 import {MatChipsModule} from "@angular/material/chips";
-import {DialogEditUserView} from "./dialogs/dialogEditUser";
+import {DialogEditUserView} from "./dialogs/edit-user/dialogEditUser";
+import {UserEditComponent} from './users/user-edit/user-edit.component';
+import {DialogChangePasswordView} from "./dialogs/change-password/dialogChangePassword";
 
 
 @NgModule({
+  // providers:[
+  //   AuthService
+  // ],
   declarations: [
     DeployFormComponent,
     DevHomeComponent,
@@ -49,7 +54,9 @@ import {DialogEditUserView} from "./dialogs/dialogEditUser";
     DialogAddApplicationView,
     GraphComponent,
     UsersComponent,
-    DialogEditUserView
+    DialogEditUserView,
+    UserEditComponent,
+    DialogChangePasswordView
   ],
   imports: [
     CommonModule,
@@ -80,6 +87,7 @@ import {DialogEditUserView} from "./dialogs/dialogEditUser";
     MatPaginatorModule,
     MatTableModule,
     MatChipsModule,
+
   ],
 })
 export class ControlModule {

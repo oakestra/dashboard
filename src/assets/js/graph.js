@@ -6,7 +6,6 @@ var width = 500,
 
 var svg;
 var nodes;
-var lastNodeId;
 var links;
 var force;
 var drag_line;
@@ -21,19 +20,18 @@ var mouseup_node;
 var button;
 
 function start(nodeList, nodeLinks) {
-  //width = document.getElementById("graph").offsetWidth;
+
+  if (!d3.select("svg").empty()) {
+    svg = d3.select(".graph").select('svg')
+    svg.remove()
+  }
 
   svg = d3.select(".graph")
     .append('svg')
     .attr('width', "100%")
     .attr('height', height);
 
-// set up initial nodes and links
-//  - nodes are known by 'id', not by index in array.
-//  - reflexive edges are indicated on the node (as a bold black circle).
-//  - links are always source < target; edge directions are set by 'left' and 'right'.
   nodes = nodeList;
-  lastNodeId = "C".charCodeAt(0);
   links = nodeLinks;
 
 // init D3 force layout
@@ -97,10 +95,12 @@ function restart() {
       mousedown_link = d;
       if (mousedown_link === selected_link) selected_link = null;
       else selected_link = mousedown_link;
-      sendtoModelLink(selected_link);
+      sendToModelLink(selected_link);
       selected_node = null;
       restart();
     });
+
+
 
   // remove old links
   path.exit().remove();
@@ -150,7 +150,7 @@ function restart() {
       console.log("Jetzt hier");
       d3.select(this).attr('transform', 'scale(1.1)');
       if (!mousedown_node || d === mousedown_node) return;
-      d3.select(this).attr('transform', 'scale(2.1)');
+      d3.select(this).attr('transform', 'scale(1.1)');
       // enlarge target node
     })
     .on('mouseout', function (d) {
@@ -165,13 +165,13 @@ function restart() {
       mousedown_node = d;
       if (mousedown_node === selected_node) {
         selected_node = null;
-        // d3.select(this).attr('transform', 'scale(0.5)');
+         // d3.select(this).attr('transform', 'scale(1.1)');
       } else selected_node = mousedown_node;
       selected_link = null;
-      //d3.select(this).attr('transform', 'scale(2)');
+      // d3.select(this).attr('transform', 'scale(0.99)');
       console.log("Config");
       if (selected_node != null) {
-        sendtoModelNode(selected_node);
+        sendToModelNode(selected_node);
       }
 
       // reposition drag line
@@ -223,10 +223,12 @@ function restart() {
         link = {source: source, target: target};
         link[direction] = true;
         links.push(link);
+        addLinktoDB(link);
       }
 
       // select new link
-      selected_link = link;
+      // selected_link = link;
+      selected_link = null;
       selected_node = null;
       restart();
     });
@@ -368,6 +370,7 @@ function keydown() {
 
 }
 
+// Is used in the graph.ts file
 function deleteLink() {
   if (selected_node) {
     nodes.splice(nodes.indexOf(selected_node), 1);
@@ -380,7 +383,7 @@ function deleteLink() {
   restart();
 }
 
-// Funktion for moving the nodes
+// Function for moving the nodes
 function keyup() {
   lastKeyDown = -1;
   // ctrl
@@ -392,7 +395,7 @@ function keyup() {
   }
 }
 
-function sendtoModelNode(node) {
+function sendToModelNode(node) {
   console.log(node);
   document.getElementById("testText").innerText = node.id;
   document.getElementById("IdText").innerText = node.idNumber;
@@ -400,12 +403,24 @@ function sendtoModelNode(node) {
 
 }
 
-function sendtoModelLink(link) {
+function sendToModelLink(link) {
   console.log(link);
   document.getElementById("typeText").innerText = "Link:";
   document.getElementById("IdLinkStart").innerText = link.source.idNumber;
   document.getElementById("IdLinkTarget").innerText = link.target.idNumber;
   document.getElementById("testText").innerText = 'Link between "' + link.source.id + '" and "' + link.target.id + '"';
+
+
+}
+
+function addLinktoDB(link){
+  document.getElementById("typeText").innerText = "Link:";
+  document.getElementById("IdLinkStart").innerText = link.source.idNumber;
+  document.getElementById("IdLinkTarget").innerText = link.target.idNumber;
+  document.getElementById("testText").innerText = 'Link between "' + link.source.id + '" and "' + link.target.id + '"';
+  document.getElementById("deleteLink").click()
+
+  // document.getElementById("deleteLink").onclick(link)
 }
 
 

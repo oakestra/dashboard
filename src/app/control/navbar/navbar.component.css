@@ -20,7 +20,7 @@ mat-sidenav {
 .content {
   height: calc(100vh - 98px);
   border-radius: 10px;
-  margin: 16px;
+  margin: 16px 16px 16px 32px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,16 +33,17 @@ mat-sidenav-container {
 }
 
 .menu-button {
-  width: 100%;
+  /*width: 100%;*/
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  /*justify-content: flex-start;*/
   font-size: 1rem;
+  justify-content: center;
 }
 
-.menu-button mat-icon {
-  margin-right: 8px;
-}
+/*.menu-button mat-icon {*/
+/*  margin-right: 8px;*/
+/*}*/
 
 .avatar {
   margin-top: 16px;
