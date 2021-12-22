@@ -25,7 +25,7 @@ export class GraphComponent implements OnChanges {
   jobs: any
 
   constructor(public dialog: MatDialog,
-              public dbService: ApiService) {
+              public api: ApiService) {
   }
 
   ngOnChanges() {
@@ -34,7 +34,7 @@ export class GraphComponent implements OnChanges {
 
   async openDialog(start: string, target: string) {
     let job: any = await this.getJob(start)
-    let conn = this.findCorrectConstraint(target, job.job_sla.connectivity)
+    let conn = this.findCorrectConstraint(target, job.connectivity)
     console.log(job)
     console.log(conn)
 
@@ -72,10 +72,9 @@ export class GraphComponent implements OnChanges {
 
   async saveGraphConstrains(data: any) {
     let jobProm: any = await this.getJob(data.start_serviceID)
-    let newJob = jobProm.job_sla
+    let newJob = jobProm
     let index = newJob.connectivity.findIndex((d: any) => d.target_microservice_id == data.targe_serviceID)
-    console.log(index)
-    if (index < 0) {
+    if (index < 0) { // add new constrains
       newJob.connectivity.push({
         target_microservice_id: data.targe_serviceID,
         con_constraints: {
@@ -85,7 +84,7 @@ export class GraphComponent implements OnChanges {
           'convergence_time': data.convergence_time
         }
       })
-    } else {
+    } else { // edit existing constraint
       newJob.connectivity[index] = {
         target_microservice_id: data.targe_serviceID,
         con_constraints: {
@@ -96,27 +95,22 @@ export class GraphComponent implements OnChanges {
         }
       };
     }
-
     this.update(data.start_serviceID, newJob)
   }
 
   async getJob(id: string) {
     return new Promise((job) => {
-      this.dbService.getJobByID(id).subscribe(x => {
+      this.api.getJobByID(id).subscribe(x => {
         job(x)
       })
     })
   }
 
   update(id: string, job: any) {
-    // let newJob = {
-    //   _id: {$oid: id},
-    //   job_sla: job
-    // }
-    this.dbService.updateJob(job);
+    this.api.updateJob(job).subscribe(() => console.log("Updated Constrains"));
   }
 
-  //TODO change id to number and inNumber to id also in js file
+  //TODO change id to name and idNumber to id also in js file
   getNodes() {
     this.nodes = []
     for (let job of this.jobs) {
@@ -164,14 +158,7 @@ export class GraphComponent implements OnChanges {
     deleteLink(); // Call function in graph.js
   }
 
-  print(start: string, target: string) {
-    console.log("Test if function is executed")
-    console.log(start)
-    console.log(target)
-  }
-
   start() {
-
     let linksNew = [];
     let l = this.links;
     let n = this.nodes;
@@ -189,4 +176,3 @@ export class GraphComponent implements OnChanges {
     start(this.nodes, linksNew);
   }
 }
-

@@ -46,7 +46,6 @@ export class UsersComponent implements OnInit {
         this.roles.forEach((role) => {
           this.dropdownList.push(role.name)
         })
-        //this.roles.forEach((role) => this.dropdownList.push({"id": role.role_id, "itemName": role.name}))
         this.loadData();
       }
     )
@@ -56,8 +55,6 @@ export class UsersComponent implements OnInit {
     this.api.getAllUser().subscribe((users: any) => {
       this.users = users;
       this.route.queryParams.subscribe(params => {
-        // TODO Implement filter later
-        const username = params['username'];
         this.action = params['action'];
         this.searchText = params['searchText']
         this.selectedItems = [];
@@ -69,20 +66,11 @@ export class UsersComponent implements OnInit {
           } else {
             searchRoles.push(params['searchRoles']);
           }
+          this.dropdown.patchValue(searchRoles)
           searchRoles.forEach((searched) => {
             const found = this.dropdownList.find((role) => role === searched)!;
             this.selectedItems.push(found);
           })
-        }
-
-        // TODO Was soll das warum steht das hier?
-        if (this.action === 'edit' && username) {
-          this.selectedUser = this.users.find(user => user.name === username);
-        } else if (this.action === 'add') {
-          //this.selectedUser = this.entity.create_user_entity();
-        } else {
-          //this.action = null;
-          this.selectedUser = null;
         }
         this.doFilter();
       });
@@ -101,9 +89,11 @@ export class UsersComponent implements OnInit {
     if (this.searchText && this.searchText.length > 0) {
       queryParams.searchText = this.searchText;
     }
+
+    this.selectedItems = this.dropdown.value
     if (this.selectedItems) {
-      this.selectedItems.forEach((role: any) => {
-        queryParams.searchRoles.push(role.name)
+      this.selectedItems.forEach((role: string) => {
+        queryParams.searchRoles.push(role)
       });
     }
     this.router.navigate(['control', 'users'], {queryParams: queryParams, queryParamsHandling: "merge"});
@@ -119,8 +109,8 @@ export class UsersComponent implements OnInit {
 
   roleFilter(user: UserEntity): boolean {
     return !this.selectedItems || this.selectedItems.length === 0 || this.selectedItems.some((searchedRole: any) => {
-      return (searchedRole.itemName === 'None' && user.roles.length === 0)
-        || user.roles.some((role) => role.name === searchedRole.itemName)
+      return (searchedRole === 'None' && user.roles.length === 0)
+        || user.roles.some((role) => role.name === searchedRole)
     })
   }
 
@@ -140,7 +130,7 @@ export class UsersComponent implements OnInit {
 
     if (action == "add") {
       obj = { // New UserEntity
-        created_at: "", email: "", name: "", password: "", roles: []
+        _id: {}, created_at: "", email: "", name: "", password: "", roles: []
       };
     }
 
@@ -153,7 +143,6 @@ export class UsersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result.event == 'add') {
-        console.log(result.data)
         this.addUser(result.data)
       } else if (result.event == 'edit') {
         this.updateUser(result.data)
@@ -166,21 +155,20 @@ export class UsersComponent implements OnInit {
   }
 
   addUser(user: UserEntity) {
-    console.log(user.name)
     if (user.name.length !== 0 && user.password.length !== 0) {
       user.created_at = this.datePipe.transform((new Date), 'dd/MM/yyyy HH:mm')!;
       this.api.registerUser(user).subscribe(
         () => {
-          this.notifyService.notify(Type.success,  "You are registered successfully.")
+          this.notifyService.notify(Type.success, "User registered successfully.")
           this.loadData()
-        }, error1 => {
-          if (!error1.hasOwnProperty("_body")) {
-            this.notifyService.notify(Type.error,  "Server is not running.")
+        }, error => {
+          if (!error.hasOwnProperty("_body")) {
+            this.notifyService.notify(Type.error, error.error.message)
           }
         }
       )
     } else {
-      this.notifyService.notify(Type.error,  "Please provide valid inputs for login.")
+      this.notifyService.notify(Type.error, "Please provide valid inputs for user registration.")
     }
   }
 }

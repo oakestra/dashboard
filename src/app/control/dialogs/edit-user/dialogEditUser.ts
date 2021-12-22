@@ -1,6 +1,6 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -16,9 +16,11 @@ export class DialogEditUserView {
   action: string;
   title: string
   local_data: any;
-  roles: FormGroup;
+
+  form;
 
   rolDB: any;
+  buttonText = ""
 
   constructor(
     public dialogRef: MatDialogRef<DialogEditUserView>,
@@ -29,37 +31,67 @@ export class DialogEditUserView {
     this.local_data = data.obj;
     this.action = data.action;
     this.rolDB = data.roles;
-
     this.title = "Editing user..."
 
-    if (this.action == "edit") {
-      this.roles = fb.group({
-        'Admin_Role': this.local_data.roles.some((r: any) => r.name == 'Admin_Role'),
-        'Application_Provider': this.local_data.roles.some((r: any) => r.name == 'Application_Provider'),
-        'Infrastructure_Provider': this.local_data.roles.some((r: any) => r.name == 'Infrastructure_Provider'),
+    if (this.data.action == "edit") {
+      this.buttonText = "Save changes"
+
+      this.form = fb.group({
+        "name": [this.local_data.name, UserValidators.containsWhitespace],
+        "email": [this.local_data.email],
+        "roles": fb.group({
+          'Admin_Role': this.local_data.roles.some((r: any) => r.name == 'Admin_Role'),
+          'Application_Provider': this.local_data.roles.some((r: any) => r.name == 'Application_Provider'),
+          'Infrastructure_Provider': this.local_data.roles.some((r: any) => r.name == 'Infrastructure_Provider'),
+        })
       })
 
     } else {
-      this.roles = fb.group({
-        'Admin_Role': false,
-        'Application_Provider': false,
-        'Infrastructure_Provider': false
+      this.buttonText = "Create"
+
+      this.form = fb.group({
+        "name": ["", UserValidators.containsWhitespace],
+        "email": [""],
+        "password": [""],
+        "roles": fb.group({
+          'Admin_Role': false,
+          'Application_Provider': false,
+          'Infrastructure_Provider': false
+        })
       })
     }
   }
 
-  doAction() {
+  get name() {
+    return this.form.get('name')!;
+  }
 
-    let roles = this.roles.value
+  doAction() {
+    let roles = this.form.value.roles
+    this.local_data.roles = []
 
     for (let r of this.rolDB) {
       if (roles[r.name])
         this.local_data.roles.push(r)
     }
-    this.dialogRef.close({event: this.action, data: this.local_data});
+    this.form.value.roles = this.local_data.roles;
+    this.form.value.created_at = this.local_data.created_at
+    this.form.value._id = this.local_data._id
+
+    this.dialogRef.close({event: this.action, data: this.form.value});
   }
 
   closeDialog() {
     this.dialogRef.close({event: 'Cancel'});
+  }
+}
+
+export class UserValidators {
+  static containsWhitespace(control: AbstractControl): Validators | null {
+    if ((control.value as String).indexOf(" ") > 0) {
+      return {containsWhitespace: true}
+    } else {
+      return null
+    }
   }
 }

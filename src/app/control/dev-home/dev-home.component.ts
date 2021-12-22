@@ -14,7 +14,6 @@ export class DevHomeComponent implements OnInit {
   subscription: Subscription | undefined
   data: any
   appName: string = ""
-
   appID: string = ""
 
   constructor(public sharedService: SharedIDService,
@@ -22,18 +21,18 @@ export class DevHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("In dev init")
     this.subscription = this.sharedService.applicationObservable$.subscribe(
-      formData => {
-        formData.subscribe((x: any) => {
+      x => {
           this.data = x
           this.appName = x.name
           this.appID = x._id.$oid
           this.loadData()
-        })
       });
   }
 
   loadData(): void {
+    console.log("in dev loadData")
     this.api.getJobsOfApplication(this.appID).subscribe((jobs: any) => {
       this.jobs$ = jobs
     }, (err) => {
@@ -44,30 +43,21 @@ export class DevHomeComponent implements OnInit {
   deleteJob(job: any) {
     // TODO send delete also to the System manager
     // Delete in local Database
-    this.api.deleteJob(job).subscribe((_success) => {
+    this.api.deleteJob(job).subscribe(() => {
       this.loadData()
     })
   }
 
   deployJob(job: any) {
-    this.api.deployJob(job).subscribe((_success) => {
+    this.api.deployJob(job).subscribe(() => {
       this.loadData()
     })
   }
 
   deleteJobWithGraph(id: string) {
-    // TODO Do this cleaner
-    let job = {
-      _id: {
-        $oid: id
-      }
-    }
-    this.api.deleteJob(job).subscribe((_success) => {
+    let job = {_id: {$oid: id}}
+    this.api.deleteJob(job).subscribe(() => {
       this.loadData()
     })
-  }
-
-  sendSLAToAPI() {
-    console.log("Implement job selection and deploy them all")
   }
 }

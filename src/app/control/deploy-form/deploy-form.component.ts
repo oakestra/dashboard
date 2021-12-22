@@ -5,6 +5,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../shared/modules/api/api.service";
 import {SharedIDService} from "../../shared/modules/helper/shared-id.service";
+import {CleanJsonService} from "../../shared/util/clean-json.service";
 
 @Component({
   selector: 'deploy-form',
@@ -16,6 +17,9 @@ export class DeployFormComponent implements OnInit {
 
   form: FormGroup;
 
+  file: File | undefined
+  filename = "Select File to Upload"
+
   fileArrayForm = new FormArray([]);
   canViewLatConstrains: boolean[] = [];
 
@@ -26,7 +30,10 @@ export class DeployFormComponent implements OnInit {
   applicationId = "";
   currentApplication: any;
 
-  allJobs$: any // For the Dropdown list of the connections
+  argsArray: string[] = [];
+  argsText = "";
+
+  allJobs: any // For the Dropdown list of the connections
 
   jsonContent: any // The final SLA witch is generated form the form
 
@@ -45,17 +52,13 @@ export class DeployFormComponent implements OnInit {
               private shardService: SharedIDService) {
 
     this.currentJobID = "not yet defined";
-
-    this.shardService.applicationObservable$.subscribe(obs => {
-      obs.subscribe((app: any) => {
-        this.currentApplication = app
-        this.applicationId = app._id.$oid
-
-        this.api.getJobsOfApplication(this.applicationId).subscribe((jobs: any) => {
-          this.allJobs$ = jobs
-        }, (err) => {
-          console.log(err)
-        })
+    this.shardService.applicationObservable$.subscribe(app => {
+      this.currentApplication = app
+      this.applicationId = app._id.$oid
+      this.api.getJobsOfApplication(this.applicationId).subscribe((jobs: any) => {
+        this.allJobs = jobs
+      }, (err) => {
+        console.log(err)
       })
     })
 
@@ -87,6 +90,7 @@ export class DeployFormComponent implements OnInit {
       'added_files': this.fileArrayForm,
       'constraints': new FormArray([]),
       'connectivity': new FormArray([]),
+      'args': this.argsArray
     });
   }
 
@@ -146,7 +150,7 @@ export class DeployFormComponent implements OnInit {
   }
 
   deleteConnection(index: number) {
-    this.connectivity.controls.splice(index, 1)
+    this.connectivity.removeAt(index)
   }
 
   deleteFiles(index: number) {
@@ -198,9 +202,7 @@ export class DeployFormComponent implements OnInit {
 
   // Saving the Dialog Data to the Array and the Form
   saveDialogData(data: any, index: number) {
-
     this.conConstrainsArray[index].clear();
-
     if (this.conConstrainsArray[index].length == 0) {
       this.conConstrainsArray[index].push(new FormGroup({
         'type': new FormControl(data.type),
@@ -242,6 +244,25 @@ export class DeployFormComponent implements OnInit {
     }
   }
 
+  loadFile(event: any) {
+    this.file = event.target.files[0];
+    console.log(this.file);
+    this.filename = this.file!.name
+  }
+
+  uploadDocument() {
+    if (this.file) {
+      let fileReader = new FileReader();
+      fileReader.onload = () => {
+        console.log(fileReader.result);
+        let sla = JSON.parse(fileReader.result + "")
+        sla.applicationId = this.applicationId
+        this.generateSLA(sla)
+      }
+      fileReader.readAsText(this.file);
+    }
+  }
+
   generateSLA(jobSLA: any) {
 
     this.jsonContent = {
@@ -262,55 +283,20 @@ export class DeployFormComponent implements OnInit {
     // Is set in de mongodb
     jobSLA.microserviceID = ""
     this.jsonContent.applications[0].microservices = [jobSLA]
-    this.jsonContent = this.cleanData(this.jsonContent)
+    this.jsonContent = CleanJsonService.cleanData(this.jsonContent)
 
     this.api.addJob(this.jsonContent).subscribe((_e: any) => {
       this.router.navigate(['/control']);
     })
   }
 
-  // deletes all null values form the JSON Object
-  cleanData(o: any) {
-
-    if (Object.prototype.toString.call(o) == "[object Array]") {
-      for (let key = 0; key < o.length; key++) {
-        this.cleanData(o[key]);
-        if (Object.prototype.toString.call(o[key]) == "[object Object]") {
-          if (Object.keys(o[key]).length === 0) {
-            o.splice(key, 1);
-            key--;
-          }
-        }
-      }
-    } else if (Object.prototype.toString.call(o) == "[object Object]") {
-      for (let key in o) {
-        let value = this.cleanData(o[key]);
-        if (value === null) {
-          delete o[key];
-        }
-        if (Object.prototype.toString.call(o[key]) == "[object Object]") {
-          if (Object.keys(o[key]).length === 0) {
-            delete o[key];
-          }
-        }
-        /* Deletes empty array, but we need them
-       if (Object.prototype.toString.call(o[key]) == "[object Array]") {
-
-         if (o[key].length === 0) {
-           delete o[key];
-         }
-        } */
-      }
-    }
-    return o;
-  }
-
   onSubmit() {
     let content = this.form.value
     content.applicationId = this.applicationId
+    content.args = [this.argsText]
 
     if (this.editingJob) {
-      content.microserviceID = {id: {$oid: this.currentJobID}}
+      content.microserviceID = {_id: {$oid: this.currentJobID}}
       this.api.updateJob(content).subscribe((_success) => {
           this.router.navigate(['/control']);
         },

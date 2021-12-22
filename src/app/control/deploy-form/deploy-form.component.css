@@ -1,90 +1,16 @@
-/*@import 'https://www.w3schools.com/w3css/4/w3.css';*/
+.cancel_buttons{
+  margin-left: 8px;
+}
 
-/*mat-card {*/
-/*  width: 100%;*/
-/*  font-size: 1rem;*/
-/*  margin-bottom: 10px;*/
-/*  display: inline-block;*/
-/*  padding-bottom: 0;*/
-/*}*/
+.content {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: lightgray;
+}
 
-/*mat-card-title {*/
-/*  background-color: #004a9f;*/
-/*  padding: 16px;*/
-/*  border-radius: 4px;*/
-/*  color: white;*/
-/*}*/
-
-/*mat-card p {*/
-/*  margin-bottom: 0;*/
-/*}*/
-
-/*.content-cards {*/
-/*  border-radius: 10px;*/
-/*  margin: 16px;*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  justify-content: center;*/
-/*}*/
-
-/*@media only screen and (min-width: 801px) {*/
-/*  .content-cards {*/
-/*    margin-left: 32px;*/
-/*  }*/
-/*}*/
-
-/*.serviceCard {*/
-/*  height: 100%;*/
-/*}*/
-
-/*form {*/
-/*  padding: 10px;*/
-/*}*/
-
-/*.form {*/
-/*  min-width: 150px;*/
-/*  max-width: 500px;*/
-/*  width: 100%;*/
-/*}*/
-
-/*.full-width {*/
-/*  width: 100%;*/
-/*}*/
-
-/*.smallInput {*/
-/*  width: 10%;*/
-/*  padding: 10px;*/
-/*}*/
-
-/*td {*/
-/*  padding-right: 8px;*/
-/*}*/
-
-/*.constraints {*/
-/*  padding-top: 10px;*/
-/*}*/
-
-/*.settingsButton {*/
-/*  float: right;*/
-/*}*/
-
-/*.leftInput {*/
-/*  padding-right: 8px;*/
-/*}*/
-
-/*.rightInput {*/
-/*  padding-left: 8px;*/
-/*}*/
-
-/*.addButtonDiv {*/
-/*  display: inline-block;*/
-/*  vertical-align: middle;*/
-/*}*/
-
-/*.cancel_buttons{*/
-/*  margin-left: 8px;*/
-/*}*/
-
-/*.file-input{*/
-/*  display: none*/
-/*}*/
+.mat-form-field{
+  width: 100%;
+}

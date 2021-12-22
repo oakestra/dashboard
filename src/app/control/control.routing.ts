@@ -7,6 +7,7 @@ import {NotFoundComponent} from "./not-found/not-found.component";
 import {UsersComponent} from "./users/users.component";
 import {AuthGuardService} from "../shared/modules/auth/auth-guard.service";
 import {UserEditComponent} from "./users/user-edit/user-edit.component";
+import {RoleRouterGuard} from "../shared/modules/auth/role-guard.service";
 
 export const routes: Routes = [
   {
@@ -37,7 +38,7 @@ export const routes: Routes = [
       {
         path: 'users',
         component: UsersComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService,RoleRouterGuard]
       },
       {
         path: 'profile',

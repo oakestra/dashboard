@@ -6,6 +6,7 @@ import {catchError, map} from 'rxjs/operators';
 import {environment} from "../../../../environments/environment";
 import jwt_decode from 'jwt-decode';
 import {LoginRequest} from "../api/api.service";
+import {NotificationService, Type} from "../notification/notification.service";
 
 
 @Injectable({
@@ -17,7 +18,8 @@ export class UserService {
 
   constructor(private route: ActivatedRoute,
               private http: HttpClient,
-              private router: Router) {
+              private router: Router,
+              private notifyService: NotificationService) {
   }
 
   getUsername(): string {
@@ -27,8 +29,6 @@ export class UserService {
   login(request: LoginRequest): Observable<boolean> {
     return this.http.post<Response>(environment.apiUrl + "/auth/login", request).pipe(
       map((response: any) => {
-        console.log("Tokens")
-        console.log(response)
         this.loggedIn = true
         this.setAuthToken(response.token);
         this.setRefreshToken(response.refresh_token);
@@ -44,7 +44,9 @@ export class UserService {
           // server is running and returned a json string
           errorMsg = error.error.message;
           console.log(errorMsg)
+
         }
+        // return throwError(error || 'Server error')
         return throwError(error || 'Server error')
       }))
   }
@@ -60,7 +62,10 @@ export class UserService {
 
   /** true if the user is logged in */
   isLoggedIn(): boolean {
-    return !this.isTokenExpired(this.getAuthTokenRaw());
+    if(this.checkIfTokenExists('api_token')){
+      return !this.isTokenExpired(this.getAuthTokenRaw());
+    }
+    return false
   }
 
   /** true if the refresh token is still valid */
@@ -82,7 +87,6 @@ export class UserService {
     const refreshToken = this.getRefreshTokenRaw();
     const requestOptions = {
       headers: new HttpHeaders({
-        // 'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + refreshToken,
       }),
     };
@@ -93,7 +97,7 @@ export class UserService {
         return true;
       }),
       catchError((error) => {
-        const errorMsg = JSON.parse(error._body);
+        this.notifyService.notify(Type.error, error.error.message)
         //this.notify.error("Error", errorMsg.error || errorMsg.message);
         return throwError(error || 'Server error')
       }))
@@ -101,8 +105,7 @@ export class UserService {
 
   renewToken(): Observable<boolean> {
     return this.tryTokenRenewal().pipe(map(
-        (res) => {
-          //this.notify.success("Success", "Token renewal works!");
+        () => {
           return true;
         }),
       catchError(
@@ -115,8 +118,7 @@ export class UserService {
   }
 
   redirectToLogin(): void {
-    console.log("Redict to login")
-    //this.notify.error("Error", "Your session has expired.");
+    this.notifyService.notify(Type.error, "Your session has expired." )
     this.logout();
     this.router.navigate(['/']);
   }
@@ -142,13 +144,17 @@ export class UserService {
   }
 
   getJWTTokenRaw(key: string): string {
-    const token = localStorage.getItem(key);
-    if (token == null || token.split('.').length !== 3) {
+    if(this.checkIfTokenExists(key)){
+      return localStorage.getItem(key)!;
+    }else{
       throwError("No refresh token found")
-      return "" // Todo throw arrow
-    } else {
-      return token
+      return ""
     }
+  }
+
+  checkIfTokenExists(key : string){
+    const token = localStorage.getItem(key);
+    return !(token == null || token.split('.').length !== 3);
   }
 
   private getTokenExpirationDate(token: any) {

@@ -25,7 +25,7 @@ export class ApiService extends RestService {
   }
 
   updateApplication(app: any) {
-    return this.doPUTRequest("/application", app)
+    return this.doPUTRequest("/application/" + app._id.$oid, app)
   }
 
   deleteApplication(app: any) {
@@ -47,13 +47,13 @@ export class ApiService extends RestService {
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////// Job Functions ///////////////////////////////////////
 
-  //TODO Add description also to the DB but not to the sla
   addJob(job: any) {
     return this.doPOSTRequest("/job", job)
   }
 
   updateJob(job: any) {
-    return this.doPUTRequest("/job", job)
+    console.log(job)
+    return this.doPUTRequest("/job/" + job.microserviceID._id.$oid, job)
   }
 
   deleteJob(job: any) {
@@ -84,6 +84,7 @@ export class ApiService extends RestService {
   }
 
   public updateUser(user: UserEntity) {
+    console.log(user)
     return this.doPUTRequest("/user/" + user.name, user)
   }
 
@@ -135,12 +136,21 @@ export class ApiService extends RestService {
       newPassword,
     });
   }
+
+  resetPassword(username: string) {
+    return this.doPOSTRequest("/auth/resetPassword", {username});
+  }
+
+  saveResetPassword(token: string, password: string) {
+    return this.doPUTRequest("/auth/resetPassword", { token, password });
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////// Helpful Interfaces ///////////////////////////////
 
 export interface UserEntity {
+  _id: object
   name: string;
   password: string;
   email: string;

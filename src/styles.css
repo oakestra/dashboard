@@ -1,4 +1,5 @@
 @import "~bootstrap/dist/css/bootstrap.css";
+@import "https://www.w3schools.com/w3css/4/w3.css";
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
@@ -14,12 +15,9 @@
 /*  background-color: transparent !important;*/
 /*}*/
 
-.dialog-radio{
+.dialog-radio {
   border-color: red;
 }
-
-
-
 
 
 /*////////////////////////////////////////////////////*/
@@ -28,7 +26,7 @@ svg {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  -o-user-select: none;
+  /*-o-user-select: none;*/
   user-select: none;
 }
 
@@ -60,7 +58,7 @@ path.link.hidden {
 }
 
 circle.node {
-  stroke-width: 0px;
+  stroke-width: 0;
   cursor: pointer;
   fill: #fff;
 }
@@ -75,22 +73,14 @@ text.id {
   font-weight: bold;
 }
 
-.error-snackbar{
+.error-snackbar {
   background-color: #a31919;
 }
 
-.success-snackbar{
+.success-snackbar {
   background-color: #28a513;
 }
 
-
-
-
-
-
-
-
-@import 'https://www.w3schools.com/w3css/4/w3.css';
 
 mat-card {
   width: 100%;
@@ -168,15 +158,25 @@ td {
   padding-left: 8px;
 }
 
+@media only screen and (max-width: 1000px) {
+  .leftInput {
+    padding-right: 0;
+  }
+
+  .rightInput {
+    padding-left: 0;
+  }
+}
+
 .addButtonDiv {
   display: inline-block;
   vertical-align: middle;
 }
 
-.cancel_buttons{
+.cancel_buttons {
   margin-left: 8px;
 }
 
-.file-input{
+.file-input {
   display: none
 }

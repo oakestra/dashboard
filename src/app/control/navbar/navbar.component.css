@@ -20,12 +20,18 @@ mat-sidenav {
 .content {
   height: calc(100vh - 98px);
   border-radius: 10px;
-  margin: 16px 16px 16px 32px;
+  margin: 16px 16px 16px 16px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 2rem;
   color: lightgray;
+}
+
+@media only screen and (min-width: 801px) {
+  .content {
+    margin-left: 32px;
+  }
 }
 
 mat-sidenav-container {
@@ -40,10 +46,6 @@ mat-sidenav-container {
   font-size: 1rem;
   justify-content: center;
 }
-
-/*.menu-button mat-icon {*/
-/*  margin-right: 8px;*/
-/*}*/
 
 .avatar {
   margin-top: 16px;
@@ -89,11 +91,17 @@ mat-card p {
 
 .content-cards {
   border-radius: 10px;
-  margin: 16px 16px 16px 32px;
+  margin: 16px 16px 16px 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
+/*@media only screen and (min-width: 801px) {*/
+/*  .content-cards {*/
+/*    margin-left: 32px;*/
+/*  }*/
+/*}*/
 
 .serviceCard {
   height: 100%;

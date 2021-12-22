@@ -16,7 +16,6 @@ export class AuthService {
 
   getAuthorization(): Observable<{ roles: UserRole[] }> {
     if (!this.roles) {
-      // let token = this.userService.getRefreshTokenRaw();
       return this.api.getAuthorization(this.userService.getUsername()).pipe(
         map((auth: { roles: UserRole[] }) => {
             this.roles = auth.roles;
@@ -24,7 +23,6 @@ export class AuthService {
           }
         ));
     } else {
-      console.log("Roles still here")
       return of({roles: this.roles})
     }
   }
@@ -38,7 +36,7 @@ export class AuthService {
       })));
   }
 
-  clear(){
+  clear() {
     this.roles = undefined;
   }
 }

@@ -4,7 +4,7 @@
     <h2 #type id="typeText"></h2>
     <h4 id="testText">Select Node or Connection</h4>
 
-    <!--    // TODO find better way to exchange the data-->
+    <!--    // TODO find better way to exchange the data between JS and TS-->
     <div style="display: none">
       <p #nodeID id="IdText"></p>
       <p #start id="IdLinkStart"></p>
@@ -12,14 +12,16 @@
       <button (click)="openDialog(start.innerText, target.innerText)" id="deleteLink" mat-button style="display: none">
       </button>
     </div>
+
     <div *ngIf="type.innerText.startsWith('Link') else nodeButtons">
       <button (click)="openDialog(start.innerText, target.innerText)" mat-button>
-        <mat-icon>person</mat-icon>
+        <mat-icon>settings</mat-icon>
       </button>
       <button (click)="deleteOnlyLink()" mat-button>
         <mat-icon>delete</mat-icon>
       </button>
     </div>
+
     <ng-template #nodeButtons>
       <button id="editElement" mat-button routerLink="deploy/{{nodeID.innerText}}">
         <mat-icon>settings</mat-icon>
@@ -28,8 +30,10 @@
         <mat-icon>delete</mat-icon>
       </button>
     </ng-template>
+
   </div>
   <div class="graphSide" id="graph" style="overflow: hidden;">
     <div class="graph"></div>
   </div>
+
 </div>

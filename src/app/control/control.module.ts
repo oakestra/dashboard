@@ -40,9 +40,6 @@ import {DialogChangePasswordView} from "./dialogs/change-password/dialogChangePa
 
 
 @NgModule({
-  // providers:[
-  //   AuthService
-  // ],
   declarations: [
     DeployFormComponent,
     DevHomeComponent,

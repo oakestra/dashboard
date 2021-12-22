@@ -9,6 +9,7 @@ import {CommonModule, DatePipe} from "@angular/common";
 import {NotificationService} from "./modules/notification/notification.service";
 import {NotificationComponent} from './modules/notification/notification.component';
 import {MatIconModule} from "@angular/material/icon";
+import {RoleRouterGuard} from "./modules/auth/role-guard.service";
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import {MatIconModule} from "@angular/material/icon";
     SharedIDService,
     AuthService,
     AuthGuardService,
-    DatePipe
+    DatePipe,
+    RoleRouterGuard
   ],
   declarations: [
 

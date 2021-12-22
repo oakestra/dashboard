@@ -1,47 +1,54 @@
 <h2 mat-dialog-title>{{title}}</h2>
 <mat-dialog-content class="mat-typography">
 
-  <div class="w3-col l6 s12 m6">
-    <mat-form-field [appearance]="action == 'add'? 'legacy' : 'fill'" class="full-width" style="padding-right: 8px">
-      <mat-label>Username</mat-label>
-      <input [(ngModel)]="local_data.name" [disabled]="action == 'edit'" matInput>
-    </mat-form-field>
-  </div>
+  <form [formGroup]="form">
 
-  <div class="w3-col l6 s12 m6" style="padding-left: 8px">
-    <mat-form-field class="full-width">
-      <mat-label>E-Mail</mat-label>
-      <input [(ngModel)]="local_data.email" matInput>
-    </mat-form-field>
-  </div>
+    <div class="w3-col l6 s12 m6">
+      <mat-form-field [appearance]="action == 'add'? 'legacy' : 'fill'" class="full-width" style="padding-right: 8px">
+        <mat-label>Username</mat-label>
+        <input [disabled]="action == 'edit'" formControlName="name" matInput required>
+        <div *ngIf="name!.touched && name.invalid">
+          <div *ngIf="name.errors!.containsWhitespace" class="alert alert-danger">
+            Username contains whitespace
+          </div>
+        </div>
+      </mat-form-field>
+    </div>
 
-  <div *ngIf="action == 'add'" class="w3-col l6 s12 m6">
-    <mat-form-field class="full-width">
-      <mat-label>Password</mat-label>
-      <input [(ngModel)]="local_data.password" matInput>
-    </mat-form-field>
-  </div>
+    <div class="w3-col l6 s12 m6" style="padding-left: 8px">
+      <mat-form-field class="full-width">
+        <mat-label>E-Mail</mat-label>
+        <input email formControlName="email" matInput required type="email">
+      </mat-form-field>
+    </div>
 
+    <div *ngIf="action == 'add'" class="w3-col l6 s12 m6">
+      <mat-form-field class="full-width">
+        <mat-label>Password</mat-label>
+        <input formControlName="password" matInput required>
+      </mat-form-field>
+    </div>
 
-  <div class="w3-col l12 s12 m12">
-    <h3>Roles</h3>
-    <section [formGroup]="roles" class="example-section">
-      <p>
-        <mat-checkbox formControlName="Admin_Role">Admin</mat-checkbox>
-      </p>
-      <p>
-        <mat-checkbox formControlName="Application_Provider">Application_Provider</mat-checkbox>
-      </p>
-      <p>
-        <mat-checkbox formControlName="Infrastructure_Provider">Infrastructure_Provider</mat-checkbox>
-      </p>
-    </section>
-  </div>
+    <div class="w3-col l12 s12 m12">
+      <h3>Roles</h3>
+      <section class="example-section" formGroupName="roles">
+        <p>
+          <mat-checkbox formControlName="Admin_Role">Admin</mat-checkbox>
+        </p>
+        <p>
+          <mat-checkbox formControlName="Application_Provider">Application_Provider</mat-checkbox>
+        </p>
+        <p>
+          <mat-checkbox formControlName="Infrastructure_Provider">Infrastructure_Provider</mat-checkbox>
+        </p>
+      </section>
+    </div>
+  </form>
 
 </mat-dialog-content>
 
 <mat-dialog-actions class="alignRight">
-  <button (click)="doAction()" *ngIf="action != 'edit'" color="accent" mat-button mat-flat-button>Create</button>
-  <button (click)="doAction()" *ngIf="action == 'edit'" color="accent" mat-button mat-flat-button>Save changes</button>
+  <button (click)="doAction()" [disabled]="!form.valid" color="accent" mat-button
+          mat-flat-button>{{buttonText}}</button>
   <button (click)="closeDialog()" color="primary" mat-button mat-flat-button>Cancel</button>
 </mat-dialog-actions>

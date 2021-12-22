@@ -46,6 +46,15 @@ export class NavbarComponent implements OnInit {
       })
   }
 
+  ngOnInit(): void {
+    this.username = this.userService.getUsername()
+    this.api.getUserByName(this.username).subscribe((data: any) => {
+      this.userID = data._id.$oid + "";
+      this.loadData()
+      this.updatePermissions();
+    })
+  }
+
   showData(url: string) {
     this.settings = (url.includes("help") || url.includes("user") || url.includes("profile"))
   }
@@ -55,15 +64,6 @@ export class NavbarComponent implements OnInit {
         this.app = result
       }
     )
-  }
-
-  ngOnInit(): void {
-    this.username = this.userService.getUsername()
-    this.api.getUserByName(this.username).subscribe((data: any) => {
-      this.userID = data._id.$oid + "";
-      this.loadData()
-      this.updatePermissions();
-    })
   }
 
   updatePermissions(): void {
@@ -114,40 +114,42 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  deleteApplication(user: any): void {
-    this.api.deleteApplication(user).subscribe((_success) => {
-        this.notifyService.notify(Type.success, "User " + user.name + " deleted successfully!")
+  deleteApplication(app: any): void {
+    this.api.deleteApplication(app).subscribe((_success) => {
+        this.notifyService.notify(Type.success, "Application " + app.name + " deleted successfully!")
         this.loadData();
       },
       (_error) => {
-        this.notifyService.notify(Type.error, "Error: Deleting user " + user.name + " failed!")
+        this.notifyService.notify(Type.error, "Error: Deleting application " + app.name + " failed!")
       })
   }
 
-  addApplication(user: any): void {
-    this.api.addApplication(user).subscribe((_success) => {
+  addApplication(app: any): void {
+    this.api.addApplication(app).subscribe((_success) => {
         this.loadData();
       },
       (_error: any) => {
-        this.notifyService.notify(Type.success, "Error: Adding user " + user.name + " failed!")
+        this.notifyService.notify(Type.success, "Error: Adding application " + app.name + " failed!")
       })
   }
 
-  updateApplication(user: any): void {
-    this.api.updateApplication(user).subscribe((_success) => {
-        this.notifyService.notify(Type.success, "User " + user.name + " deleted successfully!")
+  updateApplication(app: any): void {
+    this.api.updateApplication(app).subscribe((_success) => {
+        this.notifyService.notify(Type.success, 'Application "' + app.name + '" updated successfully!')
         this.loadData();
       },
       (_error) => {
-        this.notifyService.notify(Type.error, "Error: Updating user " + user.name + " failed!")
+        this.notifyService.notify(Type.error, 'Error: Updating application "' + app.name + '" failed!')
       })
   }
 
   handleChange() {
-    let application = this.api.getAppById(this.active.$oid);
-    this.sharedService.selectApplication(application)
-    this.appSelected = true
-    this.router.navigate(['/control']);
+    this.api.getAppById(this.active.$oid).subscribe(app => {
+        this.sharedService.selectApplication(app)
+        this.appSelected = true
+        this.router.navigate(['/control'])
+      }
+    );
   }
 
   show() {

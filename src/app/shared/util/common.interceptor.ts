@@ -17,9 +17,14 @@ export class CommonInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     console.log("I am the Interceptor")
-    return next
-      .handle(request.clone({setHeaders: {Authorization: 'Bearer ' + this.userService.getAuthTokenRaw()}})
-      ).pipe(
+    console.log(request.url)
+
+    if (this.userService.isLoggedIn()) {
+      request = this.addToken(request, this.userService.getAuthTokenRaw())
+    }
+
+    return next.handle(request.clone())
+      .pipe(
         catchError((err: any) => {
           if (err.status === 401) {
             this._router.navigate(['/'])
@@ -29,4 +34,13 @@ export class CommonInterceptor implements HttpInterceptor {
           return throwError(err);
         }));
   }
+
+  addToken(request: HttpRequest<any>, authTokenRaw: string) {
+    return request.clone({
+      setHeaders: {
+        Authorization: 'Bearer ' + authTokenRaw
+      }
+    });
+  }
+
 }

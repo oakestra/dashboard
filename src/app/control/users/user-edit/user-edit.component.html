@@ -9,14 +9,14 @@
           <div>
             <mat-form-field appearance="fill" style="width: 60%">
               <mat-label>Name</mat-label>
-              <input [value]=user.name disabled matInput>
+              <input [value]="user.name" disabled matInput>
             </mat-form-field>
           </div>
 
           <div>
             <mat-form-field appearance="fill" style="width: 60%">
               <mat-label>E-mail</mat-label>
-              <input [value]=user.email matInput>
+              <input formControlName="email" matInput>
             </mat-form-field>
           </div>
 
@@ -33,7 +33,7 @@
           <br>
 
           <div style="text-align: center">
-            <button color="primary" mat-button mat-flat-button type="submit">Save</button>
+            <button [disabled]="!form.valid" color="primary" mat-button mat-flat-button type="submit">Save</button>
             <button (click)="openDialog(user)" class="cancel_buttons" color="primary" mat-flat-button type="button">
               Change Password
             </button>

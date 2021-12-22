@@ -13,14 +13,17 @@
   <div class="w3-col l6 s12 m6">
     <mat-form-field class="full-width" style="padding-right: 8px">
       <mat-label>Application Name</mat-label>
-      <input [(ngModel)]="local_data.name" matInput>
+<!--      Is disabled on Update because if you make changes you have to rename all JobsNames -->
+      <input [(ngModel)]="local_data.name" [disabled]="action ==='Update'"
+             matInput>
     </mat-form-field>
   </div>
 
   <div class="w3-col l6 s12 m6" style="padding-left: 8px">
     <mat-form-field class="full-width">
       <mat-label>Application Namespace</mat-label>
-      <input [(ngModel)]="local_data.namespace" matInput>
+      <input [(ngModel)]="local_data.namespace" [disabled]="action ==='Update'"
+             matInput>
     </mat-form-field>
   </div>
 

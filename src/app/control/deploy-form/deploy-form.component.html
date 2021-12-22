@@ -8,28 +8,28 @@
           <form (ngSubmit)="onSubmit()" *ngIf="service" [formGroup]="form">
 
             <div class="w3-col l6 s12 leftInput">
-              <mat-form-field appearance="fill" class="full-width ">
+              <mat-form-field appearance="fill">
                 <mat-label>Application ID</mat-label>
                 <input [value]=applicationId disabled matInput>
               </mat-form-field>
             </div>
 
             <div class="w3-col l6 s12 rightInput">
-              <mat-form-field appearance="fill" class="full-width ">
+              <mat-form-field appearance="fill">
                 <mat-label>Service Namespace</mat-label>
                 <input formControlName="microservice_namespace" matInput required>
               </mat-form-field>
             </div>
 
             <div class="w3-col l6 s12 leftInput">
-              <mat-form-field class="full-width">
+              <mat-form-field>
                 <mat-label>Service Name</mat-label>
                 <input formControlName="microservice_name" matInput required>
               </mat-form-field>
             </div>
 
             <div class="w3-col l6 s12 rightInput">
-              <mat-form-field class="full-width">
+              <mat-form-field>
                 <mat-label>Virtualization</mat-label>
                 <select formControlName="virtualization" matNativeControl required>
                   <option value="container">Container</option>
@@ -39,7 +39,7 @@
               </mat-form-field>
             </div>
 
-            <mat-form-field class="full-width">
+            <mat-form-field>
               <mat-label>Description</mat-label>
               <textarea cols="3" formControlName="description" matInput
                         placeholder="Description of the application"></textarea>
@@ -49,7 +49,7 @@
 
             <div style="margin-left: -8px">
               <div class="w3-col l3 m4 s6 w3-row-padding">
-                <mat-form-field class="full-width">
+                <mat-form-field>
                   <mat-label>Memory</mat-label>
                   <input formControlName="memory" matInput min="0" placeholder="1024" required type="number">
                   <p matSuffix>MB</p>
@@ -57,28 +57,28 @@
               </div>
 
               <div class="w3-col l3 m4 s6 w3-row-padding">
-                <mat-form-field class="full-width">
+                <mat-form-field>
                   <mat-label>Vcpus</mat-label>
                   <input formControlName="vcpus" matInput min="0" required type="number" value="1">
                 </mat-form-field>
               </div>
 
               <div class="w3-col l3 m4 s6 w3-row-padding">
-                <mat-form-field class="full-width">
+                <mat-form-field>
                   <mat-label>Vgpus</mat-label>
                   <input formControlName="vgpus" matInput min="0" required type="number" value="0">
                 </mat-form-field>
               </div>
 
               <div class="w3-col l3 m4 s6 w3-row-padding">
-                <mat-form-field class="full-width">
+                <mat-form-field>
                   <mat-label>Vtpus</mat-label>
                   <input formControlName="vtpus" matInput min="0" required type="number" value="0">
                 </mat-form-field>
               </div>
 
               <div class="w3-col l3 m4 s6 w3-row-padding">
-                <mat-form-field class="full-width">
+                <mat-form-field>
                   <mat-label>Bandwidth_in</mat-label>
                   <input formControlName="bandwidth_in" matInput min="0" required type="number" value="0">
                   <p matSuffix>KB</p>
@@ -86,7 +86,7 @@
               </div>
 
               <div class="w3-col l3 m4 s6 w3-row-padding">
-                <mat-form-field class="full-width">
+                <mat-form-field>
                   <mat-label>Bandwidth_out</mat-label>
                   <input formControlName="bandwidth_out" matInput min="0" required type="number" value="0">
                   <p matSuffix>KB</p>
@@ -94,7 +94,7 @@
               </div>
 
               <div class="w3-col l3 m4 s6 w3-row-padding">
-                <mat-form-field class="full-width">
+                <mat-form-field>
                   <mat-label>Storage</mat-label>
                   <input formControlName="storage" matInput min="0" required type="number" value="0">
                   <p matSuffix>MB</p>
@@ -152,12 +152,12 @@
                 <mat-panel-title>Addresses</mat-panel-title>
               </mat-expansion-panel-header>
 
-              <mat-form-field class="full-width">
+              <mat-form-field>
                 <mat-label>RR-IP</mat-label>
                 <input formControlName="rr_ip" matInput type="text">
               </mat-form-field>
 
-              <mat-form-field class="full-width">
+              <mat-form-field>
                 <mat-label>Closest_ip</mat-label>
                 <input formControlName="closest_ip" matInput type="text">
               </mat-form-field>
@@ -165,21 +165,21 @@
               <div class="full-width" formGroupName="instances" style="display: inline-block; margin-left: -8px">
 
                 <div class="w3-col l3 m4 s12 w3-row-padding">
-                  <mat-form-field class="full-width">
+                  <mat-form-field>
                     <mat-label>From</mat-label>
                     <input formControlName="from" matInput type="text">
                   </mat-form-field>
                 </div>
 
                 <div class="w3-col l3 m4 s12 w3-row-padding">
-                  <mat-form-field class="full-width">
+                  <mat-form-field>
                     <mat-label>To</mat-label>
                     <input formControlName="to" matInput type="text">
                   </mat-form-field>
                 </div>
 
                 <div class="w3-col l3 m4 s12 w3-row-padding">
-                  <mat-form-field class="full-width">
+                  <mat-form-field>
                     <mat-label>Start</mat-label>
                     <input formControlName="start" matInput type="text">
                   </mat-form-field>
@@ -220,10 +220,10 @@
 
             </div>
 
-            <mat-form-field class="full-width">
+            <mat-form-field>
               <mat-label>Args - Key Value</mat-label>
-              <input matInput type="text" value="">
-              <!--              <input formControlName="args" matInput type="text" value="">-->
+              <!--              <input formControlName="args" matInput type="text" value="{{argsText}}">-->
+              <input [(ngModel)]="argsText" formControlName="args" matInput type="text">
             </mat-form-field>
 
             <div>
@@ -247,7 +247,7 @@
                         <mat-icon>delete</mat-icon>
                       </button>
                     </div>
-                    <mat-form-field class="full-width">
+                    <mat-form-field>
                       <mat-label>Virtualization</mat-label>
                       <select formControlName="area" matNativeControl required>
                         <!-- // TODO Add the real locations -->
@@ -257,19 +257,19 @@
                       </select>
                     </mat-form-field>
 
-                    <mat-form-field class="full-width">
+                    <mat-form-field>
                       <mat-label>Threshold</mat-label>
                       <input formControlName="threshold" matInput type="number" value="0">
                       <p matSuffix>ms</p>
                     </mat-form-field>
 
-                    <mat-form-field class="full-width">
+                    <mat-form-field>
                       <mat-label>Rigidness</mat-label>
                       <input formControlName="rigidness" matInput max="1" min="0" step="0.01" type="number" value="0">
                       <p matSuffix>%</p>
                     </mat-form-field>
 
-                    <mat-form-field class="full-width">
+                    <mat-form-field>
                       <mat-label>Convergence Time</mat-label>
                       <input formControlName="convergence_time" matInput type="number" value="300">
                       <p matSuffix>sec</p>
@@ -285,14 +285,14 @@
                     </div>
 
                     <div class="w3-col l4 m4 s6" style="padding-right: 16px">
-                      <mat-form-field class="full-width">
+                      <mat-form-field>
                         <mat-label>Longitude</mat-label>
                         <input #long matInput type="number">
                       </mat-form-field>
                     </div>
 
                     <div class="w3-col l4 m4 s6">
-                      <mat-form-field class="full-width">
+                      <mat-form-field>
                         <mat-label>Latitude</mat-label>
                         <input #lat matInput type="number">
                       </mat-form-field>
@@ -308,19 +308,19 @@
                       <div id="map"></div>
                     </div>
 
-                    <mat-form-field class="full-width">
+                    <mat-form-field>
                       <mat-label>Threshold</mat-label>
                       <input formControlName="threshold" matInput type="number">
                       <p matSuffix>km</p>
                     </mat-form-field>
 
-                    <mat-form-field class="full-width">
+                    <mat-form-field>
                       <mat-label>Rigidness</mat-label>
                       <input formControlName="rigidness" matInput max="100" min="0" type="number" value="0">
                       <p matSuffix>%</p>
                     </mat-form-field>
 
-                    <mat-form-field class="full-width">
+                    <mat-form-field>
                       <mat-label>Convergence Time</mat-label>
                       <input formControlName="convergence_time" matInput type="number" value="300">
                       <p matSuffix>sec</p>
@@ -341,14 +341,13 @@
             <div formArrayName="connectivity">
 
               <div *ngFor="let conn of connectivity.controls; let i = index" id="contentInside">
-                <mat-card [formGroupName]="i" class="connectivityCard">
+                <mat-card [formGroupName]="i" class="connectivityCard" style="display: flex">
 
                   <div class="w3-col s8">
-                    <mat-form-field class="full-width">
+                    <mat-form-field>
                       <mat-label> target_microservice_id {{conn.value}}</mat-label>
                       <select formControlName="target_microservice_id" matNativeControl required>
-                        <!--                        TODO Simplify this variables-->
-                        <option *ngFor="let job of allJobs$" [value]="job._id.$oid">
+                        <option *ngFor="let job of allJobs" [value]="job._id.$oid">
                           {{job.microservice_name}} (id: {{job._id.$oid}})
                         </option>
                       </select>
@@ -373,17 +372,40 @@
                     type="button">
               Cancel
             </button>
-            <mat-error *ngIf="form.invalid">required field's missing</mat-error>
+            <mat-error *ngIf="form.invalid" class="alert alert-danger" style="margin-top: 10px">
+              some required field's are still missing
+            </mat-error>
 
           </form>
         </mat-tab>
 
-        <mat-tab label="JSON">
-          <pre>{{jsonContent | json}}</pre>
-        </mat-tab>
+        <!--        Is it usefull to enter the SLA in a plain Text file? - i think currently not-->
+        <!--        <mat-tab label="JSON">-->
+        <!--          <pre>{{jsonContent | json}}</pre>-->
+        <!--        </mat-tab>-->
 
         <mat-tab label="FILE">
-          Content 2
+          <div>
+            <div (click)="fileUpload.click()" class="content">
+              {{filename}}
+            </div>
+
+            <div style="align-content: baseline; text-align: center">
+              <div class="file-upload">
+                <!--                <button (click)="fileUpload.click()" class="upload-btn" color="primary" mat-mini-fab type="button">-->
+                <!--                  <mat-icon>attach_file</mat-icon>-->
+                <!--                </button>-->
+                <input #fileUpload (change)="loadFile($event)" accept="txt"
+                       class="file-input"
+                       type="file">
+              </div>
+              <button (click)="uploadDocument()" [disabled]="file == undefined" class="upload-btn"
+                      color="primary" mat-flat-button style="margin-bottom: 20px" type="button">
+                Upload Config
+              </button>
+            </div>
+          </div>
+
         </mat-tab>
 
       </mat-tab-group>

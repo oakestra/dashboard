@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatRadioChange} from "@angular/material/radio";
 
 @Component({
@@ -12,7 +12,8 @@ import {MatRadioChange} from "@angular/material/radio";
 })
 export class DialogGraphConnectionSettings {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(public dialogRef: MatDialogRef<DialogGraphConnectionSettings>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
   canViewLatConstrains: boolean = true;
@@ -20,4 +21,10 @@ export class DialogGraphConnectionSettings {
   onRadioChange(event: MatRadioChange) {
     this.canViewLatConstrains = event.value == 1;
   }
+
+  cancel(): void {
+    this.dialogRef.close()
+  }
+
+
 }

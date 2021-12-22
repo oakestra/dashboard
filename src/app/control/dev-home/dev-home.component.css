@@ -1,4 +1,4 @@
-@import "https://www.w3schools.com/w3css/4/w3.css";
+/*@import "https://www.w3schools.com/w3css/4/w3.css";*/
 
 mat-card {
   width: 100%;
@@ -21,20 +21,20 @@ mat-card p {
 .content-cards {
   border-radius: 10px;
   margin: 16px;
-  margin-left: 32px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+@media only screen and (min-width: 801px) {
+  .content-cards {
+    margin-left: 32px;
+  }
 }
 
 .serviceCard {
   height: 100%;
 }
 
-.noJobCard {
-  text-align: center;
-  color: lightgray;
-  font-size: large;
-}
 
 
