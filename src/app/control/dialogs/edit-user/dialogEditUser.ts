@@ -16,9 +16,7 @@ export class DialogEditUserView {
   action: string;
   title: string
   local_data: any;
-
   form;
-
   rolDB: any;
   buttonText = ""
 
@@ -71,8 +69,9 @@ export class DialogEditUserView {
     this.local_data.roles = []
 
     for (let r of this.rolDB) {
-      if (roles[r.name])
+      if (roles[r.name]) {
         this.local_data.roles.push(r)
+      }
     }
     this.form.value.roles = this.local_data.roles;
     this.form.value.created_at = this.local_data.created_at

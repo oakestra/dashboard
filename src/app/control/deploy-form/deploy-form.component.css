@@ -14,3 +14,8 @@
 .mat-form-field{
   width: 100%;
 }
+
+.fileDiv{
+  max-width: 90%;
+  display: inline-flex;
+}

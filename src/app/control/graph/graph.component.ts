@@ -32,24 +32,23 @@ export class GraphComponent implements OnChanges {
     this.showConnections = false;
   }
 
-  async openDialog(start: string, target: string) {
+  async openDialog(start: string, target: string, mode: string) {
     let job: any = await this.getJob(start)
     let conn = this.findCorrectConstraint(target, job.connectivity)
-    console.log(job)
-    console.log(conn)
 
     let data = {
       'start_serviceID': start,
-      'targe_serviceID': target,
+      'target_serviceID': target,
       'type': "geo",
-      'threshold': 0,
+      'threshold': 100,
       'rigidness': 0.1,
       'convergence_time': 300,
     }
     if (conn) {
+      conn = conn[0]
       data = {
         'start_serviceID': start,
-        'targe_serviceID': target,
+        'target_serviceID': target,
         'type': conn.type,
         'threshold': conn.threshold,
         'rigidness': conn.rigidness,
@@ -57,8 +56,19 @@ export class GraphComponent implements OnChanges {
       }
     }
     const dialogRef = this.dialog.open(DialogGraphConnectionSettings, {data});
-    dialogRef.afterClosed().subscribe(result => this.saveGraphConstrains(result));
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.event == 'Save') {
+        this.saveGraphConstrains(result.data)
+      } else if (result.event == 'Cancel' && mode == 'new') {
+        deleteLink()
+      } else if (result.event == 'Delete') {
+        this.deleteOnlyLink(start, target)
+      } else if (result.event == 'Switch') {
+        this.openDialog(target, start, 'edit')
+      }
+    })
   }
+
 
   findCorrectConstraint(target: string, arr: any) {
     let conn = null
@@ -73,29 +83,29 @@ export class GraphComponent implements OnChanges {
   async saveGraphConstrains(data: any) {
     let jobProm: any = await this.getJob(data.start_serviceID)
     let newJob = jobProm
-    let index = newJob.connectivity.findIndex((d: any) => d.target_microservice_id == data.targe_serviceID)
+    let index = newJob.connectivity.findIndex((d: any) => d.target_microservice_id == data.target_serviceID)
     if (index < 0) { // add new constrains
       newJob.connectivity.push({
-        target_microservice_id: data.targe_serviceID,
-        con_constraints: {
+        target_microservice_id: data.target_serviceID,
+        con_constraints: [{
           'type': data.type,
           'threshold': data.threshold,
           'rigidness': data.rigidness,
           'convergence_time': data.convergence_time
-        }
+        }]
       })
     } else { // edit existing constraint
       newJob.connectivity[index] = {
-        target_microservice_id: data.targe_serviceID,
-        con_constraints: {
+        target_microservice_id: data.target_serviceID,
+        con_constraints: [{
           'type': data.type,
           'threshold': data.threshold,
           'rigidness': data.rigidness,
           'convergence_time': data.convergence_time,
-        }
+        }]
       };
     }
-    this.update(data.start_serviceID, newJob)
+    this.update(newJob)
   }
 
   async getJob(id: string) {
@@ -106,11 +116,10 @@ export class GraphComponent implements OnChanges {
     })
   }
 
-  update(id: string, job: any) {
+  update(job: any) {
     this.api.updateJob(job).subscribe(() => console.log("Updated Constrains"));
   }
 
-  //TODO change id to name and idNumber to id also in js file
   getNodes() {
     this.nodes = []
     for (let job of this.jobs) {
@@ -151,11 +160,16 @@ export class GraphComponent implements OnChanges {
 
   delete(id: any) {
     this.updated.emit(id);
-    this.deleteOnlyLink()
+    deleteLink()
   }
 
-  deleteOnlyLink() {
-    deleteLink(); // Call function in graph.js
+  deleteOnlyLink(start: string, target: string) {
+    this.api.getJobByID(start).subscribe((job: any) => {
+      let index = job.connectivity.findIndex((d: any) => d.target_microservice_id == target)
+      job.connectivity.splice(index, 1)
+      this.update(job)
+    })
+    deleteLink(); // deletes Lin in the graph
   }
 
   start() {
@@ -163,12 +177,22 @@ export class GraphComponent implements OnChanges {
     let l = this.links;
     let n = this.nodes;
 
-    // TODO make this without 3 loops
     for (let x = 0; x < l.length; x++) {
       for (let i = 0; i < n.length; i++) {
         for (let j = 0; j < n.length; j++) {
           if (l[x].source == n[i].idNumber && l[x].target == n[j].idNumber) {
-            linksNew.push({source: n[i], target: n[j]})
+
+            // To combine two links between nodes to one, but then problems with the deletion.
+
+            // let backwardsLink = {source: n[j], target: n[i], left: false, right: true}
+            // let index: number = linksNew.findIndex(x => (x.source == n[j] && x.target == n[i]))
+            // console.log("index")
+            // console.log(index)
+            // if (index >= 0) {
+            //   linksNew[index] = ({source: n[i], target: n[j], left: true, right: true})
+            // } else {
+            linksNew.push({source: n[i], target: n[j], left: false, right: true})
+            // }
           }
         }
       }

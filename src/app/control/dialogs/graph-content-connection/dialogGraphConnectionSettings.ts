@@ -7,24 +7,35 @@ import {MatRadioChange} from "@angular/material/radio";
   templateUrl: 'dialog-graph-connection-settings.html',
   styles: [
     '.full-width{width: 100%}',
-    '.alignRight{text-align: right}'
+    '.alignRight{text-align: right}',
+    '.test .mat-radio-outer-circle{border-color: red}'
   ]
 })
 export class DialogGraphConnectionSettings {
+
+  canViewLatConstrains: boolean = true;
 
   constructor(public dialogRef: MatDialogRef<DialogGraphConnectionSettings>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
-  canViewLatConstrains: boolean = true;
-
   onRadioChange(event: MatRadioChange) {
     this.canViewLatConstrains = event.value == 1;
   }
 
-  cancel(): void {
-    this.dialogRef.close()
+  cancel() {
+    this.dialogRef.close({event: 'Cancel'});
   }
 
+  save() {
+    this.dialogRef.close({event: 'Save', data: this.data});
+  }
 
+  switchStartAndTarget() {
+    this.dialogRef.close({event: 'Switch'});
+  }
+
+  delete() {
+    this.dialogRef.close({event: 'Delete'});
+  }
 }

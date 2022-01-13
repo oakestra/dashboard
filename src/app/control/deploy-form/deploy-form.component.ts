@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DialogConnectionSettings} from "../dialogs/content-connection/dialogConnectionSettings";
 import {MatDialog} from "@angular/material/dialog";
 import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
@@ -6,6 +6,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ApiService} from "../../shared/modules/api/api.service";
 import {SharedIDService} from "../../shared/modules/helper/shared-id.service";
 import {CleanJsonService} from "../../shared/util/clean-json.service";
+import {take} from "rxjs/operators";
+import {Subscription} from "rxjs/internal/Subscription";
 
 @Component({
   selector: 'deploy-form',
@@ -13,7 +15,7 @@ import {CleanJsonService} from "../../shared/util/clean-json.service";
   styleUrls: ['./deploy-form.component.css']
 })
 
-export class DeployFormComponent implements OnInit {
+export class DeployFormComponent implements OnInit, OnDestroy{
 
   form: FormGroup;
 
@@ -29,13 +31,11 @@ export class DeployFormComponent implements OnInit {
   currentJobID = ""; // This one is uses to get the Job from the DB
   applicationId = "";
   currentApplication: any;
-
   argsArray: string[] = [];
   argsText = "";
-
   allJobs: any // For the Dropdown list of the connections
-
   jsonContent: any // The final SLA witch is generated form the form
+  subscriptions: Subscription[] = [];
 
   conConstrainsArray: FormArray[] = [new FormArray([new FormGroup({
     'type': new FormControl(0),
@@ -52,15 +52,17 @@ export class DeployFormComponent implements OnInit {
               private shardService: SharedIDService) {
 
     this.currentJobID = "not yet defined";
-    this.shardService.applicationObservable$.subscribe(app => {
+    let sub = this.shardService.applicationObserver$.subscribe(app => {
       this.currentApplication = app
       this.applicationId = app._id.$oid
-      this.api.getJobsOfApplication(this.applicationId).subscribe((jobs: any) => {
+      let s = this.api.getJobsOfApplication(this.applicationId).pipe(take(1)).subscribe((jobs: any) => {
         this.allJobs = jobs
       }, (err) => {
         console.log(err)
       })
+      this.subscriptions.push(s)
     })
+    this.subscriptions.push(sub)
 
     this.form = fb.group({
       'microserviceID': [],
@@ -95,12 +97,10 @@ export class DeployFormComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.route.paramMap.subscribe(pram => {
       if (pram.get("id") != null) {
         this.editingJob = true;
         this.currentJobID = pram.get("id")!; // Set the id to the id in the URL
-        this.form.get("microserviceID")?.setValue(this.currentJobID);
 
         this.api.getJobByID(this.currentJobID).subscribe((job: any) => {
           this.service = job;
@@ -111,6 +111,12 @@ export class DeployFormComponent implements OnInit {
         this.service = true;
       }
     })
+  }
+
+  ngOnDestroy() {
+    for(let s of this.subscriptions){
+      s.unsubscribe()
+    }
   }
 
   createEditFormGroup(): void {
@@ -267,7 +273,7 @@ export class DeployFormComponent implements OnInit {
 
     this.jsonContent = {
       "api_version": "v0.3.0",
-      "customerID": "10000000001xyz",
+      "customerID": "10000000001",
       "applications": [
         {
           "applicationID": this.currentApplication._id.$oid,
@@ -296,7 +302,7 @@ export class DeployFormComponent implements OnInit {
     content.args = [this.argsText]
 
     if (this.editingJob) {
-      content.microserviceID = {_id: {$oid: this.currentJobID}}
+      content.microserviceID = this.currentJobID
       this.api.updateJob(content).subscribe((_success) => {
           this.router.navigate(['/control']);
         },

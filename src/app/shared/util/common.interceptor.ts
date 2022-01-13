@@ -26,13 +26,10 @@ export class CommonInterceptor implements HttpInterceptor {
     return next.handle(request.clone())
       .pipe(
         catchError((err: any) => {
-          if (err.status === 401) {
             this._router.navigate(['/'])
-          } else if (err.status === 403) {
-            this._router.navigate(['control'])
+            return throwError(err);
           }
-          return throwError(err);
-        }));
+        ));
   }
 
   addToken(request: HttpRequest<any>, authTokenRaw: string) {

@@ -9,15 +9,14 @@
       </mat-form-field>
     </div>
 
-    <mat-radio-group [(ngModel)]="data.type" required style="flex: 1">
+    <mat-radio-group [(ngModel)]="data.type" required>
       <div class="w3-col l4 m4" style="float: right;">
         <mat-radio-button (change)="onRadioChange($event)" id="dialog-radio" value="latency">latency</mat-radio-button>
       </div>
-      <div class="w3-col l4 m4" style="float: right; ">
-        <mat-radio-button (change)="onRadioChange($event)" style="border-color:black" value="geo">geo</mat-radio-button>
+      <div class="w3-col l4 m4" style="float: right;">
+        <mat-radio-button (change)="onRadioChange($event)" value="geo">geo</mat-radio-button>
       </div>
     </mat-radio-group>
-
   </div>
 
   <div class="full-width w3-row">

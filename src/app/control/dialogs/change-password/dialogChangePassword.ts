@@ -20,9 +20,9 @@ export class DialogChangePasswordView {
   local_data: any;
 
   form = new FormGroup({
-    'oldPassword' : new FormControl("", Validators.required),
-    'newPassword' : new FormControl("" , Validators.required),
-    'confirmNewPassword' : new FormControl("", Validators.required)
+    'oldPassword': new FormControl("", Validators.required),
+    'newPassword': new FormControl("", Validators.required),
+    'confirmNewPassword': new FormControl("", Validators.required)
   }, [PasswordValidators.oldAndNewPassDifferent, PasswordValidators.newPasswordsSame])
 
   constructor(
@@ -36,15 +36,15 @@ export class DialogChangePasswordView {
     this.action = this.local_data.action;
   }
 
-  get oldPassword(){
+  get oldPassword() {
     return this.form.get('oldPassword')
   }
 
-  get newPassword(){
+  get newPassword() {
     return this.form.get('newPassword')
   }
 
-  get confirmNewPassword(){
+  get confirmNewPassword() {
     return this.form.get('confirmNewPassword')
   }
 
@@ -54,26 +54,28 @@ export class DialogChangePasswordView {
 
   updatePassword(): void {
     const username = this.local_data.name
-    this.api.changePassword(username, this.oldPassword?.value, this.newPassword?.value).subscribe((_success: any) => {
+    this.api.changePassword(username, this.oldPassword?.value, this.newPassword?.value).subscribe(() => {
       this.notifyService.notify(Type.success, "Password changed");
       this.closeDialog()
     });
   }
 }
 
-export class PasswordValidators{
+export class PasswordValidators {
 
-  static oldAndNewPassDifferent(control: AbstractControl): Validators | null{
-    if (control.get('oldPassword')?.value != control.get('newPassword')?.value)
+  static oldAndNewPassDifferent(control: AbstractControl): Validators | null {
+    if (control.get('oldPassword')?.value != control.get('newPassword')?.value) {
       return null;
-    else
-      return {oldAndNewPassDifferent : true}
+    } else {
+      return {oldAndNewPassDifferent: true}
+    }
   }
 
-  static newPasswordsSame(control: AbstractControl): Validators | null{
-    if (control.get('confirmNewPassword')?.value == control.get('newPassword')?.value)
+  static newPasswordsSame(control: AbstractControl): Validators | null {
+    if (control.get('confirmNewPassword')?.value == control.get('newPassword')?.value) {
       return null;
-    else
-      return {newPasswordsSame : true}
+    } else {
+      return {newPasswordsSame: true}
+    }
   }
 }

@@ -16,7 +16,6 @@ import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {AuthService, Role} from "./auth.service";
 
-
 @Injectable()
 export class RoleRouterGuard implements CanActivate, CanLoad, CanActivateChild {
 
@@ -48,5 +47,4 @@ export class RoleRouterGuard implements CanActivate, CanLoad, CanActivateChild {
   canLoad(route: Route, segments: UrlSegment[]) {
     return true
   }
-
 }

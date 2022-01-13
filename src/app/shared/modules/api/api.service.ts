@@ -52,8 +52,7 @@ export class ApiService extends RestService {
   }
 
   updateJob(job: any) {
-    console.log(job)
-    return this.doPUTRequest("/job/" + job.microserviceID._id.$oid, job)
+    return this.doPUTRequest("/job/" + job.microserviceID, job)
   }
 
   deleteJob(job: any) {
@@ -84,7 +83,6 @@ export class ApiService extends RestService {
   }
 
   public updateUser(user: UserEntity) {
-    console.log(user)
     return this.doPUTRequest("/user/" + user.name, user)
   }
 
@@ -142,7 +140,7 @@ export class ApiService extends RestService {
   }
 
   saveResetPassword(token: string, password: string) {
-    return this.doPUTRequest("/auth/resetPassword", { token, password });
+    return this.doPUTRequest("/auth/resetPassword", {token, password});
   }
 }
 

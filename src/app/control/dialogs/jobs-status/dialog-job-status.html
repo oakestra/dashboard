@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Status: {{status}}</h2>
+<mat-dialog-content class="mat-typography">
+
+  <div class="alert alert-info" style="width: 70vw">
+    <p style="margin: 0">{{details}}</p>
+  </div>
+
+  <h3>Cluster Stats:</h3>
+  <div class="alert alert-light">
+    <div>{{information | json}}</div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="alignRight">
+  <button (click)="closeDialog()" color="primary" mat-button mat-flat-button>Cancel</button>
+</mat-dialog-actions>

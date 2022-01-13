@@ -11,6 +11,7 @@ export class NotificationService {
   massage = ""
   type = 0;
   panelClass: any
+
   constructor(private snackBar: MatSnackBar) {
   }
 
@@ -18,9 +19,9 @@ export class NotificationService {
     this.massage = data
     this.type = type
 
-    if(type == Type.error){
+    if (type == Type.error) {
       this.panelClass = ['error-snackbar']
-    }else if (type == Type.success) {
+    } else if (type == Type.success) {
       this.panelClass = ['success-snackbar']
     }
 
@@ -31,7 +32,7 @@ export class NotificationService {
   }
 }
 
-export enum Type{
+export enum Type {
   error,
   information,
   success

@@ -11,9 +11,8 @@ svg:not(.active):not(.ctrl) {
 }
 
 path.link {
-  fill: none;
   stroke: #888;
-  stroke-width: 3px;
+  stroke-width: 30px;
   cursor: default;
 }
 
@@ -22,7 +21,7 @@ svg:not(.active):not(.ctrl) path.link {
 }
 
 path.link.selected {
-  stroke-dasharray: 10,2;
+  stroke-dasharray: 10, 2;
 }
 
 path.link.dragline {
@@ -36,7 +35,7 @@ path.link.hidden {
 circle.node {
   stroke-width: 0;
   cursor: pointer;
-  fill:#fff;
+  fill: #fff;
 }
 
 text {
@@ -49,7 +48,7 @@ text.id {
   font-weight: bold;
 }
 
-.graph{
+.graph {
   background: lightgray;
   border: 2px solid #002b5c;
   border-radius: 5px;

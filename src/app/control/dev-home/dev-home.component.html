@@ -1,22 +1,26 @@
 <div class="content-cards">
   <mat-card class="serviceCard">
 
-    <div *ngIf="sharedService.applicationObservable$ != null">
+    <div *ngIf="sharedService.applicationObserver$ != null">
       <mat-card-title>Application: {{appName}}</mat-card-title>
-      <div>
-        <mat-card *ngFor="let job of jobs$ ">
+      <div *ngIf="jobsCount > 0">
+        <mat-card *ngFor="let job of jobs">
           <div class="w3-row">
-            <div class="w3-col s6">
-              <p>{{job.microservice_name}}</p>
+
+            <div class="w3-col s4 l5 m4 ">
+              {{job.microservice_name}}
             </div>
 
-            <div class="w3-col s5 w3-left">
-              <p>{{job.status}}</p>
+            <div class="w3-col s5 w3-left statusField">
+              <button (click)="openStatusDialog(job)" mat-icon-button type="button">
+                <mat-icon [class]=job.status>fiber_manual_record</mat-icon>
+              </button>
+              <p class="statusText">{{job.status}}</p>
             </div>
 
-            <div class="w3-col s1">
+            <div class="w3-col s1 w3-right">
               <button [matMenuTriggerFor]="settings" mat-icon-button type="button">
-                <mat-icon style="vertical-align: top">more_vert</mat-icon>
+                <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #settings="matMenu">
                 <button [routerLink]="['deploy', job._id.$oid]" mat-menu-item>
@@ -35,9 +39,18 @@
             </div>
           </div>
         </mat-card>
+        <mat-card-actions style="text-align: end">
+          <button (click)="deployAllJobs()" color="primary" mat-flat-button type="button">
+            <mat-icon>send</mat-icon>
+            Deploy all
+          </button>
+        </mat-card-actions>
 
-        <graph (updated)="deleteJobWithGraph($event)" [jobs]="jobs$"></graph>
+        <graph (updated)="deleteJobWithGraph($event)" [jobs]="jobs"></graph>
 
+      </div>
+      <div *ngIf="jobsCount == 0" class="content mat-elevation-z8">
+        No Job in this application.
       </div>
     </div>
   </mat-card>

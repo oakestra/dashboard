@@ -16,16 +16,11 @@ export class UsersComponent implements OnInit {
 
   users: Array<UserEntity> = [];
   searchedUsers: Array<UserEntity> = [];
-
   selectedUser: any;
   action: string = "";
-
   searchText = '';
-
   roles: UserRole[] = [];
-
   selectedItems = [""];
-
   dropdown = new FormControl();
   dropdownList: string[] = [];
 

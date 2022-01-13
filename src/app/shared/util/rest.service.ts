@@ -19,8 +19,7 @@ export class RestService {
 
   requestOptions = {
     headers: new HttpHeaders({
-      "Content-Type": 'text/plain',
-      // "Content-Type": "application/json",
+      "Content-Type": "application/json",
     })
   }
 

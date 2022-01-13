@@ -30,8 +30,7 @@ export class LoginComponent {
         password: this.user.password
       };
 
-      this.userService.login(loginRequest).subscribe(
-        (userServiceResponse: any) => {
+      this.userService.login(loginRequest).subscribe((userServiceResponse: any) => {
           if (userServiceResponse === true) {
             this.authService.getAuthorization().subscribe(() =>
               this.router.navigate(['/control'])
@@ -60,7 +59,7 @@ export class LoginComponent {
   public create_user_entity(): UserEntity {
     return {
       _id: {$oid: "set in the mongoDB"},
-      name: "Daniel", // Only for testing
+      name: "Daniel", //TODO only for testing
       password: "1234",
       email: "",
       created_at: "",

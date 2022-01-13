@@ -22,13 +22,10 @@ export class NavbarComponent implements OnInit {
 
   active: any
   app: any;
-
   appSelected = false
   settings = false
-
   username = ""
   userID = "";
-
   isAdmin = false
 
   constructor(private observer: BreakpointObserver,
@@ -116,11 +113,11 @@ export class NavbarComponent implements OnInit {
 
   deleteApplication(app: any): void {
     this.api.deleteApplication(app).subscribe((_success) => {
-        this.notifyService.notify(Type.success, "Application " + app.name + " deleted successfully!")
+        this.notifyService.notify(Type.success, 'Application "' + app.name + '" deleted successfully!')
         this.loadData();
       },
       (_error) => {
-        this.notifyService.notify(Type.error, "Error: Deleting application " + app.name + " failed!")
+        this.notifyService.notify(Type.error, 'Error: Deleting application "' + app.name + '" failed!')
       })
   }
 
@@ -129,7 +126,7 @@ export class NavbarComponent implements OnInit {
         this.loadData();
       },
       (_error: any) => {
-        this.notifyService.notify(Type.success, "Error: Adding application " + app.name + " failed!")
+        this.notifyService.notify(Type.error, 'Error: Adding application "' + app.name + '" failed!')
       })
   }
 

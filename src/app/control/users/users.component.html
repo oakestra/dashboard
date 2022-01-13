@@ -53,8 +53,8 @@
       </ng-container>
 
       <ng-container matColumnDef="created_at">
-        <th *matHeaderCellDef mat-header-cell> Registered at</th>
-        <td *matCellDef="let element" mat-cell> {{element.created_at}} </td>
+        <th *matHeaderCellDef class="registeredRow" mat-header-cell> Registered at</th>
+        <td *matCellDef="let element" class="registeredRow" mat-cell> {{element.created_at}} </td>
       </ng-container>
 
       <ng-container matColumnDef="roles">

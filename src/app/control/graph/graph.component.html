@@ -1,30 +1,33 @@
 <button (click)="multipleFunctions()" color="primary" mat-button>{{showConButton}}</button>
-<div [style.display]=" showConnections ? '' : 'none'" class="wrapper" style="width: 100%; overflow: hidden;">
+
+<div [style.display]=" showConnections ? '' : 'none'" class="wrapper"
+     style="width: 100%; overflow: hidden;">
   <div class="buttonSide" style="width: 20vw; float:left;">
     <h2 #type id="typeText"></h2>
     <h4 id="testText">Select Node or Connection</h4>
 
-    <!--    // TODO find better way to exchange the data between JS and TS-->
     <div style="display: none">
       <p #nodeID id="IdText"></p>
       <p #start id="IdLinkStart"></p>
       <p #target id="IdLinkTarget"></p>
-      <button (click)="openDialog(start.innerText, target.innerText)" id="deleteLink" mat-button style="display: none">
+      <button (click)="openDialog(start.innerText, target.innerText, 'new')" id="configureLink" mat-button
+              mat-flat-button
+              style="display: none">
       </button>
     </div>
 
     <div *ngIf="type.innerText.startsWith('Link') else nodeButtons">
-      <button (click)="openDialog(start.innerText, target.innerText)" mat-button>
+      <button (click)="openDialog(start.innerText, target.innerText, 'edit')" color="primary" mat-button
+              mat-flat-button>
         <mat-icon>settings</mat-icon>
-      </button>
-      <button (click)="deleteOnlyLink()" mat-button>
-        <mat-icon>delete</mat-icon>
+        Configure Connection
       </button>
     </div>
 
     <ng-template #nodeButtons>
-      <button id="editElement" mat-button routerLink="deploy/{{nodeID.innerText}}">
+      <button color="primary" id="editElement" mat-button mat-flat-button routerLink="deploy/{{nodeID.innerText}}">
         <mat-icon>settings</mat-icon>
+        Configure Node
       </button>
       <button (click)="delete(nodeID.innerText)" mat-button>
         <mat-icon>delete</mat-icon>
@@ -32,8 +35,9 @@
     </ng-template>
 
   </div>
-  <div class="graphSide" id="graph" style="overflow: hidden;">
-    <div class="graph"></div>
-  </div>
+</div>
 
+<div [style.display]=" showConnections ? '' : 'none'" class="graphSide" id="graph"
+     style="overflow: hidden; margin-top: 20px">
+  <div class="graph"></div>
 </div>

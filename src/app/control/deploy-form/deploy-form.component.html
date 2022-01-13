@@ -103,7 +103,7 @@
 
             </div>
 
-            <div style="max-width: 90%; display: inline-flex">
+            <div class="fileDiv">
               <mat-form-field style="width: 70vh">
                 <mat-label>Code</mat-label>
                 <input formControlName="code" matInput placeholder="https://urlToCode" required type="url">
@@ -121,7 +121,7 @@
               </div>
             </div>
 
-            <div style="max-width: 90%; display: inline-flex">
+            <div class="fileDiv">
               <mat-form-field style="width: 70vh">
                 <mat-label>State</mat-label>
                 <input formControlName="state" matInput placeholder="https://urlToState" required type="url" value="">
@@ -134,7 +134,6 @@
                 <input #fileUpload (change)="onFileSelected($event, 0, 'state')"
                        class="file-input"
                        type="file">
-                <!--                {{fileName[i] || ""}}-->
                 <input #fileUpload class="file-input"
                        type="file">
               </div>
@@ -197,7 +196,7 @@
               </button>
             </div>
 
-            <div *ngFor="let f of fileArrayForm.controls; index as i" style="max-width: 100%">
+            <div *ngFor="let f of fileArrayForm.controls; index as i">
               <mat-form-field formGroupName="added_files" style="width: 80%; float: left;">
                 <mat-label>File Url</mat-label>
                 <input [formControl]="$any(fileArrayForm).controls[i]"
@@ -222,7 +221,6 @@
 
             <mat-form-field>
               <mat-label>Args - Key Value</mat-label>
-              <!--              <input formControlName="args" matInput type="text" value="{{argsText}}">-->
               <input [(ngModel)]="argsText" formControlName="args" matInput type="text">
             </mat-form-field>
 
@@ -302,12 +300,6 @@
                       <input [ngModel]="'(' + long.value + ',' + lat.value + ')'" formControlName="location" matInput>
                     </div>
 
-                    <!--                TODO Make Dialog with Map and Location selector -->
-                    <div class="w3-col l4 m4 s6">
-                      <button mat-flat-button type="button">Select on map</button>
-                      <div id="map"></div>
-                    </div>
-
                     <mat-form-field>
                       <mat-label>Threshold</mat-label>
                       <input formControlName="threshold" matInput type="number">
@@ -379,11 +371,6 @@
           </form>
         </mat-tab>
 
-        <!--        Is it usefull to enter the SLA in a plain Text file? - i think currently not-->
-        <!--        <mat-tab label="JSON">-->
-        <!--          <pre>{{jsonContent | json}}</pre>-->
-        <!--        </mat-tab>-->
-
         <mat-tab label="FILE">
           <div>
             <div (click)="fileUpload.click()" class="content">
@@ -392,10 +379,8 @@
 
             <div style="align-content: baseline; text-align: center">
               <div class="file-upload">
-                <!--                <button (click)="fileUpload.click()" class="upload-btn" color="primary" mat-mini-fab type="button">-->
-                <!--                  <mat-icon>attach_file</mat-icon>-->
-                <!--                </button>-->
-                <input #fileUpload (change)="loadFile($event)" accept="txt"
+                <input #fileUpload (change)="loadFile($event)"
+                       accept="application/JSON"
                        class="file-input"
                        type="file">
               </div>
@@ -412,10 +397,3 @@
     </div>
   </mat-card>
 </div>
-
-
-
-
-
-
-

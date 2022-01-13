@@ -3,39 +3,38 @@
 
   <div class="full-width w3-row" style="display: flex; padding-top: 20px;">
 
-    <div class="w3-col s12 l5">
+    <div class="w3-col s12 l5 w3-left">
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Start ID</mat-label>
         <input [value]=data.start_serviceID disabled matInput>
       </mat-form-field>
     </div>
 
-    <!--      TODO Implement function were start and target switch-->
-    <!--      <div class="w3-col l2" style="text-align: center">-->
-    <!--        <button mat-icon-button>-->
-    <!--          <mat-icon>swap_horiz</mat-icon>-->
-    <!--        </button>-->
-    <!--      </div>-->
+    <div class="w3-col s12 l2" style="text-align: center">
+      <button (click)="switchStartAndTarget()" mat-icon-button>
+        <mat-icon>swap_horiz</mat-icon>
+      </button>
+    </div>
 
-    <div class="w3-col s12 l5">
+    <div class="w3-col s12 l5 w3-right">
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Target ID</mat-label>
-        <input [value]="data.targe_serviceID" disabled matInput>
+        <input [value]="data.target_serviceID" disabled matInput>
       </mat-form-field>
     </div>
+
   </div>
 
-  <div style="padding-bottom: 32px; padding-top: 16px">
+  <div style="padding-bottom: 32px; margin: 20px 0 20px 0">
     <mat-radio-group [(ngModel)]="data.type" required style="flex: 1">
-      <div class="w3-col l4 m4">
+      <div class="w3-col l6 m6" style="text-align: center">
         <mat-radio-button (change)="onRadioChange($event)" id="dialog-radio" value="latency">latency</mat-radio-button>
       </div>
-      <div class="w3-col l4 m4">
-        <mat-radio-button (change)="onRadioChange($event)" style="border-color:black" value="geo">geo</mat-radio-button>
+      <div class="w3-col l6 m6" style="text-align: center">
+        <mat-radio-button class="test" (change)="onRadioChange($event)" value="geo">geo</mat-radio-button>
       </div>
     </mat-radio-group>
   </div>
-
 
   <div class="full-width w3-row">
 
@@ -67,6 +66,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-button (click)="cancel()">Cancel</button>
-  <button [mat-dialog-close]="data" color="primary" mat-button mat-flat-button>Save</button>
+  <button (click)="cancel()" mat-button>Cancel</button>
+  <button (click)="delete()" color="warn" mat-button mat-flat-button>Delete</button>
+  <button (click)="save()" [mat-dialog-close]="data" color="primary" mat-button mat-flat-button>Save</button>
 </mat-dialog-actions>

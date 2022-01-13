@@ -37,6 +37,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import {DialogEditUserView} from "./dialogs/edit-user/dialogEditUser";
 import {UserEditComponent} from './users/user-edit/user-edit.component';
 import {DialogChangePasswordView} from "./dialogs/change-password/dialogChangePassword";
+import {DialogJobStatusView} from "./dialogs/jobs-status/dialogJobStatus";
 
 
 @NgModule({
@@ -53,16 +54,15 @@ import {DialogChangePasswordView} from "./dialogs/change-password/dialogChangePa
     UsersComponent,
     DialogEditUserView,
     UserEditComponent,
-    DialogChangePasswordView
+    DialogChangePasswordView,
+    DialogJobStatusView
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-
     // Angular Material Modules
     MatMenuModule,
     MatCheckboxModule,
@@ -84,7 +84,6 @@ import {DialogChangePasswordView} from "./dialogs/change-password/dialogChangePa
     MatPaginatorModule,
     MatTableModule,
     MatChipsModule,
-
   ],
 })
 export class ControlModule {

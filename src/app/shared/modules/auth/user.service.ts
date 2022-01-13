@@ -44,9 +44,7 @@ export class UserService {
           // server is running and returned a json string
           errorMsg = error.error.message;
           console.log(errorMsg)
-
         }
-        // return throwError(error || 'Server error')
         return throwError(error || 'Server error')
       }))
   }
@@ -128,7 +126,7 @@ export class UserService {
       return jwt_decode(token);
     } catch (Error) {
       console.log(Error)
-      this.redirectToLogin()
+      // this.redirectToLogin()
       return null;
     }
   }

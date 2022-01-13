@@ -1,6 +1,5 @@
-@import "~bootstrap/dist/css/bootstrap.css";
-@import "https://www.w3schools.com/w3css/4/w3.css";
-
+/*@import "~bootstrap/dist/css/bootstrap.css";*/
+/*@import "https://www.w3schools.com/w3css/4/w3.css";*/
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 .alignRight {
@@ -14,11 +13,6 @@
 /*.mat-button-focus-overlay {*/
 /*  background-color: transparent !important;*/
 /*}*/
-
-.dialog-radio {
-  border-color: red;
-}
-
 
 /*////////////////////////////////////////////////////*/
 svg {
@@ -41,12 +35,14 @@ path.link {
   cursor: default;
 }
 
-svg:not(.active):not(.ctrl) path.link {
-  cursor: pointer;
+path.link.selected {
+  stroke: #000000;
+  stroke-dasharray: 10, 5;
+  /*z-index: 2;*/
 }
 
-path.link.selected {
-  stroke-dasharray: 10, 2;
+svg:not(.active):not(.ctrl) path.link {
+  cursor: pointer;
 }
 
 path.link.dragline {
@@ -180,3 +176,10 @@ td {
 .file-input {
   display: none
 }
+
+button:focus {outline:0;}
+
+.mat-button{
+  line-height: 40px;
+}
+
