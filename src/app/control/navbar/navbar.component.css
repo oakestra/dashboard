@@ -95,12 +95,6 @@ mat-card p {
   justify-content: center;
 }
 
-/*@media only screen and (min-width: 801px) {*/
-/*  .content-cards {*/
-/*    margin-left: 32px;*/
-/*  }*/
-/*}*/
-
 .serviceCard {
   height: 100%;
 }
@@ -119,5 +113,4 @@ mat-card p {
 
 /deep/ .mat-radio-outer-circle {
   border-color: white
-  /*border-color: white !important;*/
 }

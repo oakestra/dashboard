@@ -1,3 +1,5 @@
+<script src="https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/js/shepherd.min.js"></script>
+
 <mat-toolbar class="mat-elevation-z8">
 
   <button (click)="sidenav.toggle()" *ngIf="sidenav.mode === 'over'" mat-icon-button>
@@ -13,7 +15,7 @@
 
   <span class="example-spacer"></span>
 
-  <button mat-icon-button routerLink="/control/deploy">
+  <button id="createJob" mat-icon-button routerLink="/control/deploy">
     <mat-icon>add_circle</mat-icon>
   </button>
 
@@ -40,30 +42,31 @@
 
     <mat-divider></mat-divider>
 
-    <button class="menu-button" mat-button routerLink="/control">
+    <button class="menu-button" id="homeNavbar" mat-button routerLink="/control">
       <span>Home</span>
     </button>
 
-    <mat-divider></mat-divider>
-    <h6>Application:</h6>
+    <div id="applicationTitle">
+      <mat-divider></mat-divider>
+      <h6>Application:</h6>
 
-    <div *ngFor="let app of app " style="display: flex; justify-content: space-between;align-items: center">
+      <div *ngFor="let app of app " style="display: flex; justify-content: space-between;align-items: center">
 
-      <mat-radio-group (change)="handleChange()" [(ngModel)]="active">
-        <mat-radio-button [value]="app._id" class="menu-button">
-          <span style="float: left">{{app.name}}</span>
-        </mat-radio-button>
-      </mat-radio-group>
+        <mat-radio-group (change)="handleChange()" [(ngModel)]="active">
+          <mat-radio-button [value]="app._id" class="menu-button">
+            <span style="float: left">{{app.name}}</span>
+          </mat-radio-button>
+        </mat-radio-group>
 
-      <button (click)="openDialog('Update',app)" mat-icon-button>
-        <mat-icon>settings</mat-icon>
+        <button (click)="openDialog('Update',app)" mat-icon-button>
+          <mat-icon>settings</mat-icon>
+        </button>
+      </div>
+
+      <button (click)="openDialog('Add',{})" class="menu-button" mat-icon-button>
+        <mat-icon>add</mat-icon>
       </button>
     </div>
-
-    <button (click)="openDialog('Add',{})" class="menu-button" mat-icon-button>
-      <mat-icon>add</mat-icon>
-    </button>
-
     <div *ngIf="isAdmin">
       <mat-divider></mat-divider>
       <h6>Admin</h6>
@@ -80,7 +83,7 @@
     </button>
 
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content id="content">
 
     <div *ngIf="!appSelected && !settings" class="content mat-elevation-z8">
       No Application selected.

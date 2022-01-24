@@ -1,7 +1,6 @@
 import {Injectable, Injector} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
-import {catchError} from "rxjs/operators";
+import {Observable} from 'rxjs';
 import {Router} from "@angular/router";
 import {UserService} from "../modules/auth/user.service";
 
@@ -24,12 +23,6 @@ export class CommonInterceptor implements HttpInterceptor {
     }
 
     return next.handle(request.clone())
-      .pipe(
-        catchError((err: any) => {
-            this._router.navigate(['/'])
-            return throwError(err);
-          }
-        ));
   }
 
   addToken(request: HttpRequest<any>, authTokenRaw: string) {

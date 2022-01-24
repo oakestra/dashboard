@@ -44,17 +44,10 @@ export class ResetPasswordComponent implements OnInit {
 
 
   public submitNewPassword(): void {
-    // if (!(this.newPassword) || !(this.confirmNewPassword)
-    //   || this.confirmNewPassword.length === 0 || this.newPassword.length === 0) {
-    //   // this.notify.error("Error", "Password can't be empty!");
-    // } else if (this.newPassword !== this.confirmNewPassword) {
-    //   // this.notify.error("Error", "Confirmed password and new password aren't the same!");
-    // } else {
       this.api.saveResetPassword(this.resetPasswordToken, this.newPassword).subscribe(() => {
         this.notifyService.notify(Type.success, "New password saved!")
       }, (e) => console.log(e));
       // this.router.navigate(["/"]);
     }
-  // }
 
 }

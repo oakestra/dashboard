@@ -27,7 +27,6 @@ export class AuthGuardService implements  CanActivate, CanLoad, CanActivateChild
         return of(false);
       }
     }
-    //this.router.navigate(['/'], {queryParams: {returnUrl: state.url}}) to get to the requested link
     return of(true);
   }
 

@@ -1,5 +1,3 @@
-/*@import "~bootstrap/dist/css/bootstrap.css";*/
-/*@import "https://www.w3schools.com/w3css/4/w3.css";*/
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 .alignRight {
@@ -10,9 +8,6 @@
   justify-content: flex-end;
 }
 
-/*.mat-button-focus-overlay {*/
-/*  background-color: transparent !important;*/
-/*}*/
 
 /*////////////////////////////////////////////////////*/
 svg {
@@ -179,7 +174,83 @@ td {
 
 button:focus {outline:0;}
 
-.mat-button{
-  line-height: 40px;
+/*///////////////////////////////////////////////////*/
+/* Style for the User Tour*/
+
+body {
+  margin: 0;
+  display: grid;
+  /*font-family: 'Helvetica Neue';*/
+  grid-template-areas: inherit;
+}
+header, aside, main, section {
+  padding: 20px;
+}
+header {
+  background: #00C195;
 }
 
+aside {
+  background: #D3D3D3;
+}
+section {
+  background: #fff;
+  border-radius: 10px;
+  min-height: 30%;
+}
+
+h1 {
+  margin: 0;
+}
+nav {
+  justify-self: right;
+}
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  padding: 10px;
+}
+aside ul {
+  margin-top: 30px;
+}
+aside ul li a {
+  text-transform: uppercase;
+  font-size: .7em;
+  padding: 13px 0;
+  display: block;
+  color: #000;
+}
+
+
+body.shepherd-active::after {
+  content: "";
+  display: block;
+  background-color: #000;
+  opacity: 0.4;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1000000; }
+
+.arrow {
+  position: absolute;
+  width: 0.75em;
+  height: 0.75em;
+  overflow: hidden;
+}
+
+.arrow::before {
+  content: '';
+  position: absolute;
+  width: 0.75em;
+  height: 0.75em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: ivory;
+  border: 1px solid black;
+}

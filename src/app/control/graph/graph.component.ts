@@ -182,7 +182,8 @@ export class GraphComponent implements OnChanges {
         for (let j = 0; j < n.length; j++) {
           if (l[x].source == n[i].idNumber && l[x].target == n[j].idNumber) {
 
-            // To combine two links between nodes to one, but then problems with the deletion.
+            // To combine two links between nodes to one, but then you have problems with if you
+            // want to delete on connection.
 
             // let backwardsLink = {source: n[j], target: n[i], left: false, right: true}
             // let index: number = linksNew.findIndex(x => (x.source == n[j] && x.target == n[i]))

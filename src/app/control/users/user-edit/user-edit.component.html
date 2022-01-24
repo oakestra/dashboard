@@ -24,7 +24,7 @@
             <h5>Your Roles</h5>
             <mat-chip-list aria-label="roles">
               <mat-chip *ngFor="let r of user.roles"
-                        [ngStyle]="{'background-color': (r.name == 'Admin_Role')? '#3f51b5': 'green'}" selected>
+                        [ngStyle]="{'background-color': (r.name == 'Admin')? '#3f51b5': 'green'}" selected>
                 {{r.name}}
               </mat-chip>
             </mat-chip-list>

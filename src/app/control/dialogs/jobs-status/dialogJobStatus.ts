@@ -1,5 +1,6 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -12,13 +13,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 export class DialogJobStatusView {
 
-  // TODO Load real data form DB
-  information: any = {
-    aggregated_cpu_percent: "xyz",
-    aggregated_memory_percent: "xyz",
-    memory_in_mb: "xyz",
-    total_cpu_cores: "xyz"
-  };
+  grafanaLink: string = environment.smIP
+  usage: any = undefined
 
   status: string = ""
   details = ""
@@ -29,6 +25,10 @@ export class DialogJobStatusView {
 
     let local_data = {...data};
     this.status = local_data.status
+
+    if (local_data.usage != undefined){
+      this.usage = local_data.usage
+    }
 
     this._statusDetails.set("REGISTERED", "The job is stored in the Database but not deployed")
     this._statusDetails.set("DEPLOY REQUESTED", "The deployment is requested and the system tries to deploy the job")

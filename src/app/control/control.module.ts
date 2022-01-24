@@ -7,7 +7,6 @@ import {NotFoundComponent} from "./not-found/not-found.component";
 import {NavbarComponent} from "./navbar/navbar.component";
 import {DialogConnectionSettings} from "./dialogs/content-connection/dialogConnectionSettings";
 import {DialogGraphConnectionSettings} from "./dialogs/graph-content-connection/dialogGraphConnectionSettings";
-import {HelpComponent} from "./help/help.component";
 import {DialogAddApplicationView} from "./dialogs/add-appllication/dialogAddApplication";
 import {GraphComponent} from "./graph/graph.component";
 import {RouterModule} from "@angular/router";
@@ -38,6 +37,8 @@ import {DialogEditUserView} from "./dialogs/edit-user/dialogEditUser";
 import {UserEditComponent} from './users/user-edit/user-edit.component';
 import {DialogChangePasswordView} from "./dialogs/change-password/dialogChangePassword";
 import {DialogJobStatusView} from "./dialogs/jobs-status/dialogJobStatus";
+import {LineChartComponent} from './charts/line-chart/line-chart.component';
+import {HelpComponent} from "./help/help.component";
 
 
 @NgModule({
@@ -48,14 +49,15 @@ import {DialogJobStatusView} from "./dialogs/jobs-status/dialogJobStatus";
     NavbarComponent,
     DialogConnectionSettings,
     DialogGraphConnectionSettings,
-    HelpComponent,
     DialogAddApplicationView,
     GraphComponent,
     UsersComponent,
     DialogEditUserView,
     UserEditComponent,
     DialogChangePasswordView,
-    DialogJobStatusView
+    DialogJobStatusView,
+    LineChartComponent,
+    HelpComponent
   ],
   imports: [
     CommonModule,
@@ -87,4 +89,5 @@ import {DialogJobStatusView} from "./dialogs/jobs-status/dialogJobStatus";
   ],
 })
 export class ControlModule {
+
 }

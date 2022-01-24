@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {delay, filter} from "rxjs/operators";
@@ -16,7 +16,7 @@ import {NotificationService, Type} from "../../shared/modules/notification/notif
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, AfterViewInit{
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
@@ -47,6 +47,7 @@ export class NavbarComponent implements OnInit {
     this.username = this.userService.getUsername()
     this.api.getUserByName(this.username).subscribe((data: any) => {
       this.userID = data._id.$oid + "";
+      this.sharedService.userID = this.userID
       this.loadData()
       this.updatePermissions();
     })

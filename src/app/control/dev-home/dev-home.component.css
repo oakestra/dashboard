@@ -64,11 +64,6 @@ mat-card p {
   color: red;
 }
 
-
-::ng-deep .mat-button-focus-overlay {
-  background-color: #d51414 !important;
-}
-
 .w3-col{
   line-height: 40px;
 }

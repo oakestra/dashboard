@@ -62,7 +62,7 @@
         <td *matCellDef="let element" mat-cell>
           <mat-chip-list aria-label="roles">
             <mat-chip *ngFor="let e of element.roles"
-                      [ngStyle]="{'background-color': (e.name == 'Admin_Role')? '#3f51b5': (e.name == 'Application_Provider')? 'green' : '#b626b4'}"
+                      [ngStyle]="{'background-color': (e.name == 'Admin')? '#3f51b5': (e.name == 'Application_Provider')? 'green' : '#b626b4'}"
                       selected>
               {{e.name}}
             </mat-chip>

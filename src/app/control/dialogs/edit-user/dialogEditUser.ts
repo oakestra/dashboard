@@ -38,7 +38,7 @@ export class DialogEditUserView {
         "name": [this.local_data.name, UserValidators.containsWhitespace],
         "email": [this.local_data.email],
         "roles": fb.group({
-          'Admin_Role': this.local_data.roles.some((r: any) => r.name == 'Admin_Role'),
+          'Admin': this.local_data.roles.some((r: any) => r.name == 'Admin'),
           'Application_Provider': this.local_data.roles.some((r: any) => r.name == 'Application_Provider'),
           'Infrastructure_Provider': this.local_data.roles.some((r: any) => r.name == 'Infrastructure_Provider'),
         })
@@ -52,7 +52,7 @@ export class DialogEditUserView {
         "email": [""],
         "password": [""],
         "roles": fb.group({
-          'Admin_Role': false,
+          'Admin': false,
           'Application_Provider': false,
           'Infrastructure_Provider': false
         })

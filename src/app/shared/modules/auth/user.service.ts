@@ -55,12 +55,12 @@ export class UserService {
     //this.log.debug("UserService - removing tokens");
     localStorage.removeItem('api_token');
     localStorage.removeItem('api_refresh_token')
-    this.router.navigate(['/'], { replaceUrl: true });
+    this.router.navigate(['/'], {replaceUrl: true});
   }
 
   /** true if the user is logged in */
   isLoggedIn(): boolean {
-    if(this.checkIfTokenExists('api_token')){
+    if (this.checkIfTokenExists('api_token')) {
       return !this.isTokenExpired(this.getAuthTokenRaw());
     }
     return false
@@ -68,7 +68,10 @@ export class UserService {
 
   /** true if the refresh token is still valid */
   canRefresh(): boolean {
-    return !this.isTokenExpired(this.getRefreshTokenRaw())
+    if (this.checkIfTokenExists('api_token')) {
+      return !this.isTokenExpired(this.getRefreshTokenRaw())
+    }
+    return false
   }
 
   /** stores the auth token*/
@@ -116,7 +119,7 @@ export class UserService {
   }
 
   redirectToLogin(): void {
-    this.notifyService.notify(Type.error, "Your session has expired." )
+    this.notifyService.notify(Type.error, "Your session has expired.")
     this.logout();
     this.router.navigate(['/']);
   }
@@ -142,15 +145,15 @@ export class UserService {
   }
 
   getJWTTokenRaw(key: string): string {
-    if(this.checkIfTokenExists(key)){
+    if (this.checkIfTokenExists(key)) {
       return localStorage.getItem(key)!;
-    }else{
+    } else {
       throwError("No refresh token found")
       return ""
     }
   }
 
-  checkIfTokenExists(key : string){
+  checkIfTokenExists(key: string) {
     const token = localStorage.getItem(key);
     return !(token == null || token.split('.').length !== 3);
   }
@@ -158,17 +161,19 @@ export class UserService {
   private getTokenExpirationDate(token: any) {
     let decoded = this.getDecodedAccessToken(token);
 
-    if (typeof decoded.exp === "undefined")
+    if (typeof decoded.exp === "undefined") {
       return null;
+    }
 
     return new Date(0).setUTCSeconds(decoded.exp);
   };
 
   isTokenExpired(token: any) {
     let d = this.getTokenExpirationDate(token);
-    if (d === null) return false;
+    if (d === null) {
+      return false;
+    }
     // Token expired?
     return !(d.valueOf() > (new Date().valueOf()));
   };
 }
-

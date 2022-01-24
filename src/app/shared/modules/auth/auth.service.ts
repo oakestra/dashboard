@@ -42,5 +42,5 @@ export class AuthService {
 }
 
 export class Role {
-  static ADMIN = "Admin_Role";
+  static ADMIN = "Admin";
 }

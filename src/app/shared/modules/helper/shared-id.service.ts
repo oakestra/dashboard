@@ -8,6 +8,7 @@ import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 export class SharedIDService {
 
   private applicationService = new BehaviorSubject<any>(null);
+  private _userID = "";
 
   selectApplication(data: any) {
     this.applicationService.next(data);
@@ -15,6 +16,13 @@ export class SharedIDService {
 
   get applicationObserver$() {
     return this.applicationService.asObservable()
+  }
+
+  set userID(id: string){
+    this._userID = id;
+  }
+  get userID(){
+    return this._userID
   }
 
 }

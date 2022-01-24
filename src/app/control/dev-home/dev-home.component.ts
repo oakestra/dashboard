@@ -20,11 +20,10 @@ export class DevHomeComponent implements OnInit, OnDestroy {
 
   constructor(public sharedService: SharedIDService,
               private api: ApiService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog){
   }
 
   ngOnInit(): void {
-    console.log("In dev init")
     let sub = this.sharedService.applicationObserver$.subscribe(
       x => {
         this.appName = x.name

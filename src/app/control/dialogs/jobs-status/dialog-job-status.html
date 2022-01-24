@@ -5,10 +5,10 @@
     <p style="margin: 0">{{details}}</p>
   </div>
 
-  <h3>Cluster Stats:</h3>
-  <div class="alert alert-light">
-    <div>{{information | json}}</div>
-  </div>
+  <a [href]=grafanaLink target="_blank" rel="noopener noreferrer">View in Grafana</a>
+
+  <line-chart *ngIf="(usage != undefined)" [usage]=usage></line-chart>
+
 </mat-dialog-content>
 
 <mat-dialog-actions class="alignRight">

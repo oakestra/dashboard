@@ -15,7 +15,7 @@ import {Subscription} from "rxjs/internal/Subscription";
   styleUrls: ['./deploy-form.component.css']
 })
 
-export class DeployFormComponent implements OnInit, OnDestroy{
+export class DeployFormComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
 
@@ -56,7 +56,7 @@ export class DeployFormComponent implements OnInit, OnDestroy{
       this.currentApplication = app
       this.applicationId = app._id.$oid
       let s = this.api.getJobsOfApplication(this.applicationId).pipe(take(1)).subscribe((jobs: any) => {
-        this.allJobs = jobs
+        this.allJobs = jobs.filter((j: any) => j._id.$oid != this.currentJobID)
       }, (err) => {
         console.log(err)
       })
@@ -114,7 +114,7 @@ export class DeployFormComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy() {
-    for(let s of this.subscriptions){
+    for (let s of this.subscriptions) {
       s.unsubscribe()
     }
   }
@@ -273,7 +273,7 @@ export class DeployFormComponent implements OnInit, OnDestroy{
 
     this.jsonContent = {
       "api_version": "v0.3.0",
-      "customerID": "10000000001",
+      "customerID": this.shardService.userID,
       "applications": [
         {
           "applicationID": this.currentApplication._id.$oid,
