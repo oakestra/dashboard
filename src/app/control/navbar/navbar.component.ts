@@ -10,6 +10,7 @@ import {UserService} from "../../shared/modules/auth/user.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {AuthService, Role} from "../../shared/modules/auth/auth.service";
 import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
+// import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-navbar',
@@ -142,6 +143,8 @@ export class NavbarComponent implements OnInit, AfterViewInit{
   }
 
   handleChange() {
+    console.log("Env")
+    // console.log(environment.apiUrl)
     this.api.getAppById(this.active.$oid).subscribe(app => {
         this.sharedService.selectApplication(app)
         this.appSelected = true

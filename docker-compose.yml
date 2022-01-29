@@ -1,0 +1,12 @@
+version: '0.1'
+
+services:
+  your-service:
+    image: edgeio-frontend
+    build: .
+    ports:
+      - "0.0.0.0:8888:80"
+    restart: unless-stopped
+    container_name: edgeio-frontend-container
+    environment:
+      - API_ADDRESS=localhost:10000

@@ -4,6 +4,7 @@ import {UserService} from "../../shared/modules/auth/user.service";
 import {AuthService} from "../../shared/modules/auth/auth.service";
 import {ApiService, LoginRequest, UserEntity} from "../../shared/modules/api/api.service";
 import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,8 @@ export class LoginComponent {
 
   user: UserEntity;
 
+  sm_ip = environment.apiUrl
+
   constructor(private router: Router,
               private userService: UserService,
               private authService: AuthService,
@@ -23,6 +26,8 @@ export class LoginComponent {
   }
 
   public submitLogin() {
+    // console.log(environment.apiUrl)
+
     if (this.user.name.length !== 0 && this.user.password.length !== 0) {
 
       const loginRequest: LoginRequest = {

@@ -1,0 +1,14 @@
+{
+  "name": "angular-environment",
+  "version": "1.0.0",
+  "description": "Used to set environment variables for Angular on startup of Docker container",
+  "main": "main.js",
+  "scripts": {
+    "set-env": "node main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular-server-side-configuration": "^0.2.0"
+  }
+}

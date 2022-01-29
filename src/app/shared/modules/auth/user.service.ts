@@ -3,10 +3,10 @@ import {Observable, of, throwError} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, map} from 'rxjs/operators';
-import {environment} from "../../../../environments/environment";
 import jwt_decode from 'jwt-decode';
 import {LoginRequest} from "../api/api.service";
 import {NotificationService, Type} from "../notification/notification.service";
+import {environment} from "../../../../environments/environment";
 
 
 @Injectable({
@@ -15,11 +15,13 @@ import {NotificationService, Type} from "../notification/notification.service";
 export class UserService {
 
   loggedIn = false
+  apiUrl: String
 
   constructor(private route: ActivatedRoute,
               private http: HttpClient,
               private router: Router,
               private notifyService: NotificationService) {
+    this.apiUrl = environment.apiUrl
   }
 
   getUsername(): string {
@@ -27,7 +29,7 @@ export class UserService {
   }
 
   login(request: LoginRequest): Observable<boolean> {
-    return this.http.post<Response>(environment.apiUrl + "/auth/login", request).pipe(
+    return this.http.post<Response>(this.apiUrl + "/auth/login", request).pipe(
       map((response: any) => {
         this.loggedIn = true
         this.setAuthToken(response.token);
@@ -92,7 +94,7 @@ export class UserService {
       }),
     };
 
-    return this.http.post(environment.apiUrl + "/auth/refresh", {}, requestOptions).pipe(
+    return this.http.post(this.apiUrl + "/auth/refresh", {}, requestOptions).pipe(
       map((response: any) => {
         this.setAuthToken(response.token);
         return true;

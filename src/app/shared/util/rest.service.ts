@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {environment} from "../../../environments/environment";
+// import {environment} from "../../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UserService} from "../modules/auth/user.service";
 import {catchError, map, mergeMap} from "rxjs/operators";
 import {Observable, throwError} from 'rxjs';
 import {NotificationService, Type} from "../modules/notification/notification.service";
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class RestService {
@@ -15,7 +16,7 @@ export class RestService {
     private notificationService: NotificationService) {
   }
 
-  baseURL = environment.apiUrl;
+  baseURL = environment.apiUrl
 
   requestOptions = {
     headers: new HttpHeaders({

@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {Observable} from "rxjs";
 import {RestService} from "../../util/rest.service";
 import {UserService} from "../auth/user.service";
 import {NotificationService} from "../notification/notification.service";
+import {environment} from "../../../../environments/environment";
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,11 @@ import {NotificationService} from "../notification/notification.service";
 
 export class ApiService extends RestService {
 
-  constructor(http: HttpClient, userService: UserService, notificationService: NotificationService) {
+  apiUrl = environment.apiUrl
+
+  constructor(http: HttpClient,
+              userService: UserService,
+              notificationService: NotificationService) {
     super(http, userService, notificationService)
   }
 
@@ -40,10 +45,6 @@ export class ApiService extends RestService {
     return this.doGETRequest("/applications/" + userId)
   }
 
-  getAllApplications() {
-    return this.doGETRequest("/applications")
-  }
-
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////// Job Functions ///////////////////////////////////////
 
@@ -61,10 +62,6 @@ export class ApiService extends RestService {
 
   getJobByID(jobID: any) {
     return this.doGETRequest("/job/" + jobID)
-  }
-
-  getAllJobs() {
-    return this.doGETRequest("/jobs")
   }
 
   getJobsOfApplication(appId: string) {
@@ -114,7 +111,7 @@ export class ApiService extends RestService {
   }
 
   public getRoles(): Observable<any> {
-    return this.http.get(environment.apiUrl + "/roles").pipe(
+    return this.http.get(this.apiUrl + "/roles").pipe(
       map((data: any) => {
         return {roles: data};
       })
@@ -125,7 +122,7 @@ export class ApiService extends RestService {
 ///////////////////// Other Functions ///////////////////////////////////////
 
   fileUpload(data: any) {
-    return this.http.post(environment.apiUrl + "/uploader", data)
+    return this.http.post(this.apiUrl + "/uploader", data)
   }
 
   changePassword(username: any, oldPassword: string, newPassword: string) {

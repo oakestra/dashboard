@@ -1,6 +1,5 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -13,7 +12,8 @@ import {environment} from "../../../../environments/environment";
 
 export class DialogJobStatusView {
 
-  grafanaLink: string = environment.smIP
+  // TODO Add correct Link
+  grafanaLink: string = "127.0.0.1"
   usage: any = undefined
 
   status: string = ""
