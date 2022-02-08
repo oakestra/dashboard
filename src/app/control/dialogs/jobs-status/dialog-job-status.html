@@ -5,7 +5,7 @@
     <p style="margin: 0">{{details}}</p>
   </div>
 
-  <a [href]=grafanaLink target="_blank" rel="noopener noreferrer">View in Grafana</a>
+  <a *ngIf="(usage != undefined)" [href]=grafanaLink target="_blank" rel="noopener noreferrer">View in Grafana</a>
 
   <line-chart *ngIf="(usage != undefined)" [usage]=usage></line-chart>
 

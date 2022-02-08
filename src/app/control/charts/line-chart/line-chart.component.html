@@ -1,3 +1,7 @@
+<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/build/ol.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/css/ol.css" rel="stylesheet"
+      type="text/css">
+
 <div class="w3-row">
   <div class="w3-col l4 m4">
     <canvas id="myChartCPU" style="width:40px; height:40px; display: block"></canvas>
@@ -6,8 +10,18 @@
     <canvas id="myChartMemory" style="width:40px; height:40px; display: block"></canvas>
   </div>
   <div class="w3-col l4 m4" style="text-align: center">
-<!--    TODO find out how the geo data looks like and display them here. -->
-    <h4>Geo Information</h4>
-    <p>{{usage.geoInformation}}</p>
+    <h3>Location</h3>
+    <div class="map" id="map"></div>
   </div>
 </div>
+
+    <style>
+      .map {
+        height:30vh;
+      }
+    </style>
+
+<!--    <h4>Geo Information</h4>-->
+<!--    <p>{{usage.geoInformation}}</p>-->
+
+

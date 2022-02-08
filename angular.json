@@ -31,7 +31,8 @@
               "node_modules/shepherd.js/dist/css/shepherd.css"
             ],
             "scripts": [
-              "src/assets/js/graph.js"
+              "src/assets/js/graph.js",
+              "src/assets/js/map.js"
             ]
           },
           "configurations": {

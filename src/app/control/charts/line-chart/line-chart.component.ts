@@ -15,6 +15,7 @@ import {
   Tooltip
 } from "chart.js";
 
+declare function initMap(lng:number, lat:number): void;
 
 @Component({
   selector: 'line-chart',
@@ -94,5 +95,6 @@ export class LineChartComponent implements OnInit {
         }
       }
     });
+    initMap(this.usage.geoInformation.lng, this.usage.geoInformation.lat);
   }
 }

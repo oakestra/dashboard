@@ -12,8 +12,6 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class ResetPasswordComponent implements OnInit {
 
   resetPasswordToken: string = "";
-  newPassword: string = "";
-  confirmNewPassword: string = "";
 
   form = new FormGroup({
     "newPass": new FormControl("", Validators.required),
@@ -38,16 +36,18 @@ export class ResetPasswordComponent implements OnInit {
     })
   }
 
-  get samePasswords(){
+  get samePasswords() {
     return this.form.get('newPass')?.value == this.form.get('confirmPass')?.value
   }
 
 
   public submitNewPassword(): void {
-      this.api.saveResetPassword(this.resetPasswordToken, this.newPassword).subscribe(() => {
-        this.notifyService.notify(Type.success, "New password saved!")
-      }, (e) => console.log(e));
-      // this.router.navigate(["/"]);
-    }
+    let pass = this.form.get('newPass')?.value
+    this.api.saveResetPassword(this.resetPasswordToken, pass).subscribe(() => {
+      this.notifyService.notify(Type.success, "New password saved!")
+      this.router.navigate(["/"]);
+    }, (e) => console.log(e));
+
+  }
 
 }

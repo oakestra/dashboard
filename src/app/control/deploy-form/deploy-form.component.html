@@ -110,13 +110,13 @@
               </mat-form-field>
 
               <div class="file-upload">
-                <button (click)="fileUpload.click()" class="upload-btn" color="primary" mat-mini-fab type="button">
+                <button (click)="fileUploadCode.click()" class="upload-btn" color="primary" mat-mini-fab type="button">
                   <mat-icon>attach_file</mat-icon>
                 </button>
-                <input #fileUpload (change)="onFileSelected($event, 0, 'code')"
+                <input #fileUploadCode (change)="onFileSelected($event, 0, 'code')"
                        class="file-input"
                        type="file">
-                <input #fileUpload class="file-input"
+                <input #fileUploadCode class="file-input"
                        type="file">
               </div>
             </div>
@@ -128,13 +128,13 @@
               </mat-form-field>
 
               <div class="file-upload">
-                <button (click)="fileUpload.click()" class="upload-btn" color="primary" mat-mini-fab type="button">
+                <button (click)="fileUploadState.click()" class="upload-btn" color="primary" mat-mini-fab type="button">
                   <mat-icon>attach_file</mat-icon>
                 </button>
-                <input #fileUpload (change)="onFileSelected($event, 0, 'state')"
+                <input #fileUploadState (change)="onFileSelected($event, 1, 'state')"
                        class="file-input"
                        type="file">
-                <input #fileUpload class="file-input"
+                <input #fileUploadState class="file-input"
                        type="file">
               </div>
             </div>
@@ -143,7 +143,7 @@
 
             <mat-form-field>
               <mat-label>Port</mat-label>
-              <input formControlName="port" matInput required type="number">
+              <input formControlName="port" matInput required type="text">
             </mat-form-field>
 
             <mat-expansion-panel formGroupName="addresses">
@@ -388,6 +388,7 @@
                       color="primary" mat-flat-button style="margin-bottom: 20px" type="button">
                 Upload Config
               </button>
+              <p>The file should contain only the microservice object</p>
             </div>
           </div>
 

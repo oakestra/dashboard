@@ -11,7 +11,10 @@
     </mat-icon>
   </button>
 
-  EdgeIO Dashboard
+  <button id="homeNavbar" mat-button routerLink="/control" style="font-size: inherit">
+    <img alt="EdgeIO Logo" src="favicon.ico" style="height: 64px">
+      EdgeIO Dashboard
+  </button>
 
   <span class="example-spacer"></span>
 
@@ -19,7 +22,7 @@
     <mat-icon>add_circle</mat-icon>
   </button>
 
-  <button [matMenuTriggerFor]="menu" mat-icon-button>
+  <button [matMenuTriggerFor]="menu" id="userSetting" mat-icon-button>
     <mat-icon>person</mat-icon>
   </button>
 
@@ -27,6 +30,10 @@
     <button mat-menu-item routerLink="/control/profile">
       <mat-icon>person</mat-icon>
       Profile
+    </button>
+    <button (click)="show()" *ngIf="isAdmin" mat-menu-item routerLink="users">
+      <mat-icon>people</mat-icon>
+      User Management
     </button>
     <button (click)="logout()" mat-menu-item>
       <mat-icon>logout</mat-icon>
@@ -40,15 +47,16 @@
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
     <h4 class="name">Hello {{username}}</h4>
 
-    <mat-divider></mat-divider>
-
-    <button class="menu-button" id="homeNavbar" mat-button routerLink="/control">
-      <span>Home</span>
-    </button>
+    <div id="homeSidenav">
+        <mat-divider></mat-divider>
+        <button class="menu-button" mat-button routerLink="/control">
+          <span>Home</span>
+        </button>
+    </div>
 
     <div id="applicationTitle">
       <mat-divider></mat-divider>
-      <h6>Application:</h6>
+      <h6>Applications:</h6>
 
       <div *ngFor="let app of app " style="display: flex; justify-content: space-between;align-items: center">
 
@@ -67,14 +75,14 @@
         <mat-icon>add</mat-icon>
       </button>
     </div>
-    <div *ngIf="isAdmin">
-      <mat-divider></mat-divider>
-      <h6>Admin</h6>
+    <!--    <div *ngIf="isAdmin">-->
+    <!--      <mat-divider></mat-divider>-->
+    <!--      <h6>Admin</h6>-->
 
-      <button (click)="show()" class="menu-button" mat-button routerLink="users">
-        <span>User Management</span>
-      </button>
-    </div>
+    <!--      <button (click)="show()" class="menu-button" mat-button routerLink="users">-->
+    <!--        <span>User Management</span>-->
+    <!--      </button>-->
+    <!--    </div>-->
 
     <mat-divider></mat-divider>
 

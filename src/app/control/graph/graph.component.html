@@ -37,6 +37,12 @@
   </div>
 </div>
 
+<div *ngIf="showConnections" class="alert alert-info">
+  <li>create new connections with drag and drop</li>
+  <li>you can move a node if you hold CTRL</li>
+  <li>Use the configure button to edit a node or an edge</li>
+</div>
+
 <div [style.display]=" showConnections ? '' : 'none'" class="graphSide" id="graph"
      style="overflow: hidden; margin-top: 20px">
   <div class="graph"></div>

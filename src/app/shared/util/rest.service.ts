@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-// import {environment} from "../../../environments/environment";
+import {Inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UserService} from "../modules/auth/user.service";
 import {catchError, map, mergeMap} from "rxjs/operators";
 import {Observable, throwError} from 'rxjs';
 import {NotificationService, Type} from "../modules/notification/notification.service";
 import {environment} from "../../../environments/environment";
+import {WINDOW} from "../modules/helper/window.providers";
 
 @Injectable()
 export class RestService {
@@ -13,7 +13,8 @@ export class RestService {
   constructor(
     public http: HttpClient,
     public userService: UserService,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    @Inject(WINDOW) private window: Window) {
   }
 
   baseURL = environment.apiUrl
@@ -45,16 +46,16 @@ export class RestService {
 
   public doGETRequest<T>(url: string): Observable<T> {
     const request = this.http.get(this.baseURL + url, this.requestOptions).pipe(
-        map((res: any) => {
+      map((res: any) => {
           console.log(res)
           return res
-          }
-        ),
-        catchError((error: any) => {
-          this.notificationService.notify(Type.error, error.error)
-          return throwError(error || "Server error");
-        })
-      );
+        }
+      ),
+      catchError((error: any) => {
+        this.notificationService.notify(Type.error, error.error)
+        return throwError(error || "Server error");
+      })
+    );
     return this.doRequest(request);
   }
 
@@ -102,8 +103,37 @@ export class RestService {
       .put<T>(this.baseURL + url, object, this.requestOptions).pipe(
         catchError((error: any) => {
           this.notificationService.notify(Type.error, error.error.message);
-          return  throwError(error || "Server error");
+          return throwError(error || "Server error");
         }));
     return this.doRequest(request);
   }
+
+  public doPOSTPublicRequest<T>(url: string, object: any): Observable<T> {
+    return this.http
+      .post(this.baseURL + url, object, this.requestOptions).pipe(
+        map((res: any) => {
+          if (res == null) {
+            throwError("no data")
+            return null
+          } else {
+            return res
+          }
+        }),
+        catchError((error: any) => {
+          this.notificationService.notify(Type.error, error.error.message);
+          return throwError(error || "Server error");
+        }));
+  }
+
+  public doPUTPublicRequest<T>(url: string, object: any): Observable<T> {
+    return this.http
+      .put<T>(this.baseURL + url, object, this.requestOptions
+      ).pipe(
+        catchError((error: any) => {
+          this.notificationService.notify(Type.error, error.error.message);
+          return throwError(error || "Server error");
+        }));
+  }
+
+
 }

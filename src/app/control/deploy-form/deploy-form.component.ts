@@ -8,6 +8,7 @@ import {SharedIDService} from "../../shared/modules/helper/shared-id.service";
 import {CleanJsonService} from "../../shared/util/clean-json.service";
 import {take} from "rxjs/operators";
 import {Subscription} from "rxjs/internal/Subscription";
+import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
 
 @Component({
   selector: 'deploy-form',
@@ -49,7 +50,8 @@ export class DeployFormComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private api: ApiService,
               private router: Router,
-              private shardService: SharedIDService) {
+              private shardService: SharedIDService,
+              private notifyService: NotificationService) {
 
     this.currentJobID = "not yet defined";
     let sub = this.shardService.applicationObserver$.subscribe(app => {
@@ -246,6 +248,9 @@ export class DeployFormComponent implements OnInit, OnDestroy {
           fc = this.form.get("state") as FormControl
           fc.setValue([x.path])
         }
+      },
+      (err) =>{
+        this.notifyService.notify(Type.error, "File not supported")
       })
     }
   }
@@ -293,7 +298,8 @@ export class DeployFormComponent implements OnInit, OnDestroy {
 
     this.api.addJob(this.jsonContent).subscribe((_e: any) => {
       this.router.navigate(['/control']);
-    })
+      this.notifyService.notify(Type.success, "Job generation was successful")
+    },(error => this.notifyService.notify(Type.error, "File was not in the correct format")))
   }
 
   onSubmit() {

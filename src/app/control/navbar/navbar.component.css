@@ -16,6 +16,7 @@ mat-sidenav {
 }
 
 .content {
+  text-align: center;
   height: calc(100vh - 98px);
   border-radius: 10px;
   margin: 16px 16px 16px 16px;
@@ -29,6 +30,15 @@ mat-sidenav {
 @media only screen and (min-width: 801px) {
   .content {
     margin-left: 32px;
+  }
+  #homeSidenav{
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 451px) {
+  #homeNavbar{
+    display: none;
   }
 }
 

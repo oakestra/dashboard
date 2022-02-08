@@ -64,8 +64,8 @@ export class LoginComponent {
   public create_user_entity(): UserEntity {
     return {
       _id: {$oid: "set in the mongoDB"},
-      name: "Daniel", //TODO only for testing
-      password: "1234",
+      name: "",
+      password: "",
       email: "",
       created_at: "",
       roles: [],

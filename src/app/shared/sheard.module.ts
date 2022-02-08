@@ -10,7 +10,7 @@ import {NotificationService} from "./modules/notification/notification.service";
 import {NotificationComponent} from './modules/notification/notification.component';
 import {MatIconModule} from "@angular/material/icon";
 import {RoleRouterGuard} from "./modules/auth/role-guard.service";
-// import {environment} from "../../environments/environment.prod";
+import {WINDOW_PROVIDERS} from "./modules/helper/window.providers";
 
 @NgModule({
   imports: [
@@ -25,7 +25,7 @@ import {RoleRouterGuard} from "./modules/auth/role-guard.service";
     AuthGuardService,
     DatePipe,
     RoleRouterGuard,
-    // {provide: 'BACKEND_API_URL', useValue: environment.apiUrl}
+    WINDOW_PROVIDERS
     ],
   declarations: [
 

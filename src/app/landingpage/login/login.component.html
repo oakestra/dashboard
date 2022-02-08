@@ -1,8 +1,8 @@
-<mat-card class="example-card">
+<mat-card class="login-form">
 
   <img alt="EdgeIO Logo" mat-card-image src="../../../assets/img/logo-white-bg.png">
   <mat-card-content>
-    <p>Connecting to: {{sm_ip}}</p>
+    <mat-icon style="float: right" matTooltip="Connecting to: {{sm_ip}}">info</mat-icon>
     <form accept-charset="UTF-8" class="form-signin" role="form">
       <div>
 
@@ -24,7 +24,7 @@
           <div class="cols-sm-10">
             <div class="input-group">
               <span class="input-group-addon"><i aria-hidden="true" class="fa fa-lock fa-lg"></i></span>
-              <input [(ngModel)]="user.password" class="form-control" id="password" name="password"
+              <input (keyup.enter) ="submitLogin()" [(ngModel)]="user.password" class="form-control" id="password" name="password"
                      placeholder="Enter your Password" type="password">
             </div>
           </div>

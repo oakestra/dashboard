@@ -56,7 +56,7 @@ export class HelpComponent {
         buttons: [
           ...this.builtInButtons
         ],
-        title: '1/4 Home',
+        title: '1/5 Home',
         text: 'With this button you can always return to the main dashboard.'
       },
       {
@@ -67,17 +67,17 @@ export class HelpComponent {
         buttons:
         this.builtInButtons
         ,
-        title: '2/4 Application',
+        title: '2/5 Application',
         text: 'Your applications are displayed here. You can select or edit applications and create new ones. '
       },
       {
         attachTo: {
           element: '#content',
-          on: 'right'
+          on: 'top'
         },
         buttons: this.builtInButtons,
-        title: '3/4 Jobs',
-        text: 'The Jobs of the selected application are displayed here.'
+        title: '3/5 Jobs',
+        text: 'The jobs of the selected application are displayed here.'
       },
       {
         attachTo: {
@@ -87,8 +87,19 @@ export class HelpComponent {
         buttons:
         this.builtInButtons
         ,
-        title: '4/4 Create new Job',
+        title: '4/5 Create new job',
         text: 'Here you can create a new job that will be created in the selected application.'
+      },
+      {
+        attachTo: {
+          element: '#userSetting',
+          on: 'bottom'
+        },
+        buttons:
+        this.builtInButtons
+        ,
+        title: '5/5 User settings',
+        text: 'Here you can find all user related settings.'
       },
     ];
   }

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {Observable} from "rxjs";
@@ -6,6 +6,7 @@ import {RestService} from "../../util/rest.service";
 import {UserService} from "../auth/user.service";
 import {NotificationService} from "../notification/notification.service";
 import {environment} from "../../../../environments/environment";
+import {WINDOW} from "../helper/window.providers";
 
 
 @Injectable({
@@ -18,8 +19,10 @@ export class ApiService extends RestService {
 
   constructor(http: HttpClient,
               userService: UserService,
-              notificationService: NotificationService) {
-    super(http, userService, notificationService)
+              notificationService: NotificationService,
+              @Inject(WINDOW) window: Window) {
+    super(http, userService, notificationService,window)
+
   }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -133,11 +136,15 @@ export class ApiService extends RestService {
   }
 
   resetPassword(username: string) {
-    return this.doPOSTRequest("/auth/resetPassword", {username});
+    let obj = {
+      'username' : username,
+      'domain': window.location.host
+    }
+    return this.doPOSTPublicRequest("/auth/resetPassword", obj);
   }
 
   saveResetPassword(token: string, password: string) {
-    return this.doPUTRequest("/auth/resetPassword", {token, password});
+    return this.doPUTPublicRequest("/auth/resetPassword", {token, password});
   }
 }
 

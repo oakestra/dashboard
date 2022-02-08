@@ -9,17 +9,19 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 import {CommonModule} from "@angular/common";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes),
-    FormsModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    CommonModule,
-  ],
+    imports: [
+        RouterModule.forChild(routes),
+        FormsModule,
+        MatCardModule,
+        MatButtonModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        CommonModule,
+        MatTooltipModule,
+    ],
   providers: [],
   declarations: [
     LandingpageComponent,

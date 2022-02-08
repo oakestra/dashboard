@@ -185,10 +185,10 @@ button:focus {outline:0;}
 /* Style for the User Tour*/
 
 body {
-  margin: 0;
-  display: grid;
+  /*margin: 0;*/
+  /*display: grid;*/
   /*font-family: 'Helvetica Neue';*/
-  grid-template-areas: inherit;
+  /*grid-template-areas: inherit;*/
 }
 header, aside, main, section {
   padding: 20px;

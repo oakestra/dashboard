@@ -122,7 +122,6 @@ export class UsersComponent implements OnInit {
 
   openDialog(action: string, obj: any) {
 
-
     if (action == "add") {
       obj = { // New UserEntity
         _id: {}, created_at: "", email: "", name: "", password: "", roles: []

@@ -23,18 +23,22 @@ export class DialogJobStatusView {
   constructor(public dialogRef: MatDialogRef<DialogJobStatusView>,
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
 
+    console.log("Test")
     let local_data = {...data};
     this.status = local_data.status
 
     if (local_data.usage != undefined){
       this.usage = local_data.usage
+
+      console.log(this.usage)
     }
 
-    this._statusDetails.set("REGISTERED", "The job is stored in the Database but not deployed")
-    this._statusDetails.set("DEPLOY REQUESTED", "The deployment is requested and the system tries to deploy the job")
-    this._statusDetails.set("SCHEDULED", "The scheduler took a decision")
-    this._statusDetails.set("RUNNING", "The service is running and no error occurred")
-    this._statusDetails.set("FAILED", "An error came up")
+    this._statusDetails.set("REGISTERED", "The job is stored in the Database but not deployed.")
+    this._statusDetails.set("DEPLOY REQUESTED", "The deployment is requested and the system tries to deploy the job.")
+    this._statusDetails.set("SCHEDULED", "The scheduler took a decision.")
+    this._statusDetails.set("RUNNING", "The service is running and no error occurred.")
+    this._statusDetails.set("FAILED", "An error came up.")
+    this._statusDetails.set("test", "This is a test how a running Job would look like.")
 
     this.details = this._statusDetails.get(this.status)!
   }
