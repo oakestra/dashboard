@@ -11,11 +11,15 @@ import {NotificationComponent} from './modules/notification/notification.compone
 import {MatIconModule} from "@angular/material/icon";
 import {RoleRouterGuard} from "./modules/auth/role-guard.service";
 import {WINDOW_PROVIDERS} from "./modules/helper/window.providers";
+import {SurveyNotificationComponent} from "../control/survey/survey-notification.component";
+import {SurveyNotificationService} from "../control/survey/survey-notification.service";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   imports: [
     MatIconModule,
-    CommonModule
+    CommonModule,
+    MatButtonModule
   ],
   exports: [],
   providers: [
@@ -26,11 +30,10 @@ import {WINDOW_PROVIDERS} from "./modules/helper/window.providers";
     DatePipe,
     RoleRouterGuard,
     WINDOW_PROVIDERS
-    ],
+  ],
   declarations: [
-
-
-    NotificationComponent
+    NotificationComponent,
+    SurveyNotificationComponent
   ]
 })
 export class SharedModule {
@@ -52,7 +55,8 @@ export class SharedModule {
         UserService,
         SharedIDService,
         AuthGuardService,
-        NotificationService
+        NotificationService,
+        SurveyNotificationService
       ]
     };
   }

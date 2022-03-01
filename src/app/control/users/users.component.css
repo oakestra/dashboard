@@ -1,8 +1,13 @@
 @media only screen and (max-width: 450px) {
-  .registeredRow{
+  .registeredRow {
     display: none;
   }
 }
-.mat-header-cell{
+
+.mat-header-cell {
   text-align: center;
+}
+
+.mat-icon-button {
+  line-height: 0;
 }

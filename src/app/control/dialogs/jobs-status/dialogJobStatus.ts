@@ -1,5 +1,6 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -12,8 +13,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 export class DialogJobStatusView {
 
-  // TODO Add correct Link
-  grafanaLink: string = "127.0.0.1"
+  // assuming grafana is running on port 80
+  tmp = environment.apiUrl.split(":")
+  grafanaLink = this.tmp[0] + ":" + this.tmp[1]
+
   usage: any = undefined
 
   status: string = ""
@@ -27,7 +30,7 @@ export class DialogJobStatusView {
     let local_data = {...data};
     this.status = local_data.status
 
-    if (local_data.usage != undefined){
+    if (local_data.usage != undefined) {
       this.usage = local_data.usage
 
       console.log(this.usage)
@@ -38,9 +41,13 @@ export class DialogJobStatusView {
     this._statusDetails.set("SCHEDULED", "The scheduler took a decision.")
     this._statusDetails.set("RUNNING", "The service is running and no error occurred.")
     this._statusDetails.set("FAILED", "An error came up.")
-    this._statusDetails.set("test", "This is a test how a running Job would look like.")
 
-    this.details = this._statusDetails.get(this.status)!
+    let d = this._statusDetails.get(this.status)
+    if(!d){
+      this.details = "Sorry, no exact description has been added for this status yet."
+    }else{
+      this.details = this._statusDetails.get(this.status)!
+    }
   }
 
   closeDialog() {

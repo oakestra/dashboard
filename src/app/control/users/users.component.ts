@@ -6,6 +6,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {DialogEditUserView} from "../dialogs/edit-user/dialogEditUser";
 import {DatePipe} from "@angular/common";
 import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
+import {DialogConfirmation} from "../dialogs/confirmation/dialogConfirmation";
 
 @Component({
   templateUrl: './users.component.html',
@@ -118,6 +119,18 @@ export class UsersComponent implements OnInit {
       (_error: Error) => {
         this.notifyService.notify(Type.error, "Error: Deleting user " + user.name + " failed!")
       })
+  }
+
+  openDeleteDialog(obj: any) {
+    let data = {
+      "text": "Delete user: " + obj.name,
+    }
+    const dialogRef = this.dialog.open(DialogConfirmation, {data: data});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.event == true) {
+        this.deleteUser(obj)
+      }
+    });
   }
 
   openDialog(action: string, obj: any) {

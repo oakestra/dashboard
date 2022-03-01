@@ -5,12 +5,12 @@
     <p style="margin: 0">{{details}}</p>
   </div>
 
-  <a *ngIf="(usage != undefined)" [href]=grafanaLink target="_blank" rel="noopener noreferrer">View in Grafana</a>
+  <a *ngIf="(usage != undefined)" [href]=grafanaLink rel="noopener noreferrer" target="_blank">View in Grafana</a>
 
   <line-chart *ngIf="(usage != undefined)" [usage]=usage></line-chart>
 
 </mat-dialog-content>
 
 <mat-dialog-actions class="alignRight">
-  <button (click)="closeDialog()" color="primary" mat-button mat-flat-button>Cancel</button>
+  <button (click)="closeDialog()" color="primary" mat-button mat-flat-button>Close</button>
 </mat-dialog-actions>

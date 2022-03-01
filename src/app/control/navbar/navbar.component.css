@@ -1,4 +1,3 @@
-
 mat-toolbar {
   background: #004a9f;
   color: white;
@@ -121,6 +120,6 @@ mat-card p {
   background-color: #002b5c;
 }
 
-/deep/ .mat-radio-outer-circle {
+::ng-deep  .mat-radio-outer-circle {
   border-color: white
 }

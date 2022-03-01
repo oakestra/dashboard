@@ -1,0 +1,187 @@
+<div class="content-cards">
+  <h1>Tasks for the user survey:</h1>
+
+  <div *ngIf="!evaluated">
+    <div class="alert alert-info" style="margin-top: 16px">
+      Take a short tour in the dashboard at the beginning to get an overview. Just go to "Help" and then click on "Start
+      tour".
+    </div>
+
+    <div class="alert alert-info" style="margin-top: 8px">
+      After taking the tour, try to solve the following tasks. If you have solved all tasks or can't solve any more,
+      click
+      on
+      "Finish tasks".
+    </div>
+  </div>
+
+  <mat-accordion class="example-headers-align" style="margin-top: 16px">
+
+
+    <mat-expansion-panel (opened)="setStep(0)" [expanded]="step === 0" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Task 1
+        </mat-panel-title>
+        <mat-panel-description>
+          Create application
+          <div>
+            <mat-icon *ngIf="evaluated && taskResults[0]" class="correct">check_circle_outline</mat-icon>
+            <mat-icon *ngIf="evaluated && !taskResults[0]" class="error">error_outline</mat-icon>
+            <mat-icon>expand_more</mat-icon>
+          </div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div #task1>
+        <p>Create a new application with the following attributes:</p>
+        <li>Name: MyApplication</li>
+        <li>Namespace: survey</li>
+        <li>Description: survey task</li>
+      </div>
+      <mat-action-row>
+        <button (click)="pinTask(1)" color="primary" mat-button>Pin Task</button>
+        <button (click)="nextStep()" color="primary" mat-button>Next</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel (opened)="setStep(1)" [expanded]="step === 1" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Task 2
+        </mat-panel-title>
+        <mat-panel-description>
+          Job status
+          <div>
+            <mat-icon *ngIf="evaluated && taskResults[1]" class="correct">check_circle_outline</mat-icon>
+            <mat-icon *ngIf="evaluated && !taskResults[1]" class="error">error_outline</mat-icon>
+            <mat-icon>expand_more</mat-icon>
+          </div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <p>Have a closer look at the status of the service named "Micro A" in Application "Sample Application".</p>
+
+      <p>At which location was the service deployed?</p>
+      <mat-form-field>
+        <mat-label>Select an location</mat-label>
+        <mat-select (selectionChange)="locationChange()" [(value)]="selected" disableRipple>
+          <mat-option value="1">Rom</mat-option>
+          <mat-option value="2">London</mat-option>
+          <mat-option value="3">Munich</mat-option>
+          <mat-option value="4">New York</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-action-row>
+        <button (click)="pinTask(2)" color="primary" mat-button>Pin Task</button>
+        <button (click)="prevStep()" color="warn" mat-button>Previous</button>
+        <button (click)="nextStep()" color="primary" mat-button>Next</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel (opened)="setStep(2)" [expanded]="step === 2" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Task 3
+        </mat-panel-title>
+        <mat-panel-description>
+          User management
+          <div>
+            <mat-icon *ngIf="evaluated && taskResults[2]" class="correct">check_circle_outline</mat-icon>
+            <mat-icon *ngIf="evaluated && !taskResults[2]" class="error">error_outline</mat-icon>
+            <mat-icon>expand_more</mat-icon>
+          </div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      You are the admin of this system and another user keeps causing problems, so delete the user "Evil-user".
+
+      <mat-action-row>
+        <button (click)="pinTask(3)" color="primary" mat-button>Pin Task</button>
+        <button (click)="prevStep()" color="warn" mat-button>Previous</button>
+        <button (click)="nextStep()" color="primary" mat-button>Next</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel (opened)="setStep(3)" [expanded]="step === 3" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Task 4
+        </mat-panel-title>
+        <mat-panel-description>
+          Create new services
+          <div>
+            <mat-icon *ngIf="evaluated && taskResults[3]" class="correct">check_circle_outline</mat-icon>
+            <mat-icon *ngIf="evaluated && !taskResults[3]" class="error">error_outline</mat-icon>
+            <mat-icon>expand_more</mat-icon>
+          </div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <p>Create two new services in your application "MyApplication" with the following properties, you can leave the
+        other attributes unchanged.</p>
+
+      Service 1:
+      <li>Name: Service1</li>
+      <li>Namespace: dev</li>
+      <li>Memory: 100</li>
+
+      <br>
+      Service 2:
+      <li>Name: Service2</li>
+      <li>Vcpu: 2</li>
+
+      <mat-action-row>
+        <button (click)="pinTask(4)" color="primary" mat-button>Pin Task</button>
+        <button (click)="prevStep()" color="warn" mat-button>Previous</button>
+        <button (click)="nextStep()" color="primary" mat-button>Next</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel (opened)="setStep(4)" [expanded]="step === 4" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Task 5
+        </mat-panel-title>
+        <mat-panel-description>
+          Create connection
+          <div>
+            <mat-icon *ngIf="evaluated && taskResults[4]" class="correct">check_circle_outline</mat-icon>
+            <mat-icon *ngIf="evaluated && !taskResults[4]" class="error">error_outline</mat-icon>
+            <mat-icon>expand_more</mat-icon>
+          </div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <p>Display the connection graph in the application "MyApplication". Then create a connection between the two
+        services with the following properties:</p>
+
+      <p>The connection should run from Service1 to Service2. </p>
+      <li>Type: latency</li>
+      <li>Threshold: 300 ms</li>
+      <li>Rigidness: 50%</li>
+      <li>Convergence Time: 250 sec</li>
+
+
+      <mat-action-row>
+        <button (click)="pinTask(5)" color="primary" mat-button>Pin Task</button>
+        <button (click)="prevStep()" color="warn" mat-button>Previous</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+
+  </mat-accordion>
+
+  <div *ngIf="evaluated" class="alert alert-success" style="margin-top: 8px">
+    Thank you for trying to solve the tasks, you have solved {{correctTasks}} out of 5 correctly. Now please logout,
+    go back to the survey and fill in the questions.
+  </div>
+
+  <button (click)="evaluateTasks()" color="primary" mat-flat-button style="margin-top: 16px" type="button">
+    Finish Tasks
+  </button>
+</div>

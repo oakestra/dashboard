@@ -1,6 +1,6 @@
 <div class="content-cards">
   <mat-card class="serviceCard">
-    <mat-card-title>Deploy Job</mat-card-title>
+    <mat-card-title>Configure Service</mat-card-title>
     <div>
       <mat-tab-group animationDuration="0ms" class="mat-elevation-z4" mat-stretch-tabs>
         <mat-tab label="FORM">
@@ -29,7 +29,8 @@
             </div>
 
             <div class="w3-col l6 s12 rightInput">
-              <mat-form-field>
+              <mat-form-field
+                matTooltip="Type of virtualization chosen for the service">
                 <mat-label>Virtualization</mat-label>
                 <select formControlName="virtualization" matNativeControl required>
                   <option value="container">Container</option>
@@ -42,7 +43,7 @@
             <mat-form-field>
               <mat-label>Description</mat-label>
               <textarea cols="3" formControlName="description" matInput
-                        placeholder="Description of the application"></textarea>
+                        placeholder="Description of the service"></textarea>
             </mat-form-field>
 
             <h4>Requirements:</h4>
@@ -80,7 +81,9 @@
               <div class="w3-col l3 m4 s6 w3-row-padding">
                 <mat-form-field>
                   <mat-label>Bandwidth_in</mat-label>
-                  <input formControlName="bandwidth_in" matInput min="0" required type="number" value="0">
+                  <input formControlName="bandwidth_in" matInput
+                         matTooltip="Minimum bandwidth-ingress needed for service" min="0" required type="number"
+                         value="0">
                   <p matSuffix>KB</p>
                 </mat-form-field>
               </div>
@@ -88,7 +91,9 @@
               <div class="w3-col l3 m4 s6 w3-row-padding">
                 <mat-form-field>
                   <mat-label>Bandwidth_out</mat-label>
-                  <input formControlName="bandwidth_out" matInput min="0" required type="number" value="0">
+                  <input formControlName="bandwidth_out" matInput
+                         matTooltip="Minimum bandwidth-egress needed for service" min="0" required type="number"
+                         value="0">
                   <p matSuffix>KB</p>
                 </mat-form-field>
               </div>
@@ -106,7 +111,9 @@
             <div class="fileDiv">
               <mat-form-field style="width: 70vh">
                 <mat-label>Code</mat-label>
-                <input formControlName="code" matInput placeholder="https://urlToCode" required type="url">
+                <input formControlName="code" matInput matTooltip="File containing the code for the service"
+                       placeholder="https://urlToCode" required
+                       type="url">
               </mat-form-field>
 
               <div class="file-upload">
@@ -124,7 +131,9 @@
             <div class="fileDiv">
               <mat-form-field style="width: 70vh">
                 <mat-label>State</mat-label>
-                <input formControlName="state" matInput placeholder="https://urlToState" required type="url" value="">
+                <input formControlName="state" matInput matTooltip="File containing the state of the service"
+                       placeholder="https://urlToState" required type="url"
+                       value="">
               </mat-form-field>
 
               <div class="file-upload">
@@ -143,26 +152,35 @@
 
             <mat-form-field>
               <mat-label>Port</mat-label>
-              <input formControlName="port" matInput required type="text">
+              <input formControlName="port" matInput matTooltip="Port for exposure of the service" required
+                     type="text">
             </mat-form-field>
 
             <mat-expansion-panel formGroupName="addresses">
               <mat-expansion-panel-header>
-                <mat-panel-title>Addresses</mat-panel-title>
+                <mat-panel-title>Addresses
+                  <mat-icon
+                    matTooltip="Optional - If the specified IP addresses are unoccupied, the service will be provided at these addresses.">
+                    info
+                  </mat-icon>
+
+                </mat-panel-title>
               </mat-expansion-panel-header>
 
               <mat-form-field>
                 <mat-label>RR-IP</mat-label>
-                <input formControlName="rr_ip" matInput type="text">
+                <input formControlName="rr_ip" matInput matTooltip="Optional - IP chosen for round-robin addressation"
+                       type="text">
               </mat-form-field>
 
               <mat-form-field>
                 <mat-label>Closest_ip</mat-label>
-                <input formControlName="closest_ip" matInput type="text">
+                <input formControlName="closest_ip" matInput matTooltip="Optional - The orchestrator may choose the closest IP to the given one"
+                       type="text">
               </mat-form-field>
 
               <div class="full-width" formGroupName="instances" style="display: inline-block; margin-left: -8px">
-
+                <p>Instances:</p>
                 <div class="w3-col l3 m4 s12 w3-row-padding">
                   <mat-form-field>
                     <mat-label>From</mat-label>
@@ -246,8 +264,9 @@
                       </button>
                     </div>
                     <mat-form-field>
-                      <mat-label>Virtualization</mat-label>
-                      <select formControlName="area" matNativeControl required>
+                      <mat-label>Area</mat-label>
+                      <select formControlName="area" matNativeControl matTooltip="Specifies the area in which the constraint is in effect"
+                              required>
                         <!-- // TODO Add the real locations -->
                         <option value="munich1">Munich 1</option>
                         <option value="munich2">Munich 2</option>
@@ -257,13 +276,15 @@
 
                     <mat-form-field>
                       <mat-label>Threshold</mat-label>
-                      <input formControlName="threshold" matInput type="number" value="0">
+                      <input formControlName="threshold" matInput matTooltip="Maximum latency" type="number"
+                             value="0">
                       <p matSuffix>ms</p>
                     </mat-form-field>
 
                     <mat-form-field>
                       <mat-label>Rigidness</mat-label>
-                      <input formControlName="rigidness" matInput max="1" min="0" step="0.01" type="number" value="0">
+                      <input formControlName="rigidness" matInput max="1" min="0" step="0.01" type="number" value="0"
+                      >
                       <p matSuffix>%</p>
                     </mat-form-field>
 
@@ -333,12 +354,13 @@
             <div formArrayName="connectivity">
 
               <div *ngFor="let conn of connectivity.controls; let i = index" id="contentInside">
-                <mat-card [formGroupName]="i" class="connectivityCard" style="display: flex">
+                <mat-card [formGroupName]="i" class="connectivityCard" style="display: flex; padding-bottom: 0">
 
                   <div class="w3-col s8">
                     <mat-form-field>
                       <mat-label> target_microservice_id {{conn.value}}</mat-label>
-                      <select formControlName="target_microservice_id" matNativeControl required>
+                      <select (change)="openDialog(i)" formControlName="target_microservice_id" matNativeControl
+                              required>
                         <option *ngFor="let job of allJobs" [value]="job._id.$oid">
                           {{job.microservice_name}} (id: {{job._id.$oid}})
                         </option>
@@ -359,12 +381,12 @@
               </div>
             </div>
 
-            <button [disabled]="form.invalid" color="primary" mat-button mat-flat-button type="submit">Save</button>
+            <button color="primary" mat-button mat-flat-button type="submit">Save</button>
             <button class="cancel_buttons" color="primary" mat-button mat-flat-button routerLink="/control"
                     type="button">
               Cancel
             </button>
-            <mat-error *ngIf="form.invalid" class="alert alert-danger" style="margin-top: 10px">
+            <mat-error *ngIf="formInvalid" class="alert alert-danger" style="margin-top: 10px">
               some required field's are still missing
             </mat-error>
 

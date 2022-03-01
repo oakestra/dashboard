@@ -5,6 +5,7 @@ import {AuthService} from "../../shared/modules/auth/auth.service";
 import {ApiService, LoginRequest, UserEntity} from "../../shared/modules/api/api.service";
 import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
 import {environment} from "../../../environments/environment";
+import {SurveyService} from "../../control/survey/survey.service";
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,6 @@ export class LoginComponent {
   }
 
   public submitLogin() {
-    // console.log(environment.apiUrl)
 
     if (this.user.name.length !== 0 && this.user.password.length !== 0) {
 
@@ -41,6 +41,7 @@ export class LoginComponent {
               this.router.navigate(['/control'])
             )
           }
+          // this.surveyService.resetSurvey() => only for survey
         },
         (error => this.notifyService.notify(Type.error, error.error.message))
       )

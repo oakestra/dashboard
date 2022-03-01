@@ -46,6 +46,7 @@ export class DialogEditUserView {
 
     } else {
       this.buttonText = "Create"
+      this.title = "Create new user..."
 
       this.form = fb.group({
         "name": ["", UserValidators.containsWhitespace],

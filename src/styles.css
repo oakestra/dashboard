@@ -8,12 +8,8 @@
   justify-content: flex-end;
 }
 
-@font-face {
-  font-family: 'Pacifico';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v12/FwZY7-Qmy14u9lezJ-6H6MmBp0u-.woff2) format('woff2');
-  font-display: swap;
+* {
+  font-family: CMUSansSerif, sans-serif;
 }
 
 /*////////////////////////////////////////////////////*/
@@ -179,7 +175,9 @@ td {
   display: none
 }
 
-button:focus {outline:0;}
+button:focus {
+  outline: 0;
+}
 
 /*///////////////////////////////////////////////////*/
 /* Style for the User Tour*/
@@ -190,9 +188,11 @@ body {
   /*font-family: 'Helvetica Neue';*/
   /*grid-template-areas: inherit;*/
 }
+
 header, aside, main, section {
   padding: 20px;
 }
+
 header {
   background: #00C195;
 }
@@ -200,6 +200,7 @@ header {
 aside {
   background: #D3D3D3;
 }
+
 section {
   background: #fff;
   border-radius: 10px;
@@ -209,9 +210,11 @@ section {
 h1 {
   margin: 0;
 }
+
 nav {
   justify-self: right;
 }
+
 nav ul li {
   display: inline;
 }
@@ -219,9 +222,11 @@ nav ul li {
 nav ul li a {
   padding: 10px;
 }
+
 aside ul {
   margin-top: 30px;
 }
+
 aside ul li a {
   text-transform: uppercase;
   font-size: .7em;
@@ -241,7 +246,8 @@ body.shepherd-active::after {
   height: 100%;
   top: 0;
   left: 0;
-  z-index: -1000000; }
+  z-index: -1000000;
+}
 
 .arrow {
   position: absolute;

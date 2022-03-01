@@ -41,7 +41,7 @@ export class GraphComponent implements OnChanges {
       'target_serviceID': target,
       'type': "geo",
       'threshold': 100,
-      'rigidness': 0.1,
+      'rigidness': 10,
       'convergence_time': 300,
     }
     if (conn) {

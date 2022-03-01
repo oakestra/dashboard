@@ -8,7 +8,7 @@ import {MatRadioChange} from "@angular/material/radio";
   styles: [
     '.full-width{width: 100%}',
     '.alignRight{text-align: right}',
-    '.test .mat-radio-outer-circle{border-color: red}'
+    '::ng-deep .blackRadio .mat-radio-outer-circle{border-color: black}'
   ]
 })
 export class DialogGraphConnectionSettings {

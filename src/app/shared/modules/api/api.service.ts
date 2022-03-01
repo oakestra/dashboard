@@ -21,7 +21,7 @@ export class ApiService extends RestService {
               userService: UserService,
               notificationService: NotificationService,
               @Inject(WINDOW) window: Window) {
-    super(http, userService, notificationService,window)
+    super(http, userService, notificationService, window)
 
   }
 
@@ -124,6 +124,13 @@ export class ApiService extends RestService {
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////// Other Functions ///////////////////////////////////////
 
+  //////////
+  // Used only for survey purposes
+  // logoutSurvey(username: any){
+  //   this.http.get(this.apiUrl + "/logout/" + username).subscribe()
+  // }
+  //////////
+
   fileUpload(data: any) {
     return this.http.post(this.apiUrl + "/uploader", data)
   }
@@ -137,7 +144,7 @@ export class ApiService extends RestService {
 
   resetPassword(username: string) {
     let obj = {
-      'username' : username,
+      'username': username,
       'domain': window.location.host
     }
     return this.doPOSTPublicRequest("/auth/resetPassword", obj);

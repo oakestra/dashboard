@@ -19,15 +19,11 @@ import {NotificationService, Type} from "../../shared/modules/notification/notif
 export class DeployFormComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
-
   file: File | undefined
   filename = "Select File to Upload"
-
   fileArrayForm = new FormArray([]);
   canViewLatConstrains: boolean[] = [];
-
   service: any = null;
-
   editingJob: boolean = false; // True if the user is editing the job
   currentJobID = ""; // This one is uses to get the Job from the DB
   applicationId = "";
@@ -37,6 +33,7 @@ export class DeployFormComponent implements OnInit, OnDestroy {
   allJobs: any // For the Dropdown list of the connections
   jsonContent: any // The final SLA witch is generated form the form
   subscriptions: Subscription[] = [];
+  formInvalid = false;
 
   conConstrainsArray: FormArray[] = [new FormArray([new FormGroup({
     'type': new FormControl(0),
@@ -68,20 +65,20 @@ export class DeployFormComponent implements OnInit, OnDestroy {
 
     this.form = fb.group({
       'microserviceID': [],
-      'microservice_name': [],
-      'microservice_namespace': [],
-      'virtualization': [],
-      'description': [],
-      'memory': [],
-      'vcpus': [],
-      'vgpus': [],
-      'vtpus': [],
-      'bandwidth_in': [],
-      'bandwidth_out': [],
-      'storage': [],
-      'code': [],
-      'state': [],
-      'port': [],
+      'microservice_name': ["Default_Service"],
+      'microservice_namespace': ["test"],
+      'virtualization': ["container"],
+      'description': ["This is a default service"],
+      'memory': [50],
+      'vcpus': [1],
+      'vgpus': [0],
+      'vtpus': [0],
+      'bandwidth_in': [0],
+      'bandwidth_out': [0],
+      'storage': [0],
+      'code': ["URL to code"],
+      'state': ["URL to state"],
+      'port': ["80"],
       'addresses': fb.group({
         'rr_ip': [],
         'closest_ip': [],
@@ -239,19 +236,19 @@ export class DeployFormComponent implements OnInit, OnDestroy {
       const path = this.api.fileUpload(formData)
       let fc
       path.subscribe((x: any) => {
-        if (action == "file") {
-          this.fileArrayForm.controls[index] = new FormControl([x.path])
-        } else if (action == "code") {
-          fc = this.form.get("code") as FormControl
-          fc.setValue([x.path])
-        } else if (action == "state") {
-          fc = this.form.get("state") as FormControl
-          fc.setValue([x.path])
-        }
-      },
-      (err) =>{
-        this.notifyService.notify(Type.error, "File not supported")
-      })
+          if (action == "file") {
+            this.fileArrayForm.controls[index] = new FormControl([x.path])
+          } else if (action == "code") {
+            fc = this.form.get("code") as FormControl
+            fc.setValue([x.path])
+          } else if (action == "state") {
+            fc = this.form.get("state") as FormControl
+            fc.setValue([x.path])
+          }
+        },
+        (_err) => {
+          this.notifyService.notify(Type.error, "File not supported")
+        })
     }
   }
 
@@ -265,9 +262,12 @@ export class DeployFormComponent implements OnInit, OnDestroy {
     if (this.file) {
       let fileReader = new FileReader();
       fileReader.onload = () => {
-        console.log(fileReader.result);
         let sla = JSON.parse(fileReader.result + "")
-        sla.applicationId = this.applicationId
+        sla.applicationID = this.applicationId
+        sla._id = null
+        if(sla.job_name){
+          delete sla.job_name
+        }
         this.generateSLA(sla)
       }
       fileReader.readAsText(this.file);
@@ -299,12 +299,17 @@ export class DeployFormComponent implements OnInit, OnDestroy {
     this.api.addJob(this.jsonContent).subscribe((_e: any) => {
       this.router.navigate(['/control']);
       this.notifyService.notify(Type.success, "Job generation was successful")
-    },(error => this.notifyService.notify(Type.error, "File was not in the correct format")))
+    }, (_error => this.notifyService.notify(Type.error, "File was not in the correct format")))
   }
 
   onSubmit() {
+    if (this.form.invalid) {
+      this.formInvalid = true;
+      return;
+    }
+
     let content = this.form.value
-    content.applicationId = this.applicationId
+    content.applicationID = this.applicationId
     content.args = [this.argsText]
 
     if (this.editingJob) {

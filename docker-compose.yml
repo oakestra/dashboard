@@ -1,4 +1,4 @@
-version: '0.1'
+#version: '0.1'
 
 services:
   your-service:
@@ -9,4 +9,4 @@ services:
     restart: unless-stopped
     container_name: edgeio-frontend-container
     environment:
-      - API_ADDRESS=localhost:10000
+      - API_ADDRESS=34.107.85.194:10000 #ip of the root orchestrator

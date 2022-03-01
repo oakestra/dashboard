@@ -14,6 +14,7 @@ export class DialogAddApplicationView {
 
   action: string;
   local_data: any;
+  title = "Add Application"
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddApplicationView>,
@@ -21,6 +22,9 @@ export class DialogAddApplicationView {
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
     this.local_data = {...data};
     this.action = this.local_data.action;
+    if (this.action == 'Update') {
+      this.title = "Modify Application"
+    }
   }
 
   doAction() {

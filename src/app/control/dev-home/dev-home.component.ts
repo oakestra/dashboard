@@ -80,4 +80,30 @@ export class DevHomeComponent implements OnInit, OnDestroy {
       this.deployJob(j)
     }
   }
+
+  //////////////////////////////////
+  //////////////////////////////////
+  //////////////////////////////////
+  //////////////////////////////////
+
+
+  private setting = {
+    element: {
+      dynamicDownload: null as any
+    }
+  }
+
+  downloadConfig(job: any) {
+    let fileName = job.microservice_name + ".json"
+    if (!this.setting.element.dynamicDownload) {
+      this.setting.element.dynamicDownload = document.createElement('a');
+    }
+    const element = this.setting.element.dynamicDownload;
+    const fileType = fileName.indexOf('.json') > -1 ? 'text/json' : 'text/plain';
+    element.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(JSON.stringify(job))}`);
+    element.setAttribute('download', fileName);
+
+    let event = new MouseEvent("click");
+    element.dispatchEvent(event);
+  }
 }

@@ -10,6 +10,8 @@ import {UserService} from "../../shared/modules/auth/user.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {AuthService, Role} from "../../shared/modules/auth/auth.service";
 import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
+import {SurveyService} from "../survey/survey.service";
+
 // import {environment} from "../../../environments/environment";
 
 @Component({
@@ -17,7 +19,7 @@ import {NotificationService, Type} from "../../shared/modules/notification/notif
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit, AfterViewInit{
+export class NavbarComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
@@ -36,8 +38,7 @@ export class NavbarComponent implements OnInit, AfterViewInit{
               public userService: UserService,
               private router: Router,
               private authService: AuthService,
-              private notifyService: NotificationService
-  ) {
+              private notifyService: NotificationService) {
     router.events.pipe(filter(e => e instanceof NavigationEnd))
       .subscribe((e: any) => {
         this.showData(e.url)
@@ -49,18 +50,25 @@ export class NavbarComponent implements OnInit, AfterViewInit{
     this.api.getUserByName(this.username).subscribe((data: any) => {
       this.userID = data._id.$oid + "";
       this.sharedService.userID = this.userID
+      // this.surveyService.resetSurvey()
+
       this.loadData()
       this.updatePermissions();
     })
   }
 
   showData(url: string) {
-    this.settings = (url.includes("help") || url.includes("user") || url.includes("profile"))
+    this.settings = (url.includes("help") || url.includes("user") || url.includes("profile") || url.includes("survey"))
   }
 
   loadData() {
-    this.api.getApplicationsOfUser(this.userID).subscribe(result => {
+    this.api.getApplicationsOfUser(this.userID).subscribe((result: any) => {
         this.app = result
+        if (result[0]) {
+          this.active = result[0]._id
+          this.appSelected = true
+          this.sharedService.selectApplication(result[0])
+        }
       }
     )
   }
@@ -114,6 +122,12 @@ export class NavbarComponent implements OnInit, AfterViewInit{
   }
 
   deleteApplication(app: any): void {
+    this.api.getJobsOfApplication(app._id.$oid).subscribe((jobs: any) => {
+      for (let j of jobs) {
+        this.api.deleteJob(j)
+      }
+    })
+
     this.api.deleteApplication(app).subscribe((_success) => {
         this.notifyService.notify(Type.success, 'Application "' + app.name + '" deleted successfully!')
         this.loadData();
@@ -158,6 +172,7 @@ export class NavbarComponent implements OnInit, AfterViewInit{
   }
 
   logout() {
+    // this.api.logoutSurvey(this.username)
     this.authService.clear()
     this.userService.logout()
   }

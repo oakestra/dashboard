@@ -14,6 +14,7 @@ export class HelpComponent {
   defaultStepOptions: any
   productSteps: any
   builtInButtons: any
+  lastButtons: any
 
   constructor(private shepherdService: ShepherdService,
               private router: Router) {
@@ -27,6 +28,23 @@ export class HelpComponent {
       },
       {
         action(): any {
+          return shepherdService.next()
+        },
+        text: 'NEXT',
+        classes: '',
+      }
+    ];
+
+    this.lastButtons = [
+      {
+        action(): any {
+          return shepherdService.back()
+        },
+        text: 'BACK'
+      },
+      {
+        action(): any {
+          router.navigate(["/control/survey"])
           return shepherdService.next()
         },
         text: 'NEXT',
@@ -76,8 +94,8 @@ export class HelpComponent {
           on: 'top'
         },
         buttons: this.builtInButtons,
-        title: '3/5 Jobs',
-        text: 'The jobs of the selected application are displayed here.'
+        title: '3/5 Services',
+        text: 'The services of the selected application are displayed here.'
       },
       {
         attachTo: {
@@ -87,8 +105,8 @@ export class HelpComponent {
         buttons:
         this.builtInButtons
         ,
-        title: '4/5 Create new job',
-        text: 'Here you can create a new job that will be created in the selected application.'
+        title: '4/5 Create new service',
+        text: 'Here you can create a new service that will be created in the selected application.'
       },
       {
         attachTo: {
@@ -96,7 +114,7 @@ export class HelpComponent {
           on: 'bottom'
         },
         buttons:
-        this.builtInButtons
+        this.lastButtons
         ,
         title: '5/5 User settings',
         text: 'Here you can find all user related settings.'

@@ -15,12 +15,11 @@ import {
   Tooltip
 } from "chart.js";
 
-declare function initMap(lng:number, lat:number): void;
+declare function initMap(lng: number, lat: number): void;
 
 @Component({
   selector: 'line-chart',
   templateUrl: './line-chart.component.html',
-  // styleUrls: ['./line-chart.component.scss'],
 })
 export class LineChartComponent implements OnInit {
 

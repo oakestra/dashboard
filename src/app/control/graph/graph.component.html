@@ -1,10 +1,12 @@
-<button (click)="multipleFunctions()" color="primary" mat-button>{{showConButton}}</button>
+<button (click)="multipleFunctions()" color="primary" mat-button>{{showConButton}}
+  <mat-icon>scatter_plot</mat-icon>
+</button>
 
 <div [style.display]=" showConnections ? '' : 'none'" class="wrapper"
      style="width: 100%; overflow: hidden;">
   <div class="buttonSide" style="width: 20vw; float:left;">
     <h2 #type id="typeText"></h2>
-    <h4 id="testText">Select Node or Connection</h4>
+    <h4 id="testText">Select Service or Connection</h4>
 
     <div style="display: none">
       <p #nodeID id="IdText"></p>
@@ -27,7 +29,7 @@
     <ng-template #nodeButtons>
       <button color="primary" id="editElement" mat-button mat-flat-button routerLink="deploy/{{nodeID.innerText}}">
         <mat-icon>settings</mat-icon>
-        Configure Node
+        Configure Service
       </button>
       <button (click)="delete(nodeID.innerText)" mat-button>
         <mat-icon>delete</mat-icon>
@@ -37,10 +39,10 @@
   </div>
 </div>
 
-<div *ngIf="showConnections" class="alert alert-info">
+<div *ngIf="showConnections" class="alert alert-info" style="margin-top: 8px">
   <li>create new connections with drag and drop</li>
-  <li>you can move a node if you hold CTRL</li>
-  <li>Use the configure button to edit a node or an edge</li>
+  <li>you can move a service if you hold CTRL</li>
+  <li>use the configure button to edit a service or a connection</li>
 </div>
 
 <div [style.display]=" showConnections ? '' : 'none'" class="graphSide" id="graph"

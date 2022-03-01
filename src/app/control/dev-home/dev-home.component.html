@@ -11,8 +11,8 @@
               {{job.microservice_name}}
             </div>
 
-            <div class="w3-col s5 w3-left statusField">
-              <button (click)="openStatusDialog(job)" mat-icon-button type="button">
+            <div (click)="openStatusDialog(job)" class="w3-col s5 w3-left statusField" style="cursor: pointer;">
+              <button mat-icon-button type="button">
                 <mat-icon [class]=job.status>fiber_manual_record</mat-icon>
               </button>
               <p class="statusText">{{job.status}}</p>
@@ -35,14 +35,22 @@
                   <mat-icon>send</mat-icon>
                   Deploy
                 </button>
+                <button (click)="downloadConfig(job)" mat-menu-item>
+                  <mat-icon>file_download</mat-icon>
+                  Download Config
+                </button>
               </mat-menu>
             </div>
           </div>
         </mat-card>
         <mat-card-actions style="text-align: end">
+          <button color="primary" id="createJob" mat-flat-button routerLink="/control/deploy" style="float: left">
+            <mat-icon>add_circle</mat-icon>
+            Create New Service
+          </button>
           <button (click)="deployAllJobs()" color="primary" mat-flat-button type="button">
             <mat-icon>send</mat-icon>
-            Deploy all
+            Deploy All
           </button>
         </mat-card-actions>
 
@@ -50,7 +58,14 @@
 
       </div>
       <div *ngIf="jobsCount == 0" class="content mat-elevation-z8">
-        No Job in this application.
+        <p>No Job in this application.</p>
+        <br>
+        <div style="text-align: end">
+          <button color="primary" id="createJobEmpty" mat-flat-button routerLink="/control/deploy" style="float: left">
+            <mat-icon>add_circle</mat-icon>
+            Create new service
+          </button>
+        </div>
       </div>
     </div>
   </mat-card>

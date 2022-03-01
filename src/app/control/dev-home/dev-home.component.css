@@ -1,5 +1,3 @@
-/*@import "https://www.w3schools.com/w3css/4/w3.css";*/
-
 mat-card {
   width: 100%;
   font-size: 1rem;
@@ -39,7 +37,11 @@ mat-card p {
   align-items: center;
   font-size: 2rem;
   color: lightgray;
+  align-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
+
 .serviceCard {
   height: 100%;
 }

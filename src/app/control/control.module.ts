@@ -39,6 +39,8 @@ import {DialogChangePasswordView} from "./dialogs/change-password/dialogChangePa
 import {DialogJobStatusView} from "./dialogs/jobs-status/dialogJobStatus";
 import {LineChartComponent} from './charts/line-chart/line-chart.component';
 import {HelpComponent} from "./help/help.component";
+import { SurveyComponent } from './survey/survey.component';
+import {DialogConfirmation} from "./dialogs/confirmation/dialogConfirmation";
 
 
 @NgModule({
@@ -57,7 +59,9 @@ import {HelpComponent} from "./help/help.component";
     DialogChangePasswordView,
     DialogJobStatusView,
     LineChartComponent,
-    HelpComponent
+    HelpComponent,
+    SurveyComponent,
+    DialogConfirmation
   ],
   imports: [
     CommonModule,

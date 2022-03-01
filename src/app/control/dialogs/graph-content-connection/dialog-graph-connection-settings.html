@@ -28,10 +28,12 @@
   <div style="padding-bottom: 32px; margin: 20px 0 20px 0">
     <mat-radio-group [(ngModel)]="data.type" required style="flex: 1">
       <div class="w3-col l6 m6" style="text-align: center">
-        <mat-radio-button (change)="onRadioChange($event)" id="dialog-radio" value="latency">latency</mat-radio-button>
+        <mat-radio-button (change)="onRadioChange($event)" class="blackRadio" id="dialog-radio" value="latency">
+          latency
+        </mat-radio-button>
       </div>
       <div class="w3-col l6 m6" style="text-align: center">
-        <mat-radio-button class="test" (change)="onRadioChange($event)" value="geo">geo</mat-radio-button>
+        <mat-radio-button (change)="onRadioChange($event)" class="blackRadio" value="geo">geo</mat-radio-button>
       </div>
     </mat-radio-group>
   </div>
