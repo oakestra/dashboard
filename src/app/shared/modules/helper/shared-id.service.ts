@@ -18,10 +18,11 @@ export class SharedIDService {
     return this.applicationService.asObservable()
   }
 
-  set userID(id: string){
+  set userID(id: string) {
     this._userID = id;
   }
-  get userID(){
+
+  get userID() {
     return this._userID
   }
 

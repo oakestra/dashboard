@@ -81,12 +81,6 @@ export class DevHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  //////////////////////////////////
-  //////////////////////////////////
-  //////////////////////////////////
-  //////////////////////////////////
-
-
   private setting = {
     element: {
       dynamicDownload: null as any
@@ -94,6 +88,8 @@ export class DevHomeComponent implements OnInit, OnDestroy {
   }
 
   downloadConfig(job: any) {
+    if(job._id)
+      delete job._id
     let fileName = job.microservice_name + ".json"
     if (!this.setting.element.dynamicDownload) {
       this.setting.element.dynamicDownload = document.createElement('a');
