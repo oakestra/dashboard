@@ -5,9 +5,9 @@
     <p style="margin: 0">{{details}}</p>
   </div>
 
-  <a *ngIf="(usage != undefined)" [href]=grafanaLink rel="noopener noreferrer" target="_blank">View in Grafana</a>
+  <a *ngIf="(instance_list != null)" [href]=grafanaLink rel="noopener noreferrer" target="_blank">View in Grafana</a>
 
-  <line-chart *ngIf="(usage != undefined)" [usage]=usage></line-chart>
+  <line-chart *ngIf="(instance_list != null)" [instance_list]=instance_list></line-chart>
 
 </mat-dialog-content>
 

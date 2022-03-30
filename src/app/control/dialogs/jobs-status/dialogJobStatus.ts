@@ -17,7 +17,7 @@ export class DialogJobStatusView {
   tmp = environment.apiUrl.split(":")
   grafanaLink = this.tmp[0] + ":" + this.tmp[1]
 
-  usage: any = undefined
+  instance_list: any = undefined
 
   status: string = ""
   details = ""
@@ -30,22 +30,30 @@ export class DialogJobStatusView {
     let local_data = {...data};
     this.status = local_data.status
 
-    if (local_data.usage != undefined) {
-      this.usage = local_data.usage
 
-      console.log(this.usage)
-    }
+    // TODO The instance_list stores only the current data, without history.
+    // change it to array, in the database, if historic data should also be displayed
+    // instance_list:[
+    //  {
+    //    'cpu':'cpu %'
+    //    'memory':'memory used by the service instance in bytes'
+    //    'disk':'disk used by the service instance in bytes'
+    //  }
+    //]
+    // And how should the different instances be displayed, currently we always display only the first entry.
+    this.instance_list = local_data.instance_list[0]
+
 
     this._statusDetails.set("REGISTERED", "The job is stored in the Database but not deployed.")
-    this._statusDetails.set("DEPLOY REQUESTED", "The deployment is requested and the system tries to deploy the job.")
+    this._statusDetails.set("REQUESTED", "The deployment is requested and the system tries to deploy the job.")
     this._statusDetails.set("SCHEDULED", "The scheduler took a decision.")
     this._statusDetails.set("RUNNING", "The service is running and no error occurred.")
     this._statusDetails.set("FAILED", "An error came up.")
 
     let d = this._statusDetails.get(this.status)
-    if(!d){
+    if (!d) {
       this.details = "Sorry, no exact description has been added for this status yet."
-    }else{
+    } else {
       this.details = this._statusDetails.get(this.status)!
     }
   }

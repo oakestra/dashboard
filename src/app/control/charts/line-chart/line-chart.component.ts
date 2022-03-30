@@ -1,10 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {
+  ArcElement,
   BarController,
   BarElement,
   CategoryScale,
   Chart,
   Decimation,
+  DoughnutController,
   Filler,
   Legend,
   LinearScale,
@@ -23,30 +25,32 @@ declare function initMap(lng: number, lat: number): void;
 })
 export class LineChartComponent implements OnInit {
 
-  @Input() usage: any;
+  @Input() instance_list: any;
 
   constructor() {
     Chart.register(LineElement, LineController, PointElement, BarElement, BarController, CategoryScale,
-      Decimation, Filler, Legend, Title, Tooltip, LinearScale);
+      Decimation, Filler, Legend, Title, Tooltip, LinearScale, DoughnutController, ArcElement);
   }
 
 
   ngOnInit(): void {
-    console.log(this.usage)
+
+    // Doughnut chart with only current value.
     new Chart("myChartCPU", {
-      type: 'line',
+      type: 'doughnut',
       data: {
-        labels: this.usage.cpuTime,
+        labels: [
+          'used',
+          'free',
+        ],
         datasets: [{
           label: 'usage [%]',
-          data: this.usage.currentCPU,
-          backgroundColor: 'rgb(56,203,24)',
-          borderColor: 'rgb(56,203,24)',
-          borderWidth: 1,
-          fill: {
-            target: 'origin',
-            above: 'rgb(56,203,24, 0.5)',   // Area will be red above the origin
-          }
+          data: [this.instance_list.cpu, 100 - this.instance_list.cpu],
+          backgroundColor: [
+            'rgb(235,54,75, 0.8)',
+            'rgba(90,246,93,0.8)',
+          ],
+          hoverOffset: 4
         }]
       },
       options: {
@@ -55,22 +59,50 @@ export class LineChartComponent implements OnInit {
             display: true,
             text: 'CPU usage'
           }
-        },
-        scales: {
-          y: {
-            beginAtZero: true
-          }
         }
       }
     });
 
+    // # Line chart with data history. Needs an array of historic data
+    // new Chart("myChartCPU", {
+    //   type: 'line',
+    //   data: {
+    //     labels: this.instance_list.cpu,
+    //     datasets: [{
+    //       label: 'usage [%]',
+    //       data: this.instance_list.cpu,
+    //       backgroundColor: 'rgb(56,203,24)',
+    //       borderColor: 'rgb(56,203,24)',
+    //       borderWidth: 1,
+    //       fill: {
+    //         target: 'origin',
+    //         above: 'rgb(56,203,24, 0.5)',   // Area will be red above the origin
+    //       }
+    //     }]
+    //   },
+    //   options: {
+    //     plugins: {
+    //       title: {
+    //         display: true,
+    //         text: 'CPU usage'
+    //       }
+    //     },
+    //     scales: {
+    //       y: {
+    //         beginAtZero: true
+    //       }
+    //     }
+    //   }
+    // });
+
+    // TODO Add historic data
     new Chart("myChartMemory", {
       type: 'line',
       data: {
-        labels: this.usage.memoryTime,
+        labels: [0, 1], // Could be a time stamp
         datasets: [{
           label: 'Memory [bytes]',
-          data: this.usage.currentMemory,
+          data: [this.instance_list.memory, this.instance_list.memory],
           backgroundColor: 'rgb(36,90,238)',
           borderColor: 'rgb(36,90,238)',
           borderWidth: 1,
@@ -87,13 +119,9 @@ export class LineChartComponent implements OnInit {
             text: 'Memory usage'
           }
         },
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
       }
     });
-    initMap(this.usage.geoInformation.lng, this.usage.geoInformation.lat);
+    // TODO Update map with real values and display only a polygon
+    initMap(11.668118226444951, 48.26255677936406);
   }
 }
