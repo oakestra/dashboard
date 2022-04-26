@@ -10,32 +10,30 @@ Make sure the following software is installed:
 * Docker 1.13.1+ ([installation manual](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/))
 * Node.js 16+ and npm 8+ ([installation with nvm](https://github.com/creationix/nvm#usage))
 
-Clone the repository and install the dependencies:
-
+1) Clone the repository
 ```shell
-npm ci
+git clone https://github.com/edgeIO/dashboard.git
 ```
 
-If you are running commands with root privileges set `--unsafe-perm flag`:
+2) Install the dependencies:
 
 ```shell
-npm ci --unsafe-perm
+npm install
 ```
 
-## Running the EdgeIO Framework
+## Running the Okakestra Framework
 
 To be able to log in to the dashboard and test all functions, at least the System Manager and MongoDB must be started.
-How to start them is described in the README of the `edgeio` repository. 
+How to start them is described in the README of the `edgeio` repository.
 
 ## Serving Dashboard for Development
 
-Quick updated version:
 
 ```shell
 npm start
 ```
 
-In the background, `npm start` starts the `angular` development server.
+In the background, `npm start` starts the `angular` development server. By default, the server starts on `localhost:4200`
 
 Once the angular server starts, it takes some time to pre-compile all assets before serving them. By default, the angular development server watches for file changes and will update accordingly.
 
@@ -46,16 +44,50 @@ Follow [Building Dashboard for Production](#building-dashboard-for-production) s
 
 ## Building Dashboard for Production
 
-The Dashboard project can be built for production by using the following task:
+In the production environment you need the following files: 
+
+1) `dist` folder
+2) `docker` folder
+3) `Dockerfile`
+4) `docker-compose.yml`
+
+
+### 1. dist folder:
+The dashboard project can be built for production by using the following task:
 
 ```shell
-make build
+npm run build
 ```
 
 The code is compiled, compressed, i18n support is enabled and debug support removed. The dashboard binary can be found in the `dist` folder.
 
-To build the docker image you will need to set environment variable in the `docker-compose.yml`:
+### 2. docker folder: 
+
+To use the environment variables of a Docker container in your Angular application we use the library [angular-server-side-configuration](https://www.npmjs.com/package/angular-server-side-configuration). For any problems you can consult the readme of that repository.
+
+This folder contains the angular-environment folder, the entrypoint.sh file and a Nginx configuration file. 
+
+In the angular-environment folder is the code that needs to run every time you start your Docker container. 
+It contains a package.json file that has a dependency on angular-server-side-configuration and runs the main.js file.
+
+The entrypoint.sh script is used to install NodeJS and the angular-server-side-configuration library. After that, it runs the main.js script to set the environment variables and at the end, all NodeJS-related stuff is deleted and the Nginx server can be started with the defined settings in the configuration file. 
+
+### 3. dockerfile 
+
+Copies all relevant files into the container and executes the `entrypoint.sh` script
+
+### 4. docker compose
+
+To start the Docker service the Ip address of the system manager should be defined in the `docker-compose.yml` file. If the dashboard cannot reach the system manager, the user cannot log in.
 
 ```shell
 API_ADDRESS=IP:PORT #ip and port of the system manager
+```
+
+## Starting the dashboard
+
+If you have all the above files, you can build and start the Dashboard using the following command.
+
+```shell
+docker-compose.yml up –build -d
 ```

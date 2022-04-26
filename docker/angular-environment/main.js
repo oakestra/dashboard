@@ -3,6 +3,8 @@
  * will contain the name variables used to run the container.
  *
  * https://medium.com/@kayvanbree/solving-angulars-environment-variable-problem-fc3ac5bbc305
+ *
+ * https://www.npmjs.com/package/angular-server-side-configuration
  */
 const assc = require('angular-server-side-configuration');
 const root = '/usr/share/nginx/html';

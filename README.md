@@ -1,7 +1,8 @@
 # EdgeIO-Frontend
 
-This is the fist implementation of a frontend for the EdgeIO framework. 
+You can find a detailed description [here](docs/README.md)
 
+This is the fist implementation of a frontend for the EdgeIO framework.
 The EdgeIO frontend sends API calls to the System-Manager and displays the results. 
 
 ## Development server

@@ -11,6 +11,7 @@ This is the first version of the documentation and should be extended in the fut
 
 * [Installation](user/installation.md)
 * [Access control](user/access-control.md)
+* [Features](user/features.md)
 
 ## [Developer Guide](developer/README.md)
 
