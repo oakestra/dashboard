@@ -48,31 +48,36 @@ export class ApiService extends RestService {
     return this.doGETRequest("/applications/" + userId)
   }
 
+  // not used yet, use it later for the admin view
+  public getAllApplication() {
+    return this.doGETRequest("/applications/")
+  }
+
 ///////////////////////////////////////////////////////////////////////////
-///////////////////// Job Functions ///////////////////////////////////////
+///////////////////// Service Functions ///////////////////////////////////////
 
-  addJob(job: any) {
-    return this.doPOSTRequest("/job", job)
+  addService(service: any) {
+    return this.doPOSTRequest("/service", service)
   }
 
-  updateJob(job: any) {
-    return this.doPUTRequest("/job/" + job.microserviceID, job)
+  updateService(service: any) {
+    return this.doPUTRequest("/service/" + service.microserviceID, service)
   }
 
-  deleteJob(job: any) {
-    return this.doDELRequest("/job/" + job._id.$oid)
+  deleteService(service: any) {
+    return this.doDELRequest("/service/" + service._id.$oid)
   }
 
-  getJobByID(jobID: any) {
-    return this.doGETRequest("/job/" + jobID)
+  getServiceByID(serviceID: any) {
+    return this.doGETRequest("/service/" + serviceID)
   }
 
-  getJobsOfApplication(appId: string) {
-    return this.doGETRequest("/jobs/" + appId)
+  getServicesOfApplication(appId: string) {
+    return this.doGETRequest("/services/" + appId)
   }
 
-  deployJob(job: any) {
-    return this.doGETRequest("/deploy/" + job._id.$oid)
+  deployService(service: any) {
+    return this.doPOSTRequest("/service/" + service._id.$oid + "/instance", service)
   }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -96,6 +101,13 @@ export class ApiService extends RestService {
 
   public getAllUser() {
     return this.doGETRequest("/users")
+  }
+
+  changePassword(username: any, oldPassword: string, newPassword: string) {
+    return this.doPOSTRequest("/changePassword/" + username, {
+      oldPassword,
+      newPassword,
+    });
   }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -124,22 +136,8 @@ export class ApiService extends RestService {
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////// Other Functions ///////////////////////////////////////
 
-  //////////
-  // Used only for survey purposes
-  // logoutSurvey(username: any){
-  //   this.http.get(this.apiUrl + "/logout/" + username).subscribe()
-  // }
-  //////////
-
   fileUpload(data: any) {
     return this.http.post(this.apiUrl + "/uploader", data)
-  }
-
-  changePassword(username: any, oldPassword: string, newPassword: string) {
-    return this.doPOSTRequest("/changePassword/" + username, {
-      oldPassword,
-      newPassword,
-    });
   }
 
   resetPassword(username: string) {

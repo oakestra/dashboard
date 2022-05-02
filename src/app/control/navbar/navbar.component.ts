@@ -10,7 +10,6 @@ import {UserService} from "../../shared/modules/auth/user.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {AuthService, Role} from "../../shared/modules/auth/auth.service";
 import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
-import {SurveyService} from "../survey/survey.service";
 
 // import {environment} from "../../../environments/environment";
 
@@ -122,9 +121,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   deleteApplication(app: any): void {
-    this.api.getJobsOfApplication(app._id.$oid).subscribe((jobs: any) => {
-      for (let j of jobs) {
-        this.api.deleteJob(j)
+    this.api.getServicesOfApplication(app._id.$oid).subscribe((services: any) => {
+      for (let j of services) {
+        this.api.deleteService(j)
       }
     })
 

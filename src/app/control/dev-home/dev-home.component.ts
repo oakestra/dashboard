@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SharedIDService} from "../../shared/modules/helper/shared-id.service";
 import {ApiService} from "../../shared/modules/api/api.service";
 import {MatDialog} from "@angular/material/dialog";
-import {DialogJobStatusView} from "../dialogs/jobs-status/dialogJobStatus";
+import {DialogServiceStatusView} from "../dialogs/service-status/dialogServiceStatus";
 import {Subscription} from "rxjs/internal/Subscription";
 
 @Component({
@@ -12,8 +12,8 @@ import {Subscription} from "rxjs/internal/Subscription";
 })
 export class DevHomeComponent implements OnInit, OnDestroy {
 
-  jobs: any;
-  jobsCount = 0;
+  services: any;
+  servicesCount = 0;
   appName: string = ""
   appID: string = ""
   subscriptions: Subscription[] = []
@@ -40,44 +40,44 @@ export class DevHomeComponent implements OnInit, OnDestroy {
   }
 
   loadData(): void {
-    let sub = this.api.getJobsOfApplication(this.appID).subscribe((jobs: any) => {
-      this.jobs = jobs
-      this.jobsCount = jobs.length
+    let sub = this.api.getServicesOfApplication(this.appID).subscribe((services: any) => {
+      this.services = services
+      this.servicesCount = services.length
     }, (err) => {
       console.log(err)
     })
     this.subscriptions.push(sub)
   }
 
-  deleteJob(job: any) {
-    this.api.deleteJob(job).subscribe(() => {
+  deleteService(service: any) {
+    this.api.deleteService(service).subscribe(() => {
       this.loadData()
     })
   }
 
-  deployJob(job: any) {
-    this.api.deployJob(job).subscribe(() => {
+  deployService(service: any) {
+    this.api.deployService(service).subscribe(() => {
       this.loadData()
     })
   }
 
-  deleteJobWithGraph(id: string) {
-    let job = {_id: {$oid: id}}
-    this.api.deleteJob(job).subscribe(() => {
+  deleteServiceWithGraph(id: string) {
+    let service = {_id: {$oid: id}}
+    this.api.deleteService(service).subscribe(() => {
       this.loadData()
     })
   }
 
-  openStatusDialog(job: any) {
-    const dialogRef = this.dialog.open(DialogJobStatusView, {data: job});
+  openStatusDialog(service: any) {
+    const dialogRef = this.dialog.open(DialogServiceStatusView, {data: service});
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
     });
   }
 
-  deployAllJobs() {
-    for (let j of this.jobs) {
-      this.deployJob(j)
+  deployAllServices() {
+    for (let j of this.services) {
+      this.deployService(j)
     }
   }
 
@@ -87,16 +87,16 @@ export class DevHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  downloadConfig(job: any) {
-    if(job._id)
-      delete job._id
-    let fileName = job.microservice_name + ".json"
+  downloadConfig(service: any) {
+    if(service._id)
+      delete service._id
+    let fileName = service.microservice_name + ".json"
     if (!this.setting.element.dynamicDownload) {
       this.setting.element.dynamicDownload = document.createElement('a');
     }
     const element = this.setting.element.dynamicDownload;
     const fileType = fileName.indexOf('.json') > -1 ? 'text/json' : 'text/plain';
-    element.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(JSON.stringify(job))}`);
+    element.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(JSON.stringify(service))}`);
     element.setAttribute('download', fileName);
 
     let event = new MouseEvent("click");

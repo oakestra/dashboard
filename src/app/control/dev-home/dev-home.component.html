@@ -3,19 +3,19 @@
 
     <div *ngIf="sharedService.applicationObserver$ != null">
       <mat-card-title>Application: {{appName}}</mat-card-title>
-      <div *ngIf="jobsCount > 0">
-        <mat-card *ngFor="let job of jobs">
+      <div *ngIf="servicesCount > 0">
+        <mat-card *ngFor="let service of services">
           <div class="w3-row">
 
             <div class="w3-col s4 l5 m4 ">
-              {{job.microservice_name}}
+              {{service.microservice_name}}
             </div>
 
-            <div (click)="openStatusDialog(job)" class="w3-col s5 w3-left statusField" style="cursor: pointer;">
+            <div (click)="openStatusDialog(service)" class="w3-col s5 w3-left statusField" style="cursor: pointer;">
               <button mat-icon-button type="button">
-                <mat-icon [class]=job.status>fiber_manual_record</mat-icon>
+                <mat-icon [class]=service.status>fiber_manual_record</mat-icon>
               </button>
-              <p class="statusText">{{job.status}}</p>
+              <p class="statusText">{{service.status}}</p>
             </div>
 
             <div class="w3-col s1 w3-right">
@@ -23,19 +23,19 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #settings="matMenu">
-                <button [routerLink]="['deploy', job._id.$oid]" mat-menu-item>
+                <button [routerLink]="['deploy', service._id.$oid]" mat-menu-item>
                   <mat-icon>edit</mat-icon>
                   Edit
                 </button>
-                <button (click)="deleteJob(job)" mat-menu-item>
+                <button (click)="deleteService(service)" mat-menu-item>
                   <mat-icon>delete</mat-icon>
                   Delete
                 </button>
-                <button (click)="deployJob(job)" mat-menu-item>
+                <button (click)="deployService(service)" mat-menu-item>
                   <mat-icon>send</mat-icon>
                   Deploy
                 </button>
-                <button (click)="downloadConfig(job)" mat-menu-item>
+                <button (click)="downloadConfig(service)" mat-menu-item>
                   <mat-icon>file_download</mat-icon>
                   Download Config
                 </button>
@@ -44,24 +44,24 @@
           </div>
         </mat-card>
         <mat-card-actions style="text-align: end">
-          <button color="primary" id="createJob" mat-flat-button routerLink="/control/deploy" style="float: left">
+          <button color="primary" id="createService" mat-flat-button routerLink="/control/deploy" style="float: left">
             <mat-icon>add_circle</mat-icon>
             Create New Service
           </button>
-          <button (click)="deployAllJobs()" color="primary" mat-flat-button type="button">
+          <button (click)="deployAllServices()" color="primary" mat-flat-button type="button">
             <mat-icon>send</mat-icon>
             Deploy All
           </button>
         </mat-card-actions>
 
-        <graph (updated)="deleteJobWithGraph($event)" [jobs]="jobs"></graph>
+        <graph (updated)="deleteServiceWithGraph($event)" [services]="services"></graph>
 
       </div>
-      <div *ngIf="jobsCount == 0" class="content mat-elevation-z8">
-        <p>No Job in this application.</p>
+      <div *ngIf="servicesCount == 0" class="content mat-elevation-z8">
+        <p>No Service in this application.</p>
         <br>
         <div style="text-align: end">
-          <button color="primary" id="createJobEmpty" mat-flat-button routerLink="/control/deploy" style="float: left">
+          <button color="primary" id="createServiceEmpty" mat-flat-button routerLink="/control/deploy" style="float: left">
             <mat-icon>add_circle</mat-icon>
             Create new service
           </button>

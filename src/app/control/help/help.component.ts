@@ -99,7 +99,7 @@ export class HelpComponent {
       },
       {
         attachTo: {
-          element: '#createJob',
+          element: '#createService',
           on: 'bottom'
         },
         buttons:

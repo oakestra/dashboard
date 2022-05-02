@@ -22,7 +22,7 @@ export class GraphComponent implements OnChanges {
   updated = new EventEmitter<string>();
 
   @Input()
-  jobs: any
+  services: any
 
   constructor(public dialog: MatDialog,
               public api: ApiService) {
@@ -33,8 +33,8 @@ export class GraphComponent implements OnChanges {
   }
 
   async openDialog(start: string, target: string, mode: string) {
-    let job: any = await this.getJob(start)
-    let conn = this.findCorrectConstraint(target, job.connectivity)
+    let service: any = await this.getService(start)
+    let conn = this.findCorrectConstraint(target, service.connectivity)
 
     let data = {
       'start_serviceID': start,
@@ -81,11 +81,11 @@ export class GraphComponent implements OnChanges {
   }
 
   async saveGraphConstrains(data: any) {
-    let jobProm: any = await this.getJob(data.start_serviceID)
-    let newJob = jobProm
-    let index = newJob.connectivity.findIndex((d: any) => d.target_microservice_id == data.target_serviceID)
+    let serviceProm: any = await this.getService(data.start_serviceID)
+    let newService = serviceProm
+    let index = newService.connectivity.findIndex((d: any) => d.target_microservice_id == data.target_serviceID)
     if (index < 0) { // add new constrains
-      newJob.connectivity.push({
+      newService.connectivity.push({
         target_microservice_id: data.target_serviceID,
         con_constraints: [{
           'type': data.type,
@@ -95,7 +95,7 @@ export class GraphComponent implements OnChanges {
         }]
       })
     } else { // edit existing constraint
-      newJob.connectivity[index] = {
+      newService.connectivity[index] = {
         target_microservice_id: data.target_serviceID,
         con_constraints: [{
           'type': data.type,
@@ -105,39 +105,39 @@ export class GraphComponent implements OnChanges {
         }]
       };
     }
-    this.update(newJob)
+    this.update(newService)
   }
 
-  async getJob(id: string) {
+  async getService(id: string) {
     return new Promise((job) => {
-      this.api.getJobByID(id).subscribe(x => {
+      this.api.getServiceByID(id).subscribe(x => {
         job(x)
       })
     })
   }
 
-  update(job: any) {
-    this.api.updateJob(job).subscribe(() => console.log("Updated Constrains"));
+  update(service: any) {
+    this.api.updateService(service).subscribe(() => console.log("Updated Constrains"));
   }
 
   getNodes() {
     this.nodes = []
-    for (let job of this.jobs) {
+    for (let service of this.services) {
       this.nodes.push({
-        id: job.microservice_name,
-        idNumber: job._id.$oid
+        id: service.microservice_name,
+        idNumber: service._id.$oid
       });
     }
     this.calculateLinks();
   }
 
   calculateLinks() {
-    for (let job of this.jobs) {
-      if (job.connectivity != undefined) {
-        for (let targetJob of job.connectivity) {
+    for (let service of this.services) {
+      if (service.connectivity != undefined) {
+        for (let targetService of service.connectivity) {
           this.links.push({
-            source: job._id.$oid,
-            target: targetJob.target_microservice_id
+            source: service._id.$oid,
+            target: targetService.target_microservice_id
           })
         }
       }
@@ -164,10 +164,10 @@ export class GraphComponent implements OnChanges {
   }
 
   deleteOnlyLink(start: string, target: string) {
-    this.api.getJobByID(start).subscribe((job: any) => {
-      let index = job.connectivity.findIndex((d: any) => d.target_microservice_id == target)
-      job.connectivity.splice(index, 1)
-      this.update(job)
+    this.api.getServiceByID(start).subscribe((service: any) => {
+      let index = service.connectivity.findIndex((d: any) => d.target_microservice_id == target)
+      service.connectivity.splice(index, 1)
+      this.update(service)
     })
     deleteLink(); // deletes Lin in the graph
   }

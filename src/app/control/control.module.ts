@@ -36,7 +36,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import {DialogEditUserView} from "./dialogs/edit-user/dialogEditUser";
 import {UserEditComponent} from './users/user-edit/user-edit.component';
 import {DialogChangePasswordView} from "./dialogs/change-password/dialogChangePassword";
-import {DialogJobStatusView} from "./dialogs/jobs-status/dialogJobStatus";
+import {DialogServiceStatusView} from "./dialogs/service-status/dialogServiceStatus";
 import {LineChartComponent} from './charts/line-chart/line-chart.component';
 import {HelpComponent} from "./help/help.component";
 import { SurveyComponent } from './survey/survey.component';
@@ -57,7 +57,7 @@ import {DialogConfirmation} from "./dialogs/confirmation/dialogConfirmation";
     DialogEditUserView,
     UserEditComponent,
     DialogChangePasswordView,
-    DialogJobStatusView,
+    DialogServiceStatusView,
     LineChartComponent,
     HelpComponent,
     SurveyComponent,
