@@ -26,7 +26,7 @@ export class DevHomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     let sub = this.sharedService.applicationObserver$.subscribe(
       x => {
-        this.appName = x.name
+        this.appName = x.application_name
         this.appID = x._id.$oid
         this.loadData()
       });

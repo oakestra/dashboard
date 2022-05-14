@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {ApiService} from "../../shared/modules/api/api.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogGraphConnectionSettings} from "../dialogs/graph-content-connection/dialogGraphConnectionSettings";
+import {CleanJsonService} from "../../shared/util/clean-json.service";
+import {SharedIDService} from "../../shared/modules/helper/shared-id.service";
 
 declare function start(nodes: any, links: any): void;
 
@@ -25,7 +27,8 @@ export class GraphComponent implements OnChanges {
   services: any
 
   constructor(public dialog: MatDialog,
-              public api: ApiService) {
+              public api: ApiService,
+              public shardService: SharedIDService) {
   }
 
   ngOnChanges() {
@@ -116,8 +119,33 @@ export class GraphComponent implements OnChanges {
     })
   }
 
+
+  // TODO Move this to a service
+  generateSLA(sla: any) {
+    let jsonContent = {
+      "api_version": "v2.0",
+      "sla_version": "v2.0",
+      "customerID": this.shardService.userID,
+      "applications": [
+        {
+          // "applicationID": this.currentApplication._id.$oid,
+          // "application_name": this.currentApplication.application_name,
+          // "application_namespace": this.currentApplication.application_namespace,
+          // "application_desc": this.currentApplication.application_desc,
+          "microservices": [{}]
+        },
+      ],
+      "args": []
+    }
+    jsonContent.applications[0].microservices = [sla]
+    jsonContent = CleanJsonService.cleanData(jsonContent)
+
+    return jsonContent
+  }
+
   update(service: any) {
-    this.api.updateService(service).subscribe(() => console.log("Updated Constrains"));
+    let sla = this.generateSLA(service)
+    this.api.updateService(sla, service.microserviceID).subscribe(() => console.log("Updated Constrains"));
   }
 
   getNodes() {

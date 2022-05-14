@@ -43,7 +43,7 @@ export class LoginComponent {
           }
           // this.surveyService.resetSurvey() => only for survey
         },
-        (error => this.notifyService.notify(Type.error, error.error.message))
+        (error => this.notifyService.notify(Type.error, error))
       )
     } else {
       this.notifyService.notify(Type.error, "Please provide valid inputs for login.")

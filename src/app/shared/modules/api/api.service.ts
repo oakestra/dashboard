@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {RestService} from "../../util/rest.service";
 import {UserService} from "../auth/user.service";
 import {NotificationService} from "../notification/notification.service";
@@ -29,11 +29,11 @@ export class ApiService extends RestService {
 ///////////////////// Application Functions ///////////////////////////////
 
   addApplication(app: any) {
-    return this.doPOSTRequest("/application", app)
+    return this.doPOSTRequest("/application/", app)
   }
 
   updateApplication(app: any) {
-    return this.doPUTRequest("/application/" + app._id.$oid, app)
+    return this.doPUTRequest("/application/" + app.applicationID, app)
   }
 
   deleteApplication(app: any) {
@@ -57,11 +57,11 @@ export class ApiService extends RestService {
 ///////////////////// Service Functions ///////////////////////////////////////
 
   addService(service: any) {
-    return this.doPOSTRequest("/service", service)
+    return this.doPOSTRequest("/service/", service)
   }
 
-  updateService(service: any) {
-    return this.doPUTRequest("/service/" + service.microserviceID, service)
+  updateService(service: any, serviceID: string) {
+    return this.doPUTRequest("/service/" + serviceID, service)
   }
 
   deleteService(service: any) {
@@ -100,7 +100,7 @@ export class ApiService extends RestService {
   }
 
   public getAllUser() {
-    return this.doGETRequest("/users")
+    return this.doGETRequest("/users/")
   }
 
   changePassword(username: any, oldPassword: string, newPassword: string) {
@@ -125,12 +125,18 @@ export class ApiService extends RestService {
     );
   }
 
-  public getRoles(): Observable<any> {
-    return this.http.get(this.apiUrl + "/roles").pipe(
-      map((data: any) => {
-        return {roles: data};
-      })
-    );
+  public getRoles() {
+
+    let roles = [{"name": "Admin", "description": "This is the admin role"},
+      {"name": "Application_Provider", "description": "This is the app role"},
+      {"name": "Infrastructure_Provider", "description": "This is the infra role"}]
+
+    return roles
+    // return this.http.get(this.apiUrl + "/roles").pipe(
+    //   map((data: any) => {
+    //     return {roles: data};
+    //   })
+    // );
   }
 
 ///////////////////////////////////////////////////////////////////////////

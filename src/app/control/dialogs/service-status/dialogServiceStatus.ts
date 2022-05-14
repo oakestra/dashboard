@@ -41,10 +41,13 @@ export class DialogServiceStatusView {
     //  }
     //]
     // And how should the different instances be displayed, currently we always display only the first entry.
-    this.instance_list = local_data.instance_list[0]
+    console.log(local_data)
+    if ('instance_list' in local_data){
+      this.instance_list = local_data.instance_list[0]
+    }
 
 
-    this._statusDetails.set("REGISTERED", "The service is stored in the Database but not deployed.")
+    this._statusDetails.set("CREATED", "The service is stored in the Database but not deployed.")
     this._statusDetails.set("REQUESTED", "The deployment is requested and the system tries to deploy the service.")
     this._statusDetails.set("SCHEDULED", "The scheduler took a decision.")
     this._statusDetails.set("RUNNING", "The service is running and no error occurred.")

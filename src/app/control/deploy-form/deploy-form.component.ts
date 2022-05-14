@@ -91,7 +91,8 @@ export class DeployFormComponent implements OnInit, OnDestroy {
       'added_files': this.fileArrayForm,
       'constraints': new FormArray([]),
       'connectivity': new FormArray([]),
-      'args': this.argsArray
+      'args': this.argsArray,
+      'status': 'CREATED'
     });
   }
 
@@ -269,6 +270,7 @@ export class DeployFormComponent implements OnInit, OnDestroy {
           delete sla.job_name
         }
         this.generateSLA(sla)
+        this.addService()
       }
       fileReader.readAsText(this.file);
     }
@@ -277,14 +279,15 @@ export class DeployFormComponent implements OnInit, OnDestroy {
   generateSLA(sla: any) {
 
     this.jsonContent = {
-      "api_version": "v0.3.0",
+      "api_version": "v2.0",
+      "sla_version": "v2.0",
       "customerID": this.shardService.userID,
       "applications": [
         {
           "applicationID": this.currentApplication._id.$oid,
-          "application_name": this.currentApplication.name,
-          "application_namespace": this.currentApplication.namespace,
-          "application_desc": this.currentApplication.description,
+          "application_name": this.currentApplication.application_name,
+          "application_namespace": this.currentApplication.application_namespace,
+          "application_desc": this.currentApplication.application_desc,
           "microservices": [{}]
         },
       ],
@@ -295,6 +298,9 @@ export class DeployFormComponent implements OnInit, OnDestroy {
     sla.microserviceID = ""
     this.jsonContent.applications[0].microservices = [sla]
     this.jsonContent = CleanJsonService.cleanData(this.jsonContent)
+  }
+
+  addService(){
 
     this.api.addService(this.jsonContent).subscribe((_e: any) => {
       this.router.navigate(['/control']);
@@ -313,8 +319,10 @@ export class DeployFormComponent implements OnInit, OnDestroy {
     content.args = [this.argsText]
 
     if (this.editingService) {
-      content.microserviceID = this.currentServiceID
-      this.api.updateService(content).subscribe((_success) => {
+      // content.microserviceID = this.currentServiceID
+      this.generateSLA(content);
+      this.jsonContent.applications[0].microservices[0].microserviceID = this.currentServiceID
+      this.api.updateService(this.jsonContent, this.currentServiceID).subscribe((_success) => {
           this.router.navigate(['/control']);
         },
         (err) => {
@@ -322,6 +330,7 @@ export class DeployFormComponent implements OnInit, OnDestroy {
         });
     } else {
       this.generateSLA(content);
+      this.addService()
     }
   }
 }
