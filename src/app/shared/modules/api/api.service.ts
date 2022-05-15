@@ -104,7 +104,7 @@ export class ApiService extends RestService {
   }
 
   changePassword(username: any, oldPassword: string, newPassword: string) {
-    return this.doPOSTRequest("/changePassword/" + username, {
+    return this.doPOSTRequest("/user/" + username, {
       oldPassword,
       newPassword,
     });
@@ -151,11 +151,11 @@ export class ApiService extends RestService {
       'username': username,
       'domain': window.location.host
     }
-    return this.doPOSTPublicRequest("/auth/resetPassword", obj);
+    return this.doPOSTPublicRequest("/user/", obj);
   }
 
   saveResetPassword(token: string, password: string) {
-    return this.doPUTPublicRequest("/auth/resetPassword", {token, password});
+    return this.doPUTPublicRequest("/user/", {token, password});
   }
 }
 
