@@ -1,9 +1,9 @@
-# EdgeIO-Frontend
+# Oakestra-Frontend
 
 You can find a detailed description [here](docs/README.md)
 
-This is the fist implementation of a frontend for the EdgeIO framework.
-The EdgeIO frontend sends API calls to the System-Manager and displays the results. 
+This is the fist implementation of a frontend for the Oakestra framework.
+The Oakestra frontend sends API calls to the System-Manager and displays the results. 
 
 ## Development server
 
@@ -18,6 +18,8 @@ Run `ng generate component component-name` to generate a new component. You can 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Run
+
+> NM: Rename system commands to oakestra
 
 Run `docker-compose up` to start the Website with docker compose.
 
