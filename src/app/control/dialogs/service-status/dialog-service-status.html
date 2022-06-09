@@ -5,9 +5,18 @@
     <p style="margin: 0">{{details}}</p>
   </div>
 
-  <a *ngIf="(instance_list != null)" [href]=grafanaLink rel="noopener noreferrer" target="_blank">View in Grafana</a>
 
-  <line-chart *ngIf="(instance_list != null)" [instance_list]=instance_list></line-chart>
+  <div *ngIf="(instance != null); else serviceDetails">
+    <line-chart  [instance_list]=instance></line-chart>
+    <p><b>Disk:</b> {{instance.disk}}</p>
+    <p><b>Cluster:</b> {{instance.cluster_id}}</p>
+
+    <a [href]=grafanaLink rel="noopener noreferrer" target="_blank">View in Grafana</a>
+  </div>
+  <ng-template #serviceDetails>
+    <p><b>Addresses:</b> {{service.addresses}}</p>
+    <p><b>Number of Instances:</b> {{service.instanceCount}}</p>
+  </ng-template>
 
 </mat-dialog-content>
 

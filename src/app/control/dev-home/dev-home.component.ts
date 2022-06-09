@@ -43,6 +43,7 @@ export class DevHomeComponent implements OnInit, OnDestroy {
     let sub = this.api.getServicesOfApplication(this.appID).subscribe((services: any) => {
       this.services = services
       this.servicesCount = services.length
+      console.log(services)
     }, (err) => {
       console.log(err)
     })
@@ -51,6 +52,12 @@ export class DevHomeComponent implements OnInit, OnDestroy {
 
   deleteService(service: any) {
     this.api.deleteService(service).subscribe(() => {
+      this.loadData()
+    })
+  }
+
+  deleteInstance(service:any , instance: any){
+    this.api.deleteInstance(service, instance).subscribe(() => {
       this.loadData()
     })
   }

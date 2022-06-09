@@ -68,6 +68,10 @@ export class ApiService extends RestService {
     return this.doDELRequest("/service/" + service._id.$oid)
   }
 
+  deleteInstance(service: any, instance: any) {
+    return this.doDELRequest("/service/" + service._id.$oid + instance.instance_number)
+  }
+
   getServiceByID(serviceID: any) {
     return this.doGETRequest("/service/" + serviceID)
   }

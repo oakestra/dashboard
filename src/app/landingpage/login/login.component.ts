@@ -5,7 +5,6 @@ import {AuthService} from "../../shared/modules/auth/auth.service";
 import {ApiService, LoginRequest, UserEntity} from "../../shared/modules/api/api.service";
 import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
 import {environment} from "../../../environments/environment";
-import {SurveyService} from "../../control/survey/survey.service";
 
 @Component({
   selector: 'app-login',

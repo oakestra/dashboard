@@ -17,7 +17,8 @@ export class DialogServiceStatusView {
   tmp = environment.apiUrl.split(":")
   grafanaLink = this.tmp[0] + ":" + this.tmp[1]
 
-  instance_list: any = undefined
+  instance: any = undefined
+  service: any = undefined
 
   status: string = ""
   details = ""
@@ -26,12 +27,10 @@ export class DialogServiceStatusView {
   constructor(public dialogRef: MatDialogRef<DialogServiceStatusView>,
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
 
-    console.log("Test")
-    let local_data = {...data};
-    this.status = local_data.status
+    this.instance = {...data};
+    this.status = this.instance.status
 
-
-    // TODO The instance_list stores only the current data, without history.
+    // TODO The instance stores only the current data, without history.
     // change it to array, in the database, if historic data should also be displayed
     // instance_list:[
     //  {
@@ -40,12 +39,7 @@ export class DialogServiceStatusView {
     //    'disk':'disk used by the service instance in bytes'
     //  }
     //]
-    // And how should the different instances be displayed, currently we always display only the first entry.
-    console.log(local_data)
-    if ('instance_list' in local_data){
-      this.instance_list = local_data.instance_list[0]
-    }
-
+    console.log(this.instance)
 
     this._statusDetails.set("CREATED", "The service is stored in the Database but not deployed.")
     this._statusDetails.set("REQUESTED", "The deployment is requested and the system tries to deploy the service.")
@@ -59,6 +53,21 @@ export class DialogServiceStatusView {
     } else {
       this.details = this._statusDetails.get(this.status)!
     }
+
+    // An entire microservice was passed and not just one instance
+    if("job_name" in this.instance){
+      this.service = {
+        "instanceCount" : this.instance.instance_list.length,
+        "addresses" : "not defined"
+      }
+
+      if("addresses" in this.instance){
+        this.service.addresses = this.instance.addresses
+      }
+      this.details = "Status of an entire microservices. Current status: " + this.status
+      this.instance = null;
+    }
+
   }
 
   closeDialog() {
