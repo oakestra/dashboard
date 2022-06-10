@@ -1,7 +1,7 @@
 #!/bin/bash
 echo ""
 echo "ENTRYPOINT: Installing NodeJS and NPM"
-apk add --update nodejs nodejs-npm
+apk add --update nodejs npm
 echo ""
 sync
 
@@ -17,7 +17,7 @@ sync
 
 echo "ENTRYPOINT: Removing node and other stuff"
 # rm /usr/src/app
-apk del nodejs-npm nodejs
+apk del npm nodejs
 echo ""
 sync
 
