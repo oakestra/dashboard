@@ -14,7 +14,7 @@
     <a [href]=grafanaLink rel="noopener noreferrer" target="_blank">View in Grafana</a>
   </div>
   <ng-template #serviceDetails>
-    <p><b>Addresses:</b> {{service.addresses}}</p>
+    <p><b>Addresses:</b> {{service.addresses | json}}</p>
     <p><b>Number of Instances:</b> {{service.instanceCount}}</p>
   </ng-template>
 

@@ -58,7 +58,9 @@ export class DialogServiceStatusView {
     if("job_name" in this.instance){
       this.service = {
         "instanceCount" : this.instance.instance_list.length,
-        "addresses" : "not defined"
+        "addresses" : {
+          "rr_ip" : "not defined"
+        }
       }
 
       if("addresses" in this.instance){
