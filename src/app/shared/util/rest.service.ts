@@ -47,8 +47,10 @@ export class RestService {
   public doGETRequest<T>(url: string): Observable<T> {
     const request = this.http.get(this.baseURL + url, this.requestOptions).pipe(
       map((res: any) => {
-          console.log(res)
-          return res
+        if(typeof res === "string"){
+          return JSON.parse(res)
+        }
+        return res
         }
       ),
       catchError((error: any) => {
@@ -68,7 +70,11 @@ export class RestService {
         map((res: any) => {
             if (res == null) {
               throwError("no data")
-            } else {
+            }
+            else if(typeof res === "string"){
+              return JSON.parse(res)
+            }
+            else {
               return res
             }
           }
@@ -87,7 +93,11 @@ export class RestService {
           if (res == null) {
             throwError("no data")
             return null
-          } else {
+          }
+          else if(typeof res === "string"){
+            return JSON.parse(res)
+          }
+          else {
             return res
           }
         }),
@@ -115,7 +125,11 @@ export class RestService {
           if (res == null) {
             throwError("no data")
             return null
-          } else {
+          }
+          else if(typeof res === "string"){
+            return JSON.parse(res)
+          }
+          else {
             return res
           }
         }),

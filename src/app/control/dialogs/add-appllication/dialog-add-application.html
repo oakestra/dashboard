@@ -13,8 +13,8 @@
   <div class="w3-col l6 s12 m6">
     <mat-form-field class="full-width" style="padding-right: 8px">
       <mat-label>Application Name</mat-label>
-      <!--      Is disabled on Update because if you make changes you have to rename all JobsNames in the DB-->
-      <input [(ngModel)]="local_data.name" [disabled]="action ==='Update'"
+      <!--      Is disabled on Update because if you make changes you have to rename all ServiceNames in the DB-->
+      <input [(ngModel)]="local_data.application_name" [disabled]="action ==='Update'"
              matInput>
     </mat-form-field>
   </div>
@@ -22,7 +22,7 @@
   <div class="w3-col l6 s12 m6" style="padding-left: 8px">
     <mat-form-field class="full-width">
       <mat-label>Application Namespace</mat-label>
-      <input [(ngModel)]="local_data.namespace" [disabled]="action ==='Update'"
+      <input [(ngModel)]="local_data.application_namespace" [disabled]="action ==='Update'"
              matInput>
     </mat-form-field>
   </div>
@@ -30,7 +30,7 @@
   <div class="w3-col l12 s12 m12">
     <mat-form-field class="full-width">
       <mat-label>Description</mat-label>
-      <textarea [(ngModel)]="local_data.description" cols="2" matInput> </textarea>
+      <textarea [(ngModel)]="local_data.application_desc" cols="2" matInput> </textarea>
     </mat-form-field>
   </div>
 

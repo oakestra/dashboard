@@ -10,7 +10,6 @@ import {UserService} from "../../shared/modules/auth/user.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {AuthService, Role} from "../../shared/modules/auth/auth.service";
 import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
-import {SurveyService} from "../survey/survey.service";
 
 // import {environment} from "../../../environments/environment";
 
@@ -48,7 +47,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.username = this.userService.getUsername()
     this.api.getUserByName(this.username).subscribe((data: any) => {
-      this.userID = data._id.$oid + "";
+      this.userID = data._id.$oid;
       this.sharedService.userID = this.userID
       // this.surveyService.resetSurvey()
 
@@ -101,9 +100,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   openDialog(action: string, obj: any) {
     if (action == "Add") {
       obj._id = {$oid: ""}; // Only for the view, is then defined in the database
-      obj.name = "";
-      obj.namespace = ""
-      obj.description = "";
+      obj.application_name = "";
+      obj.application_namespace = ""
+      obj.application_desc = "";
       obj.userId = this.userID;
     }
 
@@ -114,7 +113,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       if (result.event == 'Add') {
         this.addApplication(result.data)
       } else if (result.event == 'Update') {
-        this.updateApplication(result.data);
+        console.log(result.data.applications[0])
+        this.updateApplication(result.data.applications[0]);
       } else if (result.event == 'Delete') {
         this.deleteApplication(result.data)
       }
@@ -122,18 +122,18 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   deleteApplication(app: any): void {
-    this.api.getJobsOfApplication(app._id.$oid).subscribe((jobs: any) => {
-      for (let j of jobs) {
-        this.api.deleteJob(j)
+    this.api.getServicesOfApplication(app._id.$oid).subscribe((services: any) => {
+      for (let j of services) {
+        this.api.deleteService(j)
       }
     })
 
     this.api.deleteApplication(app).subscribe((_success) => {
-        this.notifyService.notify(Type.success, 'Application "' + app.name + '" deleted successfully!')
+        this.notifyService.notify(Type.success, 'Application "' + app.application_name + '" deleted successfully!')
         this.loadData();
       },
       (_error) => {
-        this.notifyService.notify(Type.error, 'Error: Deleting application "' + app.name + '" failed!')
+        this.notifyService.notify(Type.error, 'Error: Deleting application "' + app.application_name + '" failed!')
       })
   }
 
@@ -142,23 +142,21 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         this.loadData();
       },
       (_error: any) => {
-        this.notifyService.notify(Type.error, 'Error: Adding application "' + app.name + '" failed!')
+        this.notifyService.notify(Type.error, 'Error: Adding application "' + app.application_name + '" failed!')
       })
   }
 
   updateApplication(app: any): void {
     this.api.updateApplication(app).subscribe((_success) => {
-        this.notifyService.notify(Type.success, 'Application "' + app.name + '" updated successfully!')
+        this.notifyService.notify(Type.success, 'Application "' + app.application_name + '" updated successfully!')
         this.loadData();
       },
       (_error) => {
-        this.notifyService.notify(Type.error, 'Error: Updating application "' + app.name + '" failed!')
+        this.notifyService.notify(Type.error, 'Error: Updating application "' + app.application_name + '" failed!')
       })
   }
 
   handleChange() {
-    console.log("Env")
-    // console.log(environment.apiUrl)
     this.api.getAppById(this.active.$oid).subscribe(app => {
         this.sharedService.selectApplication(app)
         this.appSelected = true

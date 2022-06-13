@@ -18,9 +18,9 @@ The figure below outlines the architecture of the project:
 
 ## Backend
 
-- Written in [Python].
-- Code is stored in `edgeio` repository.
-- Is the EdgeIO System Manager only that some API endpoints have been modified.
+- Written in [Python](https://www.python.org).
+- Code is stored in the `edgeio` repository.
+  - currently only the develop-frontend branch supports the user interface
 
 ## Frontend
 

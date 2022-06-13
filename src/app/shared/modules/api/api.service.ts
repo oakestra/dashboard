@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {RestService} from "../../util/rest.service";
 import {UserService} from "../auth/user.service";
 import {NotificationService} from "../notification/notification.service";
@@ -29,11 +29,11 @@ export class ApiService extends RestService {
 ///////////////////// Application Functions ///////////////////////////////
 
   addApplication(app: any) {
-    return this.doPOSTRequest("/application", app)
+    return this.doPOSTRequest("/application/", app)
   }
 
   updateApplication(app: any) {
-    return this.doPUTRequest("/application/" + app._id.$oid, app)
+    return this.doPUTRequest("/application/" + app.applicationID, app)
   }
 
   deleteApplication(app: any) {
@@ -48,31 +48,40 @@ export class ApiService extends RestService {
     return this.doGETRequest("/applications/" + userId)
   }
 
+  // not used yet, use it later for the admin view
+  public getAllApplication() {
+    return this.doGETRequest("/applications/")
+  }
+
 ///////////////////////////////////////////////////////////////////////////
-///////////////////// Job Functions ///////////////////////////////////////
+///////////////////// Service Functions ///////////////////////////////////////
 
-  addJob(job: any) {
-    return this.doPOSTRequest("/job", job)
+  addService(service: any) {
+    return this.doPOSTRequest("/service/", service)
   }
 
-  updateJob(job: any) {
-    return this.doPUTRequest("/job/" + job.microserviceID, job)
+  updateService(service: any, serviceID: string) {
+    return this.doPUTRequest("/service/" + serviceID, service)
   }
 
-  deleteJob(job: any) {
-    return this.doDELRequest("/job/" + job._id.$oid)
+  deleteService(service: any) {
+    return this.doDELRequest("/service/" + service._id.$oid)
   }
 
-  getJobByID(jobID: any) {
-    return this.doGETRequest("/job/" + jobID)
+  deleteInstance(service: any, instance: any) {
+    return this.doDELRequest("/service/" + service._id.$oid + instance.instance_number)
   }
 
-  getJobsOfApplication(appId: string) {
-    return this.doGETRequest("/jobs/" + appId)
+  getServiceByID(serviceID: any) {
+    return this.doGETRequest("/service/" + serviceID)
   }
 
-  deployJob(job: any) {
-    return this.doGETRequest("/deploy/" + job._id.$oid)
+  getServicesOfApplication(appId: string) {
+    return this.doGETRequest("/services/" + appId)
+  }
+
+  deployService(service: any) {
+    return this.doPOSTRequest("/service/" + service._id.$oid + "/instance", service)
   }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -95,7 +104,14 @@ export class ApiService extends RestService {
   }
 
   public getAllUser() {
-    return this.doGETRequest("/users")
+    return this.doGETRequest("/users/")
+  }
+
+  changePassword(username: any, oldPassword: string, newPassword: string) {
+    return this.doPOSTRequest("/user/" + username, {
+      oldPassword,
+      newPassword,
+    });
   }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -113,33 +129,25 @@ export class ApiService extends RestService {
     );
   }
 
-  public getRoles(): Observable<any> {
-    return this.http.get(this.apiUrl + "/roles").pipe(
-      map((data: any) => {
-        return {roles: data};
-      })
-    );
+  public getRoles() {
+
+    let roles = [{"name": "Admin", "description": "This is the admin role"},
+      {"name": "Application_Provider", "description": "This is the app role"},
+      {"name": "Infrastructure_Provider", "description": "This is the infra role"}]
+
+    return roles
+    // return this.http.get(this.apiUrl + "/roles").pipe(
+    //   map((data: any) => {
+    //     return {roles: data};
+    //   })
+    // );
   }
 
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////// Other Functions ///////////////////////////////////////
 
-  //////////
-  // Used only for survey purposes
-  // logoutSurvey(username: any){
-  //   this.http.get(this.apiUrl + "/logout/" + username).subscribe()
-  // }
-  //////////
-
   fileUpload(data: any) {
     return this.http.post(this.apiUrl + "/uploader", data)
-  }
-
-  changePassword(username: any, oldPassword: string, newPassword: string) {
-    return this.doPOSTRequest("/changePassword/" + username, {
-      oldPassword,
-      newPassword,
-    });
   }
 
   resetPassword(username: string) {
@@ -147,11 +155,11 @@ export class ApiService extends RestService {
       'username': username,
       'domain': window.location.host
     }
-    return this.doPOSTPublicRequest("/auth/resetPassword", obj);
+    return this.doPOSTPublicRequest("/user/", obj);
   }
 
   saveResetPassword(token: string, password: string) {
-    return this.doPUTPublicRequest("/auth/resetPassword", {token, password});
+    return this.doPUTPublicRequest("/user/", {token, password});
   }
 }
 

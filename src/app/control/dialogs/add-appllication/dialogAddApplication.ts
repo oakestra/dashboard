@@ -25,10 +25,12 @@ export class DialogAddApplicationView {
     if (this.action == 'Update') {
       this.title = "Modify Application"
     }
+    console.log(this.local_data)
   }
 
   doAction() {
-    this.dialogRef.close({event: this.action, data: this.local_data});
+    console.log(this.local_data)
+    this.dialogRef.close({event: this.action, data: {'applications': [this.local_data]}});
   }
 
   deleteApplication() {

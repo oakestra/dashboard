@@ -37,17 +37,15 @@ export class UserService {
         return true;
       }),
       catchError((error: any) => {
-        let errorMsg: any = {};
-        // server is not running
-        if (typeof (error._body) == 'object') {
-          errorMsg.message = "Server is not running";
+        let errorMsg;
+        if (error.status == 0) {
+          // server is not running
+          errorMsg = "Server is not running";
         } else {
-          console.log(error)
           // server is running and returned a json string
-          errorMsg = error.error.message;
-          console.log(errorMsg)
+          errorMsg = error.statusText;
         }
-        return throwError(error || 'Server error')
+        return throwError(errorMsg || 'Server error')
       }))
   }
 

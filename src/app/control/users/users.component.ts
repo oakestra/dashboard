@@ -35,16 +35,23 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.api.getRoles().subscribe(
-      (data: any) => {
-        this.roles = data.roles;
 
-        this.roles.forEach((role) => {
-          this.dropdownList.push(role.name)
-        })
-        this.loadData();
-      }
-    )
+    this.roles = this.api.getRoles()
+    this.roles.forEach((role) => {
+      this.dropdownList.push(role.name)
+    })
+    this.loadData();
+
+    // this.api.getRoles().subscribe(
+    //   (data: any) => {
+    //     this.roles = data.roles;
+    //
+    //     this.roles.forEach((role) => {
+    //       this.dropdownList.push(role.name)
+    //     })
+    //     this.loadData();
+    //   }
+    // )
   }
 
   loadData(): void {

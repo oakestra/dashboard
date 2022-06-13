@@ -50,35 +50,93 @@ mat-card p {
   color: green;
 }
 
-.REQUESTED{
-  color: yellow;
-}
-
-.SCHEDULED{
-  color: yellow;
-}
-
-.RUNNING{
+.CLUSTER_SCHEDULED{
   color: green;
 }
 
-.FAILED{
+.REQUESTED {
+  color: yellow;
+}
+
+.SCHEDULED {
+  color: yellow;
+}
+
+.RUNNING {
+  color: green;
+}
+
+.FAILED {
   color: red;
 }
 
-.w3-col{
+.w3-col {
   line-height: 40px;
 }
 
-.statusText{
+.statusText {
   display: contents;
 }
 
 @media only screen and (max-width: 450px) {
-  .statusText{
+  .statusText {
     display: none;
   }
-  .statusField{
+
+  .statusField {
     text-align: center;
   }
+}
+
+.mat-expansion-panel {
+  margin-bottom: 10px;
+  padding: 16px;
+  /*pointer-events: none;*/
+}
+
+.mat-expansion-panel-header {
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0) !important;
+
+}
+
+.span.mat-expansion-indicator
+{
+  pointer-events: visiblefill !important;
+}
+
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.disable_ripple:hover .disable_ripple:active .disable_ripple:focus .disable_ripple:focus-within {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.mat-expansion-panel-header-description{
+  color: #000000DE;
+}
+
+.instance{
+  padding: 16px;
+  border-left: 2px solid;
+  border-left-color: #adacac;
+}
+
+.instance:hover{
+  background-color: rgba(241, 241, 241, 0.5);
+}
+
+.noinstance{
+ text-align: center;
+  color: #D3D3D3;
+  font-size: large;
+}
+
+.instanceDelete{
+  background-color: transparent;
 }

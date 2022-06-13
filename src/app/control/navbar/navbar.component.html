@@ -13,12 +13,12 @@
 
   <button id="homeNavbar" mat-button routerLink="/control" style="font-size: inherit">
     <img alt="EdgeIO Logo" src="favicon.ico" style="height: 64px">
-    EdgeIO
+    Oakestra
   </button>
 
   <span class="example-spacer"></span>
 
-  <!--  <button id="createJob" mat-icon-button routerLink="/control/deploy">-->
+  <!--  <button id="createService" mat-icon-button routerLink="/control/deploy">-->
   <!--    <mat-icon>add_circle</mat-icon>-->
   <!--  </button>-->
 
@@ -61,7 +61,7 @@
 
         <mat-radio-group (change)="handleChange()" [(ngModel)]="active" routerLink="/control">
           <mat-radio-button [value]="app._id" class="menu-button">
-            <span style="float: left">{{app.name}}</span>
+            <span style="float: left">{{app.application_name}}</span>
           </mat-radio-button>
         </mat-radio-group>
 

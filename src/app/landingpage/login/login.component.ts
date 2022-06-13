@@ -5,7 +5,6 @@ import {AuthService} from "../../shared/modules/auth/auth.service";
 import {ApiService, LoginRequest, UserEntity} from "../../shared/modules/api/api.service";
 import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
 import {environment} from "../../../environments/environment";
-import {SurveyService} from "../../control/survey/survey.service";
 
 @Component({
   selector: 'app-login',
@@ -43,7 +42,7 @@ export class LoginComponent {
           }
           // this.surveyService.resetSurvey() => only for survey
         },
-        (error => this.notifyService.notify(Type.error, error.error.message))
+        (error => this.notifyService.notify(Type.error, error))
       )
     } else {
       this.notifyService.notify(Type.error, "Please provide valid inputs for login.")

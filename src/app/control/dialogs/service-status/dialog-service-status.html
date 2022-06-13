@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Status: {{status}}</h2>
+<mat-dialog-content class="mat-typography">
+
+  <div class="alert alert-info" style="width: 70vw">
+    <p style="margin: 0">{{details}}</p>
+  </div>
+
+
+  <div *ngIf="(instance != null); else serviceDetails">
+    <line-chart  [instance_list]=instance></line-chart>
+    <p><b>Disk:</b> {{instance.disk}}</p>
+    <p><b>Cluster:</b> {{instance.cluster_id}}</p>
+
+    <a [href]=grafanaLink rel="noopener noreferrer" target="_blank">View in Grafana</a>
+  </div>
+  <ng-template #serviceDetails>
+    <p><b>Addresses:</b> {{service.addresses | json}}</p>
+    <p><b>Number of Instances:</b> {{service.instanceCount}}</p>
+  </ng-template>
+
+</mat-dialog-content>
+
+<mat-dialog-actions class="alignRight">
+  <button (click)="closeDialog()" color="primary" mat-button mat-flat-button>Close</button>
+</mat-dialog-actions>

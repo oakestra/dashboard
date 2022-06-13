@@ -24,13 +24,13 @@ export class DeployFormComponent implements OnInit, OnDestroy {
   fileArrayForm = new FormArray([]);
   canViewLatConstrains: boolean[] = [];
   service: any = null;
-  editingJob: boolean = false; // True if the user is editing the job
-  currentJobID = ""; // This one is uses to get the Job from the DB
+  editingService: boolean = false; // True if the user is editing the service
+  currentServiceID = ""; // This one is uses to get the service from the DB
   applicationId = "";
   currentApplication: any;
   argsArray: string[] = [];
   argsText = "";
-  allJobs: any // For the Dropdown list of the connections
+  allServices: any // For the Dropdown list of the connections
   jsonContent: any // The final SLA witch is generated form the form
   subscriptions: Subscription[] = [];
   formInvalid = false;
@@ -50,12 +50,12 @@ export class DeployFormComponent implements OnInit, OnDestroy {
               private shardService: SharedIDService,
               private notifyService: NotificationService) {
 
-    this.currentJobID = "not yet defined";
+    this.currentServiceID = "not yet defined";
     let sub = this.shardService.applicationObserver$.subscribe(app => {
       this.currentApplication = app
       this.applicationId = app._id.$oid
-      let s = this.api.getJobsOfApplication(this.applicationId).pipe(take(1)).subscribe((jobs: any) => {
-        this.allJobs = jobs.filter((j: any) => j._id.$oid != this.currentJobID)
+      let s = this.api.getServicesOfApplication(this.applicationId).pipe(take(1)).subscribe((services: any) => {
+        this.allServices = services.filter((j: any) => j._id.$oid != this.currentServiceID)
       }, (err) => {
         console.log(err)
       })
@@ -91,22 +91,23 @@ export class DeployFormComponent implements OnInit, OnDestroy {
       'added_files': this.fileArrayForm,
       'constraints': new FormArray([]),
       'connectivity': new FormArray([]),
-      'args': this.argsArray
+      'args': this.argsArray,
+      'status': 'CREATED'
     });
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(pram => {
       if (pram.get("id") != null) {
-        this.editingJob = true;
-        this.currentJobID = pram.get("id")!; // Set the id to the id in the URL
+        this.editingService = true;
+        this.currentServiceID = pram.get("id")!; // Set the id to the id in the URL
 
-        this.api.getJobByID(this.currentJobID).subscribe((job: any) => {
-          this.service = job;
+        this.api.getServiceByID(this.currentServiceID).subscribe((service: any) => {
+          this.service = service;
           this.createEditFormGroup();
         });
       } else {
-        // user configures a new job
+        // user configures a new service
         this.service = true;
       }
     })
@@ -269,22 +270,24 @@ export class DeployFormComponent implements OnInit, OnDestroy {
           delete sla.job_name
         }
         this.generateSLA(sla)
+        this.addService()
       }
       fileReader.readAsText(this.file);
     }
   }
 
-  generateSLA(jobSLA: any) {
+  generateSLA(sla: any) {
 
     this.jsonContent = {
-      "api_version": "v0.3.0",
+      "api_version": "v2.0",
+      "sla_version": "v2.0",
       "customerID": this.shardService.userID,
       "applications": [
         {
           "applicationID": this.currentApplication._id.$oid,
-          "application_name": this.currentApplication.name,
-          "application_namespace": this.currentApplication.namespace,
-          "application_desc": this.currentApplication.description,
+          "application_name": this.currentApplication.application_name,
+          "application_namespace": this.currentApplication.application_namespace,
+          "application_desc": this.currentApplication.application_desc,
           "microservices": [{}]
         },
       ],
@@ -292,13 +295,16 @@ export class DeployFormComponent implements OnInit, OnDestroy {
     }
 
     // Is set in de mongodb
-    jobSLA.microserviceID = ""
-    this.jsonContent.applications[0].microservices = [jobSLA]
+    sla.microserviceID = ""
+    this.jsonContent.applications[0].microservices = [sla]
     this.jsonContent = CleanJsonService.cleanData(this.jsonContent)
+  }
 
-    this.api.addJob(this.jsonContent).subscribe((_e: any) => {
+  addService(){
+
+    this.api.addService(this.jsonContent).subscribe((_e: any) => {
       this.router.navigate(['/control']);
-      this.notifyService.notify(Type.success, "Job generation was successful")
+      this.notifyService.notify(Type.success, "Service generation was successful")
     }, (_error => this.notifyService.notify(Type.error, "File was not in the correct format")))
   }
 
@@ -312,9 +318,11 @@ export class DeployFormComponent implements OnInit, OnDestroy {
     content.applicationID = this.applicationId
     content.args = [this.argsText]
 
-    if (this.editingJob) {
-      content.microserviceID = this.currentJobID
-      this.api.updateJob(content).subscribe((_success) => {
+    if (this.editingService) {
+      // content.microserviceID = this.currentServiceID
+      this.generateSLA(content);
+      this.jsonContent.applications[0].microservices[0].microserviceID = this.currentServiceID
+      this.api.updateService(this.jsonContent, this.currentServiceID).subscribe((_success) => {
           this.router.navigate(['/control']);
         },
         (err) => {
@@ -322,6 +330,7 @@ export class DeployFormComponent implements OnInit, OnDestroy {
         });
     } else {
       this.generateSLA(content);
+      this.addService()
     }
   }
 }

@@ -361,8 +361,8 @@
                       <mat-label> target_microservice_id {{conn.value}}</mat-label>
                       <select (change)="openDialog(i)" formControlName="target_microservice_id" matNativeControl
                               required>
-                        <option *ngFor="let job of allJobs" [value]="job._id.$oid">
-                          {{job.microservice_name}} (id: {{job._id.$oid}})
+                        <option *ngFor="let service of allServices" [value]="service._id.$oid">
+                          {{service.microservice_name}} (id: {{service._id.$oid}})
                         </option>
                       </select>
                     </mat-form-field>

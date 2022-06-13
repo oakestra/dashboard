@@ -1,5 +1,5 @@
 
-FROM nginx:1.17-alpine
+FROM nginx:1.22-alpine
 COPY dist/edgeIO-frontend /usr/share/nginx/html
 COPY docker/angular-environment /usr/src/app
 COPY docker/entrypoint.sh .

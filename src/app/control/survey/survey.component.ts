@@ -92,44 +92,44 @@ export class SurveyComponent implements OnInit {
   evaluateNextTask(myapp: any) {
 
     // Evaluation of the fourth task
-    let jobA = false
-    let jobB = false
-    let jobAConnection: any
+    let serviceA = false
+    let serviceB = false
+    let serviceAConnection: any
     let targetId: string
 
     if (myapp) {
-      this.api.getJobsOfApplication(myapp._id.$oid).subscribe((jobs: any) => {
-        for (let j of jobs) {
+      this.api.getServicesOfApplication(myapp._id.$oid).subscribe((services: any) => {
+        for (let j of services) {
           if (j.microservice_name == "Service1") {
             if (j.microservice_namespace == "dev" && j.memory == 100) {
-              jobA = true
+              serviceA = true
             }
 
-            jobAConnection = j.connectivity[0]
+            serviceAConnection = j.connectivity[0]
           }
           if (j.microservice_name == "Service2") {
             if (j.vcpus == 2) {
-              jobB = true
+              serviceB = true
             }
             targetId = j.microserviceID
           }
         }
-        if (jobA && jobB){
+        if (serviceA && serviceB){
           this.correctTasks++
           this.taskResults[3] = true
         }
-        this.evaluateLastTask(jobAConnection, targetId)
+        this.evaluateLastTask(serviceAConnection, targetId)
       })
     }
 
     this.evaluated = true;
   }
 
-  evaluateLastTask(jobAConnection: any, targetId: string) {
+  evaluateLastTask(serviceAConnection: any, targetId: string) {
 
     // Evaluation of the fifth task
-    if (jobAConnection && jobAConnection.target_microservice_id == targetId) {
-      let con = jobAConnection.con_constraints[0]
+    if (serviceAConnection && serviceAConnection.target_microservice_id == targetId) {
+      let con = serviceAConnection.con_constraints[0]
       if (con.type == "latency" && con.threshold == 300 && con.rigidness == 50 && con.convergence_time == 250) {
         this.taskResults[4] = true
         this.correctTasks++
