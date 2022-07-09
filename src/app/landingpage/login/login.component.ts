@@ -5,6 +5,7 @@ import {AuthService} from "../../shared/modules/auth/auth.service";
 import {ApiService, LoginRequest, UserEntity} from "../../shared/modules/api/api.service";
 import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
 import {environment} from "../../../environments/environment";
+import {RegisterComponent} from "../register/register.component";
 
 @Component({
   selector: 'app-login',
@@ -70,5 +71,10 @@ export class LoginComponent {
       created_at: "",
       roles: [],
     };
+  }
+
+  //todo make it work
+  registerForm() {
+    this.router.navigate(['/register'])
   }
 }
