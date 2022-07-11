@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
-import {routes} from "./register.routing";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
@@ -11,7 +10,7 @@ import {RegisterComponent} from "./register.component";
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routes),
+       // RouterModule.forChild(routes),
         FormsModule,
         MatCardModule,
         MatButtonModule,

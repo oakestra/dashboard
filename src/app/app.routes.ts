@@ -16,9 +16,4 @@ export const routes: Routes = [
     pathMatch: 'full',
     redirectTo: '/'
   },
-  {
-    path: 'register',
-    loadChildren: () => import('src/app/landingpage/register/register.module').then(m => m.RegisterModule),
-    canActivate: [AuthGuardService]
-  },
 ];
