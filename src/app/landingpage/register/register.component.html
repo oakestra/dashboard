@@ -1,41 +1,48 @@
 <mat-card class="register-form">
 
-  <img alt="EdgeIO Logo" mat-card-image src="../../../assets/img/logo-white-bg.png">
-  <mat-card-content>
+    <div style=" display: flex; justify-content: center; font-size: x-large">
+    <label class="cols-sm-2 control-label"><strong>REGISTRATION FORM</strong></label></div>
     <form accept-charset="UTF-8" class="form-signup" role="form">
-
-      <div class="form-group">
-        <label class="cols-sm-2 control-label" for="username">Username</label>
+      <div  class="w3-col l6 s12 m6">
+        <mat-label class="cols-sm-2 control-label" for="username"><strong>Username</strong></mat-label>
         <div class="cols-sm-10">
           <div class="input-group">
             <input class="form-control" id="username" name="username"
                    placeholder="Enter your Username"
-                   type="text">
+                   type="text" formControlName="name">
+            </div>
           </div>
         </div>
-      </div>
 
       <div class="form-group" style="margin-top: 8px">
-        <label class="cols-sm-2 control-label" for="email">Email address</label>
+        <label class="cols-sm-2 control-label" for="email"><strong>Email address</strong></label>
         <div class="cols-sm-10">
           <div class="input-group">
             <span class="input-group-addon"><i aria-hidden="true" class="fa fa-lock fa-lg"></i></span>
             <input class="form-control" id="email" name="email"
-                   placeholder="Enter your Email Address">
+                   placeholder="Enter your Email">
           </div>
         </div>
       </div>
 
       <div class="form-group" style="margin-top: 8px">
-        <label class="cols-sm-2 control-label" for="password">Password</label>
-        <label class="cols-sm-2 control-label" for="password">Confirm Password</label>
+        <label class="cols-sm-2 control-label" for="password"><strong>Password</strong></label>
         <div class="cols-sm-10">
           <div class="input-group">
             <span class="input-group-addon"><i aria-hidden="true" class="fa fa-lock fa-lg"></i></span>
             <input class="form-control" id="password" name="password"
                    placeholder="Enter your Password" type="password">
-            <span class="input-group-addon" style= "float: right"> &nbsp;&nbsp;&nbsp;<i aria-hidden="true" class="fa fa-lock fa-lg"></i></span>
-            <input class="pull-right text-primary" id="password3" name="password"
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group" style="margin-top: 8px">
+        <label class="cols-sm-2 control-label" for="password"><strong>Confirm Password</strong></label>
+        <div class="cols-sm-10">
+          <div class="input-group">
+            <span class="input-group-addon"><i aria-hidden="true" class="fa fa-lock fa-lg"></i></span>
+            <input class="form-control" id="password2" name="password"
                    placeholder="Confirm your Password" type="password">
           </div>
         </div>
@@ -48,8 +55,14 @@
           </button>
         </div>
       </div>
+
+      <div style=" display: flex; justify-content: center; margin-top: 8px ">
+        <label class="cols-sm-2 control-label" for="password">Have already an account?&ensp;</label>
+        <span (click)="loginForm()" class="pull-right text-primary"
+              style="cursor: pointer; float: right">Login here</span>
+      </div>
+
     </form>
-  </mat-card-content>
 </mat-card>
 
 

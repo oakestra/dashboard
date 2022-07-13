@@ -18,11 +18,16 @@ export class RegisterComponent {
 
   sm_ip = environment.apiUrl
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   public submitRegister() {}
 
-  //public registerForm() {}
+  loginForm() {
+    this.router.navigate([''])
+  }
+
+
+    //public registerForm() {}
 
  /* public create_user_entity(): UserEntity {
     return {

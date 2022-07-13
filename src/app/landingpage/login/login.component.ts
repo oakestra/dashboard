@@ -73,7 +73,6 @@ export class LoginComponent {
     };
   }
 
-  //todo make it work
   registerForm() {
     this.router.navigate(['/register'])
   }
