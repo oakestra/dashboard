@@ -1,5 +1,6 @@
 mat-toolbar {
-  background: #004a9f;
+  /* background: #004a9f;*/
+  background: #4A7083;
   color: white;
 }
 
@@ -7,7 +8,8 @@ mat-sidenav {
   margin: 16px;
   width: 300px;
   border-right: none;
-  background: #002b5c;
+  /* background: #002b5c;*/
+  background: #3B474E;
   color: white;
   border-radius: 10px;
   padding: 16px;
@@ -86,7 +88,8 @@ mat-card {
 }
 
 mat-card-title {
-  background-color: #004a9f;
+  /* background: #004a9f;*/
+  background-color: #4A7083;
   padding: 16px;
   border-radius: 4px;
   color: white;
@@ -117,7 +120,8 @@ mat-card p {
 }
 
 .appSelectLable {
-  background-color: #002b5c;
+  /* background: #002b5c;*/
+  background-color: #4A7083;
 }
 
 ::ng-deep  .mat-radio-outer-circle {
