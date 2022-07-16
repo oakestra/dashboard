@@ -22,6 +22,8 @@
   <!--    <mat-icon>add_circle</mat-icon>-->
   <!--  </button>-->
 
+  <h4 class="name"><small>{{username}}&nbsp;&nbsp;</small></h4>
+
   <button [matMenuTriggerFor]="menu" id="userSetting" mat-icon-button>
     <mat-icon>person</mat-icon>
   </button>
@@ -45,7 +47,7 @@
 
 <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    <h4 class="name">Hello {{username}}</h4>
+    <!--<h4 class="name">Hello {{username}}</h4>-->
 
     <div id="homeSidenav">
       <mat-divider></mat-divider>
