@@ -8,6 +8,7 @@ import {NavbarComponent} from "./navbar/navbar.component";
 import {DialogConnectionSettings} from "./dialogs/content-connection/dialogConnectionSettings";
 import {DialogGraphConnectionSettings} from "./dialogs/graph-content-connection/dialogGraphConnectionSettings";
 import {DialogAddApplicationView} from "./dialogs/add-appllication/dialogAddApplication";
+import {DialogAddClusterView} from "./dialogs/add-cluster/dialogAddCluster";
 import {GraphComponent} from "./graph/graph.component";
 import {RouterModule} from "@angular/router";
 import {MatMenuModule} from "@angular/material/menu";
@@ -52,6 +53,7 @@ import {DialogConfirmation} from "./dialogs/confirmation/dialogConfirmation";
     DialogConnectionSettings,
     DialogGraphConnectionSettings,
     DialogAddApplicationView,
+    DialogAddClusterView,
     GraphComponent,
     UsersComponent,
     DialogEditUserView,

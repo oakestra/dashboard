@@ -73,12 +73,10 @@
 
         </li>
         <li>
-          <a href="#">Add
-            <button (click)="openDialog('Add',{})" class="menu-button" mat-icon-button>
+          <span>Add</span>
+          <button (click)="openDialog('Add',{})" class="menu-button" mat-icon-button>
               <mat-icon>add</mat-icon>
             </button>
-          </a>
-
         </li>
       </ul>
     </li>
@@ -94,7 +92,9 @@
 
       <ul class="sub-menu">
         <li>
-          <a href="#">Add new cluster</a></li>
+          <a>
+          <button (click)="openDialog('Add Cluster',app)" mat-icon-button>Add new cluster</button></a>
+        </li>
         <li><a href="#">Show all</a></li>
       </ul>
     </li>
@@ -132,62 +132,3 @@
 
   <router-outlet *ngIf="appSelected || settings"></router-outlet>
 </div>
-
-<!-------------------------------------------------------------------------------------------------------->
-
-<!--
-<mat-sidenav-container>
-  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    <h4 class="name">Hello {{username}}</h4>-->
-<!--
-    <div id="homeSidenav">
-      <mat-divider></mat-divider>
-      <button class="menu-button" mat-button routerLink="/control">
-        <span>Home</span>
-      </button>
-    </div>
-
-    <div id="applicationTitle">
-      <mat-divider></mat-divider>
-
-      <div *ngFor="let app of app " style="display: flex; justify-content: space-between;align-items: center">
-
-        <mat-radio-group (change)="handleChange()" [(ngModel)]="active" routerLink="/control">
-          <mat-radio-button [value]="app._id" class="menu-button">
-            <span style="float: left">{{app.application_name}}</span>
-          </mat-radio-button>
-        </mat-radio-group>
-
-        <button (click)="openDialog('Update',app)" mat-icon-button>
-          <mat-icon>settings</mat-icon>
-        </button>
-      </div>
-
-      <button (click)="openDialog('Add',{})" class="menu-button" mat-icon-button>
-        <mat-icon>add</mat-icon>
-      </button>
-    </div>
-
-    <mat-divider></mat-divider>
-
-    <button class="menu-button" mat-button routerLink="help">
-      <span>Help</span>
-    </button>
-
-    <mat-divider></mat-divider>
-
-    <button class="menu-button" mat-button routerLink="survey">
-      <span>Survey</span>
-    </button>-->
-<!--
-  </mat-sidenav>
-  <mat-sidenav-content id="content">
-
-    <div *ngIf="!appSelected && !settings" class="content mat-elevation-z8">
-      No Application selected.
-    </div>
-
-    <router-outlet *ngIf="appSelected || settings"></router-outlet>
-
-  </mat-sidenav-content>
-</mat-sidenav-container>-->

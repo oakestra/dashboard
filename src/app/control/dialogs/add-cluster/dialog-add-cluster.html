@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content class="mat-typography">
+
+  <div class="w3-row">
+    <div class="w3-col l6 s12 m6">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Cluster ID</mat-label>
+        <!--<input [(ngModel)]="local_data._id.$oid" disabled matInput>*-->
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="w3-col l6 s12 m6">
+    <mat-form-field class="full-width" style="padding-right: 8px">
+      <mat-label>Cluster Name</mat-label>
+      <!--      Is disabled on Update because if you make changes you have to rename all ServiceNames in the DB-->
+      <input [(ngModel)]="local_data.cluster_name" [disabled]="action ==='Update'"
+             matInput>
+    </mat-form-field>
+  </div>
+
+  <div class="w3-col l6 s12 m6" style="padding-left: 8px">
+    <mat-form-field class="full-width">
+      <mat-label>Cluster Manager URL</mat-label>
+      <input [(ngModel)]="local_data.cluster_manager_URL" [disabled]="action ==='Update'"
+             matInput>
+    </mat-form-field>
+  </div>
+
+  <div class="w3-col l12 s12 m12">
+    <mat-form-field class="full-width">
+      <mat-label>Cluster Location</mat-label>
+      <textarea [(ngModel)]="local_data.cluster_location" cols="2" matInput> </textarea>
+    </mat-form-field>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions class="alignRight">
+  <button (click)="doAction()" color="primary" mat-button mat-flat-button>{{local_data.action}}</button>
+  <button (click)="deleteCluster()" *ngIf="action ==='Update'" color="warn" mat-button mat-flat-button>Delete
+  </button>
+  <button (click)="closeDialog()" color="primary" mat-button mat-flat-button>Cancel</button>
+</mat-dialog-actions>

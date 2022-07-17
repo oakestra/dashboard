@@ -105,6 +105,13 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       obj.application_desc = "";
       obj.userId = this.userID;
     }
+    else if (action == "Add Cluster") {
+      obj._id = {$oid: ""};
+      obj.cluster_name = "";
+      obj.cluster_manager_URL = "";
+      obj.cluster_location = ""
+      obj.userId = this.userID;
+    }
 
     obj.action = action;
     const dialogRef = this.dialog.open(DialogAddApplicationView, {data: obj});
