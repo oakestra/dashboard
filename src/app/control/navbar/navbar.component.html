@@ -1,29 +1,13 @@
 <script src="https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/js/shepherd.min.js"></script>
-<link rel="shortcut icon" href="#">
+<link rel="shortcut icon" href="navbar.component.css">
+<!-- Boxicons CSS link -->
+<link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
 
 <mat-toolbar class="mat-elevation-z8">
 
-  <button (click)="sidenav.toggle()" *ngIf="sidenav.mode === 'over'" mat-icon-button>
-    <mat-icon *ngIf="!sidenav.opened">
-      menu
-    </mat-icon>
-    <mat-icon *ngIf="sidenav.opened">
-      close
-    </mat-icon>
-  </button>
-
-  <button id="homeNavbar" mat-button routerLink="/control" style="font-size: inherit">
-    <img src="favicon.ico" style="height: 64px">
-  </button>
-
   <span class="example-spacer"></span>
 
-  <!--  <button id="createService" mat-icon-button routerLink="/control/deploy">-->
-  <!--    <mat-icon>add_circle</mat-icon>-->
-  <!--  </button>-->
-
   <h4 class="name"><small>{{username}}&nbsp;&nbsp;</small></h4>
-
   <button [matMenuTriggerFor]="menu" id="userSetting" mat-icon-button>
     <mat-icon>person</mat-icon>
   </button>
@@ -45,10 +29,117 @@
 
 </mat-toolbar>
 
+
+<div class="sidebar">
+  <div class="logo-details">
+    <button id="homeNavbar" mat-button routerLink="/control" style="font-size: inherit">
+      <img src="favicon.ico" style="height: 64px" alt="Oakestra">
+    </button>
+  </div>
+  <ul class="nav-links">
+    <li>
+        <a href="/control">
+          <i class='bx bx-grid-alt'></i>
+          <span class="link_name">Dashboard</span>
+        </a>
+    </li>
+    <li>
+      <div class="icon-link">
+        <a>
+          <i class='bx bxs-category-alt'></i>
+          <span class="link_name">Applications</span>
+        </a>
+        <i class='bx bx-chevron-down'></i>
+      </div>
+      <ul class="sub-menu">
+        <li>
+          <div id="applicationTitle">
+            <mat-divider></mat-divider>
+
+            <div *ngFor="let app of app " style="display: flex; justify-content: space-between;align-items: center">
+
+              <mat-radio-group (change)="handleChange()" [(ngModel)]="active" routerLink="/control">
+                <mat-radio-button [value]="app._id" class="menu-button">
+                  <span style="float: left">{{app.application_name}}</span>
+                </mat-radio-button>
+              </mat-radio-group>
+
+              <button (click)="openDialog('Update',app)" mat-icon-button>
+                <mat-icon>settings</mat-icon>
+              </button>
+            </div>
+
+          </div>
+
+        </li>
+        <li>
+          <a href="#">Add
+            <button (click)="openDialog('Add',{})" class="menu-button" mat-icon-button>
+              <mat-icon>add</mat-icon>
+            </button>
+          </a>
+
+        </li>
+      </ul>
+    </li>
+    <li>
+
+      <div class="icon-link">
+        <a>
+          <i class='bx bxs-data'></i>
+          <span class="link_name">Clusters</span>
+          <i class='bx bx-chevron-down'></i>
+        </a>
+      </div>
+
+      <ul class="sub-menu">
+        <li>
+          <a href="#">Add new cluster</a></li>
+        <li><a href="#">Show all</a></li>
+      </ul>
+    </li>
+
+    <li>
+      <div class="icon-link">
+        <a>
+          <i class='bx bx-help-circle' ></i>
+          <button class="link_name" mat-button routerLink="help">Help</button>
+        </a>
+      </div>
+    </li>
+
+    <li>
+
+     <!-- <script>
+        let arrow = document.querySelectorAll(".arrow");
+        console.log(arrow);
+        for (var i = 0; i < arrow.length; ++i) {
+          arrow[i].addEventListener("click", (e)=>{
+            let arrowParent = e.target.parentElement.parentElement;
+            arrowParent.classList.toggle("showMenu");
+          });
+        }
+      </script>-->
+    </li>
+
+  </ul>
+</div>
+
+<div class="content">
+  <div *ngIf="!appSelected && !settings" class="content mat-elevation-z8">
+    No Application selected.
+  </div>
+
+  <router-outlet *ngIf="appSelected || settings"></router-outlet>
+</div>
+
+<!-------------------------------------------------------------------------------------------------------->
+
+<!--
 <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    <!--<h4 class="name">Hello {{username}}</h4>-->
-
+    <h4 class="name">Hello {{username}}</h4>-->
+<!--
     <div id="homeSidenav">
       <mat-divider></mat-divider>
       <button class="menu-button" mat-button routerLink="/control">
@@ -83,12 +174,12 @@
       <span>Help</span>
     </button>
 
-    <!--<mat-divider></mat-divider>
+    <mat-divider></mat-divider>
 
     <button class="menu-button" mat-button routerLink="survey">
       <span>Survey</span>
     </button>-->
-
+<!--
   </mat-sidenav>
   <mat-sidenav-content id="content">
 
@@ -99,4 +190,4 @@
     <router-outlet *ngIf="appSelected || settings"></router-outlet>
 
   </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container>-->

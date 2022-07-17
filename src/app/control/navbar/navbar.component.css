@@ -32,7 +32,7 @@ mat-sidenav {
   .content {
     margin-left: 32px;
   }
-  #homeSidenav{
+  #sidebar{
     display: none;
   }
 }
@@ -41,19 +41,13 @@ mat-sidenav {
   #homeNavbar{
     display: none;
   }
+  .content {
+    display: none;
+  }
 }
 
 mat-sidenav-container {
   height: calc(100vh - 65px);
-}
-
-.menu-button {
-  /*width: 100%;*/
-  display: flex;
-  align-items: center;
-  /*justify-content: flex-start;*/
-  font-size: 1rem;
-  justify-content: center;
 }
 
 .avatar {
@@ -126,4 +120,98 @@ mat-card p {
 
 ::ng-deep  .mat-radio-outer-circle {
   border-color: white
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 260px;
+  background: #4A7083;
+}
+
+.sidebar .nav-links{
+  background: #3B474E;
+  height: 100%;
+  padding-top: 30px;
+  padding-left: 10px;
+  overflow: auto;
+}
+
+.sidebar .nav-links li {
+  position: relative;
+  list-style: none;
+  transition: all 0.4s ease;
+}
+
+.sidebar .nav-links li:hover {
+  background: #3E4E57;
+}
+
+.sidebar .nav-links li .icon-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar .nav-links li i{
+  height: 50px;
+  min-width: 78px;
+  text-align: center;
+  line-height: 50px;
+  color: #fff;
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+.sidebar .nav-links li.showMenu i.arrow {
+  transform: rotate(-180deg);
+}
+
+.sidebar .nav-links li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.sidebar .nav-links li a .link_name{
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+}
+
+.sidebar .nav-links li .sub-menu{
+  padding: 6px 6px 14px 80px;
+  margin-top: -10px;
+  background: #3E4E57;
+  /*display: none;*/
+}
+
+.sidebar .nav-links li .sub-menu a{
+  color: #fff;
+  font-size: 15px;
+  padding: 5px 0;
+  white-space: nowrap;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.sidebar .nav-links li .sub-menu a:hover {
+  opacity: 1;
+}
+
+
+.sidebar.close .nav-links li .sub-menu{
+  position: absolute;
+  left: 100%;
+  top: 0;
+  margin-top: 0;
+  padding: 10px 20px;
+  border-radius: 0 6px 6px 0;
+  transition: all 0.4s ease;
+}
+
+.sidebar.close .nav-links li .showMenu .sub-menu {
+  display: block;
 }
