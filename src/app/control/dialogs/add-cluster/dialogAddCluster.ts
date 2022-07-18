@@ -14,7 +14,7 @@ export class DialogAddClusterView {
 
   action: string;
   local_data: any;
-  title = ""
+  title = "Add Cluster"
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddClusterView>,
@@ -27,20 +27,20 @@ export class DialogAddClusterView {
       this.title = "Add Cluster"
     }
     /*if (this.action == 'Update') {
-  this.title = "Modify Application"
+  this.title = "Modify Cluster"
 }*/
   }
 
   doAction() {
     console.log(this.local_data)
-    this.dialogRef.close({event: this.action, data: {'clusters': [this.local_data]}});
+    //this.dialogRef.close({event: this.action, data: {'clusters': [this.local_data]}});
   }
 
   deleteCluster() {
-    this.dialogRef.close({event: 'Delete', data: this.local_data});
+    //this.dialogRef.close({event: 'Delete', data: this.local_data});
   }
 
   closeDialog() {
-    this.dialogRef.close({event: 'Cancel'});
+    //this.dialogRef.close({event: 'Cancel'});
   }
 }
