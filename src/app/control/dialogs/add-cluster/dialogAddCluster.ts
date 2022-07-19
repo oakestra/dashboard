@@ -1,5 +1,10 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {UserService} from "../../../shared/modules/auth/user.service";
+import {NotificationService, Type} from "../../../shared/modules/notification/notification.service";
+import {DialogModule} from '@syncfusion/ej2-angular-popups';
+import {MatDialog} from "@angular/material/dialog";
+import {DialogGenerateTokenView} from "../generate-token/dialogGenerateToken";
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -16,10 +21,12 @@ export class DialogAddClusterView {
   local_data: any;
   title = "Add Cluster"
 
-  constructor(
-    public dialogRef: MatDialogRef<DialogAddClusterView>,
-    //@Optional() is used to prevent error if no data is passed
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor (public dialogRef: MatDialogRef<DialogAddClusterView>,
+               //@Optional() is used to prevent error if no data is passed
+               @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+               private userService: UserService,
+               private notifyService: NotificationService,
+               public dialog: MatDialog){
     this.local_data = {...data};
     this.action = this.local_data.action;
 
@@ -33,14 +40,23 @@ export class DialogAddClusterView {
 
   doAction() {
     console.log(this.local_data)
+    let s = this.userService.generateTokenCluster;
     //this.dialogRef.close({event: this.action, data: {'clusters': [this.local_data]}});
+    const dialogRef2 = this.dialog.open(DialogGenerateTokenView);
+
+    dialogRef2.afterClosed().subscribe(result => {
+      this.doSomething();
+    });
+    return
   }
 
+  doSomething(){};
+
   deleteCluster() {
-    //this.dialogRef.close({event: 'Delete', data: this.local_data});
+    this.dialogRef.close({event: 'Delete', data: this.local_data});
   }
 
   closeDialog() {
-    //this.dialogRef.close({event: 'Cancel'});
+    this.dialogRef.close({event: 'Cancel'});
   }
 }

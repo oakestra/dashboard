@@ -42,6 +42,7 @@ import {LineChartComponent} from './charts/line-chart/line-chart.component';
 import {HelpComponent} from "./help/help.component";
 import { SurveyComponent } from './survey/survey.component';
 import {DialogConfirmation} from "./dialogs/confirmation/dialogConfirmation";
+import {DialogGenerateTokenView} from "./dialogs/generate-token/dialogGenerateToken";
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import {DialogConfirmation} from "./dialogs/confirmation/dialogConfirmation";
     DialogGraphConnectionSettings,
     DialogAddApplicationView,
     DialogAddClusterView,
+    DialogGenerateTokenView,
     GraphComponent,
     UsersComponent,
     DialogEditUserView,

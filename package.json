@@ -27,6 +27,7 @@
     "@nrwl/angular": "^14.4.2",
     "@popperjs/core": "^2.11.2",
     "@swimlane/ngx-charts": "^20.0.1",
+    "@syncfusion/ej2-angular-popups": "^20.2.39",
     "angular-server-side-configuration": "^12.0.0",
     "angular-shepherd": "^13.0.1",
     "ansi-regex": "^6.0.1",
