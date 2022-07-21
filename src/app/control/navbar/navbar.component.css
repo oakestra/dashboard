@@ -165,10 +165,6 @@ mat-card p {
   transition: all 0.3s ease;
 }
 
-.sidebar .nav-links li.showMenu i.arrow {
-  transform: rotate(-180deg);
-}
-
 .sidebar .nav-links li a {
   display: flex;
   align-items: center;
@@ -188,19 +184,10 @@ mat-card p {
   /*display: none;*/
 }
 
-.sidebar .nav-links li .sub-menu a{
-  color: #fff;
-  font-size: 15px;
-  padding: 5px 0;
-  white-space: nowrap;
-  opacity: 0.6;
-  transition: all 0.3s ease;
-}
 
-.sidebar .nav-links li .sub-menu a:hover {
-  opacity: 1;
+.sidebar .nav-links li.showMenu i.bx-chevron-down {
+  transform: rotate(-180deg);
 }
-
 
 .sidebar.close .nav-links li .sub-menu{
   position: absolute;
@@ -212,6 +199,20 @@ mat-card p {
   transition: all 0.4s ease;
 }
 
-.sidebar.close .nav-links li .showMenu .sub-menu {
+.sidebar.close .nav-links li.showMenu .sub-menu {
   display: block;
+}
+
+
+.sidebar .nav-links li .sub-menu a{
+  color: #fff;
+  font-size: 15px;
+  padding: 5px 0;
+  white-space: nowrap;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.sidebar .nav-links li .sub-menu a:hover {
+  opacity: 1;
 }

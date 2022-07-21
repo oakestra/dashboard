@@ -49,7 +49,7 @@
           <i class='bx bxs-category-alt'></i>
           <span class="link_name">Applications</span>
         </a>
-        <i class='bx bx-chevron-down'></i>
+        <!--<i class='bx bx-chevron-down'></i>-->
       </div>
       <ul class="sub-menu">
         <li>
@@ -60,11 +60,11 @@
 
               <mat-radio-group (change)="handleChange()" [(ngModel)]="active" routerLink="/control">
                 <mat-radio-button [value]="app._id" class="menu-button">
-                  <span style="float: left">{{app.application_name}}</span>
+                  <span style="float: left ; color: white ">{{app.application_name}}</span>
                 </mat-radio-button>
               </mat-radio-group>
 
-              <button (click)="openDialog('Update',app)" mat-icon-button>
+              <button (click)="openDialog('Update',app)" style="color: white " mat-icon-button>
                 <mat-icon>settings</mat-icon>
               </button>
             </div>
@@ -73,14 +73,14 @@
 
         </li>
         <li>
-          <span>Add</span>
-          <button (click)="openDialog('Add',{})" class="menu-button" mat-icon-button>
+          <span style="color: white">Add</span>
+          <button (click)="openDialog('Add',{})" class="menu-button" style="color: white" mat-icon-button>
               <mat-icon>add</mat-icon>
             </button>
         </li>
       </ul>
     </li>
-    <li>
+    <!--<li>
 
       <div class="icon-link">
         <a>
@@ -97,7 +97,7 @@
         </li>
         <li><a href="#">Show all</a></li>
       </ul>
-    </li>
+    </li>-->
 
     <li>
       <div class="icon-link">
@@ -110,8 +110,8 @@
 
     <li>
 
-     <!-- <script>
-        let arrow = document.querySelectorAll(".arrow");
+    <!--  <script>
+        let arrow = document.querySelectorAll(".bx-chevron-down");
         console.log(arrow);
         for (var i = 0; i < arrow.length; ++i) {
           arrow[i].addEventListener("click", (e)=>{

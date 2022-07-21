@@ -29,7 +29,7 @@ export class ApiService extends RestService {
 ///////////////////// Application Functions ///////////////////////////////
 
   addApplication(app: any) {
-    return this.doPOSTRequest("/application/", app)
+      return this.doPOSTRequest("/application/", app)
   }
 
   updateApplication(app: any) {
