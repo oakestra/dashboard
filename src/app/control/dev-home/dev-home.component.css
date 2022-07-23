@@ -42,14 +42,6 @@ mat-card p {
   flex-direction: column;
 }
 
-.content .mat-elevation-z8 p {
-  font-size: 4px;
-}
-
-.serviceCard {
-  height: 100%;
-}
-
 .REGISTERED{
   color: green;
 }

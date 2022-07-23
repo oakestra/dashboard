@@ -35,8 +35,8 @@
 </mat-dialog-content>
 
 <mat-dialog-actions class="alignRight">
-  <button (click)="doAction()" color="primary" mat-button mat-flat-button>{{local_data.action}}</button>
+  <button (click)="doAction()" color="primary" style="background-color: #4A7083" mat-button mat-flat-button>{{local_data.action}}</button>
   <button (click)="deleteCluster()" *ngIf="action ==='Update'" color="warn" mat-button mat-flat-button>Delete
   </button>
-  <button (click)="closeDialog()" color="primary" mat-button mat-flat-button>Cancel</button>
+  <button (click)="closeDialog()" color="primary" style="background-color: #4A7083" mat-button mat-flat-button>Cancel</button>
 </mat-dialog-actions>

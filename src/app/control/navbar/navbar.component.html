@@ -5,6 +5,14 @@
 
 <mat-toolbar class="mat-elevation-z8">
 
+  <div class="sidebar">
+    <div class="logo-details">
+      <button id="homeNavbar" mat-button routerLink="/control" style="font-size: inherit">
+        <img src="favicon.ico" style="height: 64px" alt="Oakestra">
+      </button>
+    </div>
+  </div>
+
   <span class="example-spacer"></span>
 
   <h4 class="name"><small>{{username}}&nbsp;&nbsp;</small></h4>
@@ -29,31 +37,27 @@
 
 </mat-toolbar>
 
-
-<div class="sidebar">
-  <div class="logo-details">
-    <button id="homeNavbar" mat-button routerLink="/control" style="font-size: inherit">
-      <img src="favicon.ico" style="height: 64px" alt="Oakestra">
-    </button>
-  </div>
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
   <ul class="nav-links">
-    <li>
+    <mat-list-item>
         <a href="/control">
           <i class='bx bx-grid-alt'></i>
           <span class="link_name">Dashboard</span>
         </a>
-    </li>
-    <li>
-      <div class="icon-link">
-        <a>
+    </mat-list-item>
+
+    <mat-list-item>
+    <div class="icon-link">
+      <a>
           <i class='bx bxs-category-alt'></i>
           <span class="link_name">Applications</span>
         </a>
         <!--<i class='bx bx-chevron-down'></i>-->
       </div>
       <ul class="sub-menu">
-        <li>
-          <div id="applicationTitle">
+        <mat-list-item>
+        <div id="applicationTitle">
             <mat-divider></mat-divider>
 
             <div *ngFor="let app of app " style="display: flex; justify-content: space-between;align-items: center">
@@ -71,16 +75,16 @@
 
           </div>
 
-        </li>
-        <li>
+        </mat-list-item>
+        <mat-list-item>
           <span style="color: white">Add</span>
           <button (click)="openDialog('Add',{})" class="menu-button" style="color: white" mat-icon-button>
               <mat-icon>add</mat-icon>
             </button>
-        </li>
+        </mat-list-item>
       </ul>
-    </li>
-    <!--<li>
+      </mat-list-item>
+      <!--<mat-list-item>
 
       <div class="icon-link">
         <a>
@@ -91,26 +95,24 @@
       </div>
 
       <ul class="sub-menu">
-        <li>
+        <mat-list-item>
           <a>
           <button (click)="openDialog('Add Cluster',app)" mat-icon-button>Add new cluster</button></a>
-        </li>
-        <li><a href="#">Show all</a></li>
+        </>mat-list-item>
+        <mat-list-item><a href="#">Show all</a></>mat-list-item>
       </ul>
-    </li>-->
-
-    <li>
+    </>mat-list-item>-->
+    <mat-list-item>
       <div class="icon-link">
-        <a>
-          <i class='bx bx-help-circle' ></i>
-          <button class="link_name" mat-button routerLink="help">Help</button>
+        <a href="/control/help">
+          <i class='bx bx-help-circle'></i>
+          <span class="link_name">Help</span>
         </a>
       </div>
-    </li>
-
-    <li>
-
-    <!--  <script>
+    </mat-list-item>
+    <!--
+    <mat-list-item>
+    <script>
         let arrow = document.querySelectorAll(".bx-chevron-down");
         console.log(arrow);
         for (var i = 0; i < arrow.length; ++i) {
@@ -119,16 +121,20 @@
             arrowParent.classList.toggle("showMenu");
           });
         }
-      </script>-->
-    </li>
+      </script>
+      </>mat-list-item>
+      -->
 
   </ul>
-</div>
+    </mat-sidenav>
 
-<div class="content">
+
+<mat-sidenav-content id="content">
   <div *ngIf="!appSelected && !settings" class="content mat-elevation-z8">
     No Application selected.
   </div>
 
   <router-outlet *ngIf="appSelected || settings"></router-outlet>
-</div>
+</mat-sidenav-content>
+</mat-sidenav-container>
+

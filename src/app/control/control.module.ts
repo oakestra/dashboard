@@ -43,6 +43,7 @@ import {HelpComponent} from "./help/help.component";
 import { SurveyComponent } from './survey/survey.component';
 import {DialogConfirmation} from "./dialogs/confirmation/dialogConfirmation";
 import {DialogGenerateTokenView} from "./dialogs/generate-token/dialogGenerateToken";
+import {MatListModule} from "@angular/material/list";
 
 
 @NgModule({
@@ -94,6 +95,7 @@ import {DialogGenerateTokenView} from "./dialogs/generate-token/dialogGenerateTo
     MatPaginatorModule,
     MatTableModule,
     MatChipsModule,
+    MatListModule,
   ],
 })
 export class ControlModule {

@@ -9,6 +9,7 @@
   align-items: center;
   font-size: 2rem;
   color: lightgray;
+  padding-top: 20px;
 }
 
 .mat-form-field{

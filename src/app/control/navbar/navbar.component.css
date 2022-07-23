@@ -32,7 +32,7 @@ mat-sidenav {
   .content {
     margin-left: 32px;
   }
-  #sidebar{
+  #matSidenav{
     display: none;
   }
 }
@@ -118,11 +118,15 @@ mat-card p {
   background-color: #4A7083;
 }
 
+body {
+  background-color: #4A7083;
+}
+
 ::ng-deep  .mat-radio-outer-circle {
   border-color: white
 }
 
-.sidebar {
+matSidenav {
   position: fixed;
   top: 0;
   left: 0;
@@ -131,31 +135,30 @@ mat-card p {
   background: #4A7083;
 }
 
-.sidebar .nav-links{
+matSidenav .nav-links{
   background: #3B474E;
   height: 100%;
   padding-top: 30px;
-  padding-left: 10px;
   overflow: auto;
 }
 
-.sidebar .nav-links li {
+mat-list-item {
   position: relative;
   list-style: none;
   transition: all 0.4s ease;
 }
 
-.sidebar .nav-links li:hover {
+mat-list-item:hover {
   background: #3E4E57;
 }
 
-.sidebar .nav-links li .icon-link {
+mat-list-item .icon-link {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.sidebar .nav-links li i{
+mat-list-item i{
   height: 50px;
   min-width: 78px;
   text-align: center;
@@ -165,19 +168,19 @@ mat-card p {
   transition: all 0.3s ease;
 }
 
-.sidebar .nav-links li a {
+mat-list-item a {
   display: flex;
   align-items: center;
   text-decoration: none;
 }
 
-.sidebar .nav-links li a .link_name{
+mat-list-item a .link_name{
   font-size: 16px;
   font-weight: 400;
   color: #fff;
 }
 
-.sidebar .nav-links li .sub-menu{
+mat-list-item .sub-menu{
   padding: 6px 6px 14px 80px;
   margin-top: -10px;
   background: #3E4E57;
@@ -185,11 +188,11 @@ mat-card p {
 }
 
 
-.sidebar .nav-links li.showMenu i.bx-chevron-down {
+mat-list-item.showMenu i.bx-chevron-down {
   transform: rotate(-180deg);
 }
 
-.sidebar.close .nav-links li .sub-menu{
+matSidenav.close .nav-links mat-list-item .sub-menu{
   position: absolute;
   left: 100%;
   top: 0;
@@ -199,12 +202,12 @@ mat-card p {
   transition: all 0.4s ease;
 }
 
-.sidebar.close .nav-links li.showMenu .sub-menu {
+matSidenav.close .nav-links mat-list-item.showMenu .sub-menu {
   display: block;
 }
 
 
-.sidebar .nav-links li .sub-menu a{
+mat-list-item .sub-menu a{
   color: #fff;
   font-size: 15px;
   padding: 5px 0;
@@ -213,6 +216,6 @@ mat-card p {
   transition: all 0.3s ease;
 }
 
-.sidebar .nav-links li .sub-menu a:hover {
+mat-list-item .sub-menu a:hover {
   opacity: 1;
 }

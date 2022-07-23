@@ -1,4 +1,4 @@
-<div class="content-cards" xmlns:background-color="http://www.w3.org/1999/xhtml">
+<div class="content-cards">
   <mat-card class="serviceCard" id="content">
 
     <div *ngIf="sharedService.applicationObserver$ != null">
@@ -78,7 +78,7 @@
             <mat-icon>add_circle</mat-icon>
             Create New Service
           </button>
-          <button (click)="deployAllServices()" color="primary" mat-flat-button type="button">
+          <button (click)="deployAllServices()" color="primary" mat-flat-button type="button" style="background-color: #4A7083">
             <mat-icon>send</mat-icon>
             Deploy All
           </button>
@@ -88,7 +88,7 @@
 
       </div>
       <div *ngIf="servicesCount == 0" class="content mat-elevation-z8">
-        <p style="font-size: large ; margin: 30px">No Service in this application.</p>
+        <p>No Service in this application.</p>
         <br>
         <div style="text-align: end">
           <button color="primary" id="createServiceEmpty" mat-flat-button routerLink="/control/deploy"
