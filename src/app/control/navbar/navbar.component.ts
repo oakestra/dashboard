@@ -4,6 +4,7 @@ import {BreakpointObserver} from "@angular/cdk/layout";
 import {delay, filter} from "rxjs/operators";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogAddApplicationView} from "../dialogs/add-appllication/dialogAddApplication";
+import {DialogAddClusterView} from "../dialogs/add-cluster/dialogAddCluster";
 import {SharedIDService} from "../../shared/modules/helper/shared-id.service";
 import {ApiService} from "../../shared/modules/api/api.service";
 import {UserService} from "../../shared/modules/auth/user.service";
@@ -28,6 +29,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   settings = false
   username = ""
   userID = "";
+  clusterID = "";
   isAdmin = false
 
   constructor(private observer: BreakpointObserver,
@@ -105,6 +107,21 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       obj.application_desc = "";
       obj.userId = this.userID;
     }
+    else if (action == "Add Cluster") {
+      obj._id = {$oid: ""};
+      obj.cluster_name = "";
+      obj.cluster_manager_URL = "";
+      obj.cluster_location = ""
+      obj.clusterId = this.clusterID;
+
+      obj.action = action;
+      const dialogRef = this.dialog.open(DialogAddClusterView, {data: obj});
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.addCluster(result.data)
+      });
+      return
+    }
 
     obj.action = action;
     const dialogRef = this.dialog.open(DialogAddApplicationView, {data: obj});
@@ -163,6 +180,10 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/control'])
       }
     );
+  }
+
+  //TODO call API responsible to add the cluster
+  addCluster(app: any): void {
   }
 
   show() {

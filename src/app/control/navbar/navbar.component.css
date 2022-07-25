@@ -1,5 +1,6 @@
 mat-toolbar {
-  background: #004a9f;
+  /* background: #004a9f;*/
+  background: #4A7083;
   color: white;
 }
 
@@ -7,7 +8,8 @@ mat-sidenav {
   margin: 16px;
   width: 300px;
   border-right: none;
-  background: #002b5c;
+  /* background: #002b5c;*/
+  background: #3B474E;
   color: white;
   border-radius: 10px;
   padding: 16px;
@@ -30,7 +32,7 @@ mat-sidenav {
   .content {
     margin-left: 32px;
   }
-  #homeSidenav{
+  #matSidenav{
     display: none;
   }
 }
@@ -39,19 +41,13 @@ mat-sidenav {
   #homeNavbar{
     display: none;
   }
+  .content {
+    display: none;
+  }
 }
 
 mat-sidenav-container {
   height: calc(100vh - 65px);
-}
-
-.menu-button {
-  /*width: 100%;*/
-  display: flex;
-  align-items: center;
-  /*justify-content: flex-start;*/
-  font-size: 1rem;
-  justify-content: center;
 }
 
 .avatar {
@@ -86,7 +82,8 @@ mat-card {
 }
 
 mat-card-title {
-  background-color: #004a9f;
+  /* background: #004a9f;*/
+  background-color: #4A7083;
   padding: 16px;
   border-radius: 4px;
   color: white;
@@ -117,9 +114,108 @@ mat-card p {
 }
 
 .appSelectLable {
-  background-color: #002b5c;
+  /* background: #002b5c;*/
+  background-color: #4A7083;
+}
+
+body {
+  background-color: #4A7083;
 }
 
 ::ng-deep  .mat-radio-outer-circle {
   border-color: white
+}
+
+matSidenav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 260px;
+  background: #4A7083;
+}
+
+matSidenav .nav-links{
+  background: #3B474E;
+  height: 100%;
+  padding-top: 30px;
+  overflow: auto;
+}
+
+mat-list-item {
+  position: relative;
+  list-style: none;
+  transition: all 0.4s ease;
+}
+
+mat-list-item:hover {
+  background: #3E4E57;
+}
+
+mat-list-item .icon-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+mat-list-item i{
+  height: 50px;
+  min-width: 78px;
+  text-align: center;
+  line-height: 50px;
+  color: #fff;
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+mat-list-item a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+mat-list-item a .link_name{
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+}
+
+mat-list-item .sub-menu{
+  padding: 6px 6px 14px 80px;
+  margin-top: -10px;
+  background: #3E4E57;
+  /*display: none;*/
+}
+
+
+mat-list-item.showMenu i.bx-chevron-down {
+  transform: rotate(-180deg);
+}
+
+matSidenav.close .nav-links mat-list-item .sub-menu{
+  position: absolute;
+  left: 100%;
+  top: 0;
+  margin-top: 0;
+  padding: 10px 20px;
+  border-radius: 0 6px 6px 0;
+  transition: all 0.4s ease;
+}
+
+matSidenav.close .nav-links mat-list-item.showMenu .sub-menu {
+  display: block;
+}
+
+
+mat-list-item .sub-menu a{
+  color: #fff;
+  font-size: 15px;
+  padding: 5px 0;
+  white-space: nowrap;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+mat-list-item .sub-menu a:hover {
+  opacity: 1;
 }

@@ -117,7 +117,7 @@
               </mat-form-field>
 
               <div class="file-upload">
-                <button (click)="fileUploadCode.click()" class="upload-btn" color="primary" mat-mini-fab type="button">
+                <button (click)="fileUploadCode.click()" class="upload-btn" mat-mini-fab type="button" style="background-color: #4A7083">
                   <mat-icon>attach_file</mat-icon>
                 </button>
                 <input #fileUploadCode (change)="onFileSelected($event, 0, 'code')"
@@ -137,7 +137,7 @@
               </mat-form-field>
 
               <div class="file-upload">
-                <button (click)="fileUploadState.click()" class="upload-btn" color="primary" mat-mini-fab type="button">
+                <button (click)="fileUploadState.click()" class="upload-btn" style="background-color: #4A7083" mat-mini-fab type="button">
                   <mat-icon>attach_file</mat-icon>
                 </button>
                 <input #fileUploadState (change)="onFileSelected($event, 1, 'state')"
@@ -381,8 +381,8 @@
               </div>
             </div>
 
-            <button color="primary" mat-button mat-flat-button type="submit">Save</button>
-            <button class="cancel_buttons" color="primary" mat-button mat-flat-button routerLink="/control"
+            <button color="primary" style="background-color: #4A7083" mat-button mat-flat-button type="submit">Save</button>
+            <button class="cancel_buttons" color="primary" style="background-color: #4A7083" mat-button mat-flat-button routerLink="/control"
                     type="button">
               Cancel
             </button>

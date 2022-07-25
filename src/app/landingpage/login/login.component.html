@@ -1,6 +1,6 @@
 <mat-card class="login-form">
 
-  <img alt="EdgeIO Logo" mat-card-image src="../../../assets/img/logo-white-bg.png">
+  <img alt="EdgeIO Logo" mat-card-image src="../../../assets/img/color-full.png">
   <mat-card-content>
     <mat-icon style="float: right" matTooltip="Connecting to: {{sm_ip}}">info</mat-icon>
     <form accept-charset="UTF-8" class="form-signin" role="form">
@@ -33,9 +33,14 @@
         <hr>
 
         <div style=" display: flex; justify-content: center;">
-          <button (click)="submitLogin()" color="primary" mat-button mat-flat-button style="margin-top: 8px;"
+          <button (click)="submitLogin()" mat-button mat-flat-button style="background-color: #4A7083; color: #fff"
                   type="button">Sign in
           </button>
+        </div>
+        <div style=" display: flex; justify-content: center; margin-top: 8px ">
+          <label class="cols-sm-2 control-label" for="password">Don't have an account?&ensp;</label>
+          <span (click)="registerForm()" class="pull-right text-primary"
+                style="cursor: pointer; float: right">Sign up now</span>
         </div>
       </div>
     </form>

@@ -1,4 +1,4 @@
-.login-form{
+.register-form{
   width:80%;
   height: fit-content;
 
@@ -12,13 +12,13 @@
 }
 
 @media only screen and (min-width: 801px) {
-  .login-form {
-    width: 70%;
+  .register-form {
+    width: 40%;
   }
 }
 
 @media only screen and (min-width: 1201px) {
-  .login-form {
-    width: 35%;
+  .register-form {
+    width: 25%;
   }
 }

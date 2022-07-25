@@ -25,8 +25,11 @@ export class DialogAddApplicationView {
     if (this.action == 'Update') {
       this.title = "Modify Application"
     }
+    else if (this.action == 'Add Cluster') {
+      this.title = "Add Cluster"
+    }
     console.log(this.local_data)
-  }
+    }
 
   doAction() {
     console.log(this.local_data)

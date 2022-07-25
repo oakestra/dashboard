@@ -8,6 +8,7 @@ import {NavbarComponent} from "./navbar/navbar.component";
 import {DialogConnectionSettings} from "./dialogs/content-connection/dialogConnectionSettings";
 import {DialogGraphConnectionSettings} from "./dialogs/graph-content-connection/dialogGraphConnectionSettings";
 import {DialogAddApplicationView} from "./dialogs/add-appllication/dialogAddApplication";
+import {DialogAddClusterView} from "./dialogs/add-cluster/dialogAddCluster";
 import {GraphComponent} from "./graph/graph.component";
 import {RouterModule} from "@angular/router";
 import {MatMenuModule} from "@angular/material/menu";
@@ -41,6 +42,8 @@ import {LineChartComponent} from './charts/line-chart/line-chart.component';
 import {HelpComponent} from "./help/help.component";
 import { SurveyComponent } from './survey/survey.component';
 import {DialogConfirmation} from "./dialogs/confirmation/dialogConfirmation";
+import {DialogGenerateTokenView} from "./dialogs/generate-token/dialogGenerateToken";
+import {MatListModule} from "@angular/material/list";
 
 
 @NgModule({
@@ -52,6 +55,8 @@ import {DialogConfirmation} from "./dialogs/confirmation/dialogConfirmation";
     DialogConnectionSettings,
     DialogGraphConnectionSettings,
     DialogAddApplicationView,
+    DialogAddClusterView,
+    DialogGenerateTokenView,
     GraphComponent,
     UsersComponent,
     DialogEditUserView,
@@ -90,6 +95,7 @@ import {DialogConfirmation} from "./dialogs/confirmation/dialogConfirmation";
     MatPaginatorModule,
     MatTableModule,
     MatChipsModule,
+    MatListModule,
   ],
 })
 export class ControlModule {

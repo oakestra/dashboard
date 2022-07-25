@@ -176,4 +176,14 @@ export class UserService {
     // Token expired?
     return !(d.valueOf() > (new Date().valueOf()));
   };
-}
+
+  generateTokenCluster() {
+    return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNTM0NTQzNTQzNTQzNTM0NTMiLCJleHAiOjE1MDQ2OTkyNTZ9.zG-2FvGegujxoLWwIQfNB5IT46D-xC4e8dEDYwi6aRM";
+  }
+    /*if (this.loggedIn){
+      this.setAuthToken(response.token);
+      this.setRefreshToken(response.refresh_token);
+      return this.getJWTTokenRaw(response.token);
+    }
+  }*/
+  }

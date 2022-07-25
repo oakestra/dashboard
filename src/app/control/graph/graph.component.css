@@ -50,6 +50,11 @@ text.id {
 
 .graph {
   background: lightgray;
-  border: 2px solid #002b5c;
+  border: 2px solid #3B474E;
   border-radius: 5px;
+}
+
+graph-button {
+  background-color: #4A7083;
+  color: white;
 }
