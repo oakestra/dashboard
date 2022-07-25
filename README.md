@@ -19,14 +19,9 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Run
 
-> NM: Rename system commands to oakestra
 
-Run `docker-compose up` to start the Website with docker compose.
+Export system manager url: `export SYSTEM_MANAGER=<ip or url without port>`
+Run `docker-compose up --build` to start the Website with docker compose.
 
-or 
 
-Run `docker build -t edgeio-image .` and 
-
-`docker run -e "API_ADDRESS=localhost:10000" -p 8080:80 edgeio-image`
-
-To start the website on the port 8080 which then accesses the EdgeIO System Manager on the configured IP address.
+This starts the website on the port 8888 which then accesses the Oakestra System Manager on the configured IP address.
