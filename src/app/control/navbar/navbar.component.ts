@@ -110,8 +110,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     else if (action == "Add Cluster") {
       obj._id = {$oid: ""};
       obj.cluster_name = "";
-      obj.cluster_manager_URL = "";
-      obj.cluster_location = ""
+      obj.cluster_location = "";
       obj.clusterId = this.clusterID;
 
       obj.action = action;
