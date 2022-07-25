@@ -74,6 +74,12 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     )
   }
 
+  loadDataCluster() {
+    /*this.api.getClustersOfUser(this.userID).subscribe((result: any) => {
+      }
+    )*/
+  }
+
   updatePermissions(): void {
     this.authService.hasRole(Role.ADMIN).subscribe((res) => {
       console.log(res)
@@ -117,7 +123,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       const dialogRef = this.dialog.open(DialogAddClusterView, {data: obj});
 
       dialogRef.afterClosed().subscribe(result => {
-        this.addCluster(result.data)
+        //TODO define data for Cluster
+        //this.addCluster(result.data)
       });
       return
     }
@@ -183,6 +190,12 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   //TODO call API responsible to add the cluster
   addCluster(app: any): void {
+    this.api.addCluster(app).subscribe((_success) => {
+        this.loadDataCluster();
+      },
+      (_error: any) => {
+        this.notifyService.notify(Type.error, 'Error: Adding cluster "' + app.cluster_name + '" failed!')
+      })
   }
 
   show() {

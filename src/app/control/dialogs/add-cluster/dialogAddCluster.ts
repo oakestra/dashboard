@@ -40,6 +40,7 @@ export class DialogAddClusterView {
 
   doAction() {
     console.log(this.local_data)
+    // TODO: I shouldn't access the userService from here
     let s = this.userService.generateTokenCluster;
     //this.dialogRef.close({event: this.action, data: {'clusters': [this.local_data]}});
     const dialogRef2 = this.dialog.open(DialogGenerateTokenView);
