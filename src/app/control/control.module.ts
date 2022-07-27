@@ -44,6 +44,7 @@ import { SurveyComponent } from './survey/survey.component';
 import {DialogConfirmation} from "./dialogs/confirmation/dialogConfirmation";
 import {DialogGenerateTokenView} from "./dialogs/generate-token/dialogGenerateToken";
 import {MatListModule} from "@angular/material/list";
+import {ListClustersComponent} from "./list/clusters/list-clusters.component";
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import {MatListModule} from "@angular/material/list";
     LineChartComponent,
     HelpComponent,
     SurveyComponent,
-    DialogConfirmation
+    DialogConfirmation,
+    ListClustersComponent
   ],
   imports: [
     CommonModule,

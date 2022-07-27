@@ -11,6 +11,7 @@ import {UserService} from "../../shared/modules/auth/user.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {AuthService, Role} from "../../shared/modules/auth/auth.service";
 import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
+import {ListClustersComponent} from "../list/clusters/list-clusters.component";
 
 // import {environment} from "../../../environments/environment";
 
@@ -105,28 +106,30 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       });
   }
 
-  openDialog(action: string, obj: any) {
+  openDialogCl(action: string, obj: any) {
+    if (action == "Add Cluster") {
+      obj._id = {$oid: ""};
+      obj.cluster_name = "";
+      obj.cluster_location = "";
+      obj.userId = this.userID;
+    }
+      obj.action = action;
+      const dialogRef = this.dialog.open(DialogAddClusterView, {data: obj});
+
+      dialogRef.afterClosed().subscribe(result => {
+        //TODO define data for Cluster
+        this.addCluster(result.data)
+      });
+      return
+  }
+
+  openDialogApp(action: string, obj: any) {
     if (action == "Add") {
       obj._id = {$oid: ""}; // Only for the view, is then defined in the database
       obj.application_name = "";
       obj.application_namespace = ""
       obj.application_desc = "";
       obj.userId = this.userID;
-    }
-    else if (action == "Add Cluster") {
-      obj._id = {$oid: ""};
-      obj.cluster_name = "";
-      obj.cluster_location = "";
-      obj.clusterId = this.clusterID;
-
-      obj.action = action;
-      const dialogRef = this.dialog.open(DialogAddClusterView, {data: obj});
-
-      dialogRef.afterClosed().subscribe(result => {
-        //TODO define data for Cluster
-        //this.addCluster(result.data)
-      });
-      return
     }
 
     obj.action = action;
@@ -142,6 +145,10 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         this.deleteApplication(result.data)
       }
     });
+  }
+
+  openListClusters(){
+    this.dialog.open(ListClustersComponent)
   }
 
   deleteApplication(app: any): void {
@@ -191,7 +198,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   //TODO call API responsible to add the cluster
   addCluster(app: any): void {
     this.api.addCluster(app).subscribe((_success) => {
-        this.loadDataCluster();
+        this.userService.addCluster(app.clusterID);
+        console.log("Cluster added");
+        //this.loadDataCluster();
       },
       (_error: any) => {
         this.notifyService.notify(Type.error, 'Error: Adding cluster "' + app.cluster_name + '" failed!')

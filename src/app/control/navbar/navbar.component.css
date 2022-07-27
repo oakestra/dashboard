@@ -207,7 +207,7 @@ matSidenav.close .nav-links mat-list-item.showMenu .sub-menu {
 }
 
 
-mat-list-item .sub-menu a{
+mat-list-item .sub-menu mat-list-item{
   color: #fff;
   font-size: 15px;
   padding: 5px 0;

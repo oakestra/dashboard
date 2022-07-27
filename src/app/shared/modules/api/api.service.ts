@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {RestService} from "../../util/rest.service";
 import {UserService} from "../auth/user.service";
 import {NotificationService} from "../notification/notification.service";
@@ -58,7 +58,11 @@ export class ApiService extends RestService {
 ///////////////////// Cluster Functions ///////////////////////////////
 
   addCluster(app: any) {
-    return this.doPOSTRequest("/cluster/", app)
+    return this.doPOSTRequest("/cluster/add", app)
+  }
+
+  getClustersOfUser(userId: string) {
+    return this.doGETRequest("/clusters/" + userId)
   }
 
 ///////////////////////////////////////////////////////////////////////////

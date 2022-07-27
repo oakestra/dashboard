@@ -51,7 +51,8 @@
     <div class="icon-link">
       <a>
           <i class='bx bxs-category-alt'></i>
-          <span class="link_name">Applications</span>
+          <span class="link_name">
+            <a href="/control">Applications</a></span>
         </a>
         <!--<i class='bx bx-chevron-down'></i>-->
       </div>
@@ -68,38 +69,40 @@
                 </mat-radio-button>
               </mat-radio-group>
 
-              <button (click)="openDialog('Update',app)" style="color: white " mat-icon-button>
+              <button (click)="openDialogApp('Update',app)" style="color: white " mat-icon-button>
                 <mat-icon>settings</mat-icon>
               </button>
             </div>
 
           </div>
-
         </mat-list-item>
+        <mat-list class="inline-list">
         <mat-list-item>
           <span style="color: white">Add</span>
-          <button (click)="openDialog('Add',{})" class="menu-button" style="color: white" mat-icon-button>
+          <button (click)="openDialogApp('Add',{})" class="menu-button" style="color: white" mat-icon-button>
               <mat-icon>add</mat-icon>
             </button>
         </mat-list-item>
+        </mat-list>
+
       </ul>
       </mat-list-item>
-      <mat-list-item>
 
+
+    <mat-list-item>
       <div class="icon-link">
-        <a>
+        <a href="/control/clusters/list">
           <i class='bx bxs-data'></i>
           <span class="link_name">Clusters</span>
-          <i class='bx bx-chevron-down'></i>
         </a>
       </div>
 
       <ul class="sub-menu">
         <mat-list-item>
+          <mat-divider></mat-divider>
           <a>
-          <button (click)="openDialog('Add Cluster',app)" mat-icon-button>Add new cluster</button></a>
+          <button (click)="openDialogCl('Add Cluster',{})" mat-icon-button>Add new cluster</button></a>
         </mat-list-item>
-        <mat-list-item><a href="#">Show all</a></mat-list-item>
       </ul>
     </mat-list-item>
 
