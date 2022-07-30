@@ -57,8 +57,16 @@ export class ApiService extends RestService {
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////// Cluster Functions ///////////////////////////////
 
-  addCluster(app: any) {
-    return this.doPOSTRequest("/cluster/add", app)
+  addCluster(cluster: any) {
+    return this.doPOSTRequest("/cluster/add", cluster)
+  }
+
+  updateCluster(cluster: any) {
+    return this.doPUTRequest("/clusters/" + cluster.clusterID, cluster)
+  }
+
+  deleteCluster(cluster: any) {
+    return this.doDELRequest("/clusters/" + cluster._id.$oid)
   }
 
   getClustersOfUser(userId: string) {

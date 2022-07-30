@@ -177,8 +177,17 @@ export class UserService {
     return !(d.valueOf() > (new Date().valueOf()));
   };
 
-  addCluster(clusterID: string): string {
-    return "iJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNTM0NTQzNTQzNTQzNTM0NTMiLCJleHAiOjE1MDQ2OTkyNTZ9.zG-2FvGegujxoLWwIQfNB5IT46D-xC4e8dEDYwi6aRM"
+  addCluster(cluster_info: any): Observable<boolean> {
+   return this.http.post<Response>(this.apiUrl + "/cluster/add", cluster_info).pipe(
+     map((response: any) => {
+       return true;
+     }),
+     catchError((error) => {
+       this.notifyService.notify(Type.error, error.error.message)
+       //this.notify.error("Error", errorMsg.error || errorMsg.message);
+       return throwError(error || 'Server error')
+     }))
+    //return "iJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNTM0NTQzNTQzNTQzNTM0NTMiLCJleHAiOjE1MDQ2OTkyNTZ9.zG-2FvGegujxoLWwIQfNB5IT46D-xC4e8dEDYwi6aRM"
    /* const request = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token,

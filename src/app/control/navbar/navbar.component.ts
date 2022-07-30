@@ -76,9 +76,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   loadDataCluster() {
-    /*this.api.getClustersOfUser(this.userID).subscribe((result: any) => {
-      }
-    )*/
+    return this.api.getClustersOfUser(this.userID).subscribe((result: any) => {
+      this.router.navigate(['/control'])
+    })
   }
 
   updatePermissions(): void {
@@ -107,8 +107,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   openDialogCl(action: string, obj: any) {
-    if (action == "Add Cluster") {
-      obj._id = {$oid: ""};
+    if (action == 'Add') {
+      obj._id = {$oid: ""}; // Only for the view, is then defined in the database
       obj.cluster_name = "";
       obj.cluster_location = "";
       obj.userId = this.userID;
@@ -118,13 +118,15 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
       dialogRef.afterClosed().subscribe(result => {
         //TODO define data for Cluster
-        this.addCluster(result.data)
+        if (result.event == 'Add') {
+          this.addCluster(result.data)
+        }
       });
       return
   }
 
   openDialogApp(action: string, obj: any) {
-    if (action == "Add") {
+    if (action == 'Add') {
       obj._id = {$oid: ""}; // Only for the view, is then defined in the database
       obj.application_name = "";
       obj.application_namespace = ""
@@ -196,14 +198,14 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   //TODO call API responsible to add the cluster
-  addCluster(app: any): void {
-    this.api.addCluster(app).subscribe((_success) => {
-        this.userService.addCluster(app.clusterID);
-        console.log("Cluster added");
-        //this.loadDataCluster();
+  addCluster(cluster_info: any): void {
+    this.api.addCluster(cluster_info).subscribe((_success) => {
+      //this.userService.addCluster(cluster_info);
+      this.notifyService.notify(Type.success, 'Cluster "' + cluster_info.cluster_name + '" created successfully!')
+      //this.loadDataCluster();
       },
       (_error: any) => {
-        this.notifyService.notify(Type.error, 'Error: Adding cluster "' + app.cluster_name + '" failed!')
+        this.notifyService.notify(Type.error, 'Error: Adding cluster "' + cluster_info.cluster_name + '" failed!')
       })
   }
 
