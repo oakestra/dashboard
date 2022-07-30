@@ -3,7 +3,7 @@
 
   <div class="w3-row">
     <div class="w3-col l6 s12 m6">
-        <label>Cluster ID</label>
+        <label><i>Cluster ID</i></label>
         <!--<input [(ngModel)]="local_data._id.$oid" disabled matInput>*-->
     </div>
   </div>
@@ -20,7 +20,13 @@
   <div class="w3-col l12 s12 m12">
     <mat-form-field class="full-width">
       <mat-label>Cluster Location</mat-label>
-      <textarea [(ngModel)]="local_data.cluster_location" cols="2" matInput> </textarea>
+      <agm-map [latitude]="latitude" [longitude]="longitude" (mapClick)="onChoseLocation($event)">
+        <agm-marker
+          [latitude]="latitude"
+          [longitude]="longitude"
+          *ngIf="locationChosen"></agm-marker>
+      </agm-map>
+      <textarea [(ngModel)]="local_data.cluster_location" cols="1" matInput> </textarea>
     </mat-form-field>
   </div>
 

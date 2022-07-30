@@ -9,6 +9,7 @@ import {SharedModule} from "./shared/sheard.module";
 import {routes} from "./app.routes";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatIconModule} from "@angular/material/icon";
+import {AgmCoreModule} from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,10 @@ import {MatIconModule} from "@angular/material/icon";
     SharedModule.forRoot(),
     RouterModule.forRoot(routes),
     MatSnackBarModule,
-    MatIconModule
+    MatIconModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBYX8yJlDW4CJ2c-fQ3qENvrmIWIrUJWUA'
+    })
   ],
   providers: [
     // should be empty as we import all global services through "SharedModule.forRoot()"

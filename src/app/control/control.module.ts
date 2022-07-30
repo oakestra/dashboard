@@ -45,6 +45,7 @@ import {DialogConfirmation} from "./dialogs/confirmation/dialogConfirmation";
 import {DialogGenerateTokenView} from "./dialogs/generate-token/dialogGenerateToken";
 import {MatListModule} from "@angular/material/list";
 import {ListClustersComponent} from "./list/clusters/list-clusters.component";
+import {AgmCoreModule} from "@agm/core";
 
 
 @NgModule({
@@ -70,35 +71,36 @@ import {ListClustersComponent} from "./list/clusters/list-clusters.component";
     DialogConfirmation,
     ListClustersComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    // Angular Material Modules
-    MatMenuModule,
-    MatCheckboxModule,
-    MatSidenavModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatCardModule,
-    MatGridListModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatTabsModule,
-    MatInputModule,
-    MatTooltipModule,
-    MatExpansionModule,
-    MatRadioModule,
-    MatDialogModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatPaginatorModule,
-    MatTableModule,
-    MatChipsModule,
-    MatListModule,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        // Angular Material Modules
+        MatMenuModule,
+        MatCheckboxModule,
+        MatSidenavModule,
+        MatButtonModule,
+        MatDividerModule,
+        MatCardModule,
+        MatGridListModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatTabsModule,
+        MatInputModule,
+        MatTooltipModule,
+        MatExpansionModule,
+        MatRadioModule,
+        MatDialogModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatPaginatorModule,
+        MatTableModule,
+        MatChipsModule,
+        MatListModule,
+        AgmCoreModule,
+    ],
 })
 export class ControlModule {
 

@@ -5,7 +5,8 @@ import {DialogGenerateTokenView} from "../generate-token/dialogGenerateToken";
 
 @Component({
   selector: 'dialog-content-example-dialog',
-  templateUrl: 'dialog-add-cluster.html',
+  templateUrl: './dialog-add-cluster.html',
+  styleUrls: ['./dialog-add-cluster.css'],
   styles: [
     '.full-width{width: 100%}',
     '.alignRight{text-align: right}'
@@ -17,6 +18,9 @@ export class DialogAddClusterView {
   action: string;
   local_data: any;
   title = "Add Cluster"
+  latitude = 51.678418;
+  longitude = 7.809007;
+  locationChosen = false;
 
   constructor (
     public dialogRef: MatDialogRef<DialogAddClusterView>,
@@ -34,6 +38,9 @@ export class DialogAddClusterView {
 }*/
     }
 
+
+  doSomething(){};
+
   doAction() {
     console.log(this.local_data)
     this.dialogRef.close({event: this.action, data: {'clusters': [this.local_data]}});
@@ -49,7 +56,11 @@ export class DialogAddClusterView {
     return
   }
 
-  doSomething(){};
+  onChoseLocation(event: any) {
+    this.latitude = event.coords.lat;
+    this.longitude = event.coords.lng;
+    this.locationChosen = true;
+  }
 
   deleteCluster() {
     this.dialogRef.close({event: 'Delete', data: this.local_data});
