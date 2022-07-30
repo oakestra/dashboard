@@ -60,6 +60,9 @@ export class DialogAddClusterView {
     this.latitude = event.coords.lat;
     this.longitude = event.coords.lng;
     this.locationChosen = true;
+    this.local_data.cluster_latitude = this.latitude;
+    this.local_data.cluster_longitude = this.longitude;
+
   }
 
   deleteCluster() {

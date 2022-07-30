@@ -110,7 +110,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     if (action == 'Add') {
       obj._id = {$oid: ""}; // Only for the view, is then defined in the database
       obj.cluster_name = "";
-      obj.cluster_location = "";
+      obj.cluster_latitude= "";
+      obj.cluster_longitude = "";
+      //obj.cluster_location = "";
       obj.userId = this.userID;
     }
       obj.action = action;
