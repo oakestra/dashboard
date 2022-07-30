@@ -1,6 +1,27 @@
-  <h2 mat-dialog-title>{{"SAVE THIS TOKEN FOR LATER"}}</h2>
+<h2 mat-dialog-title class="title">Copy Cluster Key</h2>
+<mat-dialog-content class="mat-typography">
 
-  <div class="w3-col l6 s12 m6">
-    <mat-form-field class="full-width" style="padding-right: 8px">
-      <h6>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNTM0NTQzNTQzNTQzNTM0NTMiLCJleHAiOjE1MDQ2OTkyNTZ9.zG-2FvGegujxoLWwIQfNB5IT46D-xC4e8dEDYwi6aRM</h6></mat-form-field>
+<div class="dialog-key">
+
+  <div class="subtitle">
+    When running your Cluster, use this key as one of the environment variables.
   </div>
+
+    <mat-form-field class="full-width" style="padding-right: 8px">
+      <div class="copy-key">
+        <a>
+          <input type="text" class="text"
+                  value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNTM0NTQzNTQzNTQzNTM0NTMiLCJleHAiOjE1MDQ2OTkyNTZ9.zG-2FvGegujxoLWwIQfNB5IT46D-xC4e8dEDYwi6aRM" #valueKey>
+        <button class="copy-btn"
+          (click)="copySecretKey(valueKey)" value="click to copy" >
+          <i class='bx bx-clipboard'></i></button>
+        <button
+          (click)="download('cluster_key.txt', valueKey.value)" >
+          <i class='bx bxs-download'></i>
+        </button>
+        </a>
+      </div>
+    </mat-form-field>
+</div>
+</mat-dialog-content>
+<!--    Keep this key in a safe place. Once you click "Continue", you will not be able to retrieve it again.-->

@@ -37,7 +37,11 @@ export class DialogAddClusterView {
   doAction() {
     console.log(this.local_data)
     this.dialogRef.close({event: this.action, data: {'clusters': [this.local_data]}});
-    const dialogRef2 = this.dialog.open(DialogGenerateTokenView);
+    const dialogRef2 = this.dialog.open(DialogGenerateTokenView,
+      {
+        height: '40%',
+        width: '60%'
+      });
 
     dialogRef2.afterClosed().subscribe(result => {
       this.doSomething();
