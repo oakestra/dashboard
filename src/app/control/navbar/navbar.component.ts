@@ -12,6 +12,8 @@ import {NavigationEnd, Router} from "@angular/router";
 import {AuthService, Role} from "../../shared/modules/auth/auth.service";
 import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
 import {ListClustersComponent} from "../list/clusters/list-clusters.component";
+import {NONE_TYPE} from "@angular/compiler";
+import {DialogGenerateTokenView} from "../dialogs/generate-token/dialogGenerateToken";
 
 // import {environment} from "../../../environments/environment";
 
@@ -121,10 +123,24 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       dialogRef.afterClosed().subscribe(result => {
         //TODO define data for Cluster
         if (result.event == 'Add') {
-          this.addCluster(result.data)
+          //this.addCluster(result.data)
+          this.userService.addCluster(result.data).subscribe((userServiceResponse: any) => {
+              if (userServiceResponse != NONE_TYPE) {
+                const dialogRef2 = this.dialog.open(DialogGenerateTokenView,
+                  {
+                    data: userServiceResponse,
+                    height: "40%",
+                    width: '50%'
+                  });
+                dialogRef2.afterClosed().subscribe(result => {
+                });
+              }
+              // this.surveyService.resetSurvey() => only for survey
+            },
+            (error => this.notifyService.notify(Type.error, error))
+          )
         }
-      });
-      return
+      })
   }
 
   openDialogApp(action: string, obj: any) {

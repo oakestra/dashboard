@@ -177,50 +177,18 @@ export class UserService {
     return !(d.valueOf() > (new Date().valueOf()));
   };
 
-  addCluster(cluster_info: any): Observable<boolean> {
-   return this.http.post<Response>(this.apiUrl + "/cluster/add", cluster_info).pipe(
-     map((response: any) => {
-       return true;
-     }),
-     catchError((error) => {
-       this.notifyService.notify(Type.error, error.error.message)
-       //this.notify.error("Error", errorMsg.error || errorMsg.message);
-       return throwError(error || 'Server error')
-     }))
-    //return "iJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNTM0NTQzNTQzNTQzNTM0NTMiLCJleHAiOjE1MDQ2OTkyNTZ9.zG-2FvGegujxoLWwIQfNB5IT46D-xC4e8dEDYwi6aRM"
-   /* const request = {
-      headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + token,
-      }),
-    };
-    return this.http.post<Response>(this.apiUrl + "/cluster/add", request).pipe(
-      map((response: any) => {
-        this.setTokenCluster(clusterID);
-        //get the key somehow
-        //return this.getClusterTokenRaw(key, clusterID);
-        return ""
-      }),
-      catchError((error: any) => {
-        let errorMsg;
-        if (error.status == 0) {
-          // server is not running
-          errorMsg = "Server is not running";
-        } else {
-          // server is running and returned a json string
-          errorMsg = error.statusText;
-        }
-        return throwError(errorMsg || 'Server error')
-      }))*/
-  }
+  /**
+   * Service to manage the secret key provided to a new cluster to be attached to the Root Orchestrator
+   * **/
 
-  /** stores the cluster token*/
-  setTokenCluster(clusterID: string): void {
-    //localStorage.setItem('cluster_token', clusterID+token);
+  /** stores the cluster key*/
+  setClusterKey(key: string): void {
+    localStorage.setItem('cluster_key', key);
   }
 
 
-  /** returns the cluster token stored in localStorage */
-  getClusterTokenRaw(key: string, clusterID: string): string {
+  /** returns the cluster key stored in localStorage */
+  getClusterKey(key: string): string {
     if (this.loggedIn) {
       if (this.checkIfTokenExists(key)) {
         return localStorage.getItem(key)!;
@@ -231,6 +199,26 @@ export class UserService {
     }
     throwError("Session expired, please log in again")
     return "";
+  }
+
+  addCluster(cluster_info: any): Observable<string> {
+   return this.http.post<Response>(this.apiUrl + "/cluster/add", cluster_info).pipe(
+     map((response: any) => {
+       this.loggedIn = true
+       this.setClusterKey(response);
+       return response;
+     }),
+     catchError((error: any) => {
+       let errorMsg;
+       if (error.status == 0) {
+         // server is not running
+         errorMsg = "Server is not running";
+       } else {
+         // server is running and returned a json string
+         errorMsg = error.statusText;
+       }
+       return throwError(errorMsg || 'Server error')
+     }))
   }
 
   }

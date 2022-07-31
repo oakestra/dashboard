@@ -10,8 +10,9 @@
     <mat-form-field class="full-width" style="padding-right: 8px">
       <div class="copy-key">
         <a>
-          <input type="text" class="text"
-                  value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNTM0NTQzNTQzNTQzNTM0NTMiLCJleHAiOjE1MDQ2OTkyNTZ9.zG-2FvGegujxoLWwIQfNB5IT46D-xC4e8dEDYwi6aRM" #valueKey>
+          <input type="text" class="text" id="id1"
+                  value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNTM0NTQzNTQzNTQzNTM0NTMiLCJleHAiOjE1MDQ2OTkyNTZ9.zG-2FvGegujxoLWwIQfNB5IT46D-xC4e8dEDYwi6aRM"
+                 #valueKey>
         <button class="copy-btn"
           (click)="copySecretKey(valueKey)" value="click to copy" >
           <i class='bx bx-clipboard'></i></button>

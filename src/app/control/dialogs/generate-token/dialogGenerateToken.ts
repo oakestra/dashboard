@@ -9,8 +9,13 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 export class DialogGenerateTokenView {
 
+  local_data: any;
+
   constructor (public dialogRef: MatDialogRef<DialogGenerateTokenView>,
                @Inject(MAT_DIALOG_DATA) public data: any){
+      this.local_data = data;
+      //document.getElementsByClassName("text").namedItem(this.data)
+      //document.getElementById('id1').value=this.data;
   }
 
   copySecretKey(key: any){
@@ -30,5 +35,9 @@ export class DialogGenerateTokenView {
     element.click();
 
     document.body.removeChild(element);
+  }
+
+  getData(): string{
+    return this.local_data;
   }
 }
