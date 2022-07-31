@@ -12,14 +12,14 @@
         <a>
           <input type="text" class="text" id="id1"
                   value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNTM0NTQzNTQzNTQzNTM0NTMiLCJleHAiOjE1MDQ2OTkyNTZ9.zG-2FvGegujxoLWwIQfNB5IT46D-xC4e8dEDYwi6aRM"
-                 #valueKey>
-        <button class="copy-btn"
+                     #valueKey >
+        <mat-button class="copy-btn"
           (click)="copySecretKey(valueKey)" value="click to copy" >
-          <i class='bx bx-clipboard'></i></button>
-        <button
+          <i class='bx bx-clipboard'></i></mat-button>
+        <mat-button
           (click)="download('cluster_key.txt', valueKey.value)" >
           <i class='bx bxs-download'></i>
-        </button>
+        </mat-button>
         </a>
       </div>
     </mat-form-field>

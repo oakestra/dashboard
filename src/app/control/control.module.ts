@@ -46,7 +46,7 @@ import {DialogGenerateTokenView} from "./dialogs/generate-token/dialogGenerateTo
 import {MatListModule} from "@angular/material/list";
 import {ListClustersComponent} from "./list/clusters/list-clusters.component";
 import {AgmCoreModule} from "@agm/core";
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @NgModule({
   declarations: [
@@ -101,6 +101,7 @@ import {AgmCoreModule} from "@agm/core";
         MatListModule,
         AgmCoreModule,
     ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ControlModule {
 

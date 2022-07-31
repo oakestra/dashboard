@@ -4,7 +4,7 @@
     <mat-card-title>User Management</mat-card-title>
 
     <div>
-      <button (click)="openDialog('add', {})" color="primary" mat-flat-button style="float: right; background-color: #4A7083">
+      <button (click)="openDialog('add', {})" color="primary" mat-flat-button style="float: right; background-color: #3E4E57">
         <mat-icon>add_circle_outline</mat-icon>
         Create New User
       </button>
@@ -62,7 +62,7 @@
         <td *matCellDef="let element" mat-cell>
           <mat-chip-list aria-label="roles">
             <mat-chip *ngFor="let e of element.roles"
-                      [ngStyle]="{'background-color': (e.name == 'Admin')? '#3f51b5': (e.name == 'Application_Provider')? 'green' : '#b626b4'}"
+                      [ngStyle]="{'background-color': (e.name == 'Admin')? '#DE686B': (e.name == 'Application_Provider')? '#3DA23C' : '#ADA23C'}"
                       selected>
               {{e.name}}
             </mat-chip>

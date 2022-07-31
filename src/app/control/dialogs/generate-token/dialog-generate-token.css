@@ -30,10 +30,11 @@ mat-form-field .text .a {
   margin-right: 4px;
   border: none;
   outline: none;
-  width: 400px;
+  width: 100%;
+  max-width: 350px;
 }
 
-.copy-key button {
+.copy-key mat-button {
   padding: 4px;
   background: #99CCCC;
   font-size: 18px;
@@ -44,7 +45,7 @@ mat-form-field .text .a {
   margin-left: 4px;
 }
 
-.copy-key button:active {
+.copy-key mat-button:active {
   background: #99CCCC;
 }
 

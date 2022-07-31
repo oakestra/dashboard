@@ -37,7 +37,7 @@ export class DialogAddClusterView {
 
   doAction() {
     console.log(this.local_data)
-    this.dialogRef.close({event: this.action, data: {'clusters': [this.local_data]}});
+    this.dialogRef.close({event: this.action, data: this.local_data});
 
   }
 
