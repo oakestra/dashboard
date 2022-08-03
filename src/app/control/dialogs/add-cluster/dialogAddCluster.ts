@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, OnInit, Optional} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -13,13 +13,13 @@ import {MatDialog} from "@angular/material/dialog";
 })
 
 export class DialogAddClusterView {
-
   action: string;
   local_data: any;
   title = "Add Cluster"
   latitude = 51.678418;
   longitude = 7.809007;
   locationChosen = false;
+  mapOpenLocation: any;
 
   constructor (
     public dialogRef: MatDialogRef<DialogAddClusterView>,
@@ -57,4 +57,13 @@ export class DialogAddClusterView {
   closeDialog() {
     this.dialogRef.close({event: 'Cancel'});
   }
+
+  markerDragEnd($event: any) {
+    console.log($event);
+    this.latitude = $event.coords.lat;
+    this.longitude = $event.coords.lng;
+    //this.getAddress(this.latitude, this.longitude);
+  }
+
 }
+

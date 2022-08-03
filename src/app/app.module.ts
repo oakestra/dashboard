@@ -26,7 +26,8 @@ import {AgmCoreModule} from '@agm/core';
     MatSnackBarModule,
     MatIconModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBYX8yJlDW4CJ2c-fQ3qENvrmIWIrUJWUA'
+      apiKey: 'AIzaSyBYX8yJlDW4CJ2c-fQ3qENvrmIWIrUJWUA',
+      libraries: ["places", "geometry"]
     })
   ],
   providers: [
