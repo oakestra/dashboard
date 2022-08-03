@@ -1,6 +1,7 @@
-import {Component, Inject, OnInit, Optional} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {MatDialog} from "@angular/material/dialog";
+import LatLngLiteral = google.maps.LatLngLiteral;
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -20,6 +21,7 @@ export class DialogAddClusterView {
   longitude = 7.809007;
   locationChosen = false;
   mapOpenLocation: any;
+  zoom: number = 8;
 
   constructor (
     public dialogRef: MatDialogRef<DialogAddClusterView>,
@@ -41,13 +43,16 @@ export class DialogAddClusterView {
 
   }
 
-  onChoseLocation(event: any) {
-    this.latitude = event.coords.lat;
-    this.longitude = event.coords.lng;
+  onChoseLocation({$event}: { $event: any }) {
+    this.latitude = $event.coords.lat;
+    this.longitude = $event.coords.lng;
     this.locationChosen = true;
     this.local_data.cluster_latitude = this.latitude;
     this.local_data.cluster_longitude = this.longitude;
+  }
 
+  markerDragEnd($event: { $event: any }) {
+    console.log("dragEnd", $event);
   }
 
   deleteCluster() {
@@ -56,13 +61,6 @@ export class DialogAddClusterView {
 
   closeDialog() {
     this.dialogRef.close({event: 'Cancel'});
-  }
-
-  markerDragEnd($event: any) {
-    console.log($event);
-    this.latitude = $event.coords.lat;
-    this.longitude = $event.coords.lng;
-    //this.getAddress(this.latitude, this.longitude);
   }
 
 }

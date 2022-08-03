@@ -10,18 +10,19 @@
 
   <div class="w3-col l12 s12 m12">
     <mat-form-field class="full-width" style="padding-right: 8px">
+      <p>Write the name of your Cluster</p>
       <textarea class="form-control"
                 name="message"
                 [disabled]="action ==='Update'"
                 rows="2"
-                [(ngModel)]="local_data.message"
+                [(ngModel)]="local_data.cluster_name"
                 placeholder="Cluster name"
                 #message='ngModel'
       ></textarea>
-
-      <div *ngIf = "message.touched && message.invalid" class="alert alert-danger">
+      <!-- TODO: alert of too long title still has to work-->
+      <mat-option *ngIf = "message.touched && message.invalid" class="alert alert-danger">
         Cluster name is required
-      </div>
+      </mat-option>
       <p id = "result" ></p>
     </mat-form-field>
   </div>
@@ -29,17 +30,43 @@
   <div class="w3-col l12 s12 m12">
     <mat-form-field class="full-width">
       <p>Select Cluster Location</p>
-      <agm-map [latitude]="latitude" [longitude]="longitude" (mapClick)="onChoseLocation($event)">
+      <agm-map
+        [latitude]="latitude"
+        [longitude]="longitude"
+        [zoom]="zoom"
+        [disableDefaultUI]="false"
+        (mapClick)="onChoseLocation({$event : $event})">
         <agm-marker
+          *ngIf="locationChosen"
           [latitude]="latitude"
           [longitude]="longitude"
-          *ngIf="locationChosen">
-          <agm-info-window>
-            <strong>InfoWindow content</strong>
-          </agm-info-window>
+          [markerDraggable]="true"
+          (dragEnd)="markerDragEnd({$event : $event})"
+          [title]="'Pickup Location'">
         </agm-marker>
       </agm-map>
      <!-- <textarea [(ngModel)]="local_data.cluster_location" cols="1" matInput> </textarea>  placeholder="Enter the name of your cluster-->
+      <br/>
+      <!--TODO: make sure only numbers can be written down in the location fields-->
+      <textarea
+                class="form-control"
+                name="lat"
+                [disabled]="action ==='Update'"
+                rows="1"
+                [(ngModel)]="local_data.cluster_latitude"
+                placeholder="latitude"
+                #lat='ngModel'
+      ></textarea>
+      <br/>
+      <textarea
+                class="form-control"
+                name="lng"
+                [disabled]="action ==='Update'"
+                rows="1"
+                [(ngModel)]="local_data.cluster_longitude"
+                placeholder="longitude"
+                #lng='ngModel'
+      ></textarea>
     </mat-form-field>
   </div>
 

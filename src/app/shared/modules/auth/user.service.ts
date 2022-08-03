@@ -205,7 +205,7 @@ export class UserService {
    return this.http.post<Response>(this.apiUrl + "/cluster/add", cluster_info).pipe(
      map((response: any) => {
        this.loggedIn = true
-       this.setClusterKey(response);
+       this.setClusterKey(response.secret_key);
        return response;
      }),
      catchError((error: any) => {

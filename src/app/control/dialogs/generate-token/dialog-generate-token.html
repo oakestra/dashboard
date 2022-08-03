@@ -11,8 +11,8 @@
       <div class="copy-key">
         <a>
           <input type="text" class="text" id="id1"
-                  value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNTM0NTQzNTQzNTQzNTM0NTMiLCJleHAiOjE1MDQ2OTkyNTZ9.zG-2FvGegujxoLWwIQfNB5IT46D-xC4e8dEDYwi6aRM"
-                     #valueKey >
+                 [formControl]="key" #valueKey
+                 placeholder="An error has occurred and the key cannot be shown">
         <mat-button class="copy-btn"
           (click)="copySecretKey(valueKey)" value="click to copy" >
           <i class='bx bx-clipboard'></i></mat-button>
@@ -25,4 +25,8 @@
     </mat-form-field>
 </div>
 </mat-dialog-content>
-<!--    Keep this key in a safe place. Once you click "Continue", you will not be able to retrieve it again.-->
+<!--    Keep this key in a safe place. Once you click "Continue", you will not be able to retrieve it again.
+                  value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNTM0NTQzNTQzNTQzNTM0NTMiLCJleHAiOjE1MDQ2OTkyNTZ9.zG-2FvGegujxoLWwIQfNB5IT46D-xC4e8dEDYwi6aRM"
+
+                 formControlName="key"
+-->

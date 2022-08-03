@@ -1,5 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -9,13 +10,12 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 export class DialogGenerateTokenView {
 
-  local_data: any;
+  key = new FormControl();
 
   constructor (public dialogRef: MatDialogRef<DialogGenerateTokenView>,
                @Inject(MAT_DIALOG_DATA) public data: any){
-      this.local_data = data;
-      //document.getElementsByClassName("text").namedItem(this.data)
-      //document.getElementById('id1').value=this.data;
+
+    this.key.setValue(data.secret_key)
   }
 
   copySecretKey(key: any){
@@ -37,7 +37,4 @@ export class DialogGenerateTokenView {
     document.body.removeChild(element);
   }
 
-  getData(): string{
-    return this.local_data;
-  }
 }
