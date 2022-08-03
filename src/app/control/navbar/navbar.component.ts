@@ -215,18 +215,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     );
   }
 
-  //TODO call API responsible to add the cluster
-  addCluster(cluster_info: any): void {
-    this.api.addCluster(cluster_info).subscribe((_success) => {
-      //this.userService.addCluster(cluster_info);
-      this.notifyService.notify(Type.success, 'Cluster "' + cluster_info.cluster_name + '" created successfully!')
-      //this.loadDataCluster();
-      },
-      (_error: any) => {
-        this.notifyService.notify(Type.error, 'Error: Adding cluster "' + cluster_info.cluster_name + '" failed!')
-      })
-  }
-
   show() {
     this.appSelected = true
   }

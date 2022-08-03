@@ -12,8 +12,13 @@
     <mat-form-field class="full-width" style="padding-right: 8px">
       <mat-label>Cluster Name</mat-label>
       <!--      Is disabled on Update because if you make changes you have to rename all ServiceNames in the DB-->
-      <input [(ngModel)]="local_data.cluster_name" [disabled]="action ==='Update'"
-             matInput>
+      <input #name = "ngModel" [(ngModel)]="local_data.cluster_name" [disabled]="action ==='Update'"
+             matInput placeholder="Enter the name of your cluster"
+             type="text">
+      <div *ngIf = "name.touched && name.invalid" class="alert alert-danger">
+        Cluster name is required
+      </div>
+      <p id = "result" ></p>
     </mat-form-field>
   </div>
 

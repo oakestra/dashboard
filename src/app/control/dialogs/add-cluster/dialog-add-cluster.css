@@ -1,3 +1,15 @@
 agm-map {
   height: 400px;
 }
+
+.alert-danger {
+  background-color: #E07074;
+}
+
+.alert {
+  color: white;
+}
+
+.pac-container{
+  z-index: 9999;
+}
