@@ -188,10 +188,16 @@ export class UserService {
 
 
   /** returns the cluster key stored in localStorage */
-  getClusterKey(key: string): string {
+  getClusterKey(): string {
+    let key;
     if (this.loggedIn) {
-      if (this.checkIfTokenExists(key)) {
-        return localStorage.getItem(key)!;
+      if (this.checkIfTokenExists('cluster_key')) {
+        key = localStorage.getItem('cluster_key')!;
+        if (!this.isTokenExpired(key)) return key;
+        else {
+          throwError("The token is already expired")
+          return ""
+        }
       } else {
         throwError("No cluster token found")
         return ""

@@ -1,7 +1,16 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Input, OnInit, Optional} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {MatDialog} from "@angular/material/dialog";
-import LatLngLiteral = google.maps.LatLngLiteral;
+import * as L from 'leaflet';
+import * as LS from 'leaflet-search';
+
+export const DEFAULT_LAT = 48.20807;
+export const DEFAULT_LON =  16.37320;
+export const title = 'Project';
+const iconRetinaUrl = 'assets/maps/marker-icon-2x.png';
+const iconUrl = 'assets/maps/marker-icon.png';
+const shadowUrl = 'assets/maps/marker-shadow.png';
+
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -13,7 +22,7 @@ import LatLngLiteral = google.maps.LatLngLiteral;
   ]
 })
 
-export class DialogAddClusterView {
+export class DialogAddClusterView implements OnInit {
   action: string;
   local_data: any;
   title = "Add Cluster"
@@ -36,6 +45,73 @@ export class DialogAddClusterView {
         /*if (this.action == 'Update') {
         this.title = "Modify Cluster" }*/
     }
+  private map:any;
+  @Input() lat: number = DEFAULT_LAT;
+  @Input() lon: number = DEFAULT_LON;
+  @Input() titulo: string = title ;
+
+  ngOnInit(): void {
+    this.initMap();
+  }
+
+
+
+  private initMap(): void {
+    //configuración del mapa
+    this.map = L.map('map', {
+      center: [this.lat, this.lon],
+      attributionControl: false,
+      zoom: 14
+    });
+
+    //iconos personalizados
+    var iconDefault = L.icon({
+      iconRetinaUrl,
+      iconUrl,
+      shadowUrl,
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      tooltipAnchor: [16, -28],
+      shadowSize: [41, 41]
+    });
+    L.Marker.prototype.options.icon = iconDefault;
+
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+    });
+
+    //marca con pop up
+    const lon = this.lon + 0.009;
+    const lat = this.lat + 0.009;
+    const marker = L.marker([lat + 0.005, lon + 0.005]).bindPopup(this.titulo);
+    marker.addTo(this.map);
+
+    //marca forma de circulo
+    const mark = L.circleMarker([this.lat, this.lon]).addTo(this.map);
+    mark.addTo(this.map);
+
+
+    //ruta
+    L.Routing.control({
+      router: L.Routing.osrmv1({
+        serviceUrl: `https://router.project-osrm.org/route/v1/`
+      }),
+      showAlternatives: true,
+      fitSelectedRoutes: false,
+      show: false,
+      routeWhileDragging: true,
+      waypoints: [
+        L.latLng(this.lat, this.lon),
+        L.latLng(lat, lon)
+      ]
+    }).addTo(this.map);
+    tiles.addTo(this.map);
+
+    const searchLayer = LS.layerGroup().addTo(this.map);
+//... adding data in searchLayer ...
+    this.map.addControl( new LS.Control.Search({layer: searchLayer}) );
+  }
 
   doAction() {
     console.log(this.local_data)

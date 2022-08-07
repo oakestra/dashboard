@@ -118,7 +118,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       obj.userId = this.userID;
     }
       obj.action = action;
-      const dialogRef = this.dialog.open(DialogAddClusterView, {data: obj});
+      const dialogRef = this.dialog.open(DialogAddClusterView, {
+        data: obj});
 
       dialogRef.afterClosed().subscribe(result => {
         //TODO define data for Cluster

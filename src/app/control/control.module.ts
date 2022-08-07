@@ -45,7 +45,6 @@ import {DialogConfirmation} from "./dialogs/confirmation/dialogConfirmation";
 import {DialogGenerateTokenView} from "./dialogs/generate-token/dialogGenerateToken";
 import {MatListModule} from "@angular/material/list";
 import {ListClustersComponent} from "./list/clusters/list-clusters.component";
-import {AgmCoreModule} from "@agm/core";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @NgModule({
@@ -99,7 +98,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         MatTableModule,
         MatChipsModule,
         MatListModule,
-        AgmCoreModule,
     ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
