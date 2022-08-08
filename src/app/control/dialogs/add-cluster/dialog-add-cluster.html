@@ -1,4 +1,4 @@
-<h2 mat-dialog-title xmlns:style="">{{title}}</h2>
+<h2 mat-dialog-title>{{title}}</h2>
 <mat-dialog-content class="mat-typography">
 
   <div class="w3-row">
@@ -14,7 +14,7 @@
       <textarea class="form-control"
                 name="message"
                 [disabled]="action ==='Update'"
-                rows="2"
+                rows="1"
                 [(ngModel)]="local_data.cluster_name"
                 placeholder="Cluster name"
                 #message='ngModel'
@@ -29,53 +29,35 @@
 
   <div class="w3-col l12 s12 m12">
     <mat-form-field class="full-width">
-      <p>Select Cluster Location</p>
-      <div class="map-container">
+      <p>Select Cluster Location</p></mat-form-field>
+    <mat-form-field class="full-width"><div class="map-container">
         <div class="map-frame">
           <div id="map"></div>
+          <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"/>
         </div>
       </div>
-    </mat-form-field>
-  </div>
-
-      <!--<agm-map
-        [latitude]="latitude"
-        [longitude]="longitude"
-        [zoom]="zoom"
-        [disableDefaultUI]="false"
-        (mapClick)="onChoseLocation({$event : $event})">
-        <agm-marker
-          *ngIf="locationChosen"
-          [latitude]="latitude"
-          [longitude]="longitude"
-          [markerDraggable]="true"
-          (dragEnd)="markerDragEnd({$event : $event})"
-          [title]="'Pickup Location'">
-        </agm-marker>
-      </agm-map>-->
-     <!-- <textarea [(ngModel)]="local_data.cluster_location" cols="1" matInput> </textarea>  placeholder="Enter the name of your cluster-->
-     <!-- <br/>
-      TODO: make sure only numbers can be written down in the location fields
-      <textarea
-                class="form-control"
+      <!-- TODO: make sure only numbers can be written down in the location fields-->
+    <textarea class="form-control"
                 name="lat"
                 [disabled]="action ==='Update'"
                 rows="1"
                 [(ngModel)]="local_data.cluster_latitude"
                 placeholder="latitude"
-                #lat='ngModel'
-      ></textarea>
-      <br/>
-      <textarea
-                class="form-control"
+                #lat='ngModel'></textarea><br/>
+      <textarea class="form-control"
                 name="lng"
                 [disabled]="action ==='Update'"
                 rows="1"
                 [(ngModel)]="local_data.cluster_longitude"
                 placeholder="longitude"
-                #lng='ngModel'
-      ></textarea>-->
-
+                #lng='ngModel'></textarea><br/>
+      <textarea class="form-control"
+                name="lng"
+                [disabled]="action ==='Update'"
+                rows="1"
+                placeholder="radius"></textarea>
+    </mat-form-field>
+  </div>
 
 </mat-dialog-content>
 
@@ -85,3 +67,5 @@
   </button>
   <button (click)="closeDialog()" color="primary" style="background-color: #7B97A5" mat-button mat-flat-button>Cancel</button>
 </mat-dialog-actions>
+
+<script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
