@@ -37,14 +37,14 @@
         <input type="text" name="lat" id="lat" [disabled]="action ==='Update'"
                [(ngModel)]="local_data.cluster_latitude"
                placeholder="latitude"
-               #lat='ngModel'>
+               [formControl]="lat_form">
       </div>
       <div class="col-6 m2" >
         <label for="lat">Longitude</label>
         <input type="text" name="lat" id="lng" [disabled]="action ==='Update'"
                [(ngModel)]="local_data.cluster_longitude"
                placeholder="longitude"
-               #lng='ngModel'>
+               [formControl]="lng_form">
       </div>
     </div>
 

@@ -4,6 +4,7 @@ import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import 'node_modules/leaflet-geosearch/dist/geosearch.css';
 import {GeoSearchControl, OpenStreetMapProvider, SearchControl, SearchElement} from 'leaflet-geosearch';
+import {FormControl} from "@angular/forms";
 
 // FMI Garching coordinates
 export const DEFAULT_LAT = 48.262707753772624;
@@ -30,6 +31,9 @@ export class DialogAddClusterView implements OnInit {
   locationChosen = false;
   mapOpenLocation: any;
   zoom: number = 8;
+
+  lat_form = new FormControl();
+  lng_form = new FormControl();
 
   constructor (
     public dialogRef: MatDialogRef<DialogAddClusterView>,
@@ -62,7 +66,7 @@ export class DialogAddClusterView implements OnInit {
     let coord = "Latitude: " + this.lat + ". Longitude: " + this.lon
     L.marker([this.lat, this.lon]).addTo(this.map).bindPopup(coord);
 
-    L.circleMarker([this.lat, this.lon]).addTo(this.map).addTo(this.map);
+    L.circleMarker([this.lat, this.lon]).addTo(this.map).addTo(this.map).bindPopup(coord);
 
     // Search location in map
     let search = GeoSearchControl({
@@ -75,8 +79,11 @@ export class DialogAddClusterView implements OnInit {
     });
     this.map.addControl(search);
 
-    this.map.on('click', function(e: any) {
-      alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
+    this.map.on('click', (e: any) => {
+      const marker = L.marker([e.latlng.lat, e.latlng.lng]).bindPopup("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+      marker.addTo(this.map);
+      this.lat_form.setValue(e.latlng.lat.toString())
+      this.lng_form.setValue(e.latlng.lng.toString())
     });
 
   }
@@ -89,14 +96,6 @@ export class DialogAddClusterView implements OnInit {
     console.log(this.local_data)
     this.dialogRef.close({event: this.action, data: this.local_data});
 
-  }
-
-  onChoseLocation({$event}: { $event: any }) {
-    this.lat = $event.coords.lat;
-    this.lon = $event.coords.lng;
-    this.locationChosen = true;
-    this.local_data.cluster_latitude = this.lat;
-    this.local_data.cluster_longitude = this.lon;
   }
 
   markerDragEnd($event: { $event: any }) {
