@@ -3,16 +3,13 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import 'node_modules/leaflet-geosearch/dist/geosearch.css';
-import {GeoSearchControl, OpenStreetMapProvider, SearchControl, SearchElement} from 'leaflet-geosearch';
+import {GeoSearchControl, OpenStreetMapProvider} from 'leaflet-geosearch';
 import {FormControl} from "@angular/forms";
 
 // FMI Garching coordinates
 export const DEFAULT_LAT = 48.262707753772624;
 export const DEFAULT_LON =  11.668009155278707;
 export const title = 'Project';
-const iconRetinaUrl = 'assets/maps/marker-icon-2x.png';
-const iconUrl = 'assets/maps/marker-icon.png';
-const shadowUrl = 'assets/maps/marker-shadow.png';
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -34,6 +31,7 @@ export class DialogAddClusterView implements OnInit {
 
   lat_form = new FormControl();
   lng_form = new FormControl();
+  marker: any;
 
   constructor (
     public dialogRef: MatDialogRef<DialogAddClusterView>,
@@ -63,10 +61,8 @@ export class DialogAddClusterView implements OnInit {
       maxZoom: 19,
     }).addTo(this.map);
 
-    let coord = "Latitude: " + this.lat + ". Longitude: " + this.lon
-    L.marker([this.lat, this.lon]).addTo(this.map).bindPopup(coord);
-
-    L.circleMarker([this.lat, this.lon]).addTo(this.map).addTo(this.map).bindPopup(coord);
+    //let coord = "Latitude: " + this.lat + ". Longitude: " + this.lon
+    //L.circleMarker([this.lat, this.lon]).addTo(this.map).addTo(this.map).bindPopup(coord);
 
     // Search location in map
     let search = GeoSearchControl({
@@ -80,8 +76,13 @@ export class DialogAddClusterView implements OnInit {
     this.map.addControl(search);
 
     this.map.on('click', (e: any) => {
-      const marker = L.marker([e.latlng.lat, e.latlng.lng]).bindPopup("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-      marker.addTo(this.map);
+
+      if (this.marker && this.map.hasLayer(this.marker))
+        this.map.removeLayer(this.marker);
+
+      this.marker = L.marker([e.latlng.lat, e.latlng.lng]).bindPopup("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng).openPopup();
+
+      this.marker.addTo(this.map);
       this.lat_form.setValue(e.latlng.lat.toString())
       this.lng_form.setValue(e.latlng.lng.toString())
     });

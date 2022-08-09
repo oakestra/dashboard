@@ -133,8 +133,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
                     height: "40%",
                     width: '50%'
                   });
-                dialogRef2.afterClosed().subscribe(result => {
-                });
+                dialogRef2.afterClosed().subscribe(() =>
+                  this.router.navigate(['/control/clusters/list'])
+                )
               }
               // this.surveyService.resetSurvey() => only for survey
             },

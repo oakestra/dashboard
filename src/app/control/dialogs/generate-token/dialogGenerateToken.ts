@@ -15,10 +15,10 @@ export class DialogGenerateTokenView {
   constructor (public dialogRef: MatDialogRef<DialogGenerateTokenView>,
                @Inject(MAT_DIALOG_DATA) public data: any){
 
-    this.key.setValue(data.secret_key)
+    this.key.setValue(data.pairing_key)
   }
 
-  copySecretKey(key: any){
+  copyPairingKey(key: any){
     key.select();
     document.execCommand('copy');
     key.setSelectionRange(0, 0);
