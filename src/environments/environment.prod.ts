@@ -17,5 +17,5 @@ import 'angular-server-side-configuration/process';
 
 export const environment = {
   production: process.env.PROD !== 'false',
-  apiUrl: "http://" + process.env.API_ADDRESS + "/api" || 'https://34.65.248.219:10000',
+  apiUrl: "http://" + process.env.API_ADDRESS + "/api" || 'http://3.74.222.155:10000',
 };

@@ -10,6 +10,7 @@
     <line-chart  [instance_list]=instance></line-chart>
     <p><b>Disk:</b> {{instance.disk}}</p>
     <p><b>Cluster:</b> {{instance.cluster_id}}</p>
+    <p><b>Node IP:</b> {{instance.publicip}}</p>
 
     <a [href]=grafanaLink rel="noopener noreferrer" target="_blank">View in Grafana</a>
   </div>
