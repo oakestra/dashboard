@@ -34,6 +34,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   userID = "";
   clusterID = "";
   isAdmin = false
+  clusters: any;
 
   constructor(private observer: BreakpointObserver,
               public dialog: MatDialog,
@@ -56,7 +57,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       this.sharedService.userID = this.userID
       // this.surveyService.resetSurvey()
 
-      this.loadData()
+      this.loadDataApplication()
+      this.loadDataCluster()
       this.updatePermissions();
     })
   }
@@ -65,7 +67,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     this.settings = (url.includes("help") || url.includes("user") || url.includes("profile") || url.includes("survey"))
   }
 
-  loadData() {
+  loadDataApplication() {
     this.api.getApplicationsOfUser(this.userID).subscribe((result: any) => {
         this.app = result
         if (result[0]) {
@@ -77,9 +79,13 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     )
   }
 
+  navigateToMyClusters() {
+    this.router.navigate(['/control/clusters/list',this.clusters])
+  }
+
   loadDataCluster() {
-    return this.api.getClustersOfUser(this.userID).subscribe((result: any) => {
-      this.router.navigate(['/control'])
+    this.api.getClustersOfUser(this.userID).subscribe((result: any) => {
+      this.clusters = result
     })
   }
 
@@ -126,6 +132,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         if (result.event == 'Add') {
           //this.addCluster(result.data)
           this.userService.addCluster(result.data).subscribe((userServiceResponse: any) => {
+              this.notifyService.notify(Type.success, 'Cluster added successfully!')
+              this.loadDataCluster();
               if (userServiceResponse != NONE_TYPE) {
                 const dialogRef2 = this.dialog.open(DialogGenerateTokenView,
                   {
@@ -134,7 +142,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
                     width: '50%'
                   });
                 dialogRef2.afterClosed().subscribe(() =>
-                  this.router.navigate(['/control/clusters/list'])
+                    this.navigateToMyClusters()
                 )
               }
               // this.surveyService.resetSurvey() => only for survey
@@ -182,7 +190,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
     this.api.deleteApplication(app).subscribe((_success) => {
         this.notifyService.notify(Type.success, 'Application "' + app.application_name + '" deleted successfully!')
-        this.loadData();
+        this.loadDataApplication();
       },
       (_error) => {
         this.notifyService.notify(Type.error, 'Error: Deleting application "' + app.application_name + '" failed!')
@@ -191,7 +199,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   addApplication(app: any): void {
     this.api.addApplication(app).subscribe((_success) => {
-        this.loadData();
+        this.loadDataApplication();
       },
       (_error: any) => {
         this.notifyService.notify(Type.error, 'Error: Adding application "' + app.application_name + '" failed!')
@@ -201,7 +209,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   updateApplication(app: any): void {
     this.api.updateApplication(app).subscribe((_success) => {
         this.notifyService.notify(Type.success, 'Application "' + app.application_name + '" updated successfully!')
-        this.loadData();
+        this.loadDataApplication();
       },
       (_error) => {
         this.notifyService.notify(Type.error, 'Error: Updating application "' + app.application_name + '" failed!')

@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {Router} from "@angular/router";
+import {Component, Input, Inject, Optional} from '@angular/core';
+import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'dev-home',
@@ -8,6 +8,8 @@ import {Router} from "@angular/router";
 })
 
 export class ListClustersComponent {
+
+  @Input() clusters: any = []
 
   constructor (){
   }

@@ -1,27 +1,19 @@
-<div class="content-cards">
-  <mat-card class="serviceCard" id="content">
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 mx-auto my-5" *ngFor="let cluster of clusters">
+      <mdb-card>
+        <mdb-card-body>
+          <mdb-card-title>
+            <h4>{{cluster.cluster_name}}</h4>
+          </mdb-card-title>
 
-    <div>
-      <mat-card-title>Cluster: example1</mat-card-title>
+          <mdb-card-text>
+            {{cluster.cluster_latitude}}
+          </mdb-card-text>
 
-      <div class="content mat-elevation-z8">
-        <p>No jobs in this cluster.</p>
-      </div>
+          <button mdbBtn color="primary">button</button>
+        </mdb-card-body>
+      </mdb-card>
     </div>
-
-    <div>
-      <mat-card-title>Cluster: example2</mat-card-title>
-
-      <div class="content mat-elevation-z8">
-        <p>No jobs in this cluster.</p>
-      </div>
-    </div>
-    <div>
-      <mat-card-title>Cluster: example3</mat-card-title>
-
-      <div class="content mat-elevation-z8">
-        <p>No jobs in this cluster.</p>
-      </div>
-    </div>
-  </mat-card>
+  </div>
 </div>
