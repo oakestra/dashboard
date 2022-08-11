@@ -31,7 +31,9 @@ export class DialogAddClusterView implements OnInit {
 
   lat_form = new FormControl();
   lng_form = new FormControl();
+  my_radius: number = 20;
   marker: any;
+  circlemarker: any;
 
   constructor (
     public dialogRef: MatDialogRef<DialogAddClusterView>,
@@ -85,8 +87,21 @@ export class DialogAddClusterView implements OnInit {
       this.marker.addTo(this.map);
       this.lat_form.setValue(e.latlng.lat.toString())
       this.lng_form.setValue(e.latlng.lng.toString())
-    });
 
+      if (this.circlemarker && this.map.hasLayer(this.circlemarker))
+        this.map.removeLayer(this.circlemarker);
+
+      this.circlemarker = L.circleMarker([e.latlng.lat, e.latlng.lng], {radius: this.my_radius})
+      this.circlemarker.addTo(this.map).addTo(this.map);
+
+    });
+  }
+
+  radiusChange(new_val: any) {
+    this.my_radius = new_val.value;
+    this.map.removeLayer(this.circlemarker);
+    this.circlemarker = L.circleMarker([this.lat, this.lon], {radius: new_val.value})
+    this.circlemarker.addTo(this.map).addTo(this.map);
   }
 
   ngOnInit(): void {

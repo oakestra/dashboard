@@ -34,26 +34,35 @@
     <div class="row">
       <div class="col-6 m2" >
         <label for="lat">Latitude</label>
-        <input type="text" name="lat" id="lat" [disabled]="action ==='Update'"
+        <input type="text" id="lat" [disabled]="action ==='Update'"
                [(ngModel)]="local_data.cluster_latitude"
                placeholder="latitude"
                [formControl]="lat_form">
       </div>
       <div class="col-6 m2" >
         <label for="lat">Longitude</label>
-        <input type="text" name="lat" id="lng" [disabled]="action ==='Update'"
+        <input type="text" id="lng" [disabled]="action ==='Update'"
                [(ngModel)]="local_data.cluster_longitude"
                placeholder="longitude"
                [formControl]="lng_form">
       </div>
     </div>
-
-  <div class="map-container">
-    <div class="map-frame">
-        <div id="map"></div>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"/>
+    <div class="row">
+      <div class="col-6 m2" >
+        <label for="lat">Radius</label>
+        <input type="text" name="rad" id="rad" [disabled]="action ==='Update'"
+               placeholder="radius" value="{{my_radius}}" #newValue
+               (change)="radiusChange(newValue)">
+        <!--[(ngModel)]="local_data.cluster_longitude"-->
       </div>
-  </div>
+    </div>
+
+    <div class="map-container">
+      <div class="map-frame">
+          <div id="map"></div>
+          <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"/>
+        </div>
+    </div>
     <!-- TODO: make sure only numbers can be written down in the location fields-->
   </mat-form-field>
   </div>
