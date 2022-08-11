@@ -31,31 +31,35 @@
     <mat-form-field class="full-width">
     <p>Select Cluster Location</p>
 
-    <div class="row">
-      <div class="col-6 m2" >
-        <label for="lat">Latitude</label>
-        <input type="text" id="lat" [disabled]="action ==='Update'"
-               [(ngModel)]="local_data.cluster_latitude"
-               placeholder="latitude"
-               [formControl]="lat_form">
-      </div>
-      <div class="col-6 m2" >
-        <label for="lat">Longitude</label>
-        <input type="text" id="lng" [disabled]="action ==='Update'"
-               [(ngModel)]="local_data.cluster_longitude"
-               placeholder="longitude"
-               [formControl]="lng_form">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-6 m2" >
-        <label for="lat">Radius</label>
-        <input type="text" name="rad" id="rad" [disabled]="action ==='Update'"
-               placeholder="radius" value="{{my_radius}}" #newValue
-               (change)="radiusChange(newValue)">
-        <!--[(ngModel)]="local_data.cluster_longitude"-->
-      </div>
-    </div>
+      <form class="card-form">
+        <div class="row">
+          <div class="col-6 m2" >
+            <label for="lat">Latitude</label>
+            <input type="text" id="lat" [disabled]="action ==='Update'"
+                   [(ngModel)]="local_data.cluster_latitude"
+                   placeholder="latitude"
+                   [formControl]="lat_form" required>
+          </div>
+          <div class="col-6 m2" >
+            <label for="lat">Longitude</label>
+            <input type="text" id="lng" [disabled]="action ==='Update'"
+                   [(ngModel)]="local_data.cluster_longitude"
+                   placeholder="longitude"
+                   [formControl]="lng_form" required>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-6 m2" >
+            <label for="lat">Radius</label>
+            <input type="text" name="rad" id="rad" [disabled]="action ==='Update'"
+                   placeholder="radius" value="{{my_radius}}" #newValue
+                   (change)="radiusChange(newValue)" required>
+            <!--[(ngModel)]="local_data.cluster_radius"-->
+          </div>
+        </div>
+      </form>
+
 
     <div class="map-container">
       <div class="map-frame">
