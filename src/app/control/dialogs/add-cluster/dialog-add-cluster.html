@@ -54,8 +54,8 @@
             <label for="lat">Radius</label>
             <input type="text" name="rad" id="rad" [disabled]="action ==='Update'"
                    placeholder="radius" value="{{my_radius}}" #newValue
-                   (change)="radiusChange(newValue)" required>
-            <!--[(ngModel)]="local_data.cluster_radius"-->
+                   (change)="radiusChange(newValue)"
+                   [(ngModel)]="local_data.cluster_radius" required>
           </div>
         </div>
       </form>
