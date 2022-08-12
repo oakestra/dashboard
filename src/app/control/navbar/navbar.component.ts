@@ -121,7 +121,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       obj.cluster_latitude= "";
       obj.cluster_longitude = "";
       obj.cluster_radius = "";
-      obj.userId = this.userID;
+      obj.user_name = this.username;
     }
       obj.action = action;
       const dialogRef = this.dialog.open(DialogAddClusterView, {

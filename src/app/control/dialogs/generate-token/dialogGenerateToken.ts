@@ -25,6 +25,9 @@ export class DialogGenerateTokenView {
   }
 
   download(filename: any, text: any) {
+    let new_text = " export MINIENTREGA_FECHALIMITE=\"2011-03-31\"\n" +
+        "export MINIENTREGA_FICHEROS=\"informe.txt programa.c\"\n" +
+        "export MINIENTREGA_DESTINO=\"./destino/entrega-prac1\""
     const element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
     element.setAttribute('download', filename);
