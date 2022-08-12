@@ -120,7 +120,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       obj.cluster_name = "";
       obj.cluster_latitude= "";
       obj.cluster_longitude = "";
-      obj.cluster_radius = "";
+      obj.cluster_radius = "20";
       obj.user_name = this.username;
     }
       obj.action = action;

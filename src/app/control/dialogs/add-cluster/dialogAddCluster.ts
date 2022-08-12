@@ -5,6 +5,7 @@ import 'leaflet-routing-machine';
 import 'node_modules/leaflet-geosearch/dist/geosearch.css';
 import {GeoSearchControl, OpenStreetMapProvider} from 'leaflet-geosearch';
 import {FormControl} from "@angular/forms";
+import {NotificationService, Type} from "../../../shared/modules/notification/notification.service";
 
 // FMI Garching coordinates
 export const DEFAULT_LAT = 48.262707753772624;
@@ -38,7 +39,8 @@ export class DialogAddClusterView implements OnInit {
   constructor (
     public dialogRef: MatDialogRef<DialogAddClusterView>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialog: MatDialog){
+    public dialog: MatDialog,
+    private notifyService: NotificationService){
         this.local_data = {...data};
         this.action = this.local_data.action;
 
@@ -87,6 +89,8 @@ export class DialogAddClusterView implements OnInit {
       this.marker.addTo(this.map);
       this.lat_form.setValue(e.latlng.lat.toString())
       this.lng_form.setValue(e.latlng.lng.toString())
+      this.lat = e.latlng.lat
+      this.lon = e.latlng.lng
 
       if (this.circlemarker && this.map.hasLayer(this.circlemarker))
         this.map.removeLayer(this.circlemarker);
@@ -110,12 +114,16 @@ export class DialogAddClusterView implements OnInit {
 
   doAction() {
     console.log(this.local_data)
-    this.dialogRef.close({event: this.action, data: this.local_data});
 
-  }
-
-  markerDragEnd($event: { $event: any }) {
-    console.log("dragEnd", $event);
+    if (this.local_data['cluster_name'].length < 3) {
+      this.notifyService.notify(Type.error, "Please provide a valid cluster name.")
+    }
+    else if (this.local_data['cluster_latitude'] == "" || this.local_data['cluster_longitude'] == "") {
+      this.notifyService.notify(Type.error, "Please provide a valid location.")
+    }
+    else {
+      this.dialogRef.close({event: this.action, data: this.local_data});
+    }
   }
 
   deleteCluster() {
