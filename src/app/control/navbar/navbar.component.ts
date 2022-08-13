@@ -135,9 +135,11 @@ export class NavbarComponent implements OnInit, AfterViewInit {
               this.notifyService.notify(Type.success, 'Cluster added successfully!')
               this.loadDataCluster();
               if (userServiceResponse != NONE_TYPE) {
+                // TODO: We need to pass the system_manager_URL as well
+                const my_data = {pairing_key: userServiceResponse.pairing_key, username: this.username, cluster_name: result.data.cluster_name}
                 const dialogRef2 = this.dialog.open(DialogGenerateTokenView,
                   {
-                    data: userServiceResponse,
+                    data: my_data,
                     height: "40%",
                     width: '50%'
                   });

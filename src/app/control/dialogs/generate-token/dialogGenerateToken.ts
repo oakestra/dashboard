@@ -11,11 +11,15 @@ import {FormControl} from "@angular/forms";
 export class DialogGenerateTokenView {
 
   key = new FormControl();
+  cluster_name = "";
+  username = "";
 
   constructor (public dialogRef: MatDialogRef<DialogGenerateTokenView>,
                @Inject(MAT_DIALOG_DATA) public data: any){
 
     this.key.setValue(data.pairing_key)
+    this.cluster_name = data.cluster_name
+    this.username = data.username
   }
 
   copyPairingKey(key: any){
@@ -25,11 +29,14 @@ export class DialogGenerateTokenView {
   }
 
   download(filename: any, text: any) {
-    let new_text = " export MINIENTREGA_FECHALIMITE=\"2011-03-31\"\n" +
-        "export MINIENTREGA_FICHEROS=\"informe.txt programa.c\"\n" +
-        "export MINIENTREGA_DESTINO=\"./destino/entrega-prac1\""
+    // TODO: Fix SYSTEM_MANAGER_URL (now it is undefined)
+    let new_text = `CLUSTER_NAME=${this.cluster_name}
+    SYSTEM_MANAGER_URL=${process.env.API_ADDRESS}
+    USER_NAME=${this.username}
+    CLUSTER_PAIRING_KEY='${text}'`
+
     const element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(new_text));
     element.setAttribute('download', filename);
 
     element.style.display = 'none';
