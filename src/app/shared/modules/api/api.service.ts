@@ -69,7 +69,7 @@ export class ApiService extends RestService {
     return this.doDELRequest("/clusters/" + cluster._id.$oid)
   }
 
-  getClustersOfUser(userId: string) {
+  getClustersOfUser(userId: string | null) {
     return this.doGETRequest("/clusters/" + userId)
   }
 

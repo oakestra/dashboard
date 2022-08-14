@@ -11,11 +11,8 @@ import {UserService} from "../../shared/modules/auth/user.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {AuthService, Role} from "../../shared/modules/auth/auth.service";
 import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
-import {ListClustersComponent} from "../list/clusters/list-clusters.component";
 import {NONE_TYPE} from "@angular/compiler";
 import {DialogGenerateTokenView} from "../dialogs/generate-token/dialogGenerateToken";
-
-// import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-navbar',
@@ -79,10 +76,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     )
   }
 
-  navigateToMyClusters() {
-    this.router.navigate(['/control/clusters/list',this.clusters])
-  }
-
   loadDataCluster() {
     this.api.getClustersOfUser(this.userID).subscribe((result: any) => {
       this.clusters = result
@@ -133,17 +126,16 @@ export class NavbarComponent implements OnInit, AfterViewInit {
           //this.addCluster(result.data)
           this.userService.addCluster(result.data).subscribe((userServiceResponse: any) => {
               this.notifyService.notify(Type.success, 'Cluster added successfully!')
-              this.loadDataCluster();
               if (userServiceResponse != NONE_TYPE) {
                 // TODO: We need to pass the system_manager_URL as well
                 const my_data = {pairing_key: userServiceResponse.pairing_key, username: this.username, cluster_name: result.data.cluster_name}
-                const dialogRef2 = this.dialog.open(DialogGenerateTokenView,
+                const dialogKey = this.dialog.open(DialogGenerateTokenView,
                   {
                     data: my_data,
                     height: "40%",
                     width: '50%'
                   });
-                dialogRef2.afterClosed().subscribe(() =>
+                dialogKey.afterClosed().subscribe(() =>
                     this.navigateToMyClusters()
                 )
               }
@@ -179,8 +171,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openListClusters(){
-    this.dialog.open(ListClustersComponent)
+  navigateToMyClusters(){
+    this.router.navigate([ '/control/clusters/list'])
   }
 
   deleteApplication(app: any): void {

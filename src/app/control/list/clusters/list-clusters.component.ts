@@ -1,5 +1,7 @@
-import {Component, Input, Inject, Optional} from '@angular/core';
-import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {Component} from '@angular/core';
+import {ApiService} from "../../../shared/modules/api/api.service";
+import {NotificationService, Type} from "../../../shared/modules/notification/notification.service";
+import {UserService} from "../../../shared/modules/auth/user.service";
 
 @Component({
   selector: 'dev-home',
@@ -7,10 +9,35 @@ import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/materia
   styleUrls: ['./list-clusters.component.css']
 })
 
-export class ListClustersComponent {
+export class ListClustersComponent{
+  clusters: any
+  userID: string | null
+  username: any
 
-  @Input() clusters: any = []
+  constructor (private api: ApiService,
+               private notifyService: NotificationService,
+               public userService: UserService){
+    this.userID = ""
+  }
 
-  constructor (){
+  ngOnInit(): void {
+    this.username = this.userService.getUsername()
+    this.api.getUserByName(this.username).subscribe((data: any) => {
+      this.userID = data._id.$oid;
+    })
+    this.loadData()
+  }
+
+  loadData(){
+    this.api.getClustersOfUser(this.userID).subscribe((result: any) => {
+      this.clusters = result
+    },
+    (_error: any) => {
+      this.notifyService.notify(Type.error, 'Error: Getting clusters of ' + this.username)
+    })
+  }
+
+  is_complete(current_cluster: any){
+    return current_cluster.pairing_complete
   }
 }

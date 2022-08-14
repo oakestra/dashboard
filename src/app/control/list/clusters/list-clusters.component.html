@@ -1,19 +1,25 @@
 <div class="container">
   <div class="row">
     <div class="col-md-3 mx-auto my-5" *ngFor="let cluster of clusters">
-      <mdb-card>
-        <mdb-card-body>
-          <mdb-card-title>
-            <h4>{{cluster.cluster_name}}</h4>
-          </mdb-card-title>
+      <mat-card>
+        <mat-card-subtitle>Cluster ID {{cluster._id.$oid}}</mat-card-subtitle>
+        <mat-card-title>{{cluster.cluster_name}}</mat-card-title>
+        <mat-card-actions align="end">
+          <button *ngIf="!is_complete(cluster)" mat-button><i>NOT YET RUNNING</i></button>
+        </mat-card-actions>
 
-          <mdb-card-text>
-            {{cluster.cluster_latitude}}
-          </mdb-card-text>
+        <mat-accordion *ngIf="is_complete(cluster)">
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Add description
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <input>
+        </mat-expansion-panel>
+        </mat-accordion>
 
-          <button mdbBtn color="primary">button</button>
-        </mdb-card-body>
-      </mdb-card>
+      </mat-card>
     </div>
   </div>
 </div>
