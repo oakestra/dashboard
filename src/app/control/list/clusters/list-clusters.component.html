@@ -6,6 +6,7 @@
         <mat-card-title>{{cluster.cluster_name}}</mat-card-title>
         <mat-card-actions align="end">
           <button *ngIf="!is_complete(cluster)" mat-button><i>NOT YET RUNNING</i></button>
+          <button (click)="deleteCluster(cluster)" mat-button><i class='bx bxs-trash'></i></button>
         </mat-card-actions>
 
         <mat-accordion *ngIf="is_complete(cluster)">

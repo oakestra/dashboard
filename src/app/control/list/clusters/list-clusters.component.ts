@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {ApiService} from "../../../shared/modules/api/api.service";
 import {NotificationService, Type} from "../../../shared/modules/notification/notification.service";
 import {UserService} from "../../../shared/modules/auth/user.service";
+import {DialogConfirmation} from "../../dialogs/confirmation/dialogConfirmation";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'dev-home',
@@ -15,6 +17,7 @@ export class ListClustersComponent{
   username: any
 
   constructor (private api: ApiService,
+               public dialog: MatDialog,
                private notifyService: NotificationService,
                public userService: UserService){
     this.userID = ""
@@ -37,7 +40,28 @@ export class ListClustersComponent{
     })
   }
 
-  is_complete(current_cluster: any){
+  is_complete(current_cluster: any) {
     return current_cluster.pairing_complete
   }
+
+  deleteCluster(cluster: any) {
+    let data = {
+      "text": "Delete cluster: " + cluster.cluster_name,
+      "type": "cluster"
+    }
+    const dialogRef = this.dialog.open(DialogConfirmation, {data: data});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.event == true) {
+        this.api.deleteCluster(cluster).subscribe(() => {
+          this.notifyService.notify(Type.success, "Cluster " + cluster.cluster_name + " deleted successfully!")
+          this.loadData();
+        },
+        (_error: any) => {
+          this.notifyService.notify(Type.error, 'Error: Deleting cluster ' + cluster.cluster_name)
+        })
+      }
+    });
+  }
+
+
 }
