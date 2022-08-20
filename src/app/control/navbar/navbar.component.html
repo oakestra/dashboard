@@ -4,6 +4,7 @@
 <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
 
 <mat-toolbar class="mat-elevation-z8">
+  <p><mat-checkbox [(ngModel)]="opened"><mat-icon>menu</mat-icon></mat-checkbox></p>
 
   <div class="sidebar">
     <div class="logo-details">
@@ -38,8 +39,8 @@
 </mat-toolbar>
 
   <mat-sidenav-container>
-    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-  <ul class="nav-links">
+    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8" mode="side" [(opened)]="opened">
+      <ul class="nav-links">
     <mat-list-item>
         <a href="/control">
           <i class='bx bx-grid-alt'></i>
@@ -100,8 +101,33 @@
       <ul class="sub-menu">
         <mat-list-item>
           <mat-divider></mat-divider>
-          <a>
-          <button (click)="openDialogCl('Add',{})" mat-icon-button>Add new cluster</button></a>
+
+          <mat-expansion-panel hideToggle style="background-color: #3E4E57">
+            <mat-expansion-panel-header>
+              <mat-panel-title style="color: white">
+                Registered
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <!-- TODO: Make it work (not passing the clusters' instances) -->
+            <div *ngFor="let cluster of clusters" >
+              <button>{{cluster.cluster_name}}</button>
+            </div>
+
+          </mat-expansion-panel>
+
+          <mat-expansion-panel hideToggle style="background-color: #3E4E57">
+            <mat-expansion-panel-header>
+              <mat-panel-title style="color: white">
+                Active
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+
+          <span style="color: white">Add</span>
+          <button (click)="openDialogCl('Add',{})" class="menu-button" style="color: white" mat-icon-button>
+            <mat-icon>add</mat-icon>
+          </button>
         </mat-list-item>
       </ul>
     </mat-list-item>
@@ -133,12 +159,15 @@
     </mat-sidenav>
 
 
-<mat-sidenav-content id="content">
-  <div *ngIf="!appSelected && !settings" class="content mat-elevation-z8">
-    No Application selected.
-  </div>
+  <mat-sidenav-content id="content">
 
-  <router-outlet *ngIf="appSelected || settings"></router-outlet>
-</mat-sidenav-content>
+
+    <div *ngIf="!appSelected && !settings" class="content mat-elevation-z8">
+      No Application selected.
+    </div>
+
+    <router-outlet *ngIf="appSelected || settings"></router-outlet>
+  </mat-sidenav-content>
+
 </mat-sidenav-container>
 

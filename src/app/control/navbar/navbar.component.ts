@@ -33,6 +33,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   isAdmin = false
   clusters: any;
 
+  events: string[] = [];
+  opened: boolean = true;
+
   constructor(private observer: BreakpointObserver,
               public dialog: MatDialog,
               public sharedService: SharedIDService,
@@ -78,8 +81,11 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   loadDataCluster() {
     this.api.getClustersOfUser(this.userID).subscribe((result: any) => {
-      this.clusters = result
-    })
+          this.clusters = result
+        },
+        (_error: any) => {
+          this.notifyService.notify(Type.error, 'Error: Getting clusters of ' + this.username)
+        })
   }
 
   updatePermissions(): void {
@@ -126,6 +132,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
           //this.addCluster(result.data)
           this.userService.addCluster(result.data).subscribe((userServiceResponse: any) => {
               this.notifyService.notify(Type.success, 'Cluster added successfully!')
+              this.loadDataCluster()
               if (userServiceResponse != NONE_TYPE) {
                 // TODO: We need to pass the system_manager_URL as well
                 const my_data = {pairing_key: userServiceResponse.pairing_key, username: this.username, cluster_name: result.data.cluster_name}

@@ -8,7 +8,6 @@ mat-sidenav {
   margin: 16px;
   width: 300px;
   border-right: none;
-  /* background: #002b5c;*/
   background: #3B474E;
   color: white;
   border-radius: 10px;
@@ -26,24 +25,6 @@ mat-sidenav {
   align-items: center;
   font-size: 2rem;
   color: lightgray;
-}
-
-@media only screen and (min-width: 801px) {
-  .content {
-    margin-left: 32px;
-  }
-  #matSidenav{
-    display: none;
-  }
-}
-
-@media only screen and (max-width: 451px) {
-  #homeNavbar{
-    display: none;
-  }
-  .content {
-    display: none;
-  }
 }
 
 mat-sidenav-container {
@@ -127,7 +108,6 @@ body {
 }
 
 matSidenav {
-  position: fixed;
   top: 0;
   left: 0;
   height: 100%;

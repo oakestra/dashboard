@@ -1,6 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormControl} from "@angular/forms";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -28,15 +29,15 @@ export class DialogGenerateTokenView {
     key.setSelectionRange(0, 0);
   }
 
-  download(filename: any, text: any) {
+  download(filename: any, key: any) {
     // TODO: Fix SYSTEM_MANAGER_URL (now it is undefined)
-    let new_text = `CLUSTER_NAME=${this.cluster_name}
-    SYSTEM_MANAGER_URL=${process.env.API_ADDRESS}
+    let text = `CLUSTER_NAME=${this.cluster_name}
+    SYSTEM_MANAGER_URL=${environment.apiUrl}
     USER_NAME=${this.username}
-    CLUSTER_PAIRING_KEY='${text}'`
+    CLUSTER_PAIRING_KEY='${key}'`
 
     const element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(new_text));
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
     element.setAttribute('download', filename);
 
     element.style.display = 'none';
