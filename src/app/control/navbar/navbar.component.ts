@@ -226,6 +226,10 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     );
   }
 
+  onToolbarToggle() {
+    this.opened = !this.opened;
+  }
+
   show() {
     this.appSelected = true
   }

@@ -4,7 +4,7 @@
 <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
 
 <mat-toolbar class="mat-elevation-z8">
-  <p><mat-checkbox [(ngModel)]="opened"><mat-icon>menu</mat-icon></mat-checkbox></p>
+  <mat-icon (click)="onToolbarToggle()">menu</mat-icon>
 
   <div class="sidebar">
     <div class="logo-details">
