@@ -2,6 +2,7 @@ mat-toolbar {
   /* background: #004a9f;*/
   background: #4A7083;
   color: white;
+  justify-content: space-between;
 }
 
 mat-sidenav {
@@ -108,21 +109,6 @@ body {
   border-color: white
 }
 
-matSidenav {
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 260px;
-  background: #4A7083;
-}
-
-matSidenav .nav-links{
-  background: #3B474E;
-  height: 100%;
-  padding-top: 30px;
-  overflow: auto;
-}
-
 mat-list-item {
   position: relative;
   list-style: none;
@@ -162,7 +148,7 @@ mat-list-item a .link_name{
 }
 
 mat-list-item .sub-menu{
-  padding: 6px 6px 14px 80px;
+  padding: 6px 6px 14px 40px;
   margin-top: -10px;
   background: #3E4E57;
   /*display: none;*/
@@ -172,21 +158,6 @@ mat-list-item .sub-menu{
 mat-list-item.showMenu i.bx-chevron-down {
   transform: rotate(-180deg);
 }
-
-matSidenav.close .nav-links mat-list-item .sub-menu{
-  position: absolute;
-  left: 100%;
-  top: 0;
-  margin-top: 0;
-  padding: 10px 20px;
-  border-radius: 0 6px 6px 0;
-  transition: all 0.4s ease;
-}
-
-matSidenav.close .nav-links mat-list-item.showMenu .sub-menu {
-  display: block;
-}
-
 
 mat-list-item .sub-menu mat-list-item{
   color: #fff;
@@ -199,4 +170,14 @@ mat-list-item .sub-menu mat-list-item{
 
 mat-list-item .sub-menu a:hover {
   opacity: 1;
+}
+
+mat-icon #toolBar {
+  cursor: pointer;
+}
+
+mat-card{
+  width: fit-content;
+  height: fit-content;
+  margin: 8px;
 }

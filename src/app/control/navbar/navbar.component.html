@@ -4,7 +4,7 @@
 <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
 
 <mat-toolbar class="mat-elevation-z8">
-  <mat-icon (click)="onToolbarToggle()">menu</mat-icon>
+  <mat-icon id="toolBar" (click)="onToolbarToggle()">menu</mat-icon>
 
   <div class="sidebar">
     <div class="logo-details">
@@ -39,10 +39,10 @@
 </mat-toolbar>
 
   <mat-sidenav-container>
-    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8" mode="side" [(opened)]="opened">
+    <mat-sidenav class="mat-elevation-z8" mode="side" [(opened)]="opened">
       <ul class="nav-links">
     <mat-list-item>
-        <a href="/control">
+        <a (click)="resetDashboard()">
           <i class='bx bx-grid-alt'></i>
           <span class="link_name">Dashboard</span>
         </a>
@@ -92,10 +92,11 @@
 
     <mat-list-item>
       <div class="icon-link">
-        <a [routerLink]="" (click)="navigateToMyClusters()">
-        <i class='bx bxs-data'></i>
+        <i (click)="showClusters()">
+        <!--<a [routerLink]="" (click)="navigateToMyClusters()">-->
+          <i class='bx bx-grid-alt'></i>
           <span class="link_name">Clusters</span>
-        </a>
+        </i>
       </div>
 
       <ul class="sub-menu">
@@ -124,11 +125,16 @@
             </mat-expansion-panel-header>
           </mat-expansion-panel>
 
+        </mat-list-item>
+        <mat-list class="inline-list">
+          <mat-list-item>
           <span style="color: white">Add</span>
           <button (click)="openDialogCl('Add',{})" class="menu-button" style="color: white" mat-icon-button>
             <mat-icon>add</mat-icon>
           </button>
-        </mat-list-item>
+          </mat-list-item>
+        </mat-list>
+
       </ul>
     </mat-list-item>
 
@@ -162,8 +168,37 @@
   <mat-sidenav-content id="content">
 
 
-    <div *ngIf="!appSelected && !settings" class="content mat-elevation-z8">
+    <div *ngIf="!appSelected && !settings && !clustersSelected" class="content mat-elevation-z8">
       No Application selected.
+    </div>
+
+    <div *ngIf="clustersSelected" class="content mat-elevation-z8">
+      <div class="container">
+        <div class="row">
+          <div *ngFor="let cluster of clusters">
+            <mat-card>
+              <mat-card-title>{{cluster.cluster_name}}</mat-card-title>
+              <mat-card-subtitle>Cluster ID {{cluster._id.$oid}}</mat-card-subtitle>
+              <mat-card-actions align="end">
+                <button *ngIf="!is_pairing_complete(cluster)" mat-button><i>NOT YET RUNNING</i></button>
+                <button (click)="deleteCluster(cluster)" mat-button><i class='bx bxs-trash'></i></button>
+              </mat-card-actions>
+
+              <mat-accordion *ngIf="is_pairing_complete(cluster)">
+                <mat-expansion-panel hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Add description
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <input>
+                </mat-expansion-panel>
+              </mat-accordion>
+
+            </mat-card>
+          </div>
+        </div>
+      </div>
     </div>
 
     <router-outlet *ngIf="appSelected || settings"></router-outlet>

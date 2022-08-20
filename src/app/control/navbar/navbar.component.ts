@@ -13,6 +13,7 @@ import {AuthService, Role} from "../../shared/modules/auth/auth.service";
 import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
 import {NONE_TYPE} from "@angular/compiler";
 import {DialogGenerateTokenView} from "../dialogs/generate-token/dialogGenerateToken";
+import {DialogConfirmation} from "../dialogs/confirmation/dialogConfirmation";
 
 @Component({
   selector: 'app-navbar',
@@ -21,20 +22,21 @@ import {DialogGenerateTokenView} from "../dialogs/generate-token/dialogGenerateT
 })
 export class NavbarComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSidenav)
-  sidenav!: MatSidenav;
+  sidenav!: MatSidenav
 
   active: any
-  app: any;
+  app: any
   appSelected = false
   settings = false
   username = ""
-  userID = "";
-  clusterID = "";
+  userID = ""
+  clusterID = ""
   isAdmin = false
-  clusters: any;
+  clusters: any
+  clustersSelected = false
 
-  events: string[] = [];
-  opened: boolean = true;
+  events: string[] = []
+  opened: boolean = true
 
   constructor(private observer: BreakpointObserver,
               public dialog: MatDialog,
@@ -53,14 +55,14 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.username = this.userService.getUsername()
     this.api.getUserByName(this.username).subscribe((data: any) => {
-      this.userID = data._id.$oid;
+      this.userID = data._id.$oid
+    })
       this.sharedService.userID = this.userID
       // this.surveyService.resetSurvey()
 
-      this.loadDataApplication()
       this.loadDataCluster()
-      this.updatePermissions();
-    })
+      this.loadDataApplication()
+      this.updatePermissions()
   }
 
   showData(url: string) {
@@ -73,6 +75,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         if (result[0]) {
           this.active = result[0]._id
           this.appSelected = true
+          this.clustersSelected = false
           this.sharedService.selectApplication(result[0])
         }
       }
@@ -82,6 +85,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   loadDataCluster() {
     this.api.getClustersOfUser(this.userID).subscribe((result: any) => {
           this.clusters = result
+          this.clustersSelected = true
         },
         (_error: any) => {
           this.notifyService.notify(Type.error, 'Error: Getting clusters of ' + this.username)
@@ -93,6 +97,11 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       console.log(res)
       this.isAdmin = res
     });
+  }
+
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+        this.router.navigate([uri]));
   }
 
   // For the responsive sidenav
@@ -115,14 +124,14 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   openDialogCl(action: string, obj: any) {
     if (action == 'Add') {
-      obj._id = {$oid: ""}; // Only for the view, is then defined in the database
-      obj.cluster_name = "";
-      obj.cluster_latitude= "";
-      obj.cluster_longitude = "";
-      obj.cluster_radius = "20";
-      obj.user_name = this.username;
+      obj._id = {$oid: ""} // Only for the view, is then defined in the database
+      obj.cluster_name = ""
+      obj.cluster_latitude= ""
+      obj.cluster_longitude = ""
+      obj.cluster_radius = "20"
+      obj.user_name = this.username
     }
-      obj.action = action;
+      obj.action = action
       const dialogRef = this.dialog.open(DialogAddClusterView, {
         data: obj});
 
@@ -132,8 +141,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
           //this.addCluster(result.data)
           this.userService.addCluster(result.data).subscribe((userServiceResponse: any) => {
               this.notifyService.notify(Type.success, 'Cluster added successfully!')
-              this.loadDataCluster()
-              if (userServiceResponse != NONE_TYPE) {
+                this.redirectTo('/control')
+                if (userServiceResponse != NONE_TYPE) {
                 // TODO: We need to pass the system_manager_URL as well
                 const my_data = {pairing_key: userServiceResponse.pairing_key, username: this.username, cluster_name: result.data.cluster_name}
                 const dialogKey = this.dialog.open(DialogGenerateTokenView,
@@ -143,7 +152,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
                     width: '50%'
                   });
                 dialogKey.afterClosed().subscribe(() =>
-                    this.navigateToMyClusters()
+                    this.showClusters()
                 )
               }
               // this.surveyService.resetSurvey() => only for survey
@@ -156,22 +165,22 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   openDialogApp(action: string, obj: any) {
     if (action == 'Add') {
-      obj._id = {$oid: ""}; // Only for the view, is then defined in the database
-      obj.application_name = "";
+      obj._id = {$oid: ""} // Only for the view, is then defined in the database
+      obj.application_name = ""
       obj.application_namespace = ""
-      obj.application_desc = "";
-      obj.userId = this.userID;
+      obj.application_desc = ""
+      obj.userId = this.userID
     }
 
-    obj.action = action;
-    const dialogRef = this.dialog.open(DialogAddApplicationView, {data: obj});
+    obj.action = action
+    const dialogRef = this.dialog.open(DialogAddApplicationView, {data: obj})
 
     dialogRef.afterClosed().subscribe(result => {
       if (result.event == 'Add') {
         this.addApplication(result.data)
       } else if (result.event == 'Update') {
         console.log(result.data.applications[0])
-        this.updateApplication(result.data.applications[0]);
+        this.updateApplication(result.data.applications[0])
       } else if (result.event == 'Delete') {
         this.deleteApplication(result.data)
       }
@@ -200,7 +209,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   addApplication(app: any): void {
     this.api.addApplication(app).subscribe((_success) => {
-        this.loadDataApplication();
+        this.loadDataApplication()
       },
       (_error: any) => {
         this.notifyService.notify(Type.error, 'Error: Adding application "' + app.application_name + '" failed!')
@@ -217,17 +226,51 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       })
   }
 
+  is_pairing_complete(cluster: any) {
+    return cluster.pairing_complete
+  }
+
+  deleteCluster(cluster: any) {
+    let data = {
+      "text": "Delete cluster: " + cluster.cluster_name,
+      "type": "cluster"
+    }
+    const dialogRef = this.dialog.open(DialogConfirmation, {data: data})
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.event == true) {
+        this.api.deleteCluster(cluster).subscribe(() => {
+          this.notifyService.notify(Type.success, "Cluster " + cluster.cluster_name + " deleted successfully!")
+          this.redirectTo('/control')
+          },
+        (_error: any) => {
+          this.notifyService.notify(Type.error, 'Error: Deleting cluster ' + cluster.cluster_name)
+        })
+      }
+    });
+  }
+
   handleChange() {
     this.api.getAppById(this.active.$oid).subscribe(app => {
         this.sharedService.selectApplication(app)
+        this.clustersSelected = false
         this.appSelected = true
         this.router.navigate(['/control'])
       }
     );
   }
 
+  showClusters() {
+    this.appSelected = false
+    this.settings = false
+    this.clustersSelected = true
+  }
+
+  resetDashboard() {
+    this.appSelected = this.settings = this.clustersSelected = false
+  }
+
   onToolbarToggle() {
-    this.opened = !this.opened;
+    this.opened = !this.opened
   }
 
   show() {
