@@ -14,6 +14,8 @@ import {NotificationService, Type} from "../../shared/modules/notification/notif
 import {NONE_TYPE} from "@angular/compiler";
 import {DialogGenerateTokenView} from "../dialogs/generate-token/dialogGenerateToken";
 import {DialogConfirmation} from "../dialogs/confirmation/dialogConfirmation";
+import {GeoSearchControl, OpenStreetMapProvider} from 'leaflet-geosearch';
+import * as L from "leaflet";
 
 @Component({
   selector: 'app-navbar',
@@ -38,6 +40,11 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   events: string[] = []
   opened: boolean = true
 
+  private map: any;
+  // FMI Garching coordinates
+  private lat = 48.262707753772624;
+  private lon =  11.668009155278707;
+
   constructor(private observer: BreakpointObserver,
               public dialog: MatDialog,
               public sharedService: SharedIDService,
@@ -52,6 +59,28 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       })
   }
 
+  private initMap(): void {
+
+    this.map = L.map('map', {
+      center: [this.lat, this.lon],
+      attributionControl: false,
+      zoom: 14
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+    }).addTo(this.map);
+
+    // Search location in map
+    let search = GeoSearchControl({
+      provider: new OpenStreetMapProvider(),
+      marker: {
+        draggable: true
+      },
+    });
+    this.map.addControl(search);
+  }
+
   ngOnInit(): void {
     this.username = this.userService.getUsername()
     this.api.getUserByName(this.username).subscribe((data: any) => {
@@ -63,6 +92,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       this.loadDataCluster()
       this.loadDataApplication()
       this.updatePermissions()
+
+      this.initMap()
   }
 
   showData(url: string) {
@@ -74,8 +105,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         this.app = result
         if (result[0]) {
           this.active = result[0]._id
-          this.appSelected = true
-          this.clustersSelected = false
+            this.clustersSelected = false
+            this.appSelected = true
           this.sharedService.selectApplication(result[0])
         }
       }
@@ -85,6 +116,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   loadDataCluster() {
     this.api.getClustersOfUser(this.userID).subscribe((result: any) => {
           this.clusters = result
+          this.appSelected = false
+          this.settings = false
           this.clustersSelected = true
         },
         (_error: any) => {
@@ -185,10 +218,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         this.deleteApplication(result.data)
       }
     });
-  }
-
-  navigateToMyClusters(){
-    this.router.navigate([ '/control/clusters/list'])
   }
 
   deleteApplication(app: any): void {

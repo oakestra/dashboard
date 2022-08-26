@@ -105,24 +105,42 @@
 
           <mat-expansion-panel hideToggle style="background-color: #3E4E57">
             <mat-expansion-panel-header>
-              <mat-panel-title style="color: white">
+              <mat-panel-title style="color: white; align-items: center">
                 Registered
+                <i class='bx bx-chevron-down'></i>
               </mat-panel-title>
             </mat-expansion-panel-header>
 
-            <!-- TODO: Make it work (not passing the clusters' instances) -->
-            <div *ngFor="let cluster of clusters" >
-              <button>{{cluster.cluster_name}}</button>
+            <div *ngFor="let cluster of clusters" style="display: flex; justify-content: space-between;align-items: center">
+              <div *ngIf="!cluster.pairing_complete">
+                <mat-radio-group [(ngModel)]="active">
+                  <mat-radio-button [value]="cluster._id" class="menu-button">
+                    <span style="float: left ; color: white ">{{cluster.cluster_name}}</span>
+                  </mat-radio-button>
+                </mat-radio-group>
+                <!--<button>{{cluster.cluster_name}}</button>-->
+              </div>
             </div>
 
           </mat-expansion-panel>
 
           <mat-expansion-panel hideToggle style="background-color: #3E4E57">
             <mat-expansion-panel-header>
-              <mat-panel-title style="color: white">
+              <mat-panel-title style="color: white; align-items: center">
                 Active
+                <i class='bx bx-chevron-down'></i>
               </mat-panel-title>
             </mat-expansion-panel-header>
+
+            <div *ngFor="let cluster of clusters" style="display: flex; justify-content: space-between;align-items: center">
+              <div *ngIf="cluster.pairing_complete">
+                <mat-radio-group [(ngModel)]="active">
+                  <mat-radio-button [value]="cluster._id" class="menu-button">
+                    <span style="float: left ; color: white ">{{cluster.cluster_name}}</span>
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
           </mat-expansion-panel>
 
         </mat-list-item>
@@ -179,7 +197,16 @@
             <mat-card>
               <mat-card-title>{{cluster.cluster_name}}</mat-card-title>
               <mat-card-subtitle>Cluster ID {{cluster._id.$oid}}</mat-card-subtitle>
-              <mat-card-actions align="end">
+              <!--<mat-card-content>
+              <div class="map-container">
+                <div class="map-frame">
+                  <div id="map"></div>
+                </div>
+              </div>
+              </mat-card-content>
+              # getting a blank leaflet map for each card and the one in the "add cluster" dialog not showing
+              -->
+                <mat-card-actions align="end">
                 <button *ngIf="!is_pairing_complete(cluster)" mat-button><i>NOT YET RUNNING</i></button>
                 <button (click)="deleteCluster(cluster)" mat-button><i class='bx bxs-trash'></i></button>
               </mat-card-actions>
