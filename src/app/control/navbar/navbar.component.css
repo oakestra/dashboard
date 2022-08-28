@@ -33,6 +33,10 @@ mat-sidenav-container {
   flex: 1;
 }
 
+.content .container {
+  margin-top: 1100px;
+}
+
 .avatar {
   margin-top: 16px;
   width: 100px;
@@ -184,15 +188,10 @@ mat-card{
 
 
 
-
-
-
-
-
-
-
 .map-container {
-  position: absolute;
+  align-content: center;
+  height: 140px;
+  width: 250px;
   top: 0;
   left: 0;
   right: 0;

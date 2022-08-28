@@ -41,7 +41,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   events: string[] = []
   opened: boolean = true
 
-  private map: any;
+  private card_map: any;
   // FMI Garching coordinates
   private lat = 48.262707753772624;
   private lon =  11.668009155278707;
@@ -61,25 +61,15 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   private initMap(): void {
+      this.card_map = L.map('card_map', {
+        center: [this.lat, this.lon],
+        attributionControl: false,
+        zoom: 14
+      });
 
-    this.map = L.map('map', {
-      center: [this.lat, this.lon],
-      attributionControl: false,
-      zoom: 14
-    });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-    }).addTo(this.map);
-
-    // Search location in map
-    let search = GeoSearchControl({
-      provider: new OpenStreetMapProvider(),
-      marker: {
-        draggable: true
-      },
-    });
-    this.map.addControl(search);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 13,
+      }).addTo(this.card_map);
   }
 
   ngOnInit(): void {
@@ -87,15 +77,16 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     this.api.getUserByName(this.username).subscribe((data: any) => {
       this.userID = data._id.$oid
     })
-      this.sharedService.userID = this.userID
-      // this.surveyService.resetSurvey()
+    this.sharedService.userID = this.userID
+    // this.surveyService.resetSurvey()
 
-      this.loadDataCluster()
-      this.loadDataApplication()
-      this.updatePermissions()
+    this.loadDataCluster()
+    this.loadDataApplication()
+    this.updatePermissions()
 
-      this.initMap()
+    this.initMap()
   }
+
 
   showData(url: string) {
     this.settings = (url.includes("help") || url.includes("user") || url.includes("profile") || url.includes("survey"))

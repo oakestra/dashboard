@@ -7,6 +7,7 @@ import {Subscription} from "rxjs/internal/Subscription";
 import {DialogConfirmation} from "../dialogs/confirmation/dialogConfirmation";
 import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
 import {Router} from "@angular/router";
+import * as L from "leaflet";
 
 @Component({
   selector: 'dev-home',
@@ -28,11 +29,28 @@ export class DevHomeComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = []
 
+  private cluster_map: any;
+  // FMI Garching coordinates
+  private lat = 48.262707753772624;
+  private lon =  11.668009155278707;
+
   constructor(public sharedService: SharedIDService,
               private api: ApiService,
               public dialog: MatDialog,
               private router: Router,
               private notifyService: NotificationService){
+  }
+
+  private initMap(): void {
+    this.cluster_map = L.map('card_map', {
+      center: [this.lat, this.lon],
+      attributionControl: false,
+      zoom: 14
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 13,
+    }).addTo(this.cluster_map);
   }
 
   ngOnInit(): void {
@@ -43,6 +61,7 @@ export class DevHomeComponent implements OnInit, OnDestroy {
           this.clusterName = x.cluster_name
           this.clusterID = x._id.$oid
           this.is_app = false
+          //this.initMap()
         });
     this.subscriptions.push(sub2)
 

@@ -100,7 +100,6 @@
     <mat-list-item>
       <div class="icon-link">
         <i (click)="showClusters()">
-        <!--<a [routerLink]="" (click)="navigateToMyClusters()">-->
           <i class='bx bx-grid-alt'></i>
           <span class="link_name">Clusters</span>
         </i>
@@ -125,7 +124,6 @@
                     <span style="float: left ; color: white ">{{cluster.cluster_name}}</span>
                   </mat-radio-button>
                 </mat-radio-group>
-                <!--<button>{{cluster.cluster_name}}</button>-->
               </div>
             </div>
 
@@ -191,14 +189,15 @@
             <mat-card>
               <mat-card-title>{{cluster.cluster_name}}</mat-card-title>
               <mat-card-subtitle>Cluster ID {{cluster._id.$oid}}</mat-card-subtitle>
-              <!--<mat-card-content>
+              <mat-card-content *ngIf="cluster.pairing_complete">
               <div class="map-container">
                 <div class="map-frame">
-                  <div id="map"></div>
+                  <div id="card_map"></div>
+                  <p>The cluster is located in: [{{cluster.cluster_latitude}}, {{cluster.cluster_longitude}}]  </p>
                 </div>
               </div>
               </mat-card-content>
-              # getting a blank leaflet map for each card and the one in the "add cluster" dialog not showing
+              <!--# ERROR NOT WORKING: getting a blank leaflet map for each card
               -->
                 <mat-card-actions align="end">
                 <button *ngIf="!cluster.pairing_complete" mat-button>
@@ -209,7 +208,7 @@
                 <button (click)="deleteCluster(cluster)" mat-button><i class='bx bxs-trash'></i></button>
               </mat-card-actions>
 
-              <mat-accordion *ngIf="cluster.pairing_complete">
+              <!--<mat-accordion *ngIf="cluster.pairing_complete">
                 <mat-expansion-panel hideToggle>
                   <mat-expansion-panel-header>
                     <mat-panel-title>
@@ -218,7 +217,7 @@
                   </mat-expansion-panel-header>
                   <input>
                 </mat-expansion-panel>
-              </mat-accordion>
+              </mat-accordion>-->
 
             </mat-card>
           </div>
@@ -227,10 +226,7 @@
         </mat-card-actions>
     </div>
 
-    <router-outlet *ngIf="appSelected || settings"></router-outlet>
-
-    <router-outlet *ngIf="clusterSelected"></router-outlet>
-
+    <router-outlet *ngIf="appSelected || settings || clusterSelected"></router-outlet>
 
   </mat-sidenav-content>
 
