@@ -9,7 +9,6 @@ import {AuthGuardService} from "../shared/modules/auth/auth-guard.service";
 import {UserEditComponent} from "./users/user-edit/user-edit.component";
 import {RoleRouterGuard} from "../shared/modules/auth/role-guard.service";
 import {SurveyComponent} from "./survey/survey.component";
-import {ListClustersComponent} from "./list/clusters/list-clusters.component";
 
 export const routes: Routes = [
   {
@@ -20,12 +19,7 @@ export const routes: Routes = [
         path: '',
         component: DevHomeComponent,
         pathMatch: 'full',
-        canActivate: [AuthGuardService]
-      },
-      {
-        path: 'clusters/list',
-        component: ListClustersComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
       },
       {
         path: 'help',

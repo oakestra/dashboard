@@ -4,6 +4,9 @@ import {ApiService} from "../../shared/modules/api/api.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogServiceStatusView} from "../dialogs/service-status/dialogServiceStatus";
 import {Subscription} from "rxjs/internal/Subscription";
+import {DialogConfirmation} from "../dialogs/confirmation/dialogConfirmation";
+import {NotificationService, Type} from "../../shared/modules/notification/notification.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'dev-home',
@@ -16,21 +19,42 @@ export class DevHomeComponent implements OnInit, OnDestroy {
   servicesCount = 0;
   appName: string = ""
   appID: string = ""
+
+  clusterName: string = ""
+  clusterID: string = ""
+  cluster_info: any;
+
+  is_app: boolean = true
+
   subscriptions: Subscription[] = []
 
   constructor(public sharedService: SharedIDService,
               private api: ApiService,
-              public dialog: MatDialog){
+              public dialog: MatDialog,
+              private router: Router,
+              private notifyService: NotificationService){
   }
 
   ngOnInit(): void {
+
+    let sub2 = this.sharedService.clusterObserver$.subscribe(
+        x => {
+          this.cluster_info = x
+          this.clusterName = x.cluster_name
+          this.clusterID = x._id.$oid
+          this.is_app = false
+        });
+    this.subscriptions.push(sub2)
+
     let sub = this.sharedService.applicationObserver$.subscribe(
       x => {
         this.appName = x.application_name
         this.appID = x._id.$oid
+        this.is_app = true
         this.loadData()
       });
     this.subscriptions.push(sub)
+
   }
 
   ngOnDestroy() {
@@ -73,6 +97,27 @@ export class DevHomeComponent implements OnInit, OnDestroy {
     this.api.deleteService(service).subscribe(() => {
       this.loadData()
     })
+  }
+
+  // repeated function in navbar.component.ts
+  deleteCluster(cluster: any) {
+    let data = {
+      "text": "Delete cluster: " + cluster.cluster_name,
+      "type": "cluster"
+    }
+    const dialogRef = this.dialog.open(DialogConfirmation, {data: data})
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.event == true) {
+        this.api.deleteCluster(cluster._id.$oid).subscribe(() => {
+              this.notifyService.notify(Type.success, "Cluster " + cluster.cluster_name + " deleted successfully!")
+              this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+                  this.router.navigate(['/control']));
+            },
+            (_error: any) => {
+              this.notifyService.notify(Type.error, 'Error: Deleting cluster ' + cluster.cluster_name)
+            })
+      }
+    });
   }
 
   openStatusDialog(service: any) {

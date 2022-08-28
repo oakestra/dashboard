@@ -8,7 +8,7 @@
 
   <div class="sidebar">
     <div class="logo-details">
-      <button id="homeNavbar" mat-button routerLink="/control" style="font-size: inherit">
+      <button id="homeNavbar" (click)="resetDashboard()" mat-button routerLink="/control" style="font-size: inherit">
         <img src="favicon.ico" style="height: 64px" alt="Oakestra">
       </button>
     </div>
@@ -42,7 +42,7 @@
     <mat-sidenav class="mat-elevation-z8" mode="side" [(opened)]="opened">
       <ul class="nav-links">
     <mat-list-item>
-        <a (click)="resetDashboard()">
+        <a (click)="resetDashboard()" routerLink="/control">
           <i class='bx bx-grid-alt'></i>
           <span class="link_name">Dashboard</span>
         </a>
@@ -55,13 +55,19 @@
           <span class="link_name">
             <a href="/control">Applications</a></span>
         </a>
-        <!--<i class='bx bx-chevron-down'></i>-->
-      </div>
+    </div>
       <ul class="sub-menu">
         <mat-list-item>
         <div id="applicationTitle">
             <mat-divider></mat-divider>
 
+          <mat-expansion-panel hideToggle style="background-color: #3E4E57">
+            <mat-expansion-panel-header>
+              <mat-panel-title style="color: white; align-items: center">
+                My Applications
+                <i class='bx bx-chevron-down'></i>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
             <div *ngFor="let app of app " style="display: flex; justify-content: space-between;align-items: center">
 
               <mat-radio-group (change)="handleChange()" [(ngModel)]="active" routerLink="/control">
@@ -74,8 +80,9 @@
                 <mat-icon>settings</mat-icon>
               </button>
             </div>
+          </mat-expansion-panel>
 
-          </div>
+        </div>
         </mat-list-item>
         <mat-list class="inline-list">
         <mat-list-item>
@@ -113,7 +120,7 @@
 
             <div *ngFor="let cluster of clusters" style="display: flex; justify-content: space-between;align-items: center">
               <div *ngIf="!cluster.pairing_complete">
-                <mat-radio-group [(ngModel)]="active">
+                <mat-radio-group (change)="handleChangeCluster(cluster)" [(ngModel)]="active" routerLink="/control">
                   <mat-radio-button [value]="cluster._id" class="menu-button">
                     <span style="float: left ; color: white ">{{cluster.cluster_name}}</span>
                   </mat-radio-button>
@@ -134,7 +141,7 @@
 
             <div *ngFor="let cluster of clusters" style="display: flex; justify-content: space-between;align-items: center">
               <div *ngIf="cluster.pairing_complete">
-                <mat-radio-group [(ngModel)]="active">
+                <mat-radio-group (change)="handleChangeCluster(cluster)" [(ngModel)]="active" routerLink="/control">
                   <mat-radio-button [value]="cluster._id" class="menu-button">
                     <span style="float: left ; color: white ">{{cluster.cluster_name}}</span>
                   </mat-radio-button>
@@ -164,20 +171,6 @@
         </a>
       </div>
     </mat-list-item>
-    <!--
-    <mat-list-item>
-    <script>
-        let arrow = document.querySelectorAll(".bx-chevron-down");
-        console.log(arrow);
-        for (var i = 0; i < arrow.length; ++i) {
-          arrow[i].addEventListener("click", (e)=>{
-            let arrowParent = e.target.parentElement.parentElement;
-            arrowParent.classList.toggle("showMenu");
-          });
-        }
-      </script>
-      </>mat-list-item>
-      -->
 
   </ul>
     </mat-sidenav>
@@ -186,12 +179,13 @@
   <mat-sidenav-content id="content">
 
 
-    <div *ngIf="!appSelected && !settings && !clustersSelected" class="content mat-elevation-z8">
-      No Application selected.
+    <div *ngIf="!appSelected && !settings && !listClusters && !clusterSelected" class="content mat-elevation-z8">
+      There is nothing selected.
     </div>
 
-    <div *ngIf="clustersSelected" class="content mat-elevation-z8">
-      <div class="container">
+    <div *ngIf="listClusters" class="content mat-elevation-z8">
+      <mat-card-actions style="text-align: end">
+        <div class="container">
         <div class="row">
           <div *ngFor="let cluster of clusters">
             <mat-card>
@@ -207,11 +201,15 @@
               # getting a blank leaflet map for each card and the one in the "add cluster" dialog not showing
               -->
                 <mat-card-actions align="end">
-                <button *ngIf="!is_pairing_complete(cluster)" mat-button><i>NOT YET RUNNING</i></button>
+                <button *ngIf="!cluster.pairing_complete" mat-button>
+                  <div *ngIf="!cluster.pairing_complete" class="noinstance">
+                    <p>NOT YET ACTIVE</p>
+                  </div>
+                </button>
                 <button (click)="deleteCluster(cluster)" mat-button><i class='bx bxs-trash'></i></button>
               </mat-card-actions>
 
-              <mat-accordion *ngIf="is_pairing_complete(cluster)">
+              <mat-accordion *ngIf="cluster.pairing_complete">
                 <mat-expansion-panel hideToggle>
                   <mat-expansion-panel-header>
                     <mat-panel-title>
@@ -226,9 +224,14 @@
           </div>
         </div>
       </div>
+        </mat-card-actions>
     </div>
 
     <router-outlet *ngIf="appSelected || settings"></router-outlet>
+
+    <router-outlet *ngIf="clusterSelected"></router-outlet>
+
+
   </mat-sidenav-content>
 
 </mat-sidenav-container>

@@ -7,7 +7,7 @@ mat-toolbar {
 
 mat-sidenav {
   margin: 16px;
-  width: 300px;
+  width: 335px;
   border-right: none;
   background: #3B474E;
   color: white;
@@ -209,4 +209,10 @@ mat-card{
   bottom: 0;
   height: 100%;
   width: 100%;
+}
+
+.noinstance{
+  text-align: center;
+  color: #D3D3D3;
+  font-size: large;
 }

@@ -65,12 +65,16 @@ export class ApiService extends RestService {
     return this.doPUTRequest("/clusters/" + cluster.clusterID, cluster)
   }
 
-  deleteCluster(cluster: any) {
-    return this.doDELRequest("/cluster/" + cluster._id.$oid)
+  deleteCluster(clusterId: any) {
+    return this.doDELRequest("/cluster/" + clusterId)
   }
 
   getClustersOfUser(userId: string | null) {
     return this.doGETRequest("/clusters/" + userId)
+  }
+
+  getClusterById(clusterId: any) {
+    return this.doGETRequest("/cluster/" + clusterId)
   }
 
 ///////////////////////////////////////////////////////////////////////////

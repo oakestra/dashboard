@@ -35,7 +35,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   clusterID = ""
   isAdmin = false
   clusters: any
-  clustersSelected = false
+  listClusters = false
+  clusterSelected = false
 
   events: string[] = []
   opened: boolean = true
@@ -105,8 +106,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         this.app = result
         if (result[0]) {
           this.active = result[0]._id
-            this.clustersSelected = false
-            this.appSelected = true
+          this.listClusters = false
+          this.appSelected = true
           this.sharedService.selectApplication(result[0])
         }
       }
@@ -115,10 +116,14 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   loadDataCluster() {
     this.api.getClustersOfUser(this.userID).subscribe((result: any) => {
-          this.clusters = result
-          this.appSelected = false
-          this.settings = false
-          this.clustersSelected = true
+      this.clusters = result
+      if (result[0]) {
+        this.active = result[0]._id
+        this.appSelected = false
+        this.settings = false
+        this.listClusters = true
+        this.sharedService.selectCluster(result[0])
+      }
         },
         (_error: any) => {
           this.notifyService.notify(Type.error, 'Error: Getting clusters of ' + this.username)
@@ -255,10 +260,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       })
   }
 
-  is_pairing_complete(cluster: any) {
-    return cluster.pairing_complete
-  }
-
   deleteCluster(cluster: any) {
     let data = {
       "text": "Delete cluster: " + cluster.cluster_name,
@@ -267,7 +268,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(DialogConfirmation, {data: data})
     dialogRef.afterClosed().subscribe(result => {
       if (result.event == true) {
-        this.api.deleteCluster(cluster).subscribe(() => {
+        this.api.deleteCluster(cluster._id.$oid).subscribe(() => {
           this.notifyService.notify(Type.success, "Cluster " + cluster.cluster_name + " deleted successfully!")
           this.redirectTo('/control')
           },
@@ -278,24 +279,35 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     });
   }
 
+  switchScreen(app: boolean, list: boolean, cluster: boolean) {
+    this.appSelected = app
+    this.listClusters = list
+    this.clusterSelected = cluster
+  }
+
   handleChange() {
     this.api.getAppById(this.active.$oid).subscribe(app => {
-        this.sharedService.selectApplication(app)
-        this.clustersSelected = false
-        this.appSelected = true
-        this.router.navigate(['/control'])
+      this.sharedService.selectApplication(app)
+      this.switchScreen(true, false, false)
+      this.router.navigate(['/control'])
       }
     );
   }
 
+  handleChangeCluster(cluster: any) {
+    this.api.getClusterById(cluster._id.$oid).subscribe(cl => {
+      this.sharedService.selectCluster(cl)
+      this.switchScreen(false, false, true)
+      this.router.navigate(['/control'])
+    });
+  }
+
   showClusters() {
-    this.appSelected = false
-    this.settings = false
-    this.clustersSelected = true
+    this.switchScreen(false, true, false)
   }
 
   resetDashboard() {
-    this.appSelected = this.settings = this.clustersSelected = false
+    this.switchScreen(false, false, false)
   }
 
   onToolbarToggle() {
