@@ -181,12 +181,11 @@
       There is nothing selected.
     </div>
 
-    <div *ngIf="listClusters" class="content mat-elevation-z8">
-      <mat-card-actions style="text-align: end">
-        <div class="container">
+    <div *ngIf="listClusters">
+        <div class="container" >
         <div class="row">
           <div *ngFor="let cluster of clusters">
-            <mat-card>
+            <mat-card id="my_card">
               <mat-card-title>{{cluster.cluster_name}}</mat-card-title>
               <mat-card-subtitle>Cluster ID {{cluster._id.$oid}}</mat-card-subtitle>
               <mat-card-content *ngIf="cluster.pairing_complete">
@@ -223,7 +222,6 @@
           </div>
         </div>
       </div>
-        </mat-card-actions>
     </div>
 
     <router-outlet *ngIf="appSelected || settings || clusterSelected"></router-outlet>

@@ -33,9 +33,6 @@ mat-sidenav-container {
   flex: 1;
 }
 
-.content .container {
-  margin-top: 1100px;
-}
 
 .avatar {
   margin-top: 16px;
@@ -61,13 +58,6 @@ mat-divider {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-mat-card {
-  width: 100%;
-  font-size: 1rem;
-  margin-bottom: 10px;
-  height: 50px;
-}
-
 mat-card-title {
   /* background: #004a9f;*/
   background-color: #4A7083;
@@ -78,14 +68,6 @@ mat-card-title {
 
 mat-card p {
   margin-bottom: 0;
-}
-
-.content-cards {
-  border-radius: 10px;
-  margin: 16px 16px 16px 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .serviceCard {
@@ -184,9 +166,8 @@ mat-card{
   width: fit-content;
   height: fit-content;
   margin: 8px;
+  left: 64px;
 }
-
-
 
 .map-container {
   align-content: center;
