@@ -59,7 +59,6 @@
       <ul class="sub-menu">
         <mat-list-item>
         <div id="applicationTitle">
-            <mat-divider></mat-divider>
 
           <mat-expansion-panel hideToggle style="background-color: #3E4E57">
             <mat-expansion-panel-header>
@@ -96,18 +95,17 @@
       </ul>
       </mat-list-item>
 
-
     <mat-list-item>
       <div class="icon-link">
-        <i (click)="showClusters()">
+        <a>
           <i class='bx bx-grid-alt'></i>
-          <span class="link_name">Clusters</span>
-        </i>
+          <span class="link_name">
+            <a (click)="showClusters()">Clusters</a></span>
+        </a>
       </div>
 
       <ul class="sub-menu">
         <mat-list-item>
-          <mat-divider></mat-divider>
 
           <mat-expansion-panel hideToggle style="background-color: #3E4E57">
             <mat-expansion-panel-header>
@@ -160,12 +158,12 @@
 
       </ul>
     </mat-list-item>
-
     <mat-list-item>
       <div class="icon-link">
-        <a href="/control/help">
+        <a>
           <i class='bx bx-help-circle'></i>
-          <span class="link_name">Help</span>
+          <span class="link_name">
+          <a href="/control/help">Help</a></span>
         </a>
       </div>
     </mat-list-item>

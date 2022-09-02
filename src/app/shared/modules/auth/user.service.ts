@@ -187,7 +187,7 @@ export class UserService {
   }
 
 
-  /** returns the cluster key stored in localStorage */
+  /** returns the cluster key stored in localStorage -> right now not used because the key is not stored */
   getClusterKey(): string {
     let key;
     if (this.loggedIn) {
@@ -208,23 +208,28 @@ export class UserService {
   }
 
   addCluster(cluster_info: any): Observable<string> {
-   return this.http.post<Response>(this.apiUrl + "/cluster/add", cluster_info).pipe(
-     map((response: any) => {
-       this.loggedIn = true
-       this.setClusterKey(response.secret_key);
-       return response;
-     }),
-     catchError((error: any) => {
-       let errorMsg;
-       if (error.status == 0) {
-         // server is not running
-         errorMsg = "Server is not running";
-       } else {
-         // server is running and returned a json string
-         errorMsg = error.statusText;
-       }
-       return throwError(errorMsg || 'Server error')
-     }))
+    if (this.loggedIn){
+      return this.http.post<Response>(this.apiUrl + "/cluster/add", cluster_info).pipe(
+          map((response: any) => {
+            this.loggedIn = true
+            this.setClusterKey(response.secret_key);
+            return response;
+          }),
+          catchError((error: any) => {
+            let errorMsg;
+            if (error.status == 0) {
+              // server is not running
+              errorMsg = "Server is not running";
+            } else {
+              // server is running and returned a json string
+              errorMsg = error.statusText;
+            }
+            return throwError(errorMsg || 'Server error')
+          }))
+    }
+    this.logout()
+    return throwError("Session expired, please log in again")
+
   }
 
   }
