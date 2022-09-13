@@ -14,7 +14,6 @@ import {NotificationService, Type} from "../../shared/modules/notification/notif
 import {NONE_TYPE} from "@angular/compiler";
 import {DialogGenerateTokenView} from "../dialogs/generate-token/dialogGenerateToken";
 import {DialogConfirmation} from "../dialogs/confirmation/dialogConfirmation";
-import {GeoSearchControl, OpenStreetMapProvider} from 'leaflet-geosearch';
 import * as L from "leaflet";
 
 @Component({
@@ -41,7 +40,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   events: string[] = []
   opened: boolean = true
 
-  private card_map: any;
+  private map: any;
   // FMI Garching coordinates
   private lat = 48.262707753772624;
   private lon =  11.668009155278707;
@@ -61,7 +60,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   private initMap(): void {
-      this.card_map = L.map('card_map', {
+      this.map = L.map('card_map', {
         center: [this.lat, this.lon],
         attributionControl: false,
         zoom: 14
@@ -69,7 +68,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 13,
-      }).addTo(this.card_map);
+      }).addTo(this.map);
   }
 
   ngOnInit(): void {
