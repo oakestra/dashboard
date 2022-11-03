@@ -54,7 +54,7 @@ export class DialogChangePasswordView {
 
   updatePassword(): void {
     const username = this.local_data.name
-    this.api.changePassword(username, this.oldPassword?.value, this.newPassword?.value).subscribe(() => {
+    this.api.changePassword(username, this.oldPassword?.value!, this.newPassword?.value!).subscribe(() => {
       this.notifyService.notify(Type.success, "Password changed");
       this.closeDialog()
     });

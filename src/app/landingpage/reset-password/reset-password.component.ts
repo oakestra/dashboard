@@ -42,7 +42,7 @@ export class ResetPasswordComponent implements OnInit {
 
 
   public submitNewPassword(): void {
-    let pass = this.form.get('newPass')?.value
+    let pass = this.form.get('newPass')?.value as string
     this.api.saveResetPassword(this.resetPasswordToken, pass).subscribe(() => {
       this.notifyService.notify(Type.success, "New password saved!")
       this.router.navigate(["/"]);

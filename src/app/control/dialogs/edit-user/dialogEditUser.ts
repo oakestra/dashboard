@@ -62,13 +62,18 @@ export class DialogEditUserView {
   }
 
   get name() {
-    return this.form.get('name')!;
+    return this.form.value.name
+    // return this.form.get('name')!;
+    // TODO Check if this works
+
   }
 
   doAction() {
     let roles = this.form.value.roles
     this.local_data.roles = []
 
+    // TODO FIX ME
+    /*
     for (let r of this.rolDB) {
       if (roles[r.name]) {
         this.local_data.roles.push(r)
@@ -77,6 +82,7 @@ export class DialogEditUserView {
     this.form.value.roles = this.local_data.roles;
     this.form.value.created_at = this.local_data.created_at
     this.form.value._id = this.local_data._id
+    */
 
     this.dialogRef.close({event: this.action, data: this.form.value});
   }

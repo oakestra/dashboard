@@ -146,6 +146,7 @@ export class DeployFormComponent implements OnInit, OnDestroy {
 
   // Add connectivity's between Services
   addConnectivity() {
+    // @ts-ignore
     this.conConstrainsArray.push(new FormArray([]));
     let n = this.connectivity.length;
 
@@ -192,7 +193,8 @@ export class DeployFormComponent implements OnInit, OnDestroy {
   }
 
   addFileInput() {
-    this.fileArrayForm.push(new FormControl(""));
+    // @ts-ignore
+    this.fileArrayForm.push(new FormControl());
   }
 
   // Dialog for the connection settings
@@ -238,6 +240,7 @@ export class DeployFormComponent implements OnInit, OnDestroy {
       let fc
       path.subscribe((x: any) => {
           if (action == "file") {
+            // @ts-ignore
             this.fileArrayForm.controls[index] = new FormControl([x.path])
           } else if (action == "code") {
             fc = this.form.get("code") as FormControl
