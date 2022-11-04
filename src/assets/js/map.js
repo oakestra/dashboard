@@ -1,4 +1,4 @@
-function initMap(lng, lat) {
+function initMap(lng, lat, circle_radius) {
 
   const coords = ol.proj.fromLonLat([lng, lat]);
 
@@ -19,7 +19,7 @@ function initMap(lng, lat) {
 
   const circleFeature = new ol.Feature({
     // geometry: new ol.geom.Circle([lng, lat], 50),
-    geometry: new ol.geom.Circle(coords, 300),
+    geometry: new ol.geom.Circle(coords, circle_radius),
   });
   circleFeature.setStyle(
     new ol.style.Style({
