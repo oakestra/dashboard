@@ -139,27 +139,20 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   deleteApplication(app: any): void {
-    this.api.getServicesOfApplication(app._id.$oid).subscribe((services: any) => {
-      for (let j of services) {
-        this.api.deleteService(j)
-      }
-    })
-
-    this.api.deleteApplication(app).subscribe((_success) => {
-        this.notifyService.notify(Type.success, 'Application "' + app.application_name + '" deleted successfully!')
-        this.loadData();
-      },
-      (_error) => {
-        this.notifyService.notify(Type.error, 'Error: Deleting application "' + app.application_name + '" failed!')
-      })
+    this.api.deleteApplication(app).subscribe( (_success) => {
+          this.notifyService.notify(Type.success, 'Application "' + app.application_name + '" deleted successfully!')
+          this.loadData();
+        }, (_error) => {
+          this.notifyService.notify(Type.error, 'Error: Deleting application "' + app.application_name + '" failed!')
+        }
+      )
   }
 
   addApplication(app: any): void {
     this.api.addApplication(app).subscribe((_success) => {
         this.loadData();
-      },
-      (_error: any) => {
-        this.notifyService.notify(Type.error, 'Error: Adding application "' + app.application_name + '" failed!')
+      }, (_error) => {
+        this.notifyService.notify(Type.error, 'Error: Adding application "' + app.applications[0].application_name + '" failed! Response: ')
       })
   }
 

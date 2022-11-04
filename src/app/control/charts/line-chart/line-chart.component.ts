@@ -17,7 +17,7 @@ import {
   Tooltip
 } from "chart.js";
 
-declare function initMap(lng: number, lat: number): void;
+declare function initMap(lng: number, lat: number, radius: number): void;
 
 @Component({
   selector: 'line-chart',
@@ -122,6 +122,11 @@ export class LineChartComponent implements OnInit {
       }
     });
     // TODO Update map with real values and display only a polygon
-    initMap(11.668118226444951, 48.26255677936406);
+    var location_split = this.instance_list.cluster_location.split(",",3)
+    if (typeof location_split !== 'undefined' && location_split.length == 3) {
+      initMap(+location_split[1],+location_split[0],+location_split[2]);
+    }else{
+      initMap(0.0,0.0,19999999);
+    }
   }
 }
