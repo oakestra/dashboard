@@ -27,7 +27,7 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "node_modules/leaflet/dist/images/", // you may need to change this path, according to your files structure
+                "input": "node_modules/leaflet/dist/images/",
                 "output": "./assets"
               }
             ],
@@ -35,7 +35,8 @@
               "src/styles.css",
               "node_modules/shepherd.js/dist/css/shepherd.css",
               "node_modules/leaflet/dist/leaflet.css",
-              "node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css"
+              "node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css",
+              "node_modules/leaflet-geosearch/dist/geosearch.css"
             ],
             "scripts": [
               "src/assets/js/graph.js",
