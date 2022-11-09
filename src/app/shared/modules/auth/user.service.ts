@@ -177,13 +177,59 @@ export class UserService {
     return !(d.valueOf() > (new Date().valueOf()));
   };
 
-  generateTokenCluster() {
-    return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNTM0NTQzNTQzNTQzNTM0NTMiLCJleHAiOjE1MDQ2OTkyNTZ9.zG-2FvGegujxoLWwIQfNB5IT46D-xC4e8dEDYwi6aRM";
+  /**
+   * Service to manage the secret key provided to a new cluster to be attached to the Root Orchestrator
+   * **/
+
+  /** stores the cluster key*/
+  setClusterKey(key: string): void {
+    localStorage.setItem('cluster_key', key);
   }
-    /*if (this.loggedIn){
-      this.setAuthToken(response.token);
-      this.setRefreshToken(response.refresh_token);
-      return this.getJWTTokenRaw(response.token);
+
+
+  /** returns the cluster key stored in localStorage -> right now not used because the key is not stored */
+  getClusterKey(): string {
+    let key;
+    if (this.loggedIn) {
+      if (this.checkIfTokenExists('cluster_key')) {
+        key = localStorage.getItem('cluster_key')!;
+        if (!this.isTokenExpired(key)) return key;
+        else {
+          throwError("The token is already expired")
+          return ""
+        }
+      } else {
+        throwError("No cluster token found")
+        return ""
+      }
     }
-  }*/
+    throwError("Session expired, please log in again")
+    return "";
+  }
+
+  addCluster(cluster_info: any): Observable<string> {
+    if (this.loggedIn){
+      return this.http.post<Response>(this.apiUrl + "/cluster/add", cluster_info).pipe(
+          map((response: any) => {
+            this.loggedIn = true
+            this.setClusterKey(response.secret_key);
+            return response;
+          }),
+          catchError((error: any) => {
+            let errorMsg;
+            if (error.status == 0) {
+              // server is not running
+              errorMsg = "Server is not running";
+            } else {
+              // server is running and returned a json string
+              errorMsg = error.statusText;
+            }
+            return throwError(errorMsg || 'Server error')
+          }))
+    }
+    this.logout()
+    return throwError("Session expired, please log in again")
+
+  }
+
   }

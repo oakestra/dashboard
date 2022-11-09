@@ -131,6 +131,7 @@ export class UsersComponent implements OnInit {
   openDeleteDialog(obj: any) {
     let data = {
       "text": "Delete user: " + obj.name,
+      "type": "user"
     }
     const dialogRef = this.dialog.open(DialogConfirmation, {data: data});
     dialogRef.afterClosed().subscribe(result => {

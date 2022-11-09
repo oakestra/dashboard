@@ -1,8 +1,9 @@
 <div class="content-cards">
   <mat-card class="serviceCard" id="content">
 
-    <div *ngIf="sharedService.applicationObserver$ != null">
-      <mat-card-title>Application: {{appName}}</mat-card-title>
+   <!-- <div *ngIf="sharedService.applicationObserver$ != null">-->
+      <div *ngIf="is_app">
+        <mat-card-title>Application: {{appName}}</mat-card-title>
       <div *ngIf="servicesCount > 0">
         <mat-accordion *ngFor="let service of services" multi>
           <mat-expansion-panel>
@@ -99,5 +100,29 @@
         </div>
       </div>
     </div>
+
+      <div *ngIf="!is_app">
+          <mat-card-title>Cluster: {{cluster_info.cluster_name}}</mat-card-title>
+          <mat-card-subtitle>Cluster ID {{cluster_info._id.$oid}}</mat-card-subtitle>
+          <mat-card-actions>
+          <div *ngIf="!cluster_info.pairing_complete" class="noinstance">
+              <p>NOT YET ACTIVE</p>
+          </div>
+          <button (click)="deleteCluster(cluster_info)" mat-button><i class='bx bxs-trash'></i></button>
+          </mat-card-actions>
+
+          <!--<mat-accordion>
+              <mat-expansion-panel hideToggle>
+                  <mat-expansion-panel-header>
+                      <mat-panel-title>
+                          Add description
+                      </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <input>
+              </mat-expansion-panel>
+          </mat-accordion>-->
+
+      </div>
+
   </mat-card>
 </div>

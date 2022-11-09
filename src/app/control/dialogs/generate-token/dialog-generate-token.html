@@ -1,6 +1,27 @@
-  <h2 mat-dialog-title>{{"SAVE THIS TOKEN FOR LATER"}}</h2>
+<h2 mat-dialog-title class="title">Save Cluster Pairing Key</h2>
+<mat-dialog-content class="mat-typography">
 
-  <div class="w3-col l6 s12 m6">
-    <mat-form-field class="full-width" style="padding-right: 8px">
-      <h6>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNTM0NTQzNTQzNTQzNTM0NTMiLCJleHAiOjE1MDQ2OTkyNTZ9.zG-2FvGegujxoLWwIQfNB5IT46D-xC4e8dEDYwi6aRM</h6></mat-form-field>
+<div class="dialog-key">
+
+  <div class="subtitle">
+    Use this key when you run your cluster for the first time
   </div>
+
+    <mat-form-field class="full-width" style="padding-right: 8px">
+      <div class="copy-key">
+        <a>
+          <input type="text" class="text" id="id1"
+                 [formControl]="key" #valueKey
+                 placeholder="An error has occurred and the key cannot be shown">
+        <mat-button class="copy-btn"
+          (click)="copyPairingKey(valueKey)" value="click to copy" >
+          <i class='bx bx-clipboard'></i></mat-button>
+        <mat-button
+          (click)="download('config_pairing.env', valueKey.value)" >
+          <i class='bx bxs-download'></i>
+        </mat-button>
+        </a>
+      </div>
+    </mat-form-field>
+</div>
+</mat-dialog-content>

@@ -23,7 +23,7 @@ import {MatIconModule} from "@angular/material/icon";
     SharedModule.forRoot(),
     RouterModule.forRoot(routes),
     MatSnackBarModule,
-    MatIconModule
+    MatIconModule,
   ],
   providers: [
     // should be empty as we import all global services through "SharedModule.forRoot()"

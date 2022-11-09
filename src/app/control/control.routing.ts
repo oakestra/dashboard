@@ -19,7 +19,7 @@ export const routes: Routes = [
         path: '',
         component: DevHomeComponent,
         pathMatch: 'full',
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
       },
       {
         path: 'help',

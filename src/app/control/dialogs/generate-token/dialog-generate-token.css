@@ -1,0 +1,80 @@
+.title {
+  text-align: center
+}
+
+.dialog-key {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center
+}
+
+.subtitle {
+  padding: 10px;
+  font-size: 14px;
+}
+
+mat-form-field .text .a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.copy-key input.text {
+  padding: 10px;
+  font-size: 12px;
+  color: #343a40;
+  background: #F6F8F9;
+  border-radius: 10px;
+  margin-right: 4px;
+  border: none;
+  outline: none;
+  width: 100%;
+  max-width: 280px;
+}
+
+.copy-key mat-button {
+  padding: 4px;
+  background: #99CCCC;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+.copy-key mat-button:active {
+  background: #99CCCC;
+}
+
+.copy-key .copy-btn:before {
+  content: "Copied";
+  position: absolute;
+  top: -50px;
+  right: 0;
+  background: #4A7083;
+  padding: 8px 10px;
+  border-radius: 20px;
+  font-size: 15px;
+  display: none;
+}
+
+.copy-key .copy-btn:after {
+  content:"";
+  position: absolute;
+  top: -20px;
+  right: 25px;
+  width: 10px;
+  height: 10px;
+  background: #99CCCC;
+  transform: rotate(45deg);
+  display: none;
+}
+
+.copy-key.active .copy-btn:before,
+.copy-key.active .copy-btn:after {
+  display:block;
+}
+

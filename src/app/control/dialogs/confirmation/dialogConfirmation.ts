@@ -13,10 +13,12 @@ import {DialogGraphConnectionSettings} from "../graph-content-connection/dialogG
 export class DialogConfirmation {
 
   text = ""
+  type = ""
 
   constructor(public dialogRef: MatDialogRef<DialogGraphConnectionSettings>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.text = data.text
+    this.type = data.type
   }
 
   confirm() {

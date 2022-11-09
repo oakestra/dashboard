@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {RestService} from "../../util/rest.service";
 import {UserService} from "../auth/user.service";
 import {NotificationService} from "../notification/notification.service";
@@ -51,6 +51,30 @@ export class ApiService extends RestService {
   // not used yet, use it later for the admin view
   public getAllApplication() {
     return this.doGETRequest("/applications/")
+  }
+
+
+///////////////////////////////////////////////////////////////////////////
+///////////////////// Cluster Functions ///////////////////////////////
+
+  addCluster(cluster: any) {
+    return this.doPOSTRequest("/cluster/add", cluster)
+  }
+
+  updateCluster(cluster: any) {
+    return this.doPUTRequest("/clusters/" + cluster.clusterID, cluster)
+  }
+
+  deleteCluster(clusterId: any) {
+    return this.doDELRequest("/cluster/" + clusterId)
+  }
+
+  getClustersOfUser(userId: string | null) {
+    return this.doGETRequest("/clusters/" + userId)
+  }
+
+  getClusterById(clusterId: any) {
+    return this.doGETRequest("/cluster/" + clusterId)
   }
 
 ///////////////////////////////////////////////////////////////////////////

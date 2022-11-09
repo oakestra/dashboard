@@ -44,7 +44,7 @@ import { SurveyComponent } from './survey/survey.component';
 import {DialogConfirmation} from "./dialogs/confirmation/dialogConfirmation";
 import {DialogGenerateTokenView} from "./dialogs/generate-token/dialogGenerateToken";
 import {MatListModule} from "@angular/material/list";
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @NgModule({
   declarations: [
@@ -68,35 +68,36 @@ import {MatListModule} from "@angular/material/list";
     SurveyComponent,
     DialogConfirmation
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    // Angular Material Modules
-    MatMenuModule,
-    MatCheckboxModule,
-    MatSidenavModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatCardModule,
-    MatGridListModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatTabsModule,
-    MatInputModule,
-    MatTooltipModule,
-    MatExpansionModule,
-    MatRadioModule,
-    MatDialogModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatPaginatorModule,
-    MatTableModule,
-    MatChipsModule,
-    MatListModule,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        // Angular Material Modules
+        MatMenuModule,
+        MatCheckboxModule,
+        MatSidenavModule,
+        MatButtonModule,
+        MatDividerModule,
+        MatCardModule,
+        MatGridListModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatTabsModule,
+        MatInputModule,
+        MatTooltipModule,
+        MatExpansionModule,
+        MatRadioModule,
+        MatDialogModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatPaginatorModule,
+        MatTableModule,
+        MatChipsModule,
+        MatListModule,
+    ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ControlModule {
 
