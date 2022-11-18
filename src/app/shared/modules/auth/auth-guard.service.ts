@@ -1,22 +1,20 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
   CanActivateChild,
   CanLoad,
   Route,
-  RouterStateSnapshot
-} from "@angular/router";
-import {UserService} from "./user.service";
-import {Observable, of} from "rxjs";
+  RouterStateSnapshot,
+} from '@angular/router';
+import { UserService } from './user.service';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthGuardService implements  CanActivate, CanLoad, CanActivateChild  {
-
-  constructor(private userService: UserService) {
-  }
+export class AuthGuardService implements CanActivate, CanLoad, CanActivateChild {
+  constructor(private userService: UserService) {}
 
   doUserCheck(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<boolean> {
     if (!this.userService.isLoggedIn()) {
@@ -31,14 +29,14 @@ export class AuthGuardService implements  CanActivate, CanLoad, CanActivateChild
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.doUserCheck(route, state)
+    return this.doUserCheck(route, state);
   }
 
   canLoad(router: Route) {
-    return true // this.doUserCheck()
+    return true; // this.doUserCheck()
   }
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.doUserCheck(childRoute, state)
+    return this.doUserCheck(childRoute, state);
   }
 }

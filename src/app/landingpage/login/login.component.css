@@ -1,14 +1,48 @@
-.login-form{
-  width:80%;
+.login-form {
+  width: 80%;
   height: fit-content;
-
   position: absolute;
-  top:0;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-
   margin: auto;
+}
+
+.connectingInfo {
+  float: right;
+  margin: 8px;
+}
+
+.signUp {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+button {
+  background-color: #4a7083;
+  color: #fff;
+}
+
+.form-group {
+  margin-top: 8px;
+}
+
+.loginButton {
+  display: flex;
+  justify-content: center;
+}
+
+.centerButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.link {
+  cursor: pointer;
+  float: right;
 }
 
 @media only screen and (min-width: 801px) {

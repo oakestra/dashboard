@@ -11,3 +11,28 @@
 .mat-icon-button {
   line-height: 0;
 }
+
+.alignRight {
+  text-align: right;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.search {
+  width: 100%;
+  margin-top: 3vh;
+}
+
+.updateButton {
+  background-color: #4a7083;
+}
+
+.input-field {
+  width: 90%;
+}
+
+.user-search {
+  padding-top: 40px;
+}

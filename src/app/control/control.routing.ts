@@ -1,14 +1,14 @@
-import {NavbarComponent} from "./navbar/navbar.component";
-import {Routes} from "@angular/router";
-import {DevHomeComponent} from "./dev-home/dev-home.component";
-import {HelpComponent} from "./help/help.component";
-import {DeployFormComponent} from "./deploy-form/deploy-form.component";
-import {NotFoundComponent} from "./not-found/not-found.component";
-import {UsersComponent} from "./users/users.component";
-import {AuthGuardService} from "../shared/modules/auth/auth-guard.service";
-import {UserEditComponent} from "./users/user-edit/user-edit.component";
-import {RoleRouterGuard} from "../shared/modules/auth/role-guard.service";
-import {SurveyComponent} from "./survey/survey.component";
+import { NavbarComponent } from './navbar/navbar.component';
+import { Routes } from '@angular/router';
+import { DevHomeComponent } from './dev-home/dev-home.component';
+import { HelpComponent } from './help/help.component';
+import { DeployFormComponent } from './deploy-form/deploy-form.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { UsersComponent } from './users/users.component';
+import { AuthGuardService } from '../shared/modules/auth/auth-guard.service';
+import { UserEditComponent } from './users/user-edit/user-edit.component';
+import { RoleRouterGuard } from '../shared/modules/auth/role-guard.service';
+import { SurveyComponent } from './survey/survey.component';
 
 export const routes: Routes = [
   {
@@ -24,35 +24,34 @@ export const routes: Routes = [
       {
         path: 'help',
         component: HelpComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
       },
       {
         path: 'survey',
         component: SurveyComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
       },
       {
         path: 'deploy/:id',
         component: DeployFormComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
       },
       {
         path: 'deploy',
         component: DeployFormComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
       },
       {
         path: 'users',
         component: UsersComponent,
-        canActivate: [AuthGuardService,RoleRouterGuard]
+        canActivate: [AuthGuardService, RoleRouterGuard],
       },
       {
         path: 'profile',
         component: UserEditComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
       },
-      {path: '**', component: NotFoundComponent}
-    ]
-  }
+      { path: '**', component: NotFoundComponent },
+    ],
+  },
 ];
-

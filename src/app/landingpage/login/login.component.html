@@ -1,50 +1,46 @@
 <mat-card class="login-form">
-
-  <img alt="EdgeIO Logo" mat-card-image src="../../../assets/img/color-full.png">
+  <img alt="Oeakestra Logo" mat-card-image src="../../../assets/img/color-full.png" />
   <mat-card-content>
-    <mat-icon style="float: right" matTooltip="Connecting to: {{sm_ip}}">info</mat-icon>
-    <form accept-charset="UTF-8" class="form-signin" role="form">
+    <mat-icon class="connectingInfo" matTooltip="Connecting to: {{ sm_ip }}">info</mat-icon>
+    <form [formGroup]="form" accept-charset="UTF-8" role="form">
       <div>
+        <div>
+          <input
+            formControlName="username"
+            class="form-control"
+            id="username"
+            name="username"
+            placeholder="Username"
+            type="text"
+          />
+        </div>
 
         <div class="form-group">
-          <label class="cols-sm-2 control-label" for="username">Username</label>
+          <span (click)="forgotPassword()" class="pull-right text-primary link">Forgot password?</span>
           <div class="cols-sm-10">
-            <div class="input-group">
-              <input [(ngModel)]="user.name" class="form-control" id="username" name="username"
-                     placeholder="Enter your Username"
-                     type="text">
-            </div>
+            <span class="input-group-addon"><i aria-hidden="true" class="fa fa-lock fa-lg"></i></span>
+            <input
+              (keyup.enter)="submitLogin()"
+              formControlName="password"
+              class="form-control"
+              id="password"
+              name="password"
+              placeholder="Password"
+              type="password"
+            />
           </div>
         </div>
 
-        <div class="form-group" style="margin-top: 8px">
-          <label class="cols-sm-2 control-label" for="password">Password</label>
-          <span (click)="forgotPassword()" class="pull-right text-primary"
-                style="cursor: pointer; float: right">Forgot password?</span>
-          <div class="cols-sm-10">
-            <div class="input-group">
-              <span class="input-group-addon"><i aria-hidden="true" class="fa fa-lock fa-lg"></i></span>
-              <input (keyup.enter) ="submitLogin()" [(ngModel)]="user.password" class="form-control" id="password" name="password"
-                     placeholder="Enter your Password" type="password">
-            </div>
-          </div>
-        </div>
+        <hr />
 
-        <hr>
-
-        <div style=" display: flex; justify-content: center;">
-          <button (click)="submitLogin()" mat-button mat-flat-button style="background-color: #4A7083; color: #fff"
-                  type="button">Sign in
-          </button>
+        <div class="centerButton">
+          <button (click)="submitLogin()" mat-button mat-flat-button type="button">Sign in</button>
         </div>
-        <div style=" display: flex; justify-content: center; margin-top: 8px ">
+        <div class="signUp">
           <label class="cols-sm-2 control-label" for="password">Don't have an account?&ensp;</label>
-          <span (click)="registerForm()" class="pull-right text-primary"
-                style="cursor: pointer; float: right">Sign up now</span>
+          <span (click)="registerForm()" class="pull-right text-primary link">Sign up now </span>
         </div>
       </div>
     </form>
   </mat-card-content>
 </mat-card>
-
-

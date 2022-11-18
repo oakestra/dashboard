@@ -5,7 +5,7 @@ mat-card {
 }
 
 mat-card-title {
-  background-color: #4A7083;
+  background-color: #4a7083;
   padding: 16px;
   border-radius: 4px;
   color: white;
@@ -42,11 +42,11 @@ mat-card p {
   flex-direction: column;
 }
 
-.REGISTERED{
+.REGISTERED {
   color: green;
 }
 
-.CLUSTER_SCHEDULED{
+.CLUSTER_SCHEDULED {
   color: green;
 }
 
@@ -84,6 +84,10 @@ mat-card p {
   }
 }
 
+.statusField {
+  cursor: pointer;
+}
+
 .mat-expansion-panel {
   margin-bottom: 10px;
   padding: 16px;
@@ -93,15 +97,13 @@ mat-card p {
 .mat-expansion-panel-header {
   padding: 0;
   background-color: rgba(0, 0, 0, 0) !important;
-
 }
 
-.span.mat-expansion-indicator
-{
+.span.mat-expansion-indicator {
   pointer-events: visiblefill !important;
 }
 
-.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) {
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled='true']) {
   background-color: rgba(0, 0, 0, 0);
 }
 
@@ -113,30 +115,29 @@ mat-card p {
   background-color: rgba(0, 0, 0, 0) !important;
 }
 
-.mat-expansion-panel-header-description{
-  color: #000000DE;
+.mat-expansion-panel-header-description {
+  color: #000000de;
 }
 
-.instance{
+.instance {
   padding: 16px;
   border-left: 2px solid;
   border-left-color: #adacac;
 }
 
-.instance:hover{
+.instance:hover {
   background-color: rgba(241, 241, 241, 0.5);
 }
 
-.noinstance{
- text-align: center;
-  color: #D3D3D3;
+.noinstance {
+  text-align: center;
+  color: #d3d3d3;
   font-size: large;
 }
 
-.instanceDelete{
+.instanceDelete {
   background-color: transparent;
 }
-
 
 .map-container {
   align-content: center;
@@ -158,4 +159,8 @@ mat-card p {
   bottom: 0;
   height: 100%;
   width: 100%;
+}
+
+.alignEnd {
+  text-align: end;
 }

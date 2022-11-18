@@ -1,8 +1,8 @@
-import {LoginComponent} from "./login/login.component";
-import {Routes} from "@angular/router";
-import {LandingpageComponent} from "./landingpage.component";
-import {ResetPasswordComponent} from "./reset-password/reset-password.component";
-import {RegisterComponent} from "./register/register.component";
+import { LoginComponent } from './login/login.component';
+import { Routes } from '@angular/router';
+import { LandingpageComponent } from './landingpage.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RegisterComponent } from './register/register.component';
 
 export const routes: Routes = [
   {
@@ -12,7 +12,7 @@ export const routes: Routes = [
       {
         path: '',
         component: LoginComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'resetPassword/:resetPasswordToken',
@@ -21,8 +21,8 @@ export const routes: Routes = [
       {
         path: 'register',
         component: RegisterComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
-    ]
-  }
+    ],
+  },
 ];

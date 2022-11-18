@@ -1,25 +1,21 @@
 <div class="content-cards">
   <mat-card class="serviceCard" id="content">
-
-   <!-- <div *ngIf="sharedService.applicationObserver$ != null">-->
-      <div *ngIf="is_app">
-        <mat-card-title>Application: {{appName}}</mat-card-title>
+    <div *ngIf="is_app">
+      <mat-card-title>Application: {{ appName }}</mat-card-title>
       <div *ngIf="servicesCount > 0">
         <mat-accordion *ngFor="let service of services" multi>
           <mat-expansion-panel>
             <mat-expansion-panel-header class="disable_ripple">
-
-              <mat-panel-title class="w3-col s4 l5 m4 ">
-                {{service.microservice_name}}
+              <mat-panel-title class="w3-col s4 l5 m4">
+                {{ service.microservice_name }}
               </mat-panel-title>
 
               <mat-panel-description class="w3-col s5 w3-right statusField" (click)="$event.stopPropagation()">
-<!--                <div (click)="openStatusDialog(service)" style="cursor: pointer;">-->
-                <div (click)="openStatusDialog(service)" *ngIf="service.status" style="cursor: pointer;">
+                <div (click)="openStatusDialog(service)" *ngIf="service.status">
                   <button mat-icon-button type="button">
-                    <mat-icon [class]=service.status>fiber_manual_record</mat-icon>
+                    <mat-icon [class]="service.status">fiber_manual_record</mat-icon>
                   </button>
-                  <p class="statusText">{{service.status}}</p>
+                  <p class="statusText">{{ service.status }}</p>
                 </div>
               </mat-panel-description>
 
@@ -48,21 +44,16 @@
               </div>
             </mat-expansion-panel-header>
 
-            <div *ngIf="service.instance_list.length == 0" class="noinstance">
-              No instances of this service.
-            </div>
+            <div *ngIf="service.instance_list.length === 0" class="noinstance">No instances of this service.</div>
 
             <div *ngFor="let instance of service.instance_list" class="w3-row instance">
+              <div class="w3-col s6 l5 m5">Instance Number: {{ instance.instance_number }}</div>
 
-              <div class="w3-col s6 l5 m5 ">
-                Instance Number: {{instance.instance_number}}
-              </div>
-
-              <div (click)="openStatusDialog(instance)" class="w3-col s5 statusField" style="cursor: pointer;">
+              <div (click)="openStatusDialog(instance)" class="w3-col s5 statusField">
                 <button mat-icon-button type="button">
-                  <mat-icon [class]=instance.status>fiber_manual_record</mat-icon>
+                  <mat-icon [class]="instance.status">fiber_manual_record</mat-icon>
                 </button>
-                <p class="statusText">{{instance.status}}</p>
+                <p class="statusText">{{ instance.status }}</p>
               </div>
 
               <div class="w3-col s1 w3-right">
@@ -74,26 +65,30 @@
           </mat-expansion-panel>
         </mat-accordion>
 
-        <mat-card-actions style="text-align: end">
-          <button color="primary" id="createService" mat-flat-button routerLink="/control/deploy" style="float: left ; background-color: #4A7083">
+        <mat-card-actions class="alignEnd">
+          <button color="primary" id="createService" mat-flat-button routerLink="/control/deploy" class="updateButton">
             <mat-icon>add_circle</mat-icon>
             Create New Service
           </button>
-          <button (click)="deployAllServices()" color="primary" mat-flat-button type="button" style="background-color: #4A7083">
+          <button (click)="deployAllServices()" color="primary" mat-flat-button type="button" class="updateButton">
             <mat-icon>send</mat-icon>
             Deploy All
           </button>
         </mat-card-actions>
 
         <graph (updated)="deleteServiceWithGraph($event)" [services]="services"></graph>
-
       </div>
-      <div *ngIf="servicesCount == 0" class="content mat-elevation-z8">
+      <div *ngIf="servicesCount === 0" class="content mat-elevation-z8">
         <p>No Service in this application.</p>
-        <br>
-        <div style="text-align: end">
-          <button color="primary" id="createServiceEmpty" mat-flat-button routerLink="/control/deploy"
-                  style="float: left ; background-color: #3E4E57">
+        <br />
+        <div class="alignEnd">
+          <button
+            color="primary"
+            id="createServiceEmpty"
+            mat-flat-button
+            routerLink="/control/deploy"
+            class="updateButton"
+          >
             <mat-icon>add_circle</mat-icon>
             Create new service
           </button>
@@ -101,28 +96,15 @@
       </div>
     </div>
 
-      <div *ngIf="!is_app">
-          <mat-card-title>Cluster: {{cluster_info.cluster_name}}</mat-card-title>
-          <mat-card-subtitle>Cluster ID {{cluster_info._id.$oid}}</mat-card-subtitle>
-          <mat-card-actions>
-          <div *ngIf="!cluster_info.pairing_complete" class="noinstance">
-              <p>NOT YET ACTIVE</p>
-          </div>
-          <button (click)="deleteCluster(cluster_info)" mat-button><i class='bx bxs-trash'></i></button>
-          </mat-card-actions>
-
-          <!--<mat-accordion>
-              <mat-expansion-panel hideToggle>
-                  <mat-expansion-panel-header>
-                      <mat-panel-title>
-                          Add description
-                      </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <input>
-              </mat-expansion-panel>
-          </mat-accordion>-->
-
-      </div>
-
+    <div *ngIf="!is_app">
+      <mat-card-title>Cluster: {{ cluster_info.cluster_name }}</mat-card-title>
+      <mat-card-subtitle>Cluster ID {{ cluster_info._id.$oid }}</mat-card-subtitle>
+      <mat-card-actions>
+        <div *ngIf="!cluster_info.pairing_complete" class="noinstance">
+          <p>NOT YET ACTIVE</p>
+        </div>
+        <button (click)="deleteCluster(cluster_info)" mat-button><i class="bx bxs-trash"></i></button>
+      </mat-card-actions>
+    </div>
   </mat-card>
 </div>

@@ -1,25 +1,23 @@
 <h2 mat-dialog-title>Connection settings</h2>
 <mat-dialog-content class="mat-typography">
-
-  <div style="padding-bottom: 32px; margin: 20px 0 20px 0">
-    <mat-radio-group [(ngModel)]="data.type" required style="flex: 1">
-      <div class="w3-col l6 m6" style="text-align: center">
-        <mat-radio-button (change)="onRadioChange($event)" class="blackRadio" id="dialog-radio" value="latency">
+  <div class="radioDiv">
+    <mat-radio-group [(ngModel)]="data.type" required>
+      <div class="w3-col l6 m6 alignCenter">
+        <mat-radio-button (change)="onRadioChange($event)" class="blackRadio" value="latency">
           latency
         </mat-radio-button>
       </div>
-      <div class="w3-col l6 m6" style="text-align: center">
+      <div class="w3-col l6 m6 alignCenter">
         <mat-radio-button (change)="onRadioChange($event)" class="blackRadio" value="geo">geo</mat-radio-button>
       </div>
     </mat-radio-group>
   </div>
 
   <div class="full-width w3-row">
-
-    <div class="w3-col s12 m4 l4" style="padding-right: 10px">
+    <div class="w3-col s12 m4 l4">
       <mat-form-field class="full-width">
         <mat-label>Threshold</mat-label>
-        <input [(ngModel)]="data.threshold" matInput type="number">
+        <input [(ngModel)]="data.threshold" matInput type="number" />
         <p matSuffix>ms</p>
       </mat-form-field>
     </div>
@@ -27,22 +25,21 @@
     <div class="w3-col s12 m4 l4">
       <mat-form-field class="full-width">
         <mat-label>Rigidness</mat-label>
-        <input [(ngModel)]="data.rigidness" matInput max="100" min="0" type="number">
+        <input [(ngModel)]="data.rigidness" matInput max="100" min="0" type="number" />
         <p matSuffix>%</p>
       </mat-form-field>
     </div>
 
-    <div class="w3-col s12 m4 l4" style="padding-left: 10px">
+    <div class="w3-col s12 m4 l4">
       <mat-form-field class="full-width">
         <mat-label>Convergence Time</mat-label>
-        <input [(ngModel)]="data.convergence_time" matInput type="number">
+        <input [(ngModel)]="data.convergence_time" matInput type="number" />
         <p matSuffix>sec</p>
       </mat-form-field>
     </div>
-
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button [mat-dialog-close]="data" color="primary" style="background-color: #4A7083" mat-button mat-flat-button>Save</button>
-  <button (click)="cancel()" mat-button>Cancel</button>
+  <button [mat-dialog-close]="data" color="primary" class="updateButton" mat-button mat-flat-button>Save</button>
+  <button (click)="cancel()" mat-button color="primary" class="cancelButton">Cancel</button>
 </mat-dialog-actions>

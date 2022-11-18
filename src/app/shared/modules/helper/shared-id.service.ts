@@ -1,15 +1,13 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class SharedIDService {
-
   private clusterService = new BehaviorSubject<any>(null);
   private applicationService = new BehaviorSubject<any>(null);
-  private _userID = "";
+  private _userID = '';
 
   selectCluster(data: any) {
     this.clusterService.next(data);
@@ -20,11 +18,11 @@ export class SharedIDService {
   }
 
   get clusterObserver$() {
-    return this.clusterService.asObservable()
+    return this.clusterService.asObservable();
   }
 
   get applicationObserver$() {
-    return this.applicationService.asObservable()
+    return this.applicationService.asObservable();
   }
 
   set userID(id: string) {
@@ -32,8 +30,6 @@ export class SharedIDService {
   }
 
   get userID() {
-    return this._userID
+    return this._userID;
   }
-
 }
-

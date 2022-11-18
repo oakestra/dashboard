@@ -1,28 +1,25 @@
-import {Injectable} from '@angular/core';
-import {NotificationComponent} from "./notification.component";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import { Injectable } from '@angular/core';
+import { NotificationComponent } from './notification.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class NotificationService {
-
-  massage = ""
+  massage = '';
   type = 0;
-  panelClass: any
+  panelClass: any;
 
-  constructor(private snackBar: MatSnackBar) {
-  }
+  constructor(private snackBar: MatSnackBar) {}
 
   notify(type: Type, data: any) {
-    this.massage = data
-    this.type = type
+    this.massage = data;
+    this.type = type;
 
     if (type == Type.error) {
-      this.panelClass = ['error-snackbar']
+      this.panelClass = ['error-snackbar'];
     } else if (type == Type.success) {
-      this.panelClass = ['success-snackbar']
+      this.panelClass = ['success-snackbar'];
     }
 
     this.snackBar.openFromComponent(NotificationComponent, {
@@ -35,6 +32,5 @@ export class NotificationService {
 export enum Type {
   error,
   information,
-  success
+  success,
 }
-

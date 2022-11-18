@@ -1,7 +1,7 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 .alignRight {
-  text-align: right
+  text-align: right;
 }
 
 .mat-dialog-actions {
@@ -75,7 +75,6 @@ text.id {
   background-color: #28a513;
 }
 
-
 mat-card {
   width: 100%;
   font-size: 1rem;
@@ -85,7 +84,7 @@ mat-card {
 }
 
 mat-card-title {
-  background-color: #4A7083;
+  background-color: #4a7083;
   padding: 16px;
   border-radius: 4px;
   color: white;
@@ -172,7 +171,7 @@ td {
 }
 
 .file-input {
-  display: none
+  display: none;
 }
 
 button:focus {
@@ -189,16 +188,19 @@ body {
   /*grid-template-areas: inherit;*/
 }
 
-header, aside, main, section {
+header,
+aside,
+main,
+section {
   padding: 20px;
 }
 
 header {
-  background: #00C195;
+  background: #00c195;
 }
 
 aside {
-  background: #D3D3D3;
+  background: #d3d3d3;
 }
 
 section {
@@ -229,15 +231,14 @@ aside ul {
 
 aside ul li a {
   text-transform: uppercase;
-  font-size: .7em;
+  font-size: 0.7em;
   padding: 13px 0;
   display: block;
   color: #000;
 }
 
-
 body.shepherd-active::after {
-  content: "";
+  content: '';
   display: block;
   background-color: #000;
   opacity: 0.4;

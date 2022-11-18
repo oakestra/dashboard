@@ -19,3 +19,11 @@
 .correct {
   color: green;
 }
+
+.space {
+  margin-top: 16px;
+}
+
+.updateButton {
+  background-color: #4a7083;
+}

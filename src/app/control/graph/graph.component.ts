@@ -1,12 +1,11 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {ApiService} from "../../shared/modules/api/api.service";
-import {MatDialog} from "@angular/material/dialog";
-import {DialogGraphConnectionSettings} from "../dialogs/graph-content-connection/dialogGraphConnectionSettings";
-import {CleanJsonService} from "../../shared/util/clean-json.service";
-import {SharedIDService} from "../../shared/modules/helper/shared-id.service";
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { ApiService } from '../../shared/modules/api/api.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogGraphConnectionSettings } from '../dialogs/graph-content-connection/dialogGraphConnectionSettings';
+import { CleanJsonService } from '../../shared/util/clean-json.service';
+import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
 
 declare function start(nodes: any, links: any): void;
-
 declare function deleteLink(): void;
 
 @Component({
@@ -15,158 +14,158 @@ declare function deleteLink(): void;
   styleUrls: ['./graph.component.css'],
 })
 export class GraphComponent implements OnChanges {
-
   showConnections = false;
-  nodes: any [] = [];
+  nodes: any[] = [];
   links: any[] = [];
 
   @Output()
   updated = new EventEmitter<string>();
 
   @Input()
-  services: any
+  services: any;
 
-  constructor(public dialog: MatDialog,
-              public api: ApiService,
-              public shardService: SharedIDService) {
-  }
+  constructor(public dialog: MatDialog, public api: ApiService, public shardService: SharedIDService) {}
 
   ngOnChanges() {
     this.showConnections = false;
   }
 
   async openDialog(start: string, target: string, mode: string) {
-    let service: any = await this.getService(start)
-    let conn = this.findCorrectConstraint(target, service.connectivity)
+    const service: any = await this.getService(start);
+    let conn = this.findCorrectConstraint(target, service.connectivity);
 
     let data = {
-      'start_serviceID': start,
-      'target_serviceID': target,
-      'type': "geo",
-      'threshold': 100,
-      'rigidness': 10,
-      'convergence_time': 300,
-    }
+      start_serviceID: start,
+      target_serviceID: target,
+      type: 'geo',
+      threshold: 100,
+      rigidness: 10,
+      convergence_time: 300,
+    };
     if (conn) {
-      conn = conn[0]
+      conn = conn[0];
       data = {
-        'start_serviceID': start,
-        'target_serviceID': target,
-        'type': conn.type,
-        'threshold': conn.threshold,
-        'rigidness': conn.rigidness,
-        'convergence_time': conn.convergence_time,
-      }
+        start_serviceID: start,
+        target_serviceID: target,
+        type: conn.type,
+        threshold: conn.threshold,
+        rigidness: conn.rigidness,
+        convergence_time: conn.convergence_time,
+      };
     }
-    const dialogRef = this.dialog.open(DialogGraphConnectionSettings, {data});
-    dialogRef.afterClosed().subscribe(result => {
+    const dialogRef = this.dialog.open(DialogGraphConnectionSettings, { data });
+    dialogRef.afterClosed().subscribe((result) => {
       if (result.event == 'Save') {
-        this.saveGraphConstrains(result.data)
+        this.saveGraphConstrains(result.data);
       } else if (result.event == 'Cancel' && mode == 'new') {
-        deleteLink()
+        deleteLink();
       } else if (result.event == 'Delete') {
-        this.deleteOnlyLink(start, target)
+        this.deleteOnlyLink(start, target);
       } else if (result.event == 'Switch') {
-        this.openDialog(target, start, 'edit')
+        this.openDialog(target, start, 'edit');
       }
-    })
+    });
   }
 
-
   findCorrectConstraint(target: string, arr: any) {
-    let conn = null
-    for (let a of arr) {
+    let conn = null;
+    for (const a of arr) {
       if (a.target_microservice_id == target) {
         conn = a.con_constraints;
       }
     }
-    return conn
+    return conn;
   }
 
   async saveGraphConstrains(data: any) {
-    let serviceProm: any = await this.getService(data.start_serviceID)
-    let newService = serviceProm
-    let index = newService.connectivity.findIndex((d: any) => d.target_microservice_id == data.target_serviceID)
-    if (index < 0) { // add new constrains
+    const serviceProm: any = await this.getService(data.start_serviceID);
+    const newService = serviceProm;
+    const index = newService.connectivity.findIndex((d: any) => d.target_microservice_id == data.target_serviceID);
+    if (index < 0) {
+      // add new constrains
       newService.connectivity.push({
         target_microservice_id: data.target_serviceID,
-        con_constraints: [{
-          'type': data.type,
-          'threshold': data.threshold,
-          'rigidness': data.rigidness,
-          'convergence_time': data.convergence_time
-        }]
-      })
-    } else { // edit existing constraint
+        con_constraints: [
+          {
+            type: data.type,
+            threshold: data.threshold,
+            rigidness: data.rigidness,
+            convergence_time: data.convergence_time,
+          },
+        ],
+      });
+    } else {
+      // edit existing constraint
       newService.connectivity[index] = {
         target_microservice_id: data.target_serviceID,
-        con_constraints: [{
-          'type': data.type,
-          'threshold': data.threshold,
-          'rigidness': data.rigidness,
-          'convergence_time': data.convergence_time,
-        }]
+        con_constraints: [
+          {
+            type: data.type,
+            threshold: data.threshold,
+            rigidness: data.rigidness,
+            convergence_time: data.convergence_time,
+          },
+        ],
       };
     }
-    this.update(newService)
+    this.update(newService);
   }
 
   async getService(id: string) {
     return new Promise((job) => {
-      this.api.getServiceByID(id).subscribe(x => {
-        job(x)
-      })
-    })
+      this.api.getServiceByID(id).subscribe((x) => {
+        job(x);
+      });
+    });
   }
-
 
   // TODO Move this to a service
   generateSLA(sla: any) {
     let jsonContent = {
-      "api_version": "v2.0",
-      "sla_version": "v2.0",
-      "customerID": this.shardService.userID,
-      "applications": [
+      api_version: 'v2.0',
+      sla_version: 'v2.0',
+      customerID: this.shardService.userID,
+      applications: [
         {
           // "applicationID": this.currentApplication._id.$oid,
           // "application_name": this.currentApplication.application_name,
           // "application_namespace": this.currentApplication.application_namespace,
           // "application_desc": this.currentApplication.application_desc,
-          "microservices": [{}]
+          microservices: [{}],
         },
       ],
-      "args": []
-    }
-    jsonContent.applications[0].microservices = [sla]
-    jsonContent = CleanJsonService.cleanData(jsonContent)
+      args: [],
+    };
+    jsonContent.applications[0].microservices = [sla];
+    jsonContent = CleanJsonService.cleanData(jsonContent);
 
-    return jsonContent
+    return jsonContent;
   }
 
   update(service: any) {
-    let sla = this.generateSLA(service)
-    this.api.updateService(sla, service.microserviceID).subscribe(() => console.log("Updated Constrains"));
+    const sla = this.generateSLA(service);
+    this.api.updateService(sla, service.microserviceID).subscribe(() => console.log('Updated Constrains'));
   }
 
   getNodes() {
-    this.nodes = []
-    for (let service of this.services) {
+    this.nodes = [];
+    for (const service of this.services) {
       this.nodes.push({
         id: service.microservice_name,
-        idNumber: service._id.$oid
+        idNumber: service._id.$oid,
       });
     }
     this.calculateLinks();
   }
 
   calculateLinks() {
-    for (let service of this.services) {
+    for (const service of this.services) {
       if (service.connectivity != undefined) {
-        for (let targetService of service.connectivity) {
+        for (const targetService of service.connectivity) {
           this.links.push({
             source: service._id.$oid,
-            target: targetService.target_microservice_id
-          })
+            target: targetService.target_microservice_id,
+          });
         }
       }
     }
@@ -177,7 +176,7 @@ export class GraphComponent implements OnChanges {
   }
 
   get showConButton() {
-    return this.showConnections ? "Hide Connection Graph" : "Show Connection Graph";
+    return this.showConnections ? 'Hide Connection Graph' : 'Show Connection Graph';
   }
 
   multipleFunctions() {
@@ -188,28 +187,27 @@ export class GraphComponent implements OnChanges {
 
   delete(id: any) {
     this.updated.emit(id);
-    deleteLink()
+    deleteLink();
   }
 
   deleteOnlyLink(start: string, target: string) {
     this.api.getServiceByID(start).subscribe((service: any) => {
-      let index = service.connectivity.findIndex((d: any) => d.target_microservice_id == target)
-      service.connectivity.splice(index, 1)
-      this.update(service)
-    })
+      const index = service.connectivity.findIndex((d: any) => d.target_microservice_id == target);
+      service.connectivity.splice(index, 1);
+      this.update(service);
+    });
     deleteLink(); // deletes Lin in the graph
   }
 
   start() {
-    let linksNew = [];
-    let l = this.links;
-    let n = this.nodes;
-
+    const linksNew = [];
+    const l = this.links;
+    const n = this.nodes;
+    // TODO Write that better
     for (let x = 0; x < l.length; x++) {
       for (let i = 0; i < n.length; i++) {
         for (let j = 0; j < n.length; j++) {
           if (l[x].source == n[i].idNumber && l[x].target == n[j].idNumber) {
-
             // To combine two links between nodes to one, but then you have problems with if you
             // want to delete on connection.
 
@@ -220,7 +218,7 @@ export class GraphComponent implements OnChanges {
             // if (index >= 0) {
             //   linksNew[index] = ({source: n[i], target: n[j], left: true, right: true})
             // } else {
-            linksNew.push({source: n[i], target: n[j], left: false, right: true})
+            linksNew.push({ source: n[i], target: n[j], left: false, right: true });
             // }
           }
         }

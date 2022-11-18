@@ -2,27 +2,21 @@
   <h1>Tasks for the user survey:</h1>
 
   <div *ngIf="!evaluated">
-    <div class="alert alert-info" style="margin-top: 16px">
+    <div class="alert alert-info space">
       Take a short tour in the dashboard at the beginning to get an overview. Just go to "Help" and then click on "Start
       tour".
     </div>
 
-    <div class="alert alert-info" style="margin-top: 8px">
+    <div class="alert alert-info space">
       After taking the tour, try to solve the following tasks. If you have solved all tasks or can't solve any more,
-      click
-      on
-      "Finish tasks".
+      click on "Finish tasks".
     </div>
   </div>
 
-  <mat-accordion class="example-headers-align" style="margin-top: 16px">
-
-
+  <mat-accordion class="example-headers-align space">
     <mat-expansion-panel (opened)="setStep(0)" [expanded]="step === 0" hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          Task 1
-        </mat-panel-title>
+        <mat-panel-title> Task 1 </mat-panel-title>
         <mat-panel-description>
           Create application
           <div>
@@ -44,12 +38,9 @@
       </mat-action-row>
     </mat-expansion-panel>
 
-
     <mat-expansion-panel (opened)="setStep(1)" [expanded]="step === 1" hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          Task 2
-        </mat-panel-title>
+        <mat-panel-title> Task 2 </mat-panel-title>
         <mat-panel-description>
           Service status
           <div>
@@ -80,12 +71,9 @@
       </mat-action-row>
     </mat-expansion-panel>
 
-
     <mat-expansion-panel (opened)="setStep(2)" [expanded]="step === 2" hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          Task 3
-        </mat-panel-title>
+        <mat-panel-title> Task 3 </mat-panel-title>
         <mat-panel-description>
           User management
           <div>
@@ -105,12 +93,9 @@
       </mat-action-row>
     </mat-expansion-panel>
 
-
     <mat-expansion-panel (opened)="setStep(3)" [expanded]="step === 3" hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          Task 4
-        </mat-panel-title>
+        <mat-panel-title> Task 4 </mat-panel-title>
         <mat-panel-description>
           Create new services
           <div>
@@ -121,15 +106,17 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <p>Create two new services in your application "MyApplication" with the following properties, you can leave the
-        other attributes unchanged.</p>
+      <p>
+        Create two new services in your application "MyApplication" with the following properties, you can leave the
+        other attributes unchanged.
+      </p>
 
       Service 1:
       <li>Name: Service1</li>
       <li>Namespace: dev</li>
       <li>Memory: 100</li>
 
-      <br>
+      <br />
       Service 2:
       <li>Name: Service2</li>
       <li>Vcpu: 2</li>
@@ -141,12 +128,9 @@
       </mat-action-row>
     </mat-expansion-panel>
 
-
     <mat-expansion-panel (opened)="setStep(4)" [expanded]="step === 4" hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          Task 5
-        </mat-panel-title>
+        <mat-panel-title> Task 5 </mat-panel-title>
         <mat-panel-description>
           Create connection
           <div>
@@ -157,31 +141,30 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <p>Display the connection graph in the application "MyApplication". Then create a connection between the two
-        services with the following properties:</p>
+      <p>
+        Display the connection graph in the application "MyApplication". Then create a connection between the two
+        services with the following properties:
+      </p>
 
-      <p>The connection should run from Service1 to Service2. </p>
+      <p>The connection should run from Service1 to Service2.</p>
       <li>Type: latency</li>
       <li>Threshold: 300 ms</li>
       <li>Rigidness: 50%</li>
       <li>Convergence Time: 250 sec</li>
-
 
       <mat-action-row>
         <button (click)="pinTask(5)" color="primary" mat-button>Pin Task</button>
         <button (click)="prevStep()" color="warn" mat-button>Previous</button>
       </mat-action-row>
     </mat-expansion-panel>
-
-
   </mat-accordion>
 
-  <div *ngIf="evaluated" class="alert alert-success" style="margin-top: 8px">
-    Thank you for trying to solve the tasks, you have solved {{correctTasks}} out of 5 correctly. Now please logout,
+  <div *ngIf="evaluated" class="alert alert-success space">
+    Thank you for trying to solve the tasks, you have solved {{ correctTasks }} out of 5 correctly. Now please logout,
     go back to the survey and fill in the questions.
   </div>
 
-  <button (click)="evaluateTasks()" color="primary" mat-flat-button style="margin-top: 16px" type="button">
+  <button (click)="evaluateTasks()" color="primary" class="updateButton space" mat-flat-button type="button">
     Finish Tasks
   </button>
 </div>

@@ -50,11 +50,29 @@ text.id {
 
 .graph {
   background: lightgray;
-  border: 2px solid #3B474E;
+  border: 2px solid #3b474e;
   border-radius: 5px;
 }
 
+.graphSide {
+  overflow: hidden;
+  margin-top: 20px;
+}
+
 graph-button {
-  background-color: #4A7083;
+  background-color: #4a7083;
   color: white;
+}
+
+.buttonSide {
+  width: 20vw;
+  float: left;
+}
+
+.updateButton {
+  background-color: #4a7083;
+}
+
+alert-info {
+  margin-top: 8px;
 }

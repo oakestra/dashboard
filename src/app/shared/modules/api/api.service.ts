@@ -1,165 +1,163 @@
-import {Inject, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs/operators";
-import {Observable} from "rxjs";
-import {RestService} from "../../util/rest.service";
-import {UserService} from "../auth/user.service";
-import {NotificationService} from "../notification/notification.service";
-import {environment} from "../../../../environments/environment";
-import {WINDOW} from "../helper/window.providers";
-
+import { Inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { RestService } from '../../util/rest.service';
+import { UserService } from '../auth/user.service';
+import { NotificationService } from '../notification/notification.service';
+import { environment } from '../../../../environments/environment';
+import { WINDOW } from '../helper/window.providers';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class ApiService extends RestService {
+  apiUrl = environment.apiUrl;
 
-  apiUrl = environment.apiUrl
-
-  constructor(http: HttpClient,
-              userService: UserService,
-              notificationService: NotificationService,
-              @Inject(WINDOW) window: Window) {
-    super(http, userService, notificationService, window)
-
+  constructor(
+    http: HttpClient,
+    userService: UserService,
+    notificationService: NotificationService,
+    @Inject(WINDOW) window: Window,
+  ) {
+    super(http, userService, notificationService, window);
   }
 
-///////////////////////////////////////////////////////////////////////////
-///////////////////// Application Functions ///////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////// Application Functions ///////////////////////////////
 
   addApplication(app: any) {
-    return this.doPOSTRequest("/application/", app)
+    return this.doPOSTRequest('/application/', app);
   }
 
   updateApplication(app: any) {
-    return this.doPUTRequest("/application/" + app.applicationID, app)
+    return this.doPUTRequest('/application/' + app.applicationID, app);
   }
 
   deleteApplication(app: any) {
-    return this.doDELRequest("/application/" + app._id.$oid)
+    return this.doDELRequest('/application/' + app._id.$oid);
   }
 
   getAppById(appId: any) {
-    return this.doGETRequest("/application/" + appId)
+    return this.doGETRequest('/application/' + appId);
   }
 
   getApplicationsOfUser(userId: string) {
-    return this.doGETRequest("/applications/" + userId)
+    return this.doGETRequest('/applications/' + userId);
   }
 
   // not used yet, use it later for the admin view
   public getAllApplication() {
-    return this.doGETRequest("/applications/")
+    return this.doGETRequest('/applications/');
   }
 
-
-///////////////////////////////////////////////////////////////////////////
-///////////////////// Cluster Functions ///////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////// Cluster Functions ///////////////////////////////
 
   addCluster(cluster: any) {
-    return this.doPOSTRequest("/cluster/add", cluster)
+    return this.doPOSTRequest('/cluster/add', cluster);
   }
 
   updateCluster(cluster: any) {
-    return this.doPUTRequest("/clusters/" + cluster.clusterID, cluster)
+    return this.doPUTRequest('/clusters/' + cluster.clusterID, cluster);
   }
 
   deleteCluster(clusterId: any) {
-    return this.doDELRequest("/cluster/" + clusterId)
+    return this.doDELRequest('/cluster/' + clusterId);
   }
 
   getClustersOfUser(userId: string | null) {
-    return this.doGETRequest("/clusters/" + userId)
+    return this.doGETRequest('/clusters/' + userId);
   }
 
   getClusterById(clusterId: any) {
-    return this.doGETRequest("/cluster/" + clusterId)
+    return this.doGETRequest('/cluster/' + clusterId);
   }
 
-///////////////////////////////////////////////////////////////////////////
-///////////////////// Service Functions ///////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////// Service Functions ///////////////////////////////////////
 
   addService(service: any) {
-    return this.doPOSTRequest("/service/", service)
+    return this.doPOSTRequest('/service/', service);
   }
 
   updateService(service: any, serviceID: string) {
-    return this.doPUTRequest("/service/" + serviceID, service)
+    return this.doPUTRequest('/service/' + serviceID, service);
   }
 
   deleteService(service: any) {
-    return this.doDELRequest("/service/" + service._id.$oid)
+    return this.doDELRequest('/service/' + service._id.$oid);
   }
 
   deleteInstance(service: any, instance: any) {
-    return this.doDELRequest("/service/" + service._id.$oid + "/instance/" + instance.instance_number)
+    return this.doDELRequest('/service/' + service._id.$oid + '/instance/' + instance.instance_number);
   }
 
   getServiceByID(serviceID: any) {
-    return this.doGETRequest("/service/" + serviceID)
+    return this.doGETRequest('/service/' + serviceID);
   }
 
   getServicesOfApplication(appId: string) {
-    return this.doGETRequest("/services/" + appId)
+    return this.doGETRequest('/services/' + appId);
   }
 
   deployService(service: any) {
-    return this.doPOSTRequest("/service/" + service._id.$oid + "/instance", service)
+    return this.doPOSTRequest('/service/' + service._id.$oid + '/instance', service);
   }
 
-///////////////////////////////////////////////////////////////////////////
-//////////////////// User Functions ///////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+  //////////////////// User Functions ///////////////////////////////////////
 
   public registerUser(user: UserEntity): Observable<any> {
-    return this.doPOSTRequest("/auth/register", user)
+    return this.doPOSTRequest('/auth/register', user);
   }
 
   public updateUser(user: UserEntity) {
-    return this.doPUTRequest("/user/" + user.name, user)
+    return this.doPUTRequest('/user/' + user.name, user);
   }
 
   public deleteUser(user: UserEntity) {
-    return this.doDELRequest("/user/" + user.name)
+    return this.doDELRequest('/user/' + user.name);
   }
 
   public getUserByName(username: string) {
-    return this.doGETRequest("/user/" + username)
+    return this.doGETRequest('/user/' + username);
   }
 
   public getAllUser() {
-    return this.doGETRequest("/users/")
+    return this.doGETRequest('/users/');
   }
 
-  changePassword(username: any, oldPassword: string, newPassword: string) {
-    return this.doPOSTRequest("/user/" + username, {
+  changePassword(username: string, oldPassword: string, newPassword: string) {
+    return this.doPOSTRequest('/user/' + username, {
       oldPassword,
       newPassword,
     });
   }
 
-///////////////////////////////////////////////////////////////////////////
-//////////////////// Functions  for Authorization /////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+  //////////////////// Functions  for Authorization /////////////////////////
 
   public getAuthorization(username: string): Observable<{ roles: UserRole[] }> {
-    return this.doGETRequest("/permission/" + username).pipe(
+    return this.doGETRequest('/permission/' + username).pipe(
       map((authJSON: any) => {
         const roles = Array<UserRole>();
-        for (const r of authJSON["roles"]) {
+        for (const r of authJSON['roles']) {
           roles.push(r);
         }
-        return {roles};
-      })
+        return { roles };
+      }),
     );
   }
 
   public getRoles() {
+    const roles = [
+      { name: 'Admin', description: 'This is the admin role' },
+      { name: 'Application_Provider', description: 'This is the app role' },
+      { name: 'Infrastructure_Provider', description: 'This is the infra role' },
+    ];
 
-    let roles = [{"name": "Admin", "description": "This is the admin role"},
-      {"name": "Application_Provider", "description": "This is the app role"},
-      {"name": "Infrastructure_Provider", "description": "This is the infra role"}]
-
-    return roles
+    return roles;
     // return this.http.get(this.apiUrl + "/roles").pipe(
     //   map((data: any) => {
     //     return {roles: data};
@@ -167,23 +165,23 @@ export class ApiService extends RestService {
     // );
   }
 
-///////////////////////////////////////////////////////////////////////////
-///////////////////// Other Functions ///////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////// Other Functions ///////////////////////////////////////
 
   fileUpload(data: any) {
-    return this.http.post(this.apiUrl + "/uploader", data)
+    return this.http.post(this.apiUrl + '/uploader', data);
   }
 
   resetPassword(username: string) {
-    let obj = {
-      'username': username,
-      'domain': window.location.host
-    }
-    return this.doPOSTPublicRequest("/user/", obj);
+    const obj = {
+      username: username,
+      domain: window.location.host,
+    };
+    return this.doPOSTPublicRequest('/user/', obj);
   }
 
   saveResetPassword(token: string, password: string) {
-    return this.doPUTPublicRequest("/user/", {token, password});
+    return this.doPUTPublicRequest('/user/', { token, password });
   }
 }
 
@@ -191,7 +189,7 @@ export class ApiService extends RestService {
 //////////////////////// Helpful Interfaces ///////////////////////////////
 
 export interface UserEntity {
-  _id: object
+  _id: object;
   name: string;
   password: string;
   email: string;
@@ -200,8 +198,8 @@ export interface UserEntity {
 }
 
 export interface LoginRequest {
-  username: string,
-  password: string
+  username: string;
+  password: string;
 }
 
 export class UserRole {
@@ -209,7 +207,7 @@ export class UserRole {
   description: string;
 
   constructor() {
-    this.name = "";
-    this.description = "";
+    this.name = '';
+    this.description = '';
   }
 }

@@ -1,29 +1,26 @@
 <h2 mat-dialog-title>{{title}}</h2>
 <mat-dialog-content class="mat-typography">
-
   <div class="w3-row">
     <div class="w3-col l6 s12 m6">
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Application ID</mat-label>
-        <input [(ngModel)]="local_data._id.$oid" disabled matInput>
+        <input [(ngModel)]="local_data._id.$oid" disabled matInput />
       </mat-form-field>
     </div>
   </div>
 
   <div class="w3-col l6 s12 m6">
-    <mat-form-field class="full-width" style="padding-right: 8px">
+    <mat-form-field class="full-width input">
       <mat-label>Application Name</mat-label>
       <!--      Is disabled on Update because if you make changes you have to rename all ServiceNames in the DB-->
-      <input [(ngModel)]="local_data.application_name" [disabled]="action ==='Update'"
-             matInput>
+      <input [(ngModel)]="local_data.application_name" [disabled]="action ==='Update'" matInput />
     </mat-form-field>
   </div>
 
-  <div class="w3-col l6 s12 m6" style="padding-left: 8px">
+  <div class="w3-col l6 s12 m6 input">
     <mat-form-field class="full-width">
       <mat-label>Application Namespace</mat-label>
-      <input [(ngModel)]="local_data.application_namespace" [disabled]="action ==='Update'"
-             matInput>
+      <input [(ngModel)]="local_data.application_namespace" [disabled]="action ==='Update'" matInput />
     </mat-form-field>
   </div>
 
@@ -33,12 +30,21 @@
       <textarea [(ngModel)]="local_data.application_desc" cols="2" matInput> </textarea>
     </mat-form-field>
   </div>
-
 </mat-dialog-content>
 
 <mat-dialog-actions class="alignRight">
-  <button (click)="doAction()" color="primary" style="background-color: #4A7083" mat-button mat-flat-button>{{local_data.action}}</button>
-  <button (click)="deleteApplication()" *ngIf="action ==='Update'" style="background-color: #E07074" mat-button mat-flat-button>Delete
+  <button (click)="doAction()" color="primary" class="updateButton" mat-button mat-flat-button>
+    {{local_data.action}}
   </button>
-  <button (click)="closeDialog()" color="primary" style="background-color: #7B97A5" mat-button mat-flat-button>Cancel</button>
+  <button
+    (click)="deleteApplication()"
+    *ngIf="action ==='Update'"
+    color="primary"
+    class="deleteButton"
+    mat-button
+    mat-flat-button
+  >
+    Delete
+  </button>
+  <button (click)="closeDialog()" color="primary" class="cancelButton" mat-button mat-flat-button>Cancel</button>
 </mat-dialog-actions>

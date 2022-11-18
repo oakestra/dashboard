@@ -31,14 +31,13 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   settings = false;
   username = '';
   userID = '';
-  clusterID = '';
   isAdmin = false;
   clusters: any;
   listClusters = false;
   clusterSelected = false;
 
   events: string[] = [];
-  opened: boolean = true;
+  opened = true;
 
   private map: any;
   // FMI Garching coordinates
@@ -83,7 +82,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     this.loadDataCluster();
     this.loadDataApplication();
     this.updatePermissions();
-
     this.initMap();
   }
 
@@ -140,10 +138,10 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       .subscribe((res) => {
         if (res.matches) {
           this.sidenav.mode = 'over';
-          this.sidenav.close().then((_r) => {});
+          this.sidenav.close();
         } else {
           this.sidenav.mode = 'side';
-          this.sidenav.open().then((_r) => {});
+          this.sidenav.open();
         }
       });
   }
@@ -218,7 +216,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   deleteApplication(app: any): void {
     this.api.getServicesOfApplication(app._id.$oid).subscribe((services: any) => {
-      for (let j of services) {
+      for (const j of services) {
         this.api.deleteService(j);
       }
     });
@@ -258,7 +256,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   deleteCluster(cluster: any) {
-    let data = {
+    const data = {
       text: 'Delete cluster: ' + cluster.cluster_name,
       type: 'cluster',
     };

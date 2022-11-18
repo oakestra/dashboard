@@ -1,6 +1,6 @@
 mat-toolbar {
   /* background: #004a9f;*/
-  background: #4A7083;
+  background: #4a7083;
   color: white;
   justify-content: space-between;
 }
@@ -9,7 +9,7 @@ mat-sidenav {
   margin: 16px;
   width: 335px;
   border-right: none;
-  background: #3B474E;
+  background: #3b474e;
   color: white;
   border-radius: 10px;
   padding: 16px;
@@ -32,7 +32,6 @@ mat-sidenav-container {
   height: calc(100vh - 65px);
   flex: 1;
 }
-
 
 .avatar {
   margin-top: 16px;
@@ -60,7 +59,7 @@ mat-divider {
 
 mat-card-title {
   /* background: #004a9f;*/
-  background-color: #4A7083;
+  background-color: #4a7083;
   padding: 16px;
   border-radius: 4px;
   color: white;
@@ -84,15 +83,15 @@ mat-card p {
 
 .appSelectLable {
   /* background: #002b5c;*/
-  background-color: #4A7083;
+  background-color: #4a7083;
 }
 
 body {
-  background-color: #4A7083;
+  background-color: #4a7083;
 }
 
-::ng-deep  .mat-radio-outer-circle {
-  border-color: white
+::ng-deep .mat-radio-outer-circle {
+  border-color: white;
 }
 
 mat-list-item {
@@ -102,7 +101,7 @@ mat-list-item {
 }
 
 mat-list-item:hover {
-  background: #3E4E57;
+  background: #3e4e57;
 }
 
 mat-list-item .icon-link {
@@ -111,7 +110,7 @@ mat-list-item .icon-link {
   justify-content: space-between;
 }
 
-mat-list-item i{
+mat-list-item i {
   height: 50px;
   min-width: 78px;
   text-align: center;
@@ -127,25 +126,24 @@ mat-list-item a {
   text-decoration: none;
 }
 
-mat-list-item a .link_name{
+mat-list-item a .link_name {
   font-size: 16px;
   font-weight: 400;
   color: #fff;
 }
 
-mat-list-item .sub-menu{
+mat-list-item .sub-menu {
   padding: 6px 6px 14px 40px;
   margin-top: -10px;
-  background: #3E4E57;
+  background: #3e4e57;
   /*display: none;*/
 }
-
 
 mat-list-item.showMenu i.bx-chevron-down {
   transform: rotate(-180deg);
 }
 
-mat-list-item .sub-menu mat-list-item{
+mat-list-item .sub-menu mat-list-item {
   color: #fff;
   font-size: 15px;
   padding: 5px 0;
@@ -162,7 +160,7 @@ mat-icon #toolBar {
   cursor: pointer;
 }
 
-mat-card{
+mat-card {
   width: fit-content;
   height: fit-content;
   margin: 8px;
@@ -191,8 +189,31 @@ mat-card{
   width: 100%;
 }
 
-.noinstance{
+.noinstance {
   text-align: center;
-  color: #D3D3D3;
+  color: #d3d3d3;
   font-size: large;
+}
+
+.favicon {
+  height: 64px;
+}
+
+.application-panel {
+  background-color: #3e4e57;
+}
+
+.panel-title {
+  color: white;
+  align-items: center;
+}
+
+.items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidenav-text {
+  color: white;
 }

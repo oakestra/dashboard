@@ -1,5 +1,5 @@
 .title {
-  text-align: center
+  text-align: center;
 }
 
 .dialog-key {
@@ -7,7 +7,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-align: center
+  text-align: center;
 }
 
 .subtitle {
@@ -25,7 +25,7 @@ mat-form-field .text .a {
   padding: 10px;
   font-size: 12px;
   color: #343a40;
-  background: #F6F8F9;
+  background: #f6f8f9;
   border-radius: 10px;
   margin-right: 4px;
   border: none;
@@ -36,7 +36,7 @@ mat-form-field .text .a {
 
 .copy-key mat-button {
   padding: 4px;
-  background: #99CCCC;
+  background: #99cccc;
   font-size: 18px;
   border: none;
   outline: none;
@@ -46,15 +46,15 @@ mat-form-field .text .a {
 }
 
 .copy-key mat-button:active {
-  background: #99CCCC;
+  background: #99cccc;
 }
 
 .copy-key .copy-btn:before {
-  content: "Copied";
+  content: 'Copied';
   position: absolute;
   top: -50px;
   right: 0;
-  background: #4A7083;
+  background: #4a7083;
   padding: 8px 10px;
   border-radius: 20px;
   font-size: 15px;
@@ -62,19 +62,22 @@ mat-form-field .text .a {
 }
 
 .copy-key .copy-btn:after {
-  content:"";
+  content: '';
   position: absolute;
   top: -20px;
   right: 25px;
   width: 10px;
   height: 10px;
-  background: #99CCCC;
+  background: #99cccc;
   transform: rotate(45deg);
   display: none;
 }
 
 .copy-key.active .copy-btn:before,
 .copy-key.active .copy-btn:after {
-  display:block;
+  display: block;
 }
 
+.input {
+  padding-right: 8px;
+}
