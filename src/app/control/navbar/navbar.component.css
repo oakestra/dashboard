@@ -135,8 +135,6 @@ mat-list-item a .link_name {
 mat-list-item .sub-menu {
   padding: 6px 6px 14px 40px;
   margin-top: -10px;
-  background: #3e4e57;
-  /*display: none;*/
 }
 
 mat-list-item.showMenu i.bx-chevron-down {
@@ -216,4 +214,32 @@ mat-card {
 
 .sidenav-text {
   color: white;
+}
+
+.nav-links {
+  padding: 0;
+}
+
+/deep/ .application-panel .mat-expansion-indicator::after {
+  color: white !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

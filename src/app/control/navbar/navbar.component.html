@@ -59,12 +59,9 @@
         <ul class="sub-menu">
           <mat-list-item>
             <div id="applicationTitle">
-              <mat-expansion-panel hideToggle class="application-panel">
+              <mat-expansion-panel class="application-panel">
                 <mat-expansion-panel-header>
-                  <mat-panel-title class="panel-title">
-                    My Applications
-                    <i class="bx bx-chevron-down"></i>
-                  </mat-panel-title>
+                  <mat-panel-title class="panel-title"> My Applications </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div *ngFor="let app of app" class="items">
                   <mat-radio-group (change)="handleChange()" [(ngModel)]="active" routerLink="/control">
@@ -101,12 +98,9 @@
 
         <ul class="sub-menu">
           <mat-list-item>
-            <mat-expansion-panel hideToggle class="application-panel">
+            <mat-expansion-panel class="application-panel">
               <mat-expansion-panel-header>
-                <mat-panel-title class="panel-title">
-                  Registered
-                  <i class="bx bx-chevron-down"></i>
-                </mat-panel-title>
+                <mat-panel-title class="panel-title"> Registered </mat-panel-title>
               </mat-expansion-panel-header>
 
               <div *ngFor="let cluster of clusters" class="items">
@@ -119,14 +113,10 @@
                 </div>
               </div>
             </mat-expansion-panel>
-
-            <!--            TODO Use original mat panels and not the down arrow-->
-            <mat-expansion-panel hideToggle class="application-panel">
+            <br />
+            <mat-expansion-panel class="application-panel">
               <mat-expansion-panel-header>
-                <mat-panel-title class="panel-title">
-                  Active
-                  <i class="bx bx-chevron-down"></i>
-                </mat-panel-title>
+                <mat-panel-title class="panel-title"> Active </mat-panel-title>
               </mat-expansion-panel-header>
 
               <div *ngFor="let cluster of clusters" class="items">
