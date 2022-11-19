@@ -6,6 +6,7 @@ import { UserService } from '../../../shared/modules/auth/user.service';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { Router } from '@angular/router';
 import { NotificationService, Type } from '../../../shared/modules/notification/notification.service';
+import { IUser } from '../../../root/interfaces/user';
 
 @Component({
   selector: 'app-user-edit',
@@ -14,7 +15,7 @@ import { NotificationService, Type } from '../../../shared/modules/notification/
 })
 export class UserEditComponent implements OnInit {
   form: FormGroup;
-  user: any;
+  user: IUser;
   dataReady = false;
 
   constructor(
@@ -32,7 +33,7 @@ export class UserEditComponent implements OnInit {
 
   ngOnInit(): void {
     const username = this.userService.getUsername();
-    this.api.getUserByName(username).subscribe((data: any) => {
+    this.api.getUserByName(username).subscribe((data: IUser) => {
       this.user = data;
       this.dataReady = true;
       this.form.patchValue({ email: this.user.email });
@@ -47,7 +48,7 @@ export class UserEditComponent implements OnInit {
     });
   }
 
-  openDialog(obj: any) {
-    this.dialog.open(DialogChangePasswordView, { data: obj });
+  openDialog(user: IUser) {
+    this.dialog.open(DialogChangePasswordView, { data: user });
   }
 }

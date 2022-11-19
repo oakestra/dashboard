@@ -8,6 +8,7 @@ import { DialogConfirmation } from '../dialogs/confirmation/dialogConfirmation';
 import { NotificationService, Type } from '../../shared/modules/notification/notification.service';
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
+import { IService } from '../../root/interfaces/service';
 
 @Component({
   selector: 'dev-home',
@@ -19,7 +20,6 @@ export class DevHomeComponent implements OnInit, OnDestroy {
   servicesCount = 0;
   appName = '';
   appID = '';
-
   clusterName = '';
   clusterID = '';
   cluster_info: any;
@@ -111,7 +111,7 @@ export class DevHomeComponent implements OnInit, OnDestroy {
   }
 
   deleteServiceWithGraph(id: string) {
-    const service = { _id: { $oid: id } };
+    const service: IService = { _id: { $oid: id } };
     this.api.deleteService(service).subscribe(() => {
       this.loadData();
     });
@@ -147,7 +147,7 @@ export class DevHomeComponent implements OnInit, OnDestroy {
   }
 
   deployAllServices() {
-    for (let j of this.services) {
+    for (const j of this.services) {
       this.deployService(j);
     }
   }

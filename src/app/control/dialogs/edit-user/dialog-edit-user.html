@@ -5,9 +5,9 @@
       <mat-form-field [appearance]="action === 'add'? 'legacy' : 'fill'" class="full-width input">
         <mat-label>Username</mat-label>
         <input [disabled]="action === 'edit'" formControlName="name" matInput required />
-        <div *ngIf="name!.touched && name.invalid">
-          <div *ngIf="name.errors!.containsWhitespace" class="alert alert-danger">Username contains whitespace</div>
-        </div>
+        <!--        <TODO div *ngIf="name!.touched && name.invalid">-->
+        <div class="alert alert-danger">Username contains whitespace</div>
+        <!--        </div>-->
       </mat-form-field>
     </div>
 

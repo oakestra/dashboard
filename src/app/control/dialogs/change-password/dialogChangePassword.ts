@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { NotificationService, Type } from '../../../shared/modules/notification/notification.service';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { IUser } from '../../../root/interfaces/user';
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -18,7 +19,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 })
 export class DialogChangePasswordView {
   action: string;
-  local_data: any;
+  user: IUser;
 
   form = new FormGroup(
     {
@@ -35,8 +36,8 @@ export class DialogChangePasswordView {
     private api: ApiService,
     public notifyService: NotificationService,
   ) {
-    this.local_data = { ...data };
-    this.action = this.local_data.action;
+    this.user = { ...data } as IUser;
+    this.action = data.action;
   }
 
   get oldPassword() {
@@ -56,7 +57,7 @@ export class DialogChangePasswordView {
   }
 
   updatePassword(): void {
-    const username = this.local_data.name;
+    const username = this.user.name;
     // TODO Fix this try to use Formbuilder
     this.api.changePassword(username, this.oldPassword?.value!, this.newPassword?.value!).subscribe(() => {
       this.notifyService.notify(Type.success, 'Password changed');

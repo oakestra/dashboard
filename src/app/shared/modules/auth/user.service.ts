@@ -4,9 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import jwt_decode from 'jwt-decode';
-import { LoginRequest } from '../api/api.service';
 import { NotificationService, Type } from '../notification/notification.service';
 import { environment } from '../../../../environments/environment';
+import { ILoginRequest } from '../../../root/interfaces/user';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +28,7 @@ export class UserService {
     return this.getDecodedAccessToken(this.getAuthTokenRaw())['sub'];
   }
 
-  login(request: LoginRequest): Observable<boolean> {
+  login(request: ILoginRequest): Observable<boolean> {
     return this.http.post<Response>(this.apiUrl + '/auth/login', request).pipe(
       map((response: any) => {
         this.loggedIn = true;

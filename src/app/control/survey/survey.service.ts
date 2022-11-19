@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ApiService, UserEntity } from '../../shared/modules/api/api.service';
+import { ApiService } from '../../shared/modules/api/api.service';
+import { IUser } from '../../root/interfaces/user';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class SurveyService {
   resetSurvey() {
     localStorage.removeItem('location');
 
-    const user: UserEntity = {
+    const user: IUser = {
       _id: { $oid: '123' },
       name: 'Evil-user',
       password: 'password',

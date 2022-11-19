@@ -9,6 +9,8 @@ import { CleanJsonService } from '../../shared/util/clean-json.service';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { NotificationService, Type } from '../../shared/modules/notification/notification.service';
+import { IApplication } from '../../root/interfaces/application';
+import { IService } from '../../root/interfaces/service';
 
 @Component({
   selector: 'deploy-form',
@@ -21,11 +23,11 @@ export class DeployFormComponent implements OnInit, OnDestroy {
   filename = 'Select File to Upload';
   fileArrayForm = new FormArray([]);
   canViewLatConstrains: boolean[] = [];
-  service: any = null; // TODO create Service interface
+  service: any = null;
   editingService = false; // True if the user is editing the service
   currentServiceID = ''; // This one is uses to get the service from the DB
   applicationId = '';
-  currentApplication: any; // TODO create Application interface
+  currentApplication: IApplication;
   argsArray: string[] = [];
   argsText = '';
   allServices: any; // For the Dropdown list of the connections
@@ -107,11 +109,11 @@ export class DeployFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.paramMap.subscribe((pram) => {
-      if (pram.get('id') != null) {
+      if (pram.get('id') !== null) {
         this.editingService = true;
         this.currentServiceID = pram.get('id')!; // Set the id to the id in the URL
 
-        this.api.getServiceByID(this.currentServiceID).subscribe((service: any) => {
+        this.api.getServiceByID(this.currentServiceID).subscribe((service: IService) => {
           this.service = service;
           this.createEditFormGroup();
         });

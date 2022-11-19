@@ -7,6 +7,9 @@ import { UserService } from '../auth/user.service';
 import { NotificationService } from '../notification/notification.service';
 import { environment } from '../../../../environments/environment';
 import { WINDOW } from '../helper/window.providers';
+import { IUser, IUserRole } from '../../../root/interfaces/user';
+import { IApplication } from '../../../root/interfaces/application';
+import { IService } from '../../../root/interfaces/service';
 
 @Injectable({
   providedIn: 'root',
@@ -26,19 +29,19 @@ export class ApiService extends RestService {
   ///////////////////////////////////////////////////////////////////////////
   ///////////////////// Application Functions ///////////////////////////////
 
-  addApplication(app: any) {
+  addApplication(app: IApplication) {
     return this.doPOSTRequest('/application/', app);
   }
 
-  updateApplication(app: any) {
-    return this.doPUTRequest('/application/' + app.applicationID, app);
+  updateApplication(app: IApplication) {
+    return this.doPUTRequest('/application/' + app._id.$oid, app);
   }
 
-  deleteApplication(app: any) {
+  deleteApplication(app: IApplication) {
     return this.doDELRequest('/application/' + app._id.$oid);
   }
 
-  getAppById(appId: any) {
+  getAppById(appId: string) {
     return this.doGETRequest('/application/' + appId);
   }
 
@@ -46,23 +49,10 @@ export class ApiService extends RestService {
     return this.doGETRequest('/applications/' + userId);
   }
 
-  // not used yet, use it later for the admin view
-  public getAllApplication() {
-    return this.doGETRequest('/applications/');
-  }
-
   ///////////////////////////////////////////////////////////////////////////
   ///////////////////// Cluster Functions ///////////////////////////////
 
-  addCluster(cluster: any) {
-    return this.doPOSTRequest('/cluster/add', cluster);
-  }
-
-  updateCluster(cluster: any) {
-    return this.doPUTRequest('/clusters/' + cluster.clusterID, cluster);
-  }
-
-  deleteCluster(clusterId: any) {
+  deleteCluster(clusterId: string) {
     return this.doDELRequest('/cluster/' + clusterId);
   }
 
@@ -70,30 +60,30 @@ export class ApiService extends RestService {
     return this.doGETRequest('/clusters/' + userId);
   }
 
-  getClusterById(clusterId: any) {
+  getClusterById(clusterId: string) {
     return this.doGETRequest('/cluster/' + clusterId);
   }
 
   ///////////////////////////////////////////////////////////////////////////
   ///////////////////// Service Functions ///////////////////////////////////////
 
-  addService(service: any) {
+  addService(service: IService) {
     return this.doPOSTRequest('/service/', service);
   }
-
+  // sla and not service is here the argument?
   updateService(service: any, serviceID: string) {
     return this.doPUTRequest('/service/' + serviceID, service);
   }
 
-  deleteService(service: any) {
+  deleteService(service: IService) {
     return this.doDELRequest('/service/' + service._id.$oid);
   }
 
-  deleteInstance(service: any, instance: any) {
+  deleteInstance(service: IService, instance: any) {
     return this.doDELRequest('/service/' + service._id.$oid + '/instance/' + instance.instance_number);
   }
 
-  getServiceByID(serviceID: any) {
+  getServiceByID(serviceID: string): Observable<IService> {
     return this.doGETRequest('/service/' + serviceID);
   }
 
@@ -101,26 +91,26 @@ export class ApiService extends RestService {
     return this.doGETRequest('/services/' + appId);
   }
 
-  deployService(service: any) {
+  deployService(service: IService) {
     return this.doPOSTRequest('/service/' + service._id.$oid + '/instance', service);
   }
 
   ///////////////////////////////////////////////////////////////////////////
   //////////////////// User Functions ///////////////////////////////////////
 
-  public registerUser(user: UserEntity): Observable<any> {
+  public registerUser(user: IUser): Observable<any> {
     return this.doPOSTRequest('/auth/register', user);
   }
 
-  public updateUser(user: UserEntity) {
+  public updateUser(user: IUser) {
     return this.doPUTRequest('/user/' + user.name, user);
   }
 
-  public deleteUser(user: UserEntity) {
+  public deleteUser(user: IUser) {
     return this.doDELRequest('/user/' + user.name);
   }
 
-  public getUserByName(username: string) {
+  public getUserByName(username: string): Observable<IUser> {
     return this.doGETRequest('/user/' + username);
   }
 
@@ -138,10 +128,10 @@ export class ApiService extends RestService {
   ///////////////////////////////////////////////////////////////////////////
   //////////////////// Functions  for Authorization /////////////////////////
 
-  public getAuthorization(username: string): Observable<{ roles: UserRole[] }> {
+  public getAuthorization(username: string): Observable<{ roles: IUserRole[] }> {
     return this.doGETRequest('/permission/' + username).pipe(
       map((authJSON: any) => {
-        const roles = Array<UserRole>();
+        const roles = Array<IUserRole>();
         for (const r of authJSON['roles']) {
           roles.push(r);
         }
@@ -151,7 +141,7 @@ export class ApiService extends RestService {
   }
 
   public getRoles() {
-    const roles = [
+    const roles: IUserRole[] = [
       { name: 'Admin', description: 'This is the admin role' },
       { name: 'Application_Provider', description: 'This is the app role' },
       { name: 'Infrastructure_Provider', description: 'This is the infra role' },
@@ -182,32 +172,5 @@ export class ApiService extends RestService {
 
   saveResetPassword(token: string, password: string) {
     return this.doPUTPublicRequest('/user/', { token, password });
-  }
-}
-
-///////////////////////////////////////////////////////////////////////////
-//////////////////////// Helpful Interfaces ///////////////////////////////
-
-export interface UserEntity {
-  _id: object;
-  name: string;
-  password: string;
-  email: string;
-  created_at: string;
-  roles: Array<UserRole>;
-}
-
-export interface LoginRequest {
-  username: string;
-  password: string;
-}
-
-export class UserRole {
-  name: string;
-  description: string;
-
-  constructor() {
-    this.name = '';
-    this.description = '';
   }
 }

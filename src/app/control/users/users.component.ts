@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { ApiService, UserEntity, UserRole } from '../../shared/modules/api/api.service';
+import { ApiService } from '../../shared/modules/api/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditUserView } from '../dialogs/edit-user/dialogEditUser';
 import { DatePipe } from '@angular/common';
 import { NotificationService, Type } from '../../shared/modules/notification/notification.service';
 import { DialogConfirmation } from '../dialogs/confirmation/dialogConfirmation';
+import { IUser, IUserRole } from '../../root/interfaces/user';
 
 @Component({
   templateUrl: './users.component.html',
@@ -15,11 +16,11 @@ import { DialogConfirmation } from '../dialogs/confirmation/dialogConfirmation';
 export class UsersComponent implements OnInit {
   displayedColumns: string[] = ['name', 'created_at', 'roles', 'symbol'];
 
-  users: Array<UserEntity> = [];
-  searchedUsers: Array<UserEntity> = [];
+  users: Array<IUser> = [];
+  searchedUsers: Array<IUser> = [];
   action = '';
   searchText = '';
-  roles: UserRole[] = [];
+  roles: IUserRole[] = [];
   selectedItems = [''];
   dropdown = new FormControl();
   dropdownList: string[] = [];
@@ -104,7 +105,7 @@ export class UsersComponent implements OnInit {
     this.searchedUsers = this.users.filter((user) => this.nameFilter(user) && this.roleFilter(user));
   }
 
-  nameFilter(user: UserEntity): boolean {
+  nameFilter(user: IUser): boolean {
     return (
       !this.searchText ||
       this.searchText.length === 0 ||
@@ -112,19 +113,20 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  roleFilter(user: UserEntity): boolean {
+  roleFilter(user: IUser): boolean {
     return (
       !this.selectedItems ||
       this.selectedItems.length === 0 ||
       this.selectedItems.some((searchedRole: any) => {
         return (
-          (searchedRole === 'None' && user.roles.length === 0) || user.roles.some((role) => role.name === searchedRole)
+          (searchedRole === 'None' && user.roles.length === 0) ||
+          user.roles.some((role: IUserRole) => role.name === searchedRole)
         );
       })
     );
   }
 
-  deleteUser(user: UserEntity): void {
+  deleteUser(user: IUser): void {
     this.api.deleteUser(user).subscribe(
       () => {
         this.notifyService.notify(Type.success, 'User ' + user.name + ' deleted successfully!');
@@ -178,11 +180,11 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  updateUser(user: UserEntity) {
+  updateUser(user: IUser) {
     this.api.updateUser(user).subscribe(() => this.loadData());
   }
 
-  addUser(user: UserEntity) {
+  addUser(user: IUser) {
     if (user.name.length !== 0 && user.password.length !== 0) {
       user.created_at = this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm')!;
       this.api.registerUser(user).subscribe(

@@ -1,6 +1,8 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { environment } from '../../../../environments/environment';
+import { IService } from '../../../root/interfaces/service';
+import { IInstance } from '../../../root/interfaces/instance';
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -12,15 +14,18 @@ import { environment } from '../../../../environments/environment';
     '.cancelButton{background-color: #7b97a5}',
   ],
 })
+
+// TODO Check if this works as it should and write it better
 export class DialogServiceStatusView {
   // assuming grafana is running on port 80
   tmp = environment.apiUrl.split(':');
   grafanaLink = this.tmp[0] + ':' + this.tmp[1];
-  instance: any = undefined;
-  service: any = undefined;
+  instance: IInstance;
+  service: IService;
   status = '';
   details = '';
   _statusDetails: Map<string, string> = new Map<string, string>();
+  instanceCount = 1;
 
   constructor(
     public dialogRef: MatDialogRef<DialogServiceStatusView>,
@@ -56,17 +61,16 @@ export class DialogServiceStatusView {
     // An entire microservice was passed and not just one instance
     if ('job_name' in this.instance) {
       this.service = {
-        instanceCount: this.instance.instance_list.length,
+        _id: { $oid: '' },
         addresses: {
           rr_ip: 'not defined',
         },
       };
-
+      this.instanceCount = this.instance.instance_list.length;
       if ('addresses' in this.instance) {
         this.service.addresses = this.instance.addresses;
       }
       this.details = 'Status of an entire microservices. Current status: ' + this.status;
-      this.instance = null;
     }
   }
 

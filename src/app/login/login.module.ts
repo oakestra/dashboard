@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
-import { routes } from './landingpage.routing';
-import { LoginComponent } from './login/login.component';
+import { routes } from './login.routing';
+import { LoginComponent } from './components/login/login.component';
 import { RouterModule } from '@angular/router';
-import { LandingpageComponent } from './landingpage.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './components/register/register.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -30,7 +29,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDialogModule,
   ],
   providers: [],
-  declarations: [LandingpageComponent, LoginComponent, ResetPasswordComponent, RegisterComponent],
+  declarations: [LoginComponent, ResetPasswordComponent, RegisterComponent],
   exports: [RouterModule],
 })
-export class LandingPageModule {}
+export class LoginModule {}

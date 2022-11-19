@@ -8,13 +8,13 @@
     <line-chart [instance_list]="instance"></line-chart>
     <p><b>Disk:</b> {{instance.disk}}</p>
     <p><b>Cluster:</b> {{instance.cluster_id}}</p>
-    <p><b>Node IP:</b> {{instance.publicip}}</p>
+    <p><b>Node IP:</b> {{instance.public_ip}}</p>
 
     <a [href]="grafanaLink" rel="noopener noreferrer" target="_blank">View in Grafana</a>
   </div>
   <ng-template #serviceDetails>
     <p><b>Addresses:</b> {{service.addresses | json}}</p>
-    <p><b>Number of Instances:</b> {{service.instanceCount}}</p>
+    <p><b>Number of Instances:</b> {{instanceCount}}</p>
   </ng-template>
 </mat-dialog-content>
 

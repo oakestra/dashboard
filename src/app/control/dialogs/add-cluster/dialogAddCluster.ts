@@ -57,7 +57,7 @@ export class DialogAddClusterView implements OnInit {
     }).addTo(this.map);
 
     // Search location in map
-    let search = GeoSearchControl({
+    const search = GeoSearchControl({
       provider: new OpenStreetMapProvider(),
       marker: {
         draggable: true,

@@ -9,7 +9,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('src/app/landingpage/landingpage.module').then((m) => m.LandingPageModule),
+    loadChildren: () => import('src/app/login/login.module').then((m) => m.LoginModule),
   },
   {
     path: '**',

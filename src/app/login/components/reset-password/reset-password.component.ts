@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../../shared/modules/api/api.service';
-import { NotificationService, Type } from '../../shared/modules/notification/notification.service';
+import { ApiService } from '../../../shared/modules/api/api.service';
+import { NotificationService, Type } from '../../../shared/modules/notification/notification.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({

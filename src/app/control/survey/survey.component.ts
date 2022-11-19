@@ -3,6 +3,7 @@ import { ApiService } from '../../shared/modules/api/api.service';
 import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
 import { SurveyService } from './survey.service';
 import { SurveyNotificationService } from './survey-notification.service';
+import { IApplication } from '../../root/interfaces/application';
 
 @Component({
   selector: 'app-survey',
@@ -14,7 +15,7 @@ export class SurveyComponent implements OnInit {
   evaluated = false;
   correctTasks = 0;
   taskResults = [false, false, false, false, false];
-  myapp: any;
+  myapp: IApplication;
 
   constructor(
     public surveyService: SurveyService,

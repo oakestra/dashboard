@@ -1,6 +1,7 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { IUser } from '../../../root/interfaces/user';
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -16,7 +17,7 @@ import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 export class DialogEditUserView {
   action: string;
   title: string;
-  local_data: any;
+  user: IUser;
   form;
   rolDB: any;
   buttonText = '';
@@ -27,7 +28,7 @@ export class DialogEditUserView {
     //@Optional() is used to prevent error if no data is passed
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-    this.local_data = data.obj;
+    this.user = data.obj;
     this.action = data.action;
     this.rolDB = data.roles;
     this.title = 'Editing user...';
@@ -36,12 +37,12 @@ export class DialogEditUserView {
       this.buttonText = 'Save changes';
 
       this.form = fb.group({
-        name: [this.local_data.name, UserValidators.containsWhitespace],
-        email: [this.local_data.email],
+        name: ['', UserValidators.containsWhitespace],
+        email: [this.user.email],
         roles: fb.group({
-          Admin: this.local_data.roles.some((r: any) => r.name == 'Admin'),
-          Application_Provider: this.local_data.roles.some((r: any) => r.name == 'Application_Provider'),
-          Infrastructure_Provider: this.local_data.roles.some((r: any) => r.name == 'Infrastructure_Provider'),
+          Admin: this.user.roles.some((r: any) => r.name == 'Admin'),
+          Application_Provider: this.user.roles.some((r: any) => r.name == 'Application_Provider'),
+          Infrastructure_Provider: this.user.roles.some((r: any) => r.name == 'Infrastructure_Provider'),
         }),
       });
     } else {
@@ -69,7 +70,7 @@ export class DialogEditUserView {
 
   doAction() {
     const roles = this.form.value.roles;
-    this.local_data.roles = [];
+    this.user.roles = [];
 
     // TODO FIX ME -> check what is to fix here and why the working code is commented
     // check in the backend if the structure has changed

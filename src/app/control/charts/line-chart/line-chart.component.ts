@@ -16,6 +16,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
+import { IInstance } from '../../../root/interfaces/instance';
 
 declare function initMap(lng: number, lat: number, radius: number): void;
 
@@ -26,7 +27,7 @@ declare function initMap(lng: number, lat: number, radius: number): void;
 })
 export class LineChartComponent implements OnInit {
   // TODO create Interface
-  @Input() instance_list: any;
+  @Input() instance_list: IInstance;
 
   constructor() {
     Chart.register(

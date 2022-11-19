@@ -8,21 +8,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./help.component.css'],
 })
 export class HelpComponent {
-  defaultStepOptions: any;
+  defaultStepOptions;
   productSteps: any;
-  builtInButtons: any;
-  lastButtons: any;
+  builtInButtons;
+  lastButtons;
 
   constructor(private shepherdService: ShepherdService, private router: Router) {
     this.builtInButtons = [
       {
-        action(): any {
+        action() {
           return shepherdService.back();
         },
         text: 'BACK',
       },
       {
-        action(): any {
+        action() {
           return shepherdService.next();
         },
         text: 'NEXT',
@@ -32,13 +32,13 @@ export class HelpComponent {
 
     this.lastButtons = [
       {
-        action(): any {
+        action() {
           return shepherdService.back();
         },
         text: 'BACK',
       },
       {
-        action(): any {
+        action() {
           router.navigate(['/control/survey']);
           return shepherdService.next();
         },

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../../shared/modules/auth/user.service';
-import { AuthService } from '../../shared/modules/auth/auth.service';
-import { ApiService, LoginRequest } from '../../shared/modules/api/api.service';
-import { NotificationService, Type } from '../../shared/modules/notification/notification.service';
-import { environment } from '../../../environments/environment';
+import { UserService } from '../../../shared/modules/auth/user.service';
+import { AuthService } from '../../../shared/modules/auth/auth.service';
+import { ApiService } from '../../../shared/modules/api/api.service';
+import { NotificationService, Type } from '../../../shared/modules/notification/notification.service';
+import { environment } from '../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ILoginRequest } from '../../../root/interfaces/user';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +35,7 @@ export class LoginComponent {
     const username = this.form.get('username');
     const password = this.form.get('password');
     if (username?.valid && password?.valid) {
-      const loginRequest: LoginRequest = {
+      const loginRequest: ILoginRequest = {
         username: username.value,
         password: password.value,
       };
