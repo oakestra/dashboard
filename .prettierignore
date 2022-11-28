@@ -1,0 +1,6 @@
+**/.angular
+**/.github
+**/node_modules
+**/dist
+*.min.css
+*.min.js
