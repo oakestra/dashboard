@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogGraphConnectionSettings } from '../dialogs/graph-content-connection/dialogGraphConnectionSettings';
+import { DialogGraphConnectionView } from '../dialogs/graph-content-connection/dialog-graph-connection-view.component';
 import { CleanJsonService } from '../../shared/util/clean-json.service';
 import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
 
@@ -53,7 +53,7 @@ export class GraphComponent implements OnChanges {
         convergence_time: conn.convergence_time,
       };
     }
-    const dialogRef = this.dialog.open(DialogGraphConnectionSettings, { data });
+    const dialogRef = this.dialog.open(DialogGraphConnectionView, { data });
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event == 'Save') {
         this.saveGraphConstrains(result.data);

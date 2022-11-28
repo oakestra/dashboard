@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div *ngFor="let cluster of clusters">
+      <mat-card id="my_card">
+        <mat-card-title>{{ cluster.cluster_name }}</mat-card-title>
+        <mat-card-subtitle>Cluster ID {{ cluster._id.$oid }}</mat-card-subtitle>
+        <mat-card-content *ngIf="cluster.pairing_complete">
+          <div class="map-container">
+            <div class="map-frame">
+              <div id="card_map"></div>
+              <p>The cluster is located in: [{{ cluster.cluster_latitude }}, {{ cluster.cluster_longitude }}]</p>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button *ngIf="!cluster.pairing_complete" mat-button>
+            <div *ngIf="!cluster.pairing_complete" class="noinstance">
+              <p>NOT YET ACTIVE</p>
+            </div>
+          </button>
+          <button (click)="deleteCluster(cluster)" mat-button><mat-icon>delete</mat-icon></button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

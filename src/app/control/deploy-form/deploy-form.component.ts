@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DialogConnectionSettings } from '../dialogs/content-connection/dialogConnectionSettings';
+import { DialogConnectionSettingsView } from '../dialogs/content-connection/dialog-connection-settings-view.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -219,7 +219,7 @@ export class DeployFormComponent implements OnInit, OnDestroy {
   // Dialog for the connection settings
   openDialog(index: number) {
     let data = this.conConstrainsArray[index].value[0];
-    const dialogRef = this.dialog.open(DialogConnectionSettings, { data });
+    const dialogRef = this.dialog.open(DialogConnectionSettingsView, { data });
 
     dialogRef.afterClosed().subscribe((result) => {
       this.saveDialogData(result, index);

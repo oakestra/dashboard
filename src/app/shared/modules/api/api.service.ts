@@ -45,7 +45,7 @@ export class ApiService extends RestService {
     return this.doGETRequest('/application/' + appId);
   }
 
-  getApplicationsOfUser(userId: string) {
+  getApplicationsOfUser(userId: string): Observable<IApplication[]> {
     return this.doGETRequest('/applications/' + userId);
   }
 
@@ -87,7 +87,7 @@ export class ApiService extends RestService {
     return this.doGETRequest('/service/' + serviceID);
   }
 
-  getServicesOfApplication(appId: string) {
+  getServicesOfApplication(appId: string): Observable<IService[]> {
     return this.doGETRequest('/services/' + appId);
   }
 

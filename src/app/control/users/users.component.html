@@ -3,7 +3,7 @@
     <mat-card-title>User Management</mat-card-title>
 
     <div>
-      <button (click)="openDialog('add', {})" color="primary" mat-flat-button class="updateButton">
+      <button (click)="openDialog(DialogAction.ADD, null)" color="primary" mat-flat-button class="updateButton">
         <mat-icon>add_circle_outline</mat-icon>
         Create New User
       </button>
@@ -74,7 +74,7 @@
       <ng-container matColumnDef="symbol">
         <th *matHeaderCellDef mat-header-cell class="alignCenter"></th>
         <td *matCellDef="let element" mat-cell class="alignRight">
-          <button (click)="openDialog('edit', element)" mat-icon-button>
+          <button (click)="openDialog(DialogAction.UPDATE, element)" mat-icon-button>
             <span><mat-icon>settings</mat-icon></span>
           </button>
           <button (click)="openDeleteDialog(element)" mat-icon-button>

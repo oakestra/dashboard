@@ -2,7 +2,7 @@
   <mat-card class="serviceCard">
     <mat-card-title>Configure Service</mat-card-title>
     <div>
-      <mat-tab-group animationDuration="0ms" class="mat-elevation-z4">
+      <mat-tab-group animationDuration="0ms" class="mat-elevation-z4" mat-stretch-tabs>
         <mat-tab label="FORM">
           <form (ngSubmit)="onSubmit()" *ngIf="service" [formGroup]="form">
             <div class="w3-col l6 s12 leftInput">
@@ -134,7 +134,7 @@
               </mat-form-field>
 
               <div class="file-upload">
-                <button (click)="fileUploadCode.click()" class="upload-btn" mat-mini-fab type="button">
+                <button (click)="fileUploadCode.click()" class="add-btn" mat-mini-fab type="button">
                   <mat-icon>attach_file</mat-icon>
                 </button>
                 <input #fileUploadCode (change)="onFileSelected($event, 0, 'code')" class="file-input" type="file" />
@@ -155,9 +155,8 @@
                   value=""
                 />
               </mat-form-field>
-
               <div class="file-upload">
-                <button (click)="fileUploadState.click()" class="upload-btn" mat-mini-fab type="button">
+                <button (click)="fileUploadState.click()" class="add-btn" mat-mini-fab type="button">
                   <mat-icon>attach_file</mat-icon>
                 </button>
                 <input #fileUploadState (change)="onFileSelected($event, 1, 'state')" class="file-input" type="file" />
@@ -210,7 +209,7 @@
                 />
               </mat-form-field>
 
-              <div class="full-width" formGroupName="instances" class="instance">
+              <div class="full-width instance" formGroupName="instances">
                 <p>Instances:</p>
                 <div class="w3-col l3 m4 s12 w3-row-padding">
                   <mat-form-field>
@@ -239,7 +238,7 @@
 
             <div>
               <p class="addButtonDiv">Files:</p>
-              <button (click)="addFileInput()" mat-icon-button type="button">
+              <button (click)="addFileInput()" class="add-btn" mat-mini-fab type="button">
                 <mat-icon>add</mat-icon>
               </button>
             </div>
@@ -282,7 +281,7 @@
 
             <div>
               <h4 class="addButtonDiv">Constraints:</h4>
-              <button [matMenuTriggerFor]="selectConstrains" mat-icon-button type="button">
+              <button [matMenuTriggerFor]="selectConstrains" class="add-btn" mat-mini-fab type="button">
                 <mat-icon>add</mat-icon>
               </button>
               <mat-menu #selectConstrains="matMenu" yPosition="above">
@@ -391,7 +390,7 @@
 
             <div>
               <h4 class="addButtonDiv">Connectivity:</h4>
-              <button (click)="addConnectivity()" mat-icon-button type="button">
+              <button (click)="addConnectivity()" class="add-btn" mat-mini-fab type="button">
                 <mat-icon>add</mat-icon>
               </button>
             </div>
@@ -463,7 +462,7 @@
               <button
                 (click)="uploadDocument()"
                 [disabled]="file === undefined"
-                class="upload-btn"
+                class="upload-btn updateButton"
                 color="primary"
                 mat-flat-button
                 type="button"

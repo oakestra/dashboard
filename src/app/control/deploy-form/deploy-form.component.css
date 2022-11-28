@@ -58,3 +58,11 @@ button {
   width: 80%;
   float: left;
 }
+
+.add-btn {
+  background-color: #4a7083;
+}
+
+.addButtonDiv {
+  padding: 10px;
+}

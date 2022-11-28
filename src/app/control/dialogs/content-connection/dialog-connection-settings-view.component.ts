@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatRadioChange } from '@angular/material/radio';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DialogGraphConnectionSettings } from '../graph-content-connection/dialogGraphConnectionSettings';
+import { DialogGraphConnectionView } from '../graph-content-connection/dialog-graph-connection-view.component';
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -15,11 +15,8 @@ import { DialogGraphConnectionSettings } from '../graph-content-connection/dialo
     '.deleteButton{background-color: #e07074}',
   ],
 })
-export class DialogConnectionSettings {
-  constructor(
-    public dialogRef: MatDialogRef<DialogGraphConnectionSettings>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-  ) {}
+export class DialogConnectionSettingsView {
+  constructor(public dialogRef: MatDialogRef<DialogGraphConnectionView>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   canViewLatConstrains = true;
 

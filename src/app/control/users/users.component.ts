@@ -6,14 +6,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogEditUserView } from '../dialogs/edit-user/dialogEditUser';
 import { DatePipe } from '@angular/common';
 import { NotificationService, Type } from '../../shared/modules/notification/notification.service';
-import { DialogConfirmation } from '../dialogs/confirmation/dialogConfirmation';
+import { DialogConfirmationView } from '../dialogs/confirmation/dialogConfirmation';
 import { IUser, IUserRole } from '../../root/interfaces/user';
+import { DialogAction } from '../../root/enums/dialogAction';
+import { IDialogAttribute } from '../../root/interfaces/dialogAttribute';
 
 @Component({
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
+  DialogAction = DialogAction;
   displayedColumns: string[] = ['name', 'created_at', 'roles', 'symbol'];
 
   users: Array<IUser> = [];
@@ -143,7 +146,7 @@ export class UsersComponent implements OnInit {
       text: 'Delete user: ' + obj.name,
       type: 'user',
     };
-    const dialogRef = this.dialog.open(DialogConfirmation, { data: data });
+    const dialogRef = this.dialog.open(DialogConfirmationView, { data: data });
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event == true) {
         this.deleteUser(obj);
@@ -151,11 +154,11 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  openDialog(action: string, obj: any) {
-    if (action == 'add') {
-      obj = {
+  openDialog(action: DialogAction, user: IUser) {
+    if (action === DialogAction.ADD) {
+      user = {
         // New UserEntity
-        _id: {},
+        _id: { $oid: '' },
         created_at: '',
         email: '',
         name: '',
@@ -164,12 +167,11 @@ export class UsersComponent implements OnInit {
       };
     }
 
-    const data = {
-      obj: obj,
+    const data: IDialogAttribute = {
+      content: user,
       action: action,
-      roles: this.roles,
     };
-    const dialogRef = this.dialog.open(DialogEditUserView, { data: data });
+    const dialogRef = this.dialog.open(DialogEditUserView, { data });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event == 'add') {
@@ -193,6 +195,7 @@ export class UsersComponent implements OnInit {
           this.loadData();
         },
         (error) => {
+          // eslint-disable-next-line no-prototype-builtins
           if (!error.hasOwnProperty('_body')) {
             this.notifyService.notify(Type.error, error.error.message);
           }

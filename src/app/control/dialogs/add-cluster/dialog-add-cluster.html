@@ -1,3 +1,4 @@
+<!--TODO Improve this code, use a form and simplify it-->
 <h2 mat-dialog-title>{{title}}</h2>
 <mat-dialog-content class="mat-typography">
   <div class="w3-row">
@@ -9,17 +10,12 @@
   <div class="w3-col l12 s12 m12">
     <mat-form-field class="full-width input">
       <p>Write the name of your Cluster</p>
-      <textarea
+      <input
         class="form-control"
         [disabled]="action ==='Update'"
-        rows="1"
         [(ngModel)]="local_data.cluster_name"
         placeholder="Cluster name"
-      ></textarea>
-      <!--<mat-option *ngIf = "message.touched && message.invalid" class="alert alert-danger">
-        Cluster name is required
-      </mat-option>
-      <p id = "result" ></p>-->
+      />
     </mat-form-field>
   </div>
 

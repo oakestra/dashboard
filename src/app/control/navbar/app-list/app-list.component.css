@@ -1,0 +1,94 @@
+.appSelectLable {
+  color: white;
+}
+
+.appSelectLable {
+  background-color: #4a7083;
+}
+
+::ng-deep .mat-radio-outer-circle {
+  border-color: white;
+}
+
+mat-list-item {
+  position: relative;
+  list-style: none;
+  transition: all 0.4s ease;
+}
+
+mat-list-item:hover {
+  background: #3e4e57;
+}
+
+mat-list-item .icon-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+mat-list-item i {
+  height: 50px;
+  min-width: 78px;
+  text-align: center;
+  line-height: 50px;
+  color: #fff;
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+mat-list-item a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+mat-list-item a .link_name {
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+}
+
+mat-list-item .sub-menu {
+  padding: 6px 6px 14px 40px;
+  margin-top: -10px;
+}
+
+mat-list-item .sub-menu mat-list-item {
+  color: #fff;
+  font-size: 15px;
+  padding: 5px 0;
+  white-space: nowrap;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+mat-list-item .sub-menu a:hover {
+  opacity: 1;
+}
+
+.application-panel {
+  background-color: #3e4e57;
+}
+
+.panel-title {
+  color: white;
+  align-items: center;
+}
+
+.items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidenav-text {
+  color: white;
+}
+
+.nav-links {
+  padding: 0;
+}
+
+/deep/ .application-panel .mat-expansion-indicator::after {
+  color: white !important;
+}

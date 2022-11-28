@@ -1,17 +1,12 @@
 <script src="https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/js/shepherd.min.js"></script>
-<link rel="shortcut icon" href="navbar.component.css" />
-<!-- Boxicons CSS link -->
-<link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
 
 <mat-toolbar class="mat-elevation-z8">
   <mat-icon id="toolBar" (click)="onToolbarToggle()">menu</mat-icon>
 
   <div class="sidebar">
-    <div class="logo-details">
-      <button id="homeNavbar" (click)="resetDashboard()" mat-button routerLink="/control">
-        <img src="favicon.ico" class="favicon" alt="Oakestra" />
-      </button>
-    </div>
+    <button id="homeNavbar" (click)="resetDashboard()" mat-button routerLink="/control">
+      <img src="favicon.ico" class="favicon" alt="Oakestra" />
+    </button>
   </div>
 
   <span class="example-spacer"></span>
@@ -19,6 +14,7 @@
   <h4 class="name">
     <small>{{ username }}&nbsp;&nbsp;</small>
   </h4>
+
   <button [matMenuTriggerFor]="menu" id="userSetting" mat-icon-button>
     <mat-icon>person</mat-icon>
   </button>
@@ -42,163 +38,36 @@
 <mat-sidenav-container>
   <mat-sidenav class="mat-elevation-z8" mode="side" [(opened)]="opened">
     <ul class="nav-links">
-      <mat-list-item>
-        <a (click)="resetDashboard()" routerLink="/control">
-          <i class="bx bx-grid-alt"></i>
-          <span class="link_name">Dashboard</span>
-        </a>
-      </mat-list-item>
+      <div class="nav-item">
+        <button class="navButton" mat-flat-button routerLink="/control">
+          <mat-icon>grid_view</mat-icon>
+          Dashboard
+        </button>
+      </div>
 
-      <mat-list-item>
-        <div class="icon-link">
-          <a>
-            <i class="bx bxs-category-alt"></i>
-            <span class="link_name"> <a href="/control">Applications</a></span>
-          </a>
-        </div>
-        <ul class="sub-menu">
-          <mat-list-item>
-            <div id="applicationTitle">
-              <mat-expansion-panel class="application-panel">
-                <mat-expansion-panel-header>
-                  <mat-panel-title class="panel-title"> My Applications </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div *ngFor="let app of app" class="items">
-                  <mat-radio-group (change)="handleChange()" [(ngModel)]="active" routerLink="/control">
-                    <mat-radio-button [value]="app._id" class="menu-button">
-                      <span class="sidenav-text">{{ app.application_name }}</span>
-                    </mat-radio-button>
-                  </mat-radio-group>
+      <div class="nav-item">
+        <app-app-list [userID]="userID"></app-app-list>
+      </div>
 
-                  <button (click)="openDialogApp('Update', app)" class="sidenav-text" mat-icon-button>
-                    <mat-icon>settings</mat-icon>
-                  </button>
-                </div>
-              </mat-expansion-panel>
-            </div>
-          </mat-list-item>
-          <mat-list class="inline-list">
-            <mat-list-item>
-              <span class="sidenav-text">Add</span>
-              <button (click)="openDialogApp('Add', {})" class="menu-button sidenav-text" mat-icon-button>
-                <mat-icon>add</mat-icon>
-              </button>
-            </mat-list-item>
-          </mat-list>
-        </ul>
-      </mat-list-item>
+      <div class="nav-item">
+        <app-cluster-list></app-cluster-list>
+      </div>
 
-      <mat-list-item>
-        <div class="icon-link">
-          <a>
-            <i class="bx bx-grid-alt"></i>
-            <span class="link_name"> <a (click)="showClusters()">Clusters</a></span>
-          </a>
-        </div>
-
-        <ul class="sub-menu">
-          <mat-list-item>
-            <mat-expansion-panel class="application-panel">
-              <mat-expansion-panel-header>
-                <mat-panel-title class="panel-title"> Registered </mat-panel-title>
-              </mat-expansion-panel-header>
-
-              <div *ngFor="let cluster of clusters" class="items">
-                <div *ngIf="!cluster.pairing_complete">
-                  <mat-radio-group (change)="handleChangeCluster(cluster)" [(ngModel)]="active" routerLink="/control">
-                    <mat-radio-button [value]="cluster._id" class="menu-button">
-                      <span class="sidenav-text">{{ cluster.cluster_name }}</span>
-                    </mat-radio-button>
-                  </mat-radio-group>
-                </div>
-              </div>
-            </mat-expansion-panel>
-            <br />
-            <mat-expansion-panel class="application-panel">
-              <mat-expansion-panel-header>
-                <mat-panel-title class="panel-title"> Active </mat-panel-title>
-              </mat-expansion-panel-header>
-
-              <div *ngFor="let cluster of clusters" class="items">
-                <div *ngIf="cluster.pairing_complete">
-                  <mat-radio-group (change)="handleChangeCluster(cluster)" [(ngModel)]="active" routerLink="/control">
-                    <mat-radio-button [value]="cluster._id" class="menu-button">
-                      <span class="sidenav-text">{{ cluster.cluster_name }}</span>
-                    </mat-radio-button>
-                  </mat-radio-group>
-                </div>
-              </div>
-            </mat-expansion-panel>
-          </mat-list-item>
-          <mat-list class="inline-list">
-            <mat-list-item>
-              <span class="sidenav-text">Add</span>
-              <button (click)="openDialogCl('Add', {})" class="menu-button" class="sidenav-text" mat-icon-button>
-                <mat-icon>add</mat-icon>
-              </button>
-            </mat-list-item>
-          </mat-list>
-        </ul>
-      </mat-list-item>
-      <mat-list-item>
-        <div class="icon-link">
-          <a>
-            <i class="bx bx-help-circle"></i>
-            <span class="link_name"> <a href="/control/help">Help</a></span>
-          </a>
-        </div>
-      </mat-list-item>
+      <div class="nav-item">
+        <button class="navButton" mat-flat-button routerLink="/control/help">
+          <mat-icon>help_outline</mat-icon>
+          Help
+        </button>
+      </div>
     </ul>
   </mat-sidenav>
 
   <mat-sidenav-content id="content">
-    <div *ngIf="!appSelected && !settings && !listClusters && !clusterSelected" class="content mat-elevation-z8">
-      There is nothing selected.
+    <div *ngIf="viewSelected(); else nothingSelected">
+      <router-outlet></router-outlet>
     </div>
-
-    <div *ngIf="listClusters">
-      <div class="container">
-        <div class="row">
-          <div *ngFor="let cluster of clusters">
-            <mat-card id="my_card">
-              <mat-card-title>{{ cluster.cluster_name }}</mat-card-title>
-              <mat-card-subtitle>Cluster ID {{ cluster._id.$oid }}</mat-card-subtitle>
-              <mat-card-content *ngIf="cluster.pairing_complete">
-                <div class="map-container">
-                  <div class="map-frame">
-                    <div id="card_map"></div>
-                    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css" />
-                    <p>The cluster is located in: [{{ cluster.cluster_latitude }}, {{ cluster.cluster_longitude }}]</p>
-                  </div>
-                </div>
-              </mat-card-content>
-              <!--# ERROR NOT WORKING: getting a blank leaflet map for each card
-              -->
-              <mat-card-actions align="end">
-                <button *ngIf="!cluster.pairing_complete" mat-button>
-                  <div *ngIf="!cluster.pairing_complete" class="noinstance">
-                    <p>NOT YET ACTIVE</p>
-                  </div>
-                </button>
-                <button (click)="deleteCluster(cluster)" mat-button><i class="bx bxs-trash"></i></button>
-              </mat-card-actions>
-
-              <!--<mat-accordion *ngIf="cluster.pairing_complete">
-                <mat-expansion-panel hideToggle>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      Add description
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <input>
-                </mat-expansion-panel>
-              </mat-accordion>-->
-            </mat-card>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <router-outlet *ngIf="appSelected || settings || clusterSelected"></router-outlet>
+    <ng-template #nothingSelected>
+      <div class="content mat-elevation-z8">There is nothing selected.</div>
+    </ng-template>
   </mat-sidenav-content>
 </mat-sidenav-container>

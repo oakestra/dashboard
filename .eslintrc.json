@@ -28,7 +28,17 @@
         "plugin:@typescript-eslint/recommended",
         "prettier"
       ],
-      "rules": {}
+      "rules": {
+        "@angular-eslint/component-class-suffix": [
+          "error",
+          {
+            "suffixes": [
+              "View",
+              "Component"
+            ]
+          }
+        ]
+      }
     },
     {
       "files": [

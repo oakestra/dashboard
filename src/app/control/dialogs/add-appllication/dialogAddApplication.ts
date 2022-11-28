@@ -1,6 +1,8 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IApplication } from '../../../root/interfaces/application';
+import { DialogAction } from '../../../root/enums/dialogAction';
+import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -15,31 +17,31 @@ import { IApplication } from '../../../root/interfaces/application';
   ],
 })
 export class DialogAddApplicationView {
-  action: string;
-  app: IApplication; // TODO SET to Application
+  DialogAction = DialogAction;
+  action: DialogAction;
+  app: IApplication;
   title = 'Add Application';
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddApplicationView>,
-    //@Optional() is used to prevent error if no data is passed
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: IDialogAttribute,
   ) {
-    this.app = { ...data } as IApplication;
-    this.action = { ...data.action };
-    if (this.action == 'Update') {
+    this.app = data.content as IApplication;
+    this.action = data.action;
+    if (this.action === DialogAction.UPDATE) {
       this.title = 'Modify Application';
     }
   }
 
   doAction() {
-    this.dialogRef.close({ event: this.action, data: { applications: [this.app] } });
+    this.dialogRef.close({ event: this.action, data: this.app });
   }
 
   deleteApplication() {
-    this.dialogRef.close({ event: 'Delete', data: this.app });
+    this.dialogRef.close({ event: DialogAction.DELETE, data: this.app });
   }
 
   closeDialog() {
-    this.dialogRef.close({ event: 'Cancel' });
+    this.dialogRef.close({ event: DialogAction.CANCEL });
   }
 }

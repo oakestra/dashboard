@@ -18,13 +18,10 @@ import { MatRadioChange } from '@angular/material/radio';
     'content{display: flex; padding-top: 20px}',
   ],
 })
-export class DialogGraphConnectionSettings {
+export class DialogGraphConnectionView {
   canViewLatConstrains = true;
 
-  constructor(
-    public dialogRef: MatDialogRef<DialogGraphConnectionSettings>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-  ) {}
+  constructor(public dialogRef: MatDialogRef<DialogGraphConnectionView>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   onRadioChange(event: MatRadioChange) {
     this.canViewLatConstrains = event.value == 1;

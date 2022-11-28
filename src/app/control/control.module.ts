@@ -5,8 +5,8 @@ import { DeployFormComponent } from './deploy-form/deploy-form.component';
 import { DevHomeComponent } from './dev-home/dev-home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { DialogConnectionSettings } from './dialogs/content-connection/dialogConnectionSettings';
-import { DialogGraphConnectionSettings } from './dialogs/graph-content-connection/dialogGraphConnectionSettings';
+import { DialogConnectionSettingsView } from './dialogs/content-connection/dialog-connection-settings-view.component';
+import { DialogGraphConnectionView } from './dialogs/graph-content-connection/dialog-graph-connection-view.component';
 import { DialogAddApplicationView } from './dialogs/add-appllication/dialogAddApplication';
 import { DialogAddClusterView } from './dialogs/add-cluster/dialogAddCluster';
 import { GraphComponent } from './graph/graph.component';
@@ -41,10 +41,13 @@ import { DialogServiceStatusView } from './dialogs/service-status/dialogServiceS
 import { LineChartComponent } from './charts/line-chart/line-chart.component';
 import { HelpComponent } from './help/help.component';
 import { SurveyComponent } from './survey/survey.component';
-import { DialogConfirmation } from './dialogs/confirmation/dialogConfirmation';
+import { DialogConfirmationView } from './dialogs/confirmation/dialogConfirmation';
 import { DialogGenerateTokenView } from './dialogs/generate-token/dialogGenerateToken';
 import { MatListModule } from '@angular/material/list';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { AppListComponent } from './navbar/app-list/app-list.component';
+import { ClusterListComponent } from './navbar/cluster-list/cluster-list.component';
+import { ClusterComponent } from './cluster/cluster.component';
 
 @NgModule({
   declarations: [
@@ -52,8 +55,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     DevHomeComponent,
     NotFoundComponent,
     NavbarComponent,
-    DialogConnectionSettings,
-    DialogGraphConnectionSettings,
+    DialogConnectionSettingsView,
+    DialogGraphConnectionView,
     DialogAddApplicationView,
     DialogAddClusterView,
     DialogGenerateTokenView,
@@ -66,7 +69,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     LineChartComponent,
     HelpComponent,
     SurveyComponent,
-    DialogConfirmation,
+    DialogConfirmationView,
+    AppListComponent,
+    ClusterListComponent,
+    ClusterComponent,
   ],
   imports: [
     CommonModule,

@@ -4,7 +4,7 @@ import { ApiService } from '../../shared/modules/api/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogServiceStatusView } from '../dialogs/service-status/dialogServiceStatus';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { DialogConfirmation } from '../dialogs/confirmation/dialogConfirmation';
+import { DialogConfirmationView } from '../dialogs/confirmation/dialogConfirmation';
 import { NotificationService, Type } from '../../shared/modules/notification/notification.service';
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
@@ -56,7 +56,7 @@ export class DevHomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const sub2 = this.sharedService.clusterObserver$.subscribe((x) => {
       this.cluster_info = x;
-      this.clusterName = x.cluster_name;
+      this.clusterName = x.cluster_name || 'clu';
       this.clusterID = x._id.$oid;
       this.is_app = false;
       //this.initMap()
@@ -123,7 +123,7 @@ export class DevHomeComponent implements OnInit, OnDestroy {
       text: 'Delete cluster: ' + cluster.cluster_name,
       type: 'cluster',
     };
-    const dialogRef = this.dialog.open(DialogConfirmation, { data: data });
+    const dialogRef = this.dialog.open(DialogConfirmationView, { data: data });
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event == true) {
         this.api.deleteCluster(cluster._id.$oid).subscribe(

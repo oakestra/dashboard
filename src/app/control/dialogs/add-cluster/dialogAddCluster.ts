@@ -13,7 +13,7 @@ import { NotificationService, Type } from '../../../shared/modules/notification/
   styleUrls: ['./dialog-add-cluster.css'],
 })
 
-// TODO Check if this code works and improve it
+// TODO Check if this code works and improve it (.ts .html file)
 export class DialogAddClusterView implements OnInit {
   action: string;
   local_data: any;

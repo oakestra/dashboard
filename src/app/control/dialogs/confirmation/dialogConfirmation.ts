@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DialogGraphConnectionSettings } from '../graph-content-connection/dialogGraphConnectionSettings';
+import { DialogGraphConnectionView } from '../graph-content-connection/dialog-graph-connection-view.component';
 
 interface ConformationText {
   text: string;
@@ -18,12 +18,12 @@ interface ConformationText {
     '.deleteButton{background-color: #e07074}',
   ],
 })
-export class DialogConfirmation {
+export class DialogConfirmationView {
   text = '';
   type = '';
 
   constructor(
-    public dialogRef: MatDialogRef<DialogGraphConnectionSettings>,
+    public dialogRef: MatDialogRef<DialogGraphConnectionView>,
     @Inject(MAT_DIALOG_DATA) public data: ConformationText,
   ) {
     this.text = data.text;

@@ -13,14 +13,14 @@
     <mat-form-field class="full-width input">
       <mat-label>Application Name</mat-label>
       <!--      Is disabled on Update because if you make changes you have to rename all ServiceNames in the DB-->
-      <input [(ngModel)]="app.application_name" [disabled]="action ==='Update'" matInput />
+      <input [(ngModel)]="app.application_name" [disabled]="action === DialogAction.UPDATE" matInput />
     </mat-form-field>
   </div>
 
   <div class="w3-col l6 s12 m6 input">
     <mat-form-field class="full-width">
       <mat-label>Application Namespace</mat-label>
-      <input [(ngModel)]="app.application_namespace" [disabled]="action ==='Update'" matInput />
+      <input [(ngModel)]="app.application_namespace" [disabled]="action === DialogAction.UPDATE" matInput />
     </mat-form-field>
   </div>
 
@@ -36,7 +36,7 @@
   <button (click)="doAction()" color="primary" class="updateButton" mat-button mat-flat-button>{{action}}</button>
   <button
     (click)="deleteApplication()"
-    *ngIf="action ==='Update'"
+    *ngIf="action === DialogAction.UPDATE"
     color="primary"
     class="deleteButton"
     mat-button

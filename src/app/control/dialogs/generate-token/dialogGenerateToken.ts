@@ -8,6 +8,7 @@ import { environment } from '../../../../environments/environment';
   templateUrl: 'dialog-generate-token.html',
   styleUrls: ['./dialog-generate-token.css'],
 })
+// TODO Fix this component - what should it do?-->
 export class DialogGenerateTokenView {
   key = new FormControl();
   cluster_name = '';
@@ -25,7 +26,7 @@ export class DialogGenerateTokenView {
     key.setSelectionRange(0, 0);
   }
 
-  download(filename: any, key: any) {
+  download(filename: string, key: any) {
     // TODO: Fix SYSTEM_MANAGER_URL (now it is undefined)
     const text = `CLUSTER_NAME=${this.cluster_name}
     SYSTEM_MANAGER_URL=${environment.apiUrl}

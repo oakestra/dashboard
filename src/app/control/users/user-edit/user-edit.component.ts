@@ -7,6 +7,8 @@ import { ApiService } from '../../../shared/modules/api/api.service';
 import { Router } from '@angular/router';
 import { NotificationService, Type } from '../../../shared/modules/notification/notification.service';
 import { IUser } from '../../../root/interfaces/user';
+import { DialogAction } from '../../../root/enums/dialogAction';
+import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
 
 @Component({
   selector: 'app-user-edit',
@@ -49,6 +51,9 @@ export class UserEditComponent implements OnInit {
   }
 
   openDialog(user: IUser) {
-    this.dialog.open(DialogChangePasswordView, { data: user });
+    const data: IDialogAttribute = {
+      content: user,
+    };
+    this.dialog.open(DialogChangePasswordView, { data });
   }
 }

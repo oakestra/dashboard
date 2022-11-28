@@ -2,8 +2,9 @@ import { Component, Inject, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { NotificationService, Type } from '../../../shared/modules/notification/notification.service';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IUser } from '../../../root/interfaces/user';
+import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
 
 @Component({
   selector: 'dialog-content-example-dialog',
@@ -18,38 +19,34 @@ import { IUser } from '../../../root/interfaces/user';
   ],
 })
 export class DialogChangePasswordView {
-  action: string;
   user: IUser;
-
-  form = new FormGroup(
-    {
-      oldPassword: new FormControl('', Validators.required),
-      newPassword: new FormControl('', Validators.required),
-      confirmNewPassword: new FormControl('', Validators.required),
-    },
-    [PasswordValidators.oldAndNewPassDifferent, PasswordValidators.newPasswordsSame],
-  );
+  form: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<DialogChangePasswordView>,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: IDialogAttribute,
     private api: ApiService,
     public notifyService: NotificationService,
+    private fb: FormBuilder,
   ) {
-    this.user = { ...data } as IUser;
-    this.action = data.action;
-  }
+    this.user = data.content as IUser;
 
-  get oldPassword() {
-    return this.form.get('oldPassword');
-  }
-
-  get newPassword() {
-    return this.form.get('newPassword');
+    this.form = fb.group(
+      {
+        oldPassword: new FormControl('', Validators.required),
+        newPassword: new FormControl('', Validators.required),
+        confirmNewPassword: new FormControl('', Validators.required),
+      },
+      [PasswordValidators.oldAndNewPassDifferent, PasswordValidators.newPasswordsSame],
+    );
   }
 
   get confirmNewPassword() {
     return this.form.get('confirmNewPassword');
+  }
+
+  get newPassword() {
+    return this.form.get('newPassword');
   }
 
   closeDialog() {
@@ -57,12 +54,14 @@ export class DialogChangePasswordView {
   }
 
   updatePassword(): void {
-    const username = this.user.name;
-    // TODO Fix this try to use Formbuilder
-    this.api.changePassword(username, this.oldPassword?.value!, this.newPassword?.value!).subscribe(() => {
-      this.notifyService.notify(Type.success, 'Password changed');
-      this.closeDialog();
-    });
+    const oldPassword = this.form.get('oldPassword');
+    const newPassword = this.form.get('newPassword');
+    if (oldPassword?.valid && newPassword?.valid) {
+      this.api.changePassword(this.user.name, oldPassword.value, newPassword.value).subscribe(() => {
+        this.notifyService.notify(Type.success, 'Password changed');
+        this.closeDialog();
+      });
+    }
   }
 }
 

@@ -1,5 +1,4 @@
 mat-toolbar {
-  /* background: #004a9f;*/
   background: #4a7083;
   color: white;
   justify-content: space-between;
@@ -220,6 +219,11 @@ mat-card {
   padding: 0;
 }
 
+.nav-item {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
 /deep/ .application-panel .mat-expansion-indicator::after {
   color: white !important;
 }
@@ -242,4 +246,10 @@ mat-card {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.navButton {
+  width: 90%;
+  background: transparent;
+  color: white;
 }
