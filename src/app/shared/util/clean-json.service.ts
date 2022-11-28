@@ -4,8 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class CleanJsonService {
-  constructor() {}
-
   // deletes all null values form the JSON Object
   static cleanData(o: any) {
     if (Object.prototype.toString.call(o) == '[object Array]') {

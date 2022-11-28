@@ -108,7 +108,7 @@ export class UserService {
       map(() => {
         return true;
       }),
-      catchError((error: Error) => {
+      catchError((_error: Error) => {
         this.redirectToLogin();
         return of(false);
       }),

@@ -6,7 +6,6 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
   providedIn: 'root',
 })
 export class SurveyNotificationService {
-  massage = '';
   taskNumber = 0;
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';

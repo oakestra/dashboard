@@ -64,10 +64,10 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       .subscribe((res) => {
         if (res.matches) {
           this.sidenav.mode = 'over';
-          this.sidenav.close();
+          this.sidenav.close().then();
         } else {
           this.sidenav.mode = 'side';
-          this.sidenav.open();
+          this.sidenav.open().then();
         }
       });
   }

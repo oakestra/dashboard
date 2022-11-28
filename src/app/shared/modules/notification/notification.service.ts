@@ -13,8 +13,8 @@ export class NotificationService {
   constructor(private snackBar: MatSnackBar) {}
 
   notify(type: Type, data: any) {
-    this.massage = data;
     this.type = type;
+    this.massage = data;
 
     if (type == Type.error) {
       this.panelClass = ['error-snackbar'];

@@ -2,7 +2,14 @@ import { Component, Inject, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { NotificationService, Type } from '../../../shared/modules/notification/notification.service';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  AbstractControlOptions,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { IUser } from '../../../root/interfaces/user';
 import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
 
@@ -37,7 +44,7 @@ export class DialogChangePasswordView {
         newPassword: new FormControl('', Validators.required),
         confirmNewPassword: new FormControl('', Validators.required),
       },
-      [PasswordValidators.oldAndNewPassDifferent, PasswordValidators.newPasswordsSame],
+      [PasswordValidators.oldAndNewPassDifferent, PasswordValidators.newPasswordsSame] as AbstractControlOptions,
     );
   }
 

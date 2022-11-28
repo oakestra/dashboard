@@ -30,7 +30,7 @@ export class AuthService {
     return this.getAuthorization().pipe(
       map(
         pipe((auth: { roles: IUserRole[] }) => {
-          const found = auth.roles.find((role_) => role_.name === role);
+          const found = auth.roles.find((r: IUserRole) => r.name === role);
           return found !== undefined;
         }),
       ),

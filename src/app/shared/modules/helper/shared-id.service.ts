@@ -4,6 +4,8 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 @Injectable({
   providedIn: 'root',
 })
+
+// TODO Do not use this anymore
 export class SharedIDService {
   private clusterService = new BehaviorSubject<any>(null);
   private applicationService = new BehaviorSubject<any>(null);

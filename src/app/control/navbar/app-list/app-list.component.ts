@@ -76,40 +76,40 @@ export class AppListComponent implements OnInit {
       }
     });
 
-    this.api.deleteApplication(app).subscribe(
-      () => {
+    this.api.deleteApplication(app).subscribe({
+      next: () => {
         this.notifyService.notify(Type.success, 'Application "' + app.application_name + '" deleted successfully!');
         this.loadDataApplication();
       },
-      () => {
+      error: () => {
         this.notifyService.notify(Type.error, 'Error: Deleting application "' + app.application_name + '" failed!');
       },
-    );
+    });
   }
 
   addApplication(app: IApplication): void {
     console.log(app);
     console.log('Add');
-    this.api.addApplication(app).subscribe(
-      () => {
+    this.api.addApplication(app).subscribe({
+      next: () => {
         this.loadDataApplication();
       },
-      () => {
+      error: () => {
         this.notifyService.notify(Type.error, 'Error: Adding application "' + app.application_name + '" failed!');
       },
-    );
+    });
   }
 
   updateApplication(app: IApplication): void {
-    this.api.updateApplication(app).subscribe(
-      () => {
+    this.api.updateApplication(app).subscribe({
+      next: () => {
         this.notifyService.notify(Type.success, 'Application "' + app.application_name + '" updated successfully!');
         this.loadDataApplication();
       },
-      () => {
+      error: () => {
         this.notifyService.notify(Type.error, 'Error: Updating application "' + app.application_name + '" failed!');
       },
-    );
+    });
   }
 
   loadDataApplication() {
@@ -126,7 +126,7 @@ export class AppListComponent implements OnInit {
     this.api.getAppById(this.activeAppId.$oid).subscribe((app) => {
       this.sharedService.selectApplication(app);
       //this.switchScreen(true, false, false); TODO why is this used?
-      this.router.navigate(['/control']);
+      this.router.navigate(['/control']).then();
     });
   }
 }

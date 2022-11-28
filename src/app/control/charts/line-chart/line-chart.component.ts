@@ -26,7 +26,6 @@ declare function initMap(lng: number, lat: number, radius: number): void;
   styleUrls: ['./line-chart.component.css'],
 })
 export class LineChartComponent implements OnInit {
-  // TODO create Interface
   @Input() instance_list: IInstance;
 
   constructor() {

@@ -1,7 +1,7 @@
 import { IId } from './id';
 
 export interface IService {
-  _id: IId;
+  _id?: IId;
   microserviceID?: string;
   microservice_name?: string;
   microservice_namespace?: string;
@@ -20,6 +20,8 @@ export interface IService {
   addresses?: IAdresses;
   added_files?: string[];
   constraints?: [];
+  instance_list?: any[]; // TODO Create instance interface
+  status?: string;
 }
 
 enum Virtualization {

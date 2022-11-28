@@ -40,14 +40,14 @@ export class LoginComponent {
         password: password.value,
       };
 
-      this.userService.login(loginRequest).subscribe(
-        (userServiceResponse: boolean) => {
+      this.userService.login(loginRequest).subscribe({
+        next: (userServiceResponse: boolean) => {
           if (userServiceResponse) {
             this.authService.getAuthorization().subscribe(() => this.router.navigate(['/control']));
           }
         },
-        (error) => this.notifyService.notify(Type.error, error),
-      );
+        error: (error) => this.notifyService.notify(Type.error, error),
+      });
     } else {
       this.notifyService.notify(Type.error, 'Please provide valid inputs for login.');
     }
@@ -65,6 +65,6 @@ export class LoginComponent {
   }
 
   public registerForm() {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/register']).then();
   }
 }

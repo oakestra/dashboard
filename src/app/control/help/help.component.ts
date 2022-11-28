@@ -39,7 +39,7 @@ export class HelpComponent {
       },
       {
         action() {
-          router.navigate(['/control/survey']);
+          router.navigate(['/control/survey']).then();
           return shepherdService.next();
         },
         text: 'NEXT',
@@ -108,7 +108,7 @@ export class HelpComponent {
   }
 
   start() {
-    this.router.navigate(['/control']);
+    this.router.navigate(['/control']).then();
 
     this.shepherdService.defaultStepOptions = this.defaultStepOptions;
     this.shepherdService.modal = true;

@@ -21,9 +21,7 @@ export class UsersComponent implements OnInit {
 
   users: Array<IUser> = [];
   searchedUsers: Array<IUser> = [];
-  action = '';
   searchText = '';
-  roles: IUserRole[] = [];
   selectedItems = [''];
   dropdown = new FormControl();
   dropdownList: string[] = [];
@@ -38,29 +36,14 @@ export class UsersComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.roles = this.api.getRoles();
-    this.roles.forEach((role) => {
-      this.dropdownList.push(role.name);
-    });
+    this.dropdownList = this.api.getRoles().map((roles) => roles.name);
     this.loadData();
-
-    // this.api.getRoles().subscribe(
-    //   (data: any) => {
-    //     this.roles = data.roles;
-    //
-    //     this.roles.forEach((role) => {
-    //       this.dropdownList.push(role.name)
-    //     })
-    //     this.loadData();
-    //   }
-    // )
   }
 
   loadData(): void {
-    this.api.getAllUser().subscribe((users: any) => {
+    this.api.getAllUser().subscribe((users: IUser[]) => {
       this.users = users;
       this.route.queryParams.subscribe((params) => {
-        this.action = params['action'];
         this.searchText = params['searchText'];
         this.selectedItems = [];
 
@@ -82,15 +65,8 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  createUser() {
-    this.router.navigate(['control', 'users'], {
-      queryParams: { username: '', action: 'add' },
-      queryParamsHandling: 'merge',
-    });
-  }
-
   search(): void {
-    const queryParams: { searchText: string; searchRoles: any } = { searchText: '', searchRoles: [] };
+    const queryParams: { searchText: string; searchRoles: string[] } = { searchText: '', searchRoles: [] };
     if (this.searchText && this.searchText.length > 0) {
       queryParams.searchText = this.searchText;
     }
@@ -101,7 +77,7 @@ export class UsersComponent implements OnInit {
         queryParams.searchRoles.push(role);
       });
     }
-    this.router.navigate(['control', 'users'], { queryParams: queryParams, queryParamsHandling: 'merge' });
+    this.router.navigate(['control', 'users'], { queryParams: queryParams, queryParamsHandling: 'merge' }).then();
   }
 
   doFilter(): void {
@@ -120,7 +96,7 @@ export class UsersComponent implements OnInit {
     return (
       !this.selectedItems ||
       this.selectedItems.length === 0 ||
-      this.selectedItems.some((searchedRole: any) => {
+      this.selectedItems.some((searchedRole: string) => {
         return (
           (searchedRole === 'None' && user.roles.length === 0) ||
           user.roles.some((role: IUserRole) => role.name === searchedRole)
@@ -130,18 +106,18 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(user: IUser): void {
-    this.api.deleteUser(user).subscribe(
-      () => {
+    this.api.deleteUser(user).subscribe({
+      next: () => {
         this.notifyService.notify(Type.success, 'User ' + user.name + ' deleted successfully!');
         this.loadData();
       },
-      (_error: Error) => {
+      error: () => {
         this.notifyService.notify(Type.error, 'Error: Deleting user ' + user.name + ' failed!');
       },
-    );
+    });
   }
 
-  openDeleteDialog(obj: any) {
+  openDeleteDialog(obj: IUser) {
     const data = {
       text: 'Delete user: ' + obj.name,
       type: 'user',
@@ -189,18 +165,15 @@ export class UsersComponent implements OnInit {
   addUser(user: IUser) {
     if (user.name.length !== 0 && user.password.length !== 0) {
       user.created_at = this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm')!;
-      this.api.registerUser(user).subscribe(
-        () => {
+      this.api.registerUser(user).subscribe({
+        next: () => {
           this.notifyService.notify(Type.success, 'User registered successfully.');
           this.loadData();
         },
-        (error) => {
-          // eslint-disable-next-line no-prototype-builtins
-          if (!error.hasOwnProperty('_body')) {
-            this.notifyService.notify(Type.error, error.error.message);
-          }
+        error: (error) => {
+          this.notifyService.notify(Type.error, error.error.message);
         },
-      );
+      });
     } else {
       this.notifyService.notify(Type.error, 'Please provide valid inputs for user registration.');
     }

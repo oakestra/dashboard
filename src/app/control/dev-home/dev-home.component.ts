@@ -9,14 +9,18 @@ import { NotificationService, Type } from '../../shared/modules/notification/not
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import { IService } from '../../root/interfaces/service';
+import { ICluster } from '../../root/interfaces/cluster';
+import { IInstance } from '../../root/interfaces/instance';
 
 @Component({
   selector: 'dev-home',
   templateUrl: './dev-home.component.html',
   styleUrls: ['./dev-home.component.css'],
 })
+
+// TODO Delete Cluster stuff from here
 export class DevHomeComponent implements OnInit, OnDestroy {
-  services: any;
+  services: IService[];
   servicesCount = 0;
   appName = '';
   appID = '';
@@ -79,32 +83,31 @@ export class DevHomeComponent implements OnInit, OnDestroy {
   }
 
   loadData(): void {
-    const sub = this.api.getServicesOfApplication(this.appID).subscribe(
-      (services: any) => {
+    const sub = this.api.getServicesOfApplication(this.appID).subscribe({
+      next: (services: IService[]) => {
         this.services = services;
         this.servicesCount = services.length;
-        console.log(services);
       },
-      (err) => {
+      error: (err) => {
         console.log(err);
       },
-    );
+    });
     this.subscriptions.push(sub);
   }
 
-  deleteService(service: any) {
+  deleteService(service: IService) {
     this.api.deleteService(service).subscribe(() => {
       this.loadData();
     });
   }
 
-  deleteInstance(service: any, instance: any) {
+  deleteInstance(service: IService, instance: IInstance) {
     this.api.deleteInstance(service, instance).subscribe(() => {
       this.loadData();
     });
   }
 
-  deployService(service: any) {
+  deployService(service: IService) {
     this.api.deployService(service).subscribe(() => {
       this.loadData();
     });
@@ -117,8 +120,8 @@ export class DevHomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  // repeated function in navbar.component.ts
-  deleteCluster(cluster: any) {
+  // repeated function in navbar.component.ts // TODO Why repeated?
+  deleteCluster(cluster: ICluster) {
     const data = {
       text: 'Delete cluster: ' + cluster.cluster_name,
       type: 'cluster',
@@ -126,20 +129,20 @@ export class DevHomeComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(DialogConfirmationView, { data: data });
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event == true) {
-        this.api.deleteCluster(cluster._id.$oid).subscribe(
-          () => {
+        this.api.deleteCluster(cluster._id.$oid).subscribe({
+          next: () => {
             this.notifyService.notify(Type.success, 'Cluster ' + cluster.cluster_name + ' deleted successfully!');
             this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate(['/control']));
           },
-          (_error: any) => {
+          error: () => {
             this.notifyService.notify(Type.error, 'Error: Deleting cluster ' + cluster.cluster_name);
           },
-        );
+        });
       }
     });
   }
 
-  openStatusDialog(service: any) {
+  openStatusDialog(service: IService) {
     const dialogRef = this.dialog.open(DialogServiceStatusView, { data: service });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result);
@@ -158,7 +161,7 @@ export class DevHomeComponent implements OnInit, OnDestroy {
     },
   };
 
-  downloadConfig(service: any) {
+  downloadConfig(service: IService) {
     if (service._id) delete service._id;
     const fileName = service.microservice_name + '.json';
     if (!this.setting.element.dynamicDownload) {

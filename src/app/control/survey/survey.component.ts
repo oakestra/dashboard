@@ -10,6 +10,8 @@ import { IApplication } from '../../root/interfaces/application';
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.css'],
 })
+
+// TODO Remove Survey Component
 export class SurveyComponent implements OnInit {
   selected = '0';
   evaluated = false;

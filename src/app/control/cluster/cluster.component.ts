@@ -50,7 +50,7 @@ export class ClusterComponent implements OnInit {
     }).addTo(this.map);
   }
 
-  deleteCluster(cluster: any) {
+  deleteCluster(cluster: ICluster) {
     const data = {
       text: 'Delete cluster: ' + cluster.cluster_name,
       type: 'cluster',
@@ -58,15 +58,15 @@ export class ClusterComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogConfirmationView, { data: data });
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event == true) {
-        this.api.deleteCluster(cluster._id.$oid).subscribe(
-          () => {
+        this.api.deleteCluster(cluster._id.$oid).subscribe({
+          next: () => {
             this.notifyService.notify(Type.success, 'Cluster ' + cluster.cluster_name + ' deleted successfully!');
             this.redirectTo('/control');
           },
-          (_error: any) => {
+          error: () => {
             this.notifyService.notify(Type.error, 'Error: Deleting cluster ' + cluster.cluster_name);
           },
-        );
+        });
       }
     });
   }

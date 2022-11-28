@@ -10,6 +10,7 @@ import { WINDOW } from '../helper/window.providers';
 import { IUser, IUserRole } from '../../../root/interfaces/user';
 import { IApplication } from '../../../root/interfaces/application';
 import { IService } from '../../../root/interfaces/service';
+import { ICluster } from '../../../root/interfaces/cluster';
 
 @Injectable({
   providedIn: 'root',
@@ -56,7 +57,7 @@ export class ApiService extends RestService {
     return this.doDELRequest('/cluster/' + clusterId);
   }
 
-  getClustersOfUser(userId: string | null) {
+  getClustersOfUser(userId: string | null): Observable<ICluster[]> {
     return this.doGETRequest('/clusters/' + userId);
   }
 
@@ -114,7 +115,7 @@ export class ApiService extends RestService {
     return this.doGETRequest('/user/' + username);
   }
 
-  public getAllUser() {
+  public getAllUser(): Observable<IUser[]> {
     return this.doGETRequest('/users/');
   }
 
@@ -148,11 +149,6 @@ export class ApiService extends RestService {
     ];
 
     return roles;
-    // return this.http.get(this.apiUrl + "/roles").pipe(
-    //   map((data: any) => {
-    //     return {roles: data};
-    //   })
-    // );
   }
 
   ///////////////////////////////////////////////////////////////////////////

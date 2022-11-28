@@ -7,7 +7,6 @@ import { ApiService } from '../../../shared/modules/api/api.service';
 import { Router } from '@angular/router';
 import { NotificationService, Type } from '../../../shared/modules/notification/notification.service';
 import { IUser } from '../../../root/interfaces/user';
-import { DialogAction } from '../../../root/enums/dialogAction';
 import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
 
 @Component({
@@ -46,7 +45,7 @@ export class UserEditComponent implements OnInit {
     this.user.email = this.form.get('email')?.value;
     this.api.updateUser(this.user).subscribe(() => {
       this.notifyService.notify(Type.success, 'Changes saved successfully');
-      this.router.navigate(['/control']);
+      this.router.navigate(['/control']).then();
     });
   }
 

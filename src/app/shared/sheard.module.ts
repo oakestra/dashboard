@@ -27,10 +27,6 @@ export class SharedModule {
       ngModule: SharedModule,
       // Here (and only here!) are all global shared services
       providers: [
-        // {
-        //   provide:
-        //   ErrorHandler, useClass: AppErrorHandler
-        // },
         {
           provide: HTTP_INTERCEPTORS,
           useClass: CommonInterceptor,

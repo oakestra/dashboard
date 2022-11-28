@@ -17,6 +17,7 @@ import { IService } from '../../root/interfaces/service';
   templateUrl: './deploy-form.component.html',
   styleUrls: ['./deploy-form.component.css'],
 })
+//TODO Refactor this Component and split it up to multiple small components
 export class DeployFormComponent implements OnInit, OnDestroy {
   form: FormGroup;
   file: File | undefined;
@@ -62,14 +63,14 @@ export class DeployFormComponent implements OnInit, OnDestroy {
       const s = this.api
         .getServicesOfApplication(this.applicationId)
         .pipe(take(1))
-        .subscribe(
-          (services: any) => {
-            this.allServices = services.filter((j: any) => j._id.$oid != this.currentServiceID);
+        .subscribe({
+          next: (services: IService[]) => {
+            this.allServices = services.filter((s: IService) => s._id?.$oid !== this.currentServiceID);
           },
-          (err) => {
+          error: (err) => {
             console.log(err);
           },
-        );
+        });
       this.subscriptions.push(s);
     });
     this.subscriptions.push(sub);
@@ -259,8 +260,8 @@ export class DeployFormComponent implements OnInit, OnDestroy {
 
       const path = this.api.fileUpload(formData);
       let fc;
-      path.subscribe(
-        (x: any) => {
+      path.subscribe({
+        next: (x: any) => {
           if (action == 'file') {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
@@ -274,10 +275,10 @@ export class DeployFormComponent implements OnInit, OnDestroy {
             fc.setValue([x.path]);
           }
         },
-        (_err) => {
+        error: () => {
           this.notifyService.notify(Type.error, 'File not supported');
         },
-      );
+      });
     }
   }
 
@@ -328,13 +329,13 @@ export class DeployFormComponent implements OnInit, OnDestroy {
   }
 
   addService() {
-    this.api.addService(this.jsonContent).subscribe(
-      (_e: any) => {
-        this.router.navigate(['/control']);
+    this.api.addService(this.jsonContent).subscribe({
+      next: () => {
+        this.router.navigate(['/control']).then();
         this.notifyService.notify(Type.success, 'Service generation was successful');
       },
-      (_error) => this.notifyService.notify(Type.error, 'File was not in the correct format'),
-    );
+      error: () => this.notifyService.notify(Type.error, 'File was not in the correct format'),
+    });
   }
 
   onSubmit() {
@@ -351,14 +352,14 @@ export class DeployFormComponent implements OnInit, OnDestroy {
       // content.microserviceID = this.currentServiceID
       this.generateSLA(content);
       this.jsonContent.applications[0].microservices[0].microserviceID = this.currentServiceID;
-      this.api.updateService(this.jsonContent, this.currentServiceID).subscribe(
-        (_success) => {
-          this.router.navigate(['/control']);
+      this.api.updateService(this.jsonContent, this.currentServiceID).subscribe({
+        next: () => {
+          this.router.navigate(['/control']).then();
         },
-        (err) => {
+        error: (err) => {
           console.log(err);
         },
-      );
+      });
     } else {
       this.generateSLA(content);
       this.addService();

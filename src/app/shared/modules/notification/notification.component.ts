@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService } from './notification.service';
+import { NotificationService, Type } from './notification.service';
 
 @Component({
   selector: 'app-notification',
   template: `
     <div class="center">
-      <mat-icon *ngIf="type === 0">error</mat-icon>
-      <mat-icon *ngIf="type === 1">info</mat-icon>
-      <mat-icon *ngIf="type === 2">check_circle</mat-icon>
+      <mat-icon *ngIf="type === Type.error">error</mat-icon>
+      <mat-icon *ngIf="type === Type.information">info</mat-icon>
+      <mat-icon *ngIf="type === Type.success">check_circle</mat-icon>
       <p class="addButtonDiv">{{ massage }}</p>
     </div>
   `,
@@ -26,8 +26,9 @@ import { NotificationService } from './notification.service';
   ],
 })
 export class NotificationComponent implements OnInit {
+  Type = Type;
   massage = '';
-  type = 1;
+  type = Type.information;
 
   constructor(private notification: NotificationService) {}
 

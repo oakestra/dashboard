@@ -12,6 +12,7 @@ import { DialogAddClusterView } from '../../dialogs/add-cluster/dialogAddCluster
 import { DialogAction } from '../../../root/enums/dialogAction';
 import { NONE_TYPE } from '@angular/compiler';
 import { DialogGenerateTokenView } from '../../dialogs/generate-token/dialogGenerateToken';
+import { IId } from '../../../root/interfaces/id';
 
 @Component({
   selector: 'app-cluster-list',
@@ -23,14 +24,13 @@ export class ClusterListComponent {
   events: string[] = [];
   opened = true;
 
-  activeAppId: any; // is that really needed
+  activeAppId: IId; // is that really needed
   appSelected = false; // can i use activeApp != null?
   settings = false;
 
   // Get the howl user
   username = '';
   userID = '';
-  isAdmin = false;
 
   listClusters = false;
   clusterSelected = false;
@@ -47,8 +47,8 @@ export class ClusterListComponent {
   ) {}
 
   loadDataCluster() {
-    this.api.getClustersOfUser(this.userID).subscribe(
-      (result: any) => {
+    this.api.getClustersOfUser(this.userID).subscribe({
+      next: (result: ICluster[]) => {
         this.clusters = result;
         if (result[0]) {
           this.activeAppId = result[0]._id;
@@ -58,15 +58,15 @@ export class ClusterListComponent {
           this.sharedService.selectCluster(result[0]);
         }
       },
-      (_error: any) => {
+      error: () => {
         this.notifyService.notify(Type.error, 'Error: Getting clusters of ' + this.username);
       },
-    );
+    });
   }
 
   openDialogCl(action: string, obj: any) {
     if (action == 'Add') {
-      obj._id = { $oid: '' }; // Only for the view, is then defined in the database
+      obj._id = { $oid: '' };
       obj.cluster_name = '';
       obj.cluster_latitude = '';
       obj.cluster_longitude = '';
@@ -82,8 +82,8 @@ export class ClusterListComponent {
       //TODO define data for Cluster
       if (result.event === DialogAction.ADD) {
         //this.addCluster(result.data)
-        this.userService.addCluster(result.data).subscribe(
-          (userServiceResponse: any) => {
+        this.userService.addCluster(result.data).subscribe({
+          next: (userServiceResponse: any) => {
             this.notifyService.notify(Type.success, 'Cluster added successfully!');
             this.redirectTo('/control');
             if (userServiceResponse != NONE_TYPE) {
@@ -100,19 +100,18 @@ export class ClusterListComponent {
               });
               dialogKey.afterClosed().subscribe(() => this.showClusters());
             }
-            // this.surveyService.resetSurvey() => only for survey
           },
-          (error) => this.notifyService.notify(Type.error, error),
-        );
+          error: (error) => this.notifyService.notify(Type.error, error),
+        });
       }
     });
   }
 
-  handleChangeCluster(cluster: any) {
+  handleChangeCluster(cluster: ICluster) {
     this.api.getClusterById(cluster._id.$oid).subscribe((cl) => {
       this.sharedService.selectCluster(cl);
       this.switchScreen(false, false, true);
-      this.router.navigate(['/control']);
+      this.router.navigate(['/control']).then();
     });
   }
 
