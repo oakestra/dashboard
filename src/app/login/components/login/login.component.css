@@ -1,62 +1,62 @@
 .html {
-  background-color: #0b2e13;
+    background-color: #0b2e13;
 }
 
 .login-form {
-  width: 80%;
-  height: fit-content;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+    width: 80%;
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
 .connectingInfo {
-  float: right;
-  margin: 8px;
+    float: right;
+    margin: 8px;
 }
 
 .signUp {
-  display: flex;
-  justify-content: center;
-  margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
 }
 
 button {
-  background-color: #4a7083;
-  color: #fff;
+    background-color: #4a7083;
+    color: #fff;
 }
 
 .form-group {
-  margin-top: 8px;
+    margin-top: 8px;
 }
 
 .loginButton {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .centerButton {
-  display: flex;
-  justify-content: center;
-  margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
 }
 
 .link {
-  cursor: pointer;
-  float: right;
+    cursor: pointer;
+    float: right;
 }
 
 @media only screen and (min-width: 801px) {
-  .login-form {
-    width: 70%;
-  }
+    .login-form {
+        width: 70%;
+    }
 }
 
 @media only screen and (min-width: 1201px) {
-  .login-form {
-    width: 35%;
-  }
+    .login-form {
+        width: 35%;
+    }
 }

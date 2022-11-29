@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Dashboard</title>
-    <!--  config is important for the environment variables, do not delete it -->
-    <!--CONFIG-->
-    <base href="/" />
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <link href="favicon.ico" rel="icon" type="image/x-icon" />
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="assets/css/w3.css" rel="stylesheet" />
-    <link href="assets/iconfont/material-icons.css" rel="stylesheet" />
-    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/cmu-sans-serif" type="text/css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-  </head>
+    <head>
+        <meta charset="utf-8" />
+        <title>Dashboard</title>
+        <!--  config is important for the environment variables, do not delete it -->
+        <!--CONFIG-->
+        <base href="/" />
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <link href="favicon.ico" rel="icon" type="image/x-icon" />
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="assets/css/w3.css" rel="stylesheet" />
+        <link href="assets/iconfont/material-icons.css" rel="stylesheet" />
+        <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/cmu-sans-serif" type="text/css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    </head>
 
-  <body>
-    <app-root></app-root>
+    <body>
+        <app-root></app-root>
 
-    <!--TODO Find a better way so that not all scripts have to be loaded at the beginning-->
+        <!--TODO Find a better way so that not all scripts have to be loaded at the beginning-->
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/build/ol.js"></script>
-    <link
-      href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/css/ol.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <script src="https://unpkg.com/elm-pep"></script>
-    <!-- The lines below are only needed for old environments like Internet Explorer and Android 4.x -->
-    <script src="https://cdn.polyfill.io/v3/polyfill.min.js?features=fetch,requestAnimationFrame,Element.prototype.classList,TextDecoder"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.18.3/minified.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/build/ol.js"></script>
+        <link
+            href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/css/ol.css"
+            rel="stylesheet"
+            type="text/css"
+        />
+        <script src="https://unpkg.com/elm-pep"></script>
+        <!-- The lines below are only needed for old environments like Internet Explorer and Android 4.x -->
+        <script src="https://cdn.polyfill.io/v3/polyfill.min.js?features=fetch,requestAnimationFrame,Element.prototype.classList,TextDecoder"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.18.3/minified.js"></script>
 
-    <script src="assets/js/d3.v3.min.js"></script>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="assets/js/d3.v3.min.js"></script>
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
 
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-  </body>
+        <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    </body>
 </html>

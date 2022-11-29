@@ -1,64 +1,68 @@
 <div class="content-cards">
-  <mat-card class="serviceCard">
-    <div>
-      <mat-card-title>Profile</mat-card-title>
-      <mat-card-content>
-        <form (ngSubmit)="onSubmit()" *ngIf="dataReady" [formGroup]="form" class="form">
-          <div>
-            <mat-form-field appearance="fill" class="input-field">
-              <mat-label>Name</mat-label>
-              <input [value]="user.name" disabled matInput />
-            </mat-form-field>
-          </div>
+    <mat-card class="serviceCard">
+        <div>
+            <mat-card-title>Profile</mat-card-title>
+            <mat-card-content>
+                <form (ngSubmit)="onSubmit()" *ngIf="dataReady" [formGroup]="form" class="form">
+                    <div>
+                        <mat-form-field appearance="fill" class="input-field">
+                            <mat-label>Name</mat-label>
+                            <input [value]="user.name" disabled matInput />
+                        </mat-form-field>
+                    </div>
 
-          <div>
-            <mat-form-field appearance="fill" class="input-field">
-              <mat-label>E-mail</mat-label>
-              <input formControlName="email" matInput />
-            </mat-form-field>
-          </div>
+                    <div>
+                        <mat-form-field appearance="fill" class="input-field">
+                            <mat-label>E-mail</mat-label>
+                            <input formControlName="email" matInput />
+                        </mat-form-field>
+                    </div>
 
-          <div>
-            <h5>Your Roles</h5>
-            <mat-chip-list aria-label="roles">
-              <mat-chip
-                *ngFor="let r of user.roles"
-                [ngStyle]="{
-                  'background-color':
-                    r.name === 'Admin' ? '#DE686B' : r.name === 'Application_Provider' ? '#3DA23C' : '#ADA23C'
-                }"
-                selected
-              >
-                {{ r.name }}
-              </mat-chip>
-            </mat-chip-list>
-          </div>
+                    <div>
+                        <h5>Your Roles</h5>
+                        <mat-chip-list aria-label="roles">
+                            <mat-chip
+                                *ngFor="let r of user.roles"
+                                [ngStyle]="{
+                                    'background-color':
+                                        r.name === 'Admin'
+                                            ? '#DE686B'
+                                            : r.name === 'Application_Provider'
+                                            ? '#3DA23C'
+                                            : '#ADA23C'
+                                }"
+                                selected
+                            >
+                                {{ r.name }}
+                            </mat-chip>
+                        </mat-chip-list>
+                    </div>
 
-          <br />
+                    <br />
 
-          <div class="alignCenter">
-            <button
-              [disabled]="!form.valid"
-              color="primary"
-              class="updateButton"
-              mat-button
-              mat-flat-button
-              type="submit"
-            >
-              Save
-            </button>
-            <button
-              (click)="openDialog(user)"
-              class="cancel_buttons updateButton"
-              color="primary"
-              mat-flat-button
-              type="button"
-            >
-              Change Password
-            </button>
-          </div>
-        </form>
-      </mat-card-content>
-    </div>
-  </mat-card>
+                    <div class="alignCenter">
+                        <button
+                            [disabled]="!form.valid"
+                            color="primary"
+                            class="updateButton"
+                            mat-button
+                            mat-flat-button
+                            type="submit"
+                        >
+                            Save
+                        </button>
+                        <button
+                            (click)="openDialog(user)"
+                            class="cancel_buttons updateButton"
+                            color="primary"
+                            mat-flat-button
+                            type="button"
+                        >
+                            Change Password
+                        </button>
+                    </div>
+                </form>
+            </mat-card-content>
+        </div>
+    </mat-card>
 </div>

@@ -1,110 +1,131 @@
 <div class="content-cards">
-  <mat-card class="serviceCard" id="content">
-    <div *ngIf="is_app">
-      <mat-card-title>Application: {{ appName }}</mat-card-title>
-      <div *ngIf="servicesCount > 0">
-        <mat-accordion *ngFor="let service of services" multi>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header class="disable_ripple">
-              <mat-panel-title class="w3-col s4 l5 m4">
-                {{ service.microservice_name }}
-              </mat-panel-title>
+    <mat-card class="serviceCard" id="content">
+        <div *ngIf="is_app">
+            <mat-card-title>Application: {{ appName }}</mat-card-title>
+            <div *ngIf="servicesCount > 0">
+                <mat-accordion *ngFor="let service of services" multi>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header class="disable_ripple">
+                            <mat-panel-title class="w3-col s4 l5 m4">
+                                {{ service.microservice_name }}
+                            </mat-panel-title>
 
-              <mat-panel-description class="w3-col s5 w3-right statusField" (click)="$event.stopPropagation()">
-                <div (click)="openStatusDialog(service)" *ngIf="service.status">
-                  <button mat-icon-button type="button">
-                    <mat-icon [class]="service.status">fiber_manual_record</mat-icon>
-                  </button>
-                  <p class="statusText">{{ service.status }}</p>
-                </div>
-              </mat-panel-description>
+                            <mat-panel-description
+                                class="w3-col s5 w3-right statusField"
+                                (click)="$event.stopPropagation()"
+                            >
+                                <div (click)="openStatusDialog(service)" *ngIf="service.status">
+                                    <button mat-icon-button type="button">
+                                        <mat-icon [class]="service.status">fiber_manual_record</mat-icon>
+                                    </button>
+                                    <p class="statusText">{{ service.status }}</p>
+                                </div>
+                            </mat-panel-description>
 
-              <div class="w3-col s1 w3-right" (click)="$event.stopPropagation()">
-                <button [matMenuTriggerFor]="settings" mat-icon-button type="button">
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #settings="matMenu">
-                  <button [routerLink]="['deploy', service._id.$oid]" mat-menu-item>
-                    <mat-icon>edit</mat-icon>
-                    Edit
-                  </button>
-                  <button (click)="deleteService(service)" mat-menu-item>
-                    <mat-icon>delete</mat-icon>
-                    Delete
-                  </button>
-                  <button (click)="deployService(service)" mat-menu-item>
-                    <mat-icon>send</mat-icon>
-                    Deploy
-                  </button>
-                  <button (click)="downloadConfig(service)" mat-menu-item>
-                    <mat-icon>file_download</mat-icon>
-                    Download Config
-                  </button>
-                </mat-menu>
-              </div>
-            </mat-expansion-panel-header>
+                            <div class="w3-col s1 w3-right" (click)="$event.stopPropagation()">
+                                <button [matMenuTriggerFor]="settings" mat-icon-button type="button">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #settings="matMenu">
+                                    <button [routerLink]="['deploy', service._id?.$oid]" mat-menu-item>
+                                        <mat-icon>edit</mat-icon>
+                                        Edit
+                                    </button>
+                                    <button (click)="deleteService(service)" mat-menu-item>
+                                        <mat-icon>delete</mat-icon>
+                                        Delete
+                                    </button>
+                                    <button (click)="deployService(service)" mat-menu-item>
+                                        <mat-icon>send</mat-icon>
+                                        Deploy
+                                    </button>
+                                    <button (click)="downloadConfig(service)" mat-menu-item>
+                                        <mat-icon>file_download</mat-icon>
+                                        Download Config
+                                    </button>
+                                </mat-menu>
+                            </div>
+                        </mat-expansion-panel-header>
 
-            <div *ngIf="service.instance_list.length === 0" class="noinstance">No instances of this service.</div>
+                        <div *ngIf="service.instance_list?.length === 0" class="noinstance">
+                            No instances of this service.
+                        </div>
 
-            <div *ngFor="let instance of service.instance_list" class="w3-row instance">
-              <div class="w3-col s6 l5 m5">Instance Number: {{ instance.instance_number }}</div>
+                        <div *ngFor="let instance of service.instance_list" class="w3-row instance">
+                            <div class="w3-col s6 l5 m5">Instance Number: {{ instance.instance_number }}</div>
 
-              <div (click)="openStatusDialog(instance)" class="w3-col s5 statusField">
-                <button mat-icon-button type="button">
-                  <mat-icon [class]="instance.status">fiber_manual_record</mat-icon>
-                </button>
-                <p class="statusText">{{ instance.status }}</p>
-              </div>
+                            <div (click)="openStatusDialog(instance)" class="w3-col s5 statusField">
+                                <button mat-icon-button type="button">
+                                    <mat-icon [class]="instance.status">fiber_manual_record</mat-icon>
+                                </button>
+                                <p class="statusText">{{ instance.status }}</p>
+                            </div>
 
-              <div class="w3-col s1 w3-right">
-                <button class="instanceDelete" mat-flat-button (click)="deleteInstance(service, instance)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
+                            <div class="w3-col s1 w3-right">
+                                <button
+                                    class="instanceDelete"
+                                    mat-flat-button
+                                    (click)="deleteInstance(service, instance)"
+                                >
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <mat-card-actions class="alignEnd">
+                    <button
+                        color="primary"
+                        id="createService"
+                        mat-flat-button
+                        routerLink="/control/deploy"
+                        class="updateButton"
+                    >
+                        <mat-icon>add_circle</mat-icon>
+                        Create New Service
+                    </button>
+                    <button
+                        (click)="deployAllServices()"
+                        color="primary"
+                        mat-flat-button
+                        type="button"
+                        class="updateButton"
+                    >
+                        <mat-icon>send</mat-icon>
+                        Deploy All
+                    </button>
+                </mat-card-actions>
+
+                <graph (updated)="deleteServiceWithGraph($event)" [services]="services"></graph>
             </div>
-          </mat-expansion-panel>
-        </mat-accordion>
-
-        <mat-card-actions class="alignEnd">
-          <button color="primary" id="createService" mat-flat-button routerLink="/control/deploy" class="updateButton">
-            <mat-icon>add_circle</mat-icon>
-            Create New Service
-          </button>
-          <button (click)="deployAllServices()" color="primary" mat-flat-button type="button" class="updateButton">
-            <mat-icon>send</mat-icon>
-            Deploy All
-          </button>
-        </mat-card-actions>
-
-        <graph (updated)="deleteServiceWithGraph($event)" [services]="services"></graph>
-      </div>
-      <div *ngIf="servicesCount === 0" class="content mat-elevation-z8">
-        <p>No Service in this application.</p>
-        <br />
-        <div class="alignEnd">
-          <button
-            color="primary"
-            id="createServiceEmpty"
-            mat-flat-button
-            routerLink="/control/deploy"
-            class="updateButton"
-          >
-            <mat-icon>add_circle</mat-icon>
-            Create new service
-          </button>
+            <div *ngIf="servicesCount === 0" class="content mat-elevation-z8">
+                <p>No Service in this application.</p>
+                <br />
+                <div class="alignEnd">
+                    <button
+                        color="primary"
+                        id="createServiceEmpty"
+                        mat-flat-button
+                        routerLink="/control/deploy"
+                        class="updateButton"
+                    >
+                        <mat-icon>add_circle</mat-icon>
+                        Create new service
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div *ngIf="!is_app">
-      <mat-card-title>Cluster: {{ cluster_info.cluster_name }}</mat-card-title>
-      <mat-card-subtitle>Cluster ID {{ cluster_info._id.$oid }}</mat-card-subtitle>
-      <mat-card-actions>
-        <div *ngIf="!cluster_info.pairing_complete" class="noinstance">
-          <p>NOT YET ACTIVE</p>
+        <div *ngIf="!is_app">
+            <mat-card-title>Cluster: {{ cluster_info.cluster_name }}</mat-card-title>
+            <mat-card-subtitle>Cluster ID {{ cluster_info._id.$oid }}</mat-card-subtitle>
+            <mat-card-actions>
+                <div *ngIf="!cluster_info.pairing_complete" class="noinstance">
+                    <p>NOT YET ACTIVE</p>
+                </div>
+                <button (click)="deleteCluster(cluster_info)" mat-button><i class="bx bxs-trash"></i></button>
+            </mat-card-actions>
         </div>
-        <button (click)="deleteCluster(cluster_info)" mat-button><i class="bx bxs-trash"></i></button>
-      </mat-card-actions>
-    </div>
-  </mat-card>
+    </mat-card>
 </div>

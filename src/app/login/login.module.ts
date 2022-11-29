@@ -15,21 +15,21 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes),
-    FormsModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    CommonModule,
-    MatTooltipModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDialogModule,
-  ],
-  providers: [],
-  declarations: [LoginComponent, ResetPasswordComponent, RegisterComponent],
-  exports: [RouterModule],
+    imports: [
+        RouterModule.forChild(routes),
+        FormsModule,
+        MatCardModule,
+        MatButtonModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        CommonModule,
+        MatTooltipModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule,
+    ],
+    providers: [],
+    declarations: [LoginComponent, ResetPasswordComponent, RegisterComponent],
+    exports: [RouterModule],
 })
 export class LoginModule {}

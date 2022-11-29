@@ -1,73 +1,73 @@
 <script src="https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/js/shepherd.min.js"></script>
 
 <mat-toolbar class="mat-elevation-z8">
-  <mat-icon id="toolBar" (click)="onToolbarToggle()">menu</mat-icon>
+    <mat-icon id="toolBar" (click)="onToolbarToggle()">menu</mat-icon>
 
-  <div class="sidebar">
-    <button id="homeNavbar" (click)="resetDashboard()" mat-button routerLink="/control">
-      <img src="favicon.ico" class="favicon" alt="Oakestra" />
+    <div class="sidebar">
+        <button id="homeNavbar" (click)="resetDashboard()" mat-button routerLink="/control">
+            <img src="favicon.ico" class="favicon" alt="Oakestra" />
+        </button>
+    </div>
+
+    <span class="example-spacer"></span>
+
+    <h4 class="name">
+        <small>{{ username }}&nbsp;&nbsp;</small>
+    </h4>
+
+    <button [matMenuTriggerFor]="menu" id="userSetting" mat-icon-button>
+        <mat-icon>person</mat-icon>
     </button>
-  </div>
 
-  <span class="example-spacer"></span>
-
-  <h4 class="name">
-    <small>{{ username }}&nbsp;&nbsp;</small>
-  </h4>
-
-  <button [matMenuTriggerFor]="menu" id="userSetting" mat-icon-button>
-    <mat-icon>person</mat-icon>
-  </button>
-
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/control/profile">
-      <mat-icon>person</mat-icon>
-      Profile
-    </button>
-    <button (click)="show()" *ngIf="isAdmin" mat-menu-item routerLink="users">
-      <mat-icon>people</mat-icon>
-      User Management
-    </button>
-    <button (click)="logout()" mat-menu-item>
-      <mat-icon>logout</mat-icon>
-      Logout
-    </button>
-  </mat-menu>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/control/profile">
+            <mat-icon>person</mat-icon>
+            Profile
+        </button>
+        <button (click)="show()" *ngIf="isAdmin" mat-menu-item routerLink="users">
+            <mat-icon>people</mat-icon>
+            User Management
+        </button>
+        <button (click)="logout()" mat-menu-item>
+            <mat-icon>logout</mat-icon>
+            Logout
+        </button>
+    </mat-menu>
 </mat-toolbar>
 
 <mat-sidenav-container>
-  <mat-sidenav class="mat-elevation-z8" mode="side" [(opened)]="opened">
-    <ul class="nav-links">
-      <div class="nav-item">
-        <button class="navButton" mat-flat-button routerLink="/control">
-          <mat-icon>grid_view</mat-icon>
-          Dashboard
-        </button>
-      </div>
+    <mat-sidenav class="mat-elevation-z8" mode="side" [(opened)]="opened">
+        <ul class="nav-links">
+            <div class="nav-item">
+                <button class="navButton" mat-flat-button routerLink="/control">
+                    <mat-icon>grid_view</mat-icon>
+                    Dashboard
+                </button>
+            </div>
 
-      <div class="nav-item">
-        <app-app-list [userID]="userID"></app-app-list>
-      </div>
+            <div class="nav-item">
+                <app-app-list [userID]="userID"></app-app-list>
+            </div>
 
-      <div class="nav-item">
-        <app-cluster-list></app-cluster-list>
-      </div>
+            <div class="nav-item">
+                <app-cluster-list></app-cluster-list>
+            </div>
 
-      <div class="nav-item">
-        <button class="navButton" mat-flat-button routerLink="/control/help">
-          <mat-icon>help_outline</mat-icon>
-          Help
-        </button>
-      </div>
-    </ul>
-  </mat-sidenav>
+            <div class="nav-item">
+                <button class="navButton" mat-flat-button routerLink="/control/help">
+                    <mat-icon>help_outline</mat-icon>
+                    Help
+                </button>
+            </div>
+        </ul>
+    </mat-sidenav>
 
-  <mat-sidenav-content id="content">
-    <div *ngIf="viewSelected(); else nothingSelected">
-      <router-outlet></router-outlet>
-    </div>
-    <ng-template #nothingSelected>
-      <div class="content mat-elevation-z8">There is nothing selected.</div>
-    </ng-template>
-  </mat-sidenav-content>
+    <mat-sidenav-content id="content">
+        <div *ngIf="viewSelected(); else nothingSelected">
+            <router-outlet></router-outlet>
+        </div>
+        <ng-template #nothingSelected>
+            <div class="content mat-elevation-z8">There is nothing selected.</div>
+        </ng-template>
+    </mat-sidenav-content>
 </mat-sidenav-container>

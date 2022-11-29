@@ -1,38 +1,38 @@
 @media only screen and (max-width: 450px) {
-  .registeredRow {
-    display: none;
-  }
+    .registeredRow {
+        display: none;
+    }
 }
 
 .mat-header-cell {
-  text-align: center;
+    text-align: center;
 }
 
 .mat-icon-button {
-  line-height: 0;
+    line-height: 0;
 }
 
 .alignRight {
-  text-align: right;
+    text-align: right;
 }
 
 .alignCenter {
-  text-align: center;
+    text-align: center;
 }
 
 .search {
-  width: 100%;
-  margin-top: 3vh;
+    width: 100%;
+    margin-top: 3vh;
 }
 
 .updateButton {
-  background-color: #4a7083;
+    background-color: #4a7083;
 }
 
 .input-field {
-  width: 90%;
+    width: 90%;
 }
 
 .user-search {
-  padding-top: 40px;
+    padding-top: 40px;
 }

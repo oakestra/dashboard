@@ -4,3 +4,4 @@
 **/dist
 *.min.css
 *.min.js
+**/docs

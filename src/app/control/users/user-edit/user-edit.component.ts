@@ -10,49 +10,49 @@ import { IUser } from '../../../root/interfaces/user';
 import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
 
 @Component({
-  selector: 'app-user-edit',
-  templateUrl: './user-edit.component.html',
-  styleUrls: ['./user-edit.component.css'],
+    selector: 'app-user-edit',
+    templateUrl: './user-edit.component.html',
+    styleUrls: ['./user-edit.component.css'],
 })
 export class UserEditComponent implements OnInit {
-  form: FormGroup;
-  user: IUser;
-  dataReady = false;
+    form: FormGroup;
+    user: IUser;
+    dataReady = false;
 
-  constructor(
-    private fb: FormBuilder,
-    public dialog: MatDialog,
-    private userService: UserService,
-    private api: ApiService,
-    private router: Router,
-    private notifyService: NotificationService,
-  ) {
-    this.form = fb.group({
-      email: ['', Validators.email],
-    });
-  }
+    constructor(
+        private fb: FormBuilder,
+        public dialog: MatDialog,
+        private userService: UserService,
+        private api: ApiService,
+        private router: Router,
+        private notifyService: NotificationService,
+    ) {
+        this.form = fb.group({
+            email: ['', Validators.email],
+        });
+    }
 
-  ngOnInit(): void {
-    const username = this.userService.getUsername();
-    this.api.getUserByName(username).subscribe((data: IUser) => {
-      this.user = data;
-      this.dataReady = true;
-      this.form.patchValue({ email: this.user.email });
-    });
-  }
+    ngOnInit(): void {
+        const username = this.userService.getUsername();
+        this.api.getUserByName(username).subscribe((data: IUser) => {
+            this.user = data;
+            this.dataReady = true;
+            this.form.patchValue({ email: this.user.email });
+        });
+    }
 
-  onSubmit() {
-    this.user.email = this.form.get('email')?.value;
-    this.api.updateUser(this.user).subscribe(() => {
-      this.notifyService.notify(Type.success, 'Changes saved successfully');
-      this.router.navigate(['/control']).then();
-    });
-  }
+    onSubmit() {
+        this.user.email = this.form.get('email')?.value;
+        this.api.updateUser(this.user).subscribe(() => {
+            this.notifyService.notify(Type.success, 'Changes saved successfully');
+            this.router.navigate(['/control']).then();
+        });
+    }
 
-  openDialog(user: IUser) {
-    const data: IDialogAttribute = {
-      content: user,
-    };
-    this.dialog.open(DialogChangePasswordView, { data });
-  }
+    openDialog(user: IUser) {
+        const data: IDialogAttribute = {
+            content: user,
+        };
+        this.dialog.open(DialogChangePasswordView, { data });
+    }
 }

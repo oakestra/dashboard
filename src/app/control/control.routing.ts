@@ -12,52 +12,52 @@ import { SurveyComponent } from './survey/survey.component';
 import { ClusterComponent } from './cluster/cluster.component';
 
 export const routes: Routes = [
-  {
-    path: '',
-    component: NavbarComponent,
-    children: [
-      {
+    {
         path: '',
-        component: DevHomeComponent,
-        pathMatch: 'full',
-        canActivate: [AuthGuardService],
-      },
-      {
-        path: 'help',
-        component: HelpComponent,
-        canActivate: [AuthGuardService],
-      },
-      {
-        path: 'survey',
-        component: SurveyComponent,
-        canActivate: [AuthGuardService],
-      },
-      {
-        path: 'deploy/:id',
-        component: DeployFormComponent,
-        canActivate: [AuthGuardService],
-      },
-      {
-        path: 'deploy',
-        component: DeployFormComponent,
-        canActivate: [AuthGuardService],
-      },
-      {
-        path: 'users',
-        component: UsersComponent,
-        canActivate: [AuthGuardService, RoleRouterGuard],
-      },
-      {
-        path: 'profile',
-        component: UserEditComponent,
-        canActivate: [AuthGuardService],
-      },
-      {
-        path: 'cluster',
-        component: ClusterComponent,
-        canActivate: [AuthGuardService],
-      },
-      { path: '**', component: NotFoundComponent },
-    ],
-  },
+        component: NavbarComponent,
+        children: [
+            {
+                path: '',
+                component: DevHomeComponent,
+                pathMatch: 'full',
+                canActivate: [AuthGuardService],
+            },
+            {
+                path: 'help',
+                component: HelpComponent,
+                canActivate: [AuthGuardService],
+            },
+            {
+                path: 'survey',
+                component: SurveyComponent,
+                canActivate: [AuthGuardService],
+            },
+            {
+                path: 'deploy/:id',
+                component: DeployFormComponent,
+                canActivate: [AuthGuardService],
+            },
+            {
+                path: 'deploy',
+                component: DeployFormComponent,
+                canActivate: [AuthGuardService],
+            },
+            {
+                path: 'users',
+                component: UsersComponent,
+                canActivate: [AuthGuardService, RoleRouterGuard],
+            },
+            {
+                path: 'profile',
+                component: UserEditComponent,
+                canActivate: [AuthGuardService],
+            },
+            {
+                path: 'cluster',
+                component: ClusterComponent,
+                canActivate: [AuthGuardService],
+            },
+            { path: '**', component: NotFoundComponent },
+        ],
+    },
 ];

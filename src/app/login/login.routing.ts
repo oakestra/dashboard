@@ -4,18 +4,18 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { RegisterComponent } from './components/register/register.component';
 
 export const routes: Routes = [
-  {
-    path: '',
-    component: LoginComponent,
-    pathMatch: 'full',
-  },
-  {
-    path: 'resetPassword/:resetPasswordToken',
-    component: ResetPasswordComponent,
-  },
-  {
-    path: 'register',
-    component: RegisterComponent,
-    pathMatch: 'full',
-  },
+    {
+        path: '',
+        component: LoginComponent,
+        pathMatch: 'full',
+    },
+    {
+        path: 'resetPassword/:resetPasswordToken',
+        component: ResetPasswordComponent,
+    },
+    {
+        path: 'register',
+        component: RegisterComponent,
+        pathMatch: 'full',
+    },
 ];

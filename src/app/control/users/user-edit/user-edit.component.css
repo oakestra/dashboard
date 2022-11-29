@@ -1,19 +1,19 @@
 .cancel_buttons {
-  margin-left: 8px;
+    margin-left: 8px;
 }
 
 .updateButton {
-  background-color: #4a7083;
+    background-color: #4a7083;
 }
 
 .alignCenter {
-  text-align: center;
+    text-align: center;
 }
 
 .form {
-  padding-top: 20px;
+    padding-top: 20px;
 }
 
 .input-field {
-  width: 60%;
+    width: 60%;
 }

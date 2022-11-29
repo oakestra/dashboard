@@ -1,68 +1,68 @@
 .cancel_buttons {
-  margin-left: 8px;
+    margin-left: 8px;
 }
 
 .content {
-  height: 50vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  color: lightgray;
-  padding-top: 20px;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: lightgray;
+    padding-top: 20px;
 }
 
 .mat-form-field {
-  width: 100%;
+    width: 100%;
 }
 
 .fileDiv {
-  max-width: 90%;
-  display: inline-flex;
+    max-width: 90%;
+    display: inline-flex;
 }
 
 .fileForm {
-  width: 70vh;
+    width: 70vh;
 }
 
 .location {
-  display: none;
+    display: none;
 }
 
 button {
-  margin-bottom: 20px;
-  background-color: #4a7083;
+    margin-bottom: 20px;
+    background-color: #4a7083;
 }
 
 .file-upload-div {
-  align-content: baseline;
-  text-align: center;
+    align-content: baseline;
+    text-align: center;
 }
 
 .file-upload {
-  float: left;
-  position: relative;
+    float: left;
+    position: relative;
 }
 
 .instance {
-  display: inline-block;
-  margin-left: -8px;
+    display: inline-block;
+    margin-left: -8px;
 }
 
 .connectivityCard {
-  display: flex;
-  padding-bottom: 0;
+    display: flex;
+    padding-bottom: 0;
 }
 
 .addedFiles {
-  width: 80%;
-  float: left;
+    width: 80%;
+    float: left;
 }
 
 .add-btn {
-  background-color: #4a7083;
+    background-color: #4a7083;
 }
 
 .addButtonDiv {
-  padding: 10px;
+    padding: 10px;
 }

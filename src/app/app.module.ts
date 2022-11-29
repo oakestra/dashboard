@@ -11,21 +11,21 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    SharedModule.forRoot(),
-    RouterModule.forRoot(routes),
-    MatSnackBarModule,
-    MatIconModule,
-  ],
-  providers: [
-    // should be empty as we import all global services through "SharedModule.forRoot()"
-  ],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        SharedModule.forRoot(),
+        RouterModule.forRoot(routes),
+        MatSnackBarModule,
+        MatIconModule,
+    ],
+    providers: [
+        // should be empty as we import all global services through "SharedModule.forRoot()"
+    ],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

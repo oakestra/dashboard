@@ -3,23 +3,23 @@ import { SurveyNotificationComponent } from './survey-notification.component';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class SurveyNotificationService {
-  taskNumber = 0;
+    taskNumber = 0;
 
-  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+    horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+    verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  constructor(private snackBar: MatSnackBar) {}
+    constructor(private snackBar: MatSnackBar) {}
 
-  notify(taskNumber: number) {
-    this.taskNumber = taskNumber;
+    notify(taskNumber: number) {
+        this.taskNumber = taskNumber;
 
-    this.snackBar.openFromComponent(SurveyNotificationComponent, {
-      panelClass: ['blue-snackbar'],
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-    });
-  }
+        this.snackBar.openFromComponent(SurveyNotificationComponent, {
+            panelClass: ['blue-snackbar'],
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+        });
+    }
 }

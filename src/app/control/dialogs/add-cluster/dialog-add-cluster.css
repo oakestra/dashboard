@@ -1,53 +1,53 @@
 .mat-form-field {
-  width: 50%;
+    width: 50%;
 }
 
 .pac-container {
-  z-index: 9999;
+    z-index: 9999;
 }
 
 .mat-dialog-content {
-  height: 400px;
+    height: 400px;
 }
 
 .map-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin-top: 200px;
-  height: 300px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 200px;
+    height: 300px;
 }
 
 .map-frame {
-  border: 2px solid black;
-  height: 100%;
+    border: 2px solid black;
+    height: 100%;
 }
 
 #map {
-  top: 0;
-  bottom: 0;
-  height: 100%;
-  width: 100%;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
 }
 
 .full-width {
-  width: 100%;
+    width: 100%;
 }
 
 .alignRight {
-  text-align: right;
+    text-align: right;
 }
 
 .input {
-  padding-right: 8px;
+    padding-right: 8px;
 }
 
 .cancelButton {
-  background-color: #7b97a5;
+    background-color: #7b97a5;
 }
 
 .updateButton {
-  background-color: #4a7083;
+    background-color: #4a7083;
 }

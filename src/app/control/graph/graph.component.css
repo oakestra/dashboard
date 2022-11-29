@@ -1,78 +1,78 @@
 svg {
-  cursor: default;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 svg:not(.active):not(.ctrl) {
-  cursor: crosshair;
+    cursor: crosshair;
 }
 
 path.link {
-  stroke: #888;
-  stroke-width: 30px;
-  cursor: default;
+    stroke: #888;
+    stroke-width: 30px;
+    cursor: default;
 }
 
 svg:not(.active):not(.ctrl) path.link {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 path.link.selected {
-  stroke-dasharray: 10, 2;
+    stroke-dasharray: 10, 2;
 }
 
 path.link.dragline {
-  pointer-events: none;
+    pointer-events: none;
 }
 
 path.link.hidden {
-  stroke-width: 0;
+    stroke-width: 0;
 }
 
 circle.node {
-  stroke-width: 0;
-  cursor: pointer;
-  fill: #fff;
+    stroke-width: 0;
+    cursor: pointer;
+    fill: #fff;
 }
 
 text {
-  font: 14px sans-serif;
-  pointer-events: none;
+    font: 14px sans-serif;
+    pointer-events: none;
 }
 
 text.id {
-  text-anchor: middle;
-  font-weight: bold;
+    text-anchor: middle;
+    font-weight: bold;
 }
 
 .graph {
-  background: lightgray;
-  border: 2px solid #3b474e;
-  border-radius: 5px;
+    background: lightgray;
+    border: 2px solid #3b474e;
+    border-radius: 5px;
 }
 
 .graphSide {
-  overflow: hidden;
-  margin-top: 20px;
+    overflow: hidden;
+    margin-top: 20px;
 }
 
 graph-button {
-  background-color: #4a7083;
-  color: white;
+    background-color: #4a7083;
+    color: white;
 }
 
 .buttonSide {
-  width: 20vw;
-  float: left;
+    width: 20vw;
+    float: left;
 }
 
 .updateButton {
-  background-color: #4a7083;
+    background-color: #4a7083;
 }
 
 alert-info {
-  margin-top: 8px;
+    margin-top: 8px;
 }

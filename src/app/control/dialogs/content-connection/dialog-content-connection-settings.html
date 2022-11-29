@@ -1,45 +1,45 @@
 <h2 mat-dialog-title>Connection settings</h2>
 <mat-dialog-content class="mat-typography">
-  <div class="radioDiv">
-    <mat-radio-group [(ngModel)]="data.type" required>
-      <div class="w3-col l6 m6 alignCenter">
-        <mat-radio-button (change)="onRadioChange($event)" class="blackRadio" value="latency">
-          latency
-        </mat-radio-button>
-      </div>
-      <div class="w3-col l6 m6 alignCenter">
-        <mat-radio-button (change)="onRadioChange($event)" class="blackRadio" value="geo">geo</mat-radio-button>
-      </div>
-    </mat-radio-group>
-  </div>
-
-  <div class="full-width w3-row">
-    <div class="w3-col s12 m4 l4">
-      <mat-form-field class="full-width">
-        <mat-label>Threshold</mat-label>
-        <input [(ngModel)]="data.threshold" matInput type="number" />
-        <p matSuffix>ms</p>
-      </mat-form-field>
+    <div class="radioDiv">
+        <mat-radio-group [(ngModel)]="data.type" required>
+            <div class="w3-col l6 m6 alignCenter">
+                <mat-radio-button (change)="onRadioChange($event)" class="blackRadio" value="latency">
+                    latency
+                </mat-radio-button>
+            </div>
+            <div class="w3-col l6 m6 alignCenter">
+                <mat-radio-button (change)="onRadioChange($event)" class="blackRadio" value="geo">geo</mat-radio-button>
+            </div>
+        </mat-radio-group>
     </div>
 
-    <div class="w3-col s12 m4 l4">
-      <mat-form-field class="full-width">
-        <mat-label>Rigidness</mat-label>
-        <input [(ngModel)]="data.rigidness" matInput max="100" min="0" type="number" />
-        <p matSuffix>%</p>
-      </mat-form-field>
-    </div>
+    <div class="full-width w3-row">
+        <div class="w3-col s12 m4 l4">
+            <mat-form-field class="full-width">
+                <mat-label>Threshold</mat-label>
+                <input [(ngModel)]="data.threshold" matInput type="number" />
+                <p matSuffix>ms</p>
+            </mat-form-field>
+        </div>
 
-    <div class="w3-col s12 m4 l4">
-      <mat-form-field class="full-width">
-        <mat-label>Convergence Time</mat-label>
-        <input [(ngModel)]="data.convergence_time" matInput type="number" />
-        <p matSuffix>sec</p>
-      </mat-form-field>
+        <div class="w3-col s12 m4 l4">
+            <mat-form-field class="full-width">
+                <mat-label>Rigidness</mat-label>
+                <input [(ngModel)]="data.rigidness" matInput max="100" min="0" type="number" />
+                <p matSuffix>%</p>
+            </mat-form-field>
+        </div>
+
+        <div class="w3-col s12 m4 l4">
+            <mat-form-field class="full-width">
+                <mat-label>Convergence Time</mat-label>
+                <input [(ngModel)]="data.convergence_time" matInput type="number" />
+                <p matSuffix>sec</p>
+            </mat-form-field>
+        </div>
     </div>
-  </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button [mat-dialog-close]="data" color="primary" class="updateButton" mat-button mat-flat-button>Save</button>
-  <button (click)="cancel()" mat-button color="primary" class="cancelButton">Cancel</button>
+    <button [mat-dialog-close]="data" color="primary" class="updateButton" mat-button mat-flat-button>Save</button>
+    <button (click)="cancel()" mat-button color="primary" class="cancelButton">Cancel</button>
 </mat-dialog-actions>

@@ -11,67 +11,70 @@ import { AuthService } from '../../shared/modules/auth/auth.service';
 import * as L from 'leaflet';
 
 @Component({
-  selector: 'app-cluster',
-  templateUrl: './cluster.component.html',
-  styleUrls: ['./cluster.component.css'],
+    selector: 'app-cluster',
+    templateUrl: './cluster.component.html',
+    styleUrls: ['./cluster.component.css'],
 })
 export class ClusterComponent implements OnInit {
-  clusters: ICluster[]; // Make this as input form parent class
+    clusters: ICluster[]; // Make this as input form parent class
 
-  private map: any;
+    private map: any;
 
-  // FMI Garching coordinates
-  private lat = 48.262707753772624;
-  private lon = 11.668009155278707;
+    // FMI Garching coordinates
+    private lat = 48.262707753772624;
+    private lon = 11.668009155278707;
 
-  constructor(
-    private observer: BreakpointObserver,
-    public dialog: MatDialog,
-    private api: ApiService,
-    public userService: UserService,
-    private router: Router,
-    private authService: AuthService,
-    private notifyService: NotificationService,
-  ) {}
+    constructor(
+        private observer: BreakpointObserver,
+        public dialog: MatDialog,
+        private api: ApiService,
+        public userService: UserService,
+        private router: Router,
+        private authService: AuthService,
+        private notifyService: NotificationService,
+    ) {}
 
-  ngOnInit(): void {
-    this.initMap();
-  }
+    ngOnInit(): void {
+        this.initMap();
+    }
 
-  private initMap(): void {
-    this.map = L.map('card_map', {
-      center: [this.lat, this.lon],
-      attributionControl: false,
-      zoom: 14,
-    });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 13,
-    }).addTo(this.map);
-  }
-
-  deleteCluster(cluster: ICluster) {
-    const data = {
-      text: 'Delete cluster: ' + cluster.cluster_name,
-      type: 'cluster',
-    };
-    const dialogRef = this.dialog.open(DialogConfirmationView, { data: data });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result.event == true) {
-        this.api.deleteCluster(cluster._id.$oid).subscribe({
-          next: () => {
-            this.notifyService.notify(Type.success, 'Cluster ' + cluster.cluster_name + ' deleted successfully!');
-            this.redirectTo('/control');
-          },
-          error: () => {
-            this.notifyService.notify(Type.error, 'Error: Deleting cluster ' + cluster.cluster_name);
-          },
+    private initMap(): void {
+        this.map = L.map('card_map', {
+            center: [this.lat, this.lon],
+            attributionControl: false,
+            zoom: 14,
         });
-      }
-    });
-  }
 
-  redirectTo(uri: string) {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate([uri]));
-  }
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 13,
+        }).addTo(this.map);
+    }
+
+    deleteCluster(cluster: ICluster) {
+        const data = {
+            text: 'Delete cluster: ' + cluster.cluster_name,
+            type: 'cluster',
+        };
+        const dialogRef = this.dialog.open(DialogConfirmationView, { data: data });
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result.event == true) {
+                this.api.deleteCluster(cluster._id.$oid).subscribe({
+                    next: () => {
+                        this.notifyService.notify(
+                            Type.success,
+                            'Cluster ' + cluster.cluster_name + ' deleted successfully!',
+                        );
+                        this.redirectTo('/control');
+                    },
+                    error: () => {
+                        this.notifyService.notify(Type.error, 'Error: Deleting cluster ' + cluster.cluster_name);
+                    },
+                });
+            }
+        });
+    }
+
+    redirectTo(uri: string) {
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate([uri]));
+    }
 }

@@ -7,41 +7,41 @@ import { IUserRole } from '../../../root/interfaces/user';
 
 @Injectable()
 export class AuthService {
-  roles: IUserRole[] | undefined;
+    roles: IUserRole[] | undefined;
 
-  constructor(private userService: UserService, private api: ApiService) {
-    this.roles = undefined;
-  }
-
-  getAuthorization(): Observable<{ roles: IUserRole[] }> {
-    if (!this.roles) {
-      return this.api.getAuthorization(this.userService.getUsername()).pipe(
-        map((auth: { roles: IUserRole[] }) => {
-          this.roles = auth.roles;
-          return auth;
-        }),
-      );
-    } else {
-      return of({ roles: this.roles });
+    constructor(private userService: UserService, private api: ApiService) {
+        this.roles = undefined;
     }
-  }
 
-  hasRole(role: Role) {
-    return this.getAuthorization().pipe(
-      map(
-        pipe((auth: { roles: IUserRole[] }) => {
-          const found = auth.roles.find((r: IUserRole) => r.name === role);
-          return found !== undefined;
-        }),
-      ),
-    );
-  }
+    getAuthorization(): Observable<{ roles: IUserRole[] }> {
+        if (!this.roles) {
+            return this.api.getAuthorization(this.userService.getUsername()).pipe(
+                map((auth: { roles: IUserRole[] }) => {
+                    this.roles = auth.roles;
+                    return auth;
+                }),
+            );
+        } else {
+            return of({ roles: this.roles });
+        }
+    }
 
-  clear() {
-    this.roles = undefined;
-  }
+    hasRole(role: Role) {
+        return this.getAuthorization().pipe(
+            map(
+                pipe((auth: { roles: IUserRole[] }) => {
+                    const found = auth.roles.find((r: IUserRole) => r.name === role);
+                    return found !== undefined;
+                }),
+            ),
+        );
+    }
+
+    clear() {
+        this.roles = undefined;
+    }
 }
 
 export class Role {
-  static ADMIN = 'Admin';
+    static ADMIN = 'Admin';
 }

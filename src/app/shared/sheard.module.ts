@@ -16,28 +16,36 @@ import { SurveyNotificationService } from '../control/survey/survey-notification
 import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  imports: [MatIconModule, CommonModule, MatButtonModule],
-  exports: [],
-  providers: [UserService, SharedIDService, AuthService, AuthGuardService, DatePipe, RoleRouterGuard, WINDOW_PROVIDERS],
-  declarations: [NotificationComponent, SurveyNotificationComponent],
-})
-export class SharedModule {
-  static forRoot(): ModuleWithProviders<any> {
-    return {
-      ngModule: SharedModule,
-      // Here (and only here!) are all global shared services
-      providers: [
-        {
-          provide: HTTP_INTERCEPTORS,
-          useClass: CommonInterceptor,
-          multi: true,
-        },
+    imports: [MatIconModule, CommonModule, MatButtonModule],
+    exports: [],
+    providers: [
         UserService,
         SharedIDService,
+        AuthService,
         AuthGuardService,
-        NotificationService,
-        SurveyNotificationService,
-      ],
-    };
-  }
+        DatePipe,
+        RoleRouterGuard,
+        WINDOW_PROVIDERS,
+    ],
+    declarations: [NotificationComponent, SurveyNotificationComponent],
+})
+export class SharedModule {
+    static forRoot(): ModuleWithProviders<any> {
+        return {
+            ngModule: SharedModule,
+            // Here (and only here!) are all global shared services
+            providers: [
+                {
+                    provide: HTTP_INTERCEPTORS,
+                    useClass: CommonInterceptor,
+                    multi: true,
+                },
+                UserService,
+                SharedIDService,
+                AuthGuardService,
+                NotificationService,
+                SurveyNotificationService,
+            ],
+        };
+    }
 }

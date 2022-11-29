@@ -1,3 +1,3 @@
 export interface IId {
-  $oid: string;
+    $oid: string;
 }

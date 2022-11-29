@@ -1,50 +1,59 @@
 <h2 mat-dialog-title>{{title}}</h2>
 <mat-dialog-content class="mat-typography">
-  <form [formGroup]="form">
-    <div class="w3-col l6 s12 m6">
-      <mat-form-field class="full-width input">
-        <mat-label>Username</mat-label>
-        <input formControlName="name" matInput />
-        <div *ngIf="name!.touched && name!.invalid">
-          <div *ngIf="form.errors?.['containsWhitespace']" class="alert alert-danger">Username contains whitespace</div>
+    <form [formGroup]="form">
+        <div class="w3-col l6 s12 m6">
+            <mat-form-field class="full-width input">
+                <mat-label>Username</mat-label>
+                <input formControlName="name" matInput />
+                <div *ngIf="name!.touched && name!.invalid">
+                    <div *ngIf="form.errors?.['containsWhitespace']" class="alert alert-danger">
+                        Username contains whitespace
+                    </div>
+                </div>
+            </mat-form-field>
         </div>
-      </mat-form-field>
-    </div>
 
-    <div class="w3-col l6 s12 m6 input">
-      <mat-form-field class="full-width">
-        <mat-label>E-Mail</mat-label>
-        <input email formControlName="email" matInput required type="email" />
-      </mat-form-field>
-    </div>
+        <div class="w3-col l6 s12 m6 input">
+            <mat-form-field class="full-width">
+                <mat-label>E-Mail</mat-label>
+                <input email formControlName="email" matInput required type="email" />
+            </mat-form-field>
+        </div>
 
-    <div *ngIf="action === DialogAction.ADD" class="w3-col l6 s12 m6">
-      <mat-form-field class="full-width">
-        <mat-label>Password</mat-label>
-        <input formControlName="password" matInput required />
-      </mat-form-field>
-    </div>
+        <div *ngIf="action === DialogAction.ADD" class="w3-col l6 s12 m6">
+            <mat-form-field class="full-width">
+                <mat-label>Password</mat-label>
+                <input formControlName="password" matInput required />
+            </mat-form-field>
+        </div>
 
-    <div class="w3-col l12 s12 m12">
-      <h3>Roles</h3>
-      <section class="example-section" formGroupName="roles">
-        <p>
-          <mat-checkbox formControlName="ADMIN">Admin</mat-checkbox>
-        </p>
-        <p>
-          <mat-checkbox formControlName="APPLICATION_PROVIDER">Application_Provider</mat-checkbox>
-        </p>
-        <p>
-          <mat-checkbox formControlName="INFRASTRUCTURE_PROVIDER">Infrastructure_Provider</mat-checkbox>
-        </p>
-      </section>
-    </div>
-  </form>
+        <div class="w3-col l12 s12 m12">
+            <h3>Roles</h3>
+            <section class="example-section" formGroupName="roles">
+                <p>
+                    <mat-checkbox formControlName="ADMIN">Admin</mat-checkbox>
+                </p>
+                <p>
+                    <mat-checkbox formControlName="APPLICATION_PROVIDER">Application_Provider</mat-checkbox>
+                </p>
+                <p>
+                    <mat-checkbox formControlName="INFRASTRUCTURE_PROVIDER">Infrastructure_Provider</mat-checkbox>
+                </p>
+            </section>
+        </div>
+    </form>
 </mat-dialog-content>
 
 <mat-dialog-actions class="alignRight">
-  <button (click)="doAction()" [disabled]="!form.valid" color="primary" class="updateButton" mat-button mat-flat-button>
-    {{buttonText}}
-  </button>
-  <button (click)="closeDialog()" color="primary" class="cancelButton" mat-button mat-flat-button>Cancel</button>
+    <button
+        (click)="doAction()"
+        [disabled]="!form.valid"
+        color="primary"
+        class="updateButton"
+        mat-button
+        mat-flat-button
+    >
+        {{buttonText}}
+    </button>
+    <button (click)="closeDialog()" color="primary" class="cancelButton" mat-button mat-flat-button>Cancel</button>
 </mat-dialog-actions>

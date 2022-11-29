@@ -1,170 +1,170 @@
 mat-card {
-  width: 100%;
-  font-size: 1rem;
-  margin-bottom: 10px;
+    width: 100%;
+    font-size: 1rem;
+    margin-bottom: 10px;
 }
 
 mat-card-title {
-  background-color: #4a7083;
-  padding: 16px;
-  border-radius: 4px;
-  color: white;
+    background-color: #4a7083;
+    padding: 16px;
+    border-radius: 4px;
+    color: white;
 }
 
 mat-card p {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .content-cards {
-  border-radius: 10px;
-  margin: 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+    border-radius: 10px;
+    margin: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 @media only screen and (min-width: 801px) {
-  .content-cards {
-    margin-left: 32px;
-  }
+    .content-cards {
+        margin-left: 32px;
+    }
 }
 
 .content {
-  height: calc(100vh - 300px);
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  color: lightgray;
-  align-content: center;
-  flex-wrap: wrap;
-  flex-direction: column;
+    height: calc(100vh - 300px);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: lightgray;
+    align-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .REGISTERED {
-  color: green;
+    color: green;
 }
 
 .CLUSTER_SCHEDULED {
-  color: green;
+    color: green;
 }
 
 .REQUESTED {
-  color: yellow;
+    color: yellow;
 }
 
 .NODE_SCHEDULED {
-  color: green;
+    color: green;
 }
 
 .RUNNING {
-  color: green;
+    color: green;
 }
 
 .FAILED {
-  color: red;
+    color: red;
 }
 
 .w3-col {
-  line-height: 40px;
+    line-height: 40px;
 }
 
 .statusText {
-  display: contents;
+    display: contents;
 }
 
 @media only screen and (max-width: 450px) {
-  .statusText {
-    display: none;
-  }
+    .statusText {
+        display: none;
+    }
 
-  .statusField {
-    text-align: center;
-  }
+    .statusField {
+        text-align: center;
+    }
 }
 
 .statusField {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .mat-expansion-panel {
-  margin-bottom: 10px;
-  padding: 16px;
-  /*pointer-events: none;*/
+    margin-bottom: 10px;
+    padding: 16px;
+    /*pointer-events: none;*/
 }
 
 .mat-expansion-panel-header {
-  padding: 0;
-  background-color: rgba(0, 0, 0, 0) !important;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0) !important;
 }
 
 .span.mat-expansion-indicator {
-  pointer-events: visiblefill !important;
+    pointer-events: visiblefill !important;
 }
 
 .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled='true']) {
-  background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .disable_ripple:hover .disable_ripple:active .disable_ripple:focus .disable_ripple:focus-within {
-  background-color: rgba(0, 0, 0, 0) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
 }
 
 .mat-expansion-panel-header.mat-expanded {
-  background-color: rgba(0, 0, 0, 0) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
 }
 
 .mat-expansion-panel-header-description {
-  color: #000000de;
+    color: #000000de;
 }
 
 .instance {
-  padding: 16px;
-  border-left: 2px solid;
-  border-left-color: #adacac;
+    padding: 16px;
+    border-left: 2px solid;
+    border-left-color: #adacac;
 }
 
 .instance:hover {
-  background-color: rgba(241, 241, 241, 0.5);
+    background-color: rgba(241, 241, 241, 0.5);
 }
 
 .noinstance {
-  text-align: center;
-  color: #d3d3d3;
-  font-size: large;
+    text-align: center;
+    color: #d3d3d3;
+    font-size: large;
 }
 
 .instanceDelete {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 .map-container {
-  align-content: center;
-  height: 140px;
-  width: 250px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+    align-content: center;
+    height: 140px;
+    width: 250px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .map-frame {
-  border: 2px solid black;
-  height: 100%;
+    border: 2px solid black;
+    height: 100%;
 }
 
 #map {
-  top: 0;
-  bottom: 0;
-  height: 100%;
-  width: 100%;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
 }
 
 .alignEnd {
-  text-align: end;
+    text-align: end;
 }
 
 .updateButton {
-  background-color: #4a7083;
+    background-color: #4a7083;
 }

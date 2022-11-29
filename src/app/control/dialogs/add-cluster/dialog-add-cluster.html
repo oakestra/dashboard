@@ -1,96 +1,96 @@
 <!--TODO Improve this code, use a form and simplify it-->
 <h2 mat-dialog-title>{{title}}</h2>
 <mat-dialog-content class="mat-typography">
-  <div class="w3-row">
-    <div class="w3-col l6 s12 m6">
-      <label><i>Cluster ID</i></label>
+    <div class="w3-row">
+        <div class="w3-col l6 s12 m6">
+            <label><i>Cluster ID</i></label>
+        </div>
     </div>
-  </div>
 
-  <div class="w3-col l12 s12 m12">
-    <mat-form-field class="full-width input">
-      <p>Write the name of your Cluster</p>
-      <input
-        class="form-control"
-        [disabled]="action ==='Update'"
-        [(ngModel)]="local_data.cluster_name"
-        placeholder="Cluster name"
-      />
-    </mat-form-field>
-  </div>
+    <div class="w3-col l12 s12 m12">
+        <mat-form-field class="full-width input">
+            <p>Write the name of your Cluster</p>
+            <input
+                class="form-control"
+                [disabled]="action ==='Update'"
+                [(ngModel)]="local_data.cluster_name"
+                placeholder="Cluster name"
+            />
+        </mat-form-field>
+    </div>
 
-  <div class="w3-col l12 s12 m12">
-    <mat-form-field class="full-width">
-      <p>Select Cluster Location</p>
+    <div class="w3-col l12 s12 m12">
+        <mat-form-field class="full-width">
+            <p>Select Cluster Location</p>
 
-      <form class="card-form">
-        <div class="row">
-          <div class="col-6 m2">
-            <label for="lat">Latitude</label>
-            <input
-              class="form-control"
-              type="text"
-              id="lat"
-              [disabled]="action ==='Update'"
-              [(ngModel)]="local_data.cluster_latitude"
-              placeholder="latitude"
-              [formControl]="lat_form"
-              required
-            />
-          </div>
-          <div class="col-6 m2">
-            <label for="lat">Longitude</label>
-            <input
-              class="form-control"
-              type="text"
-              id="lng"
-              [disabled]="action ==='Update'"
-              [(ngModel)]="local_data.cluster_longitude"
-              placeholder="longitude"
-              [formControl]="lng_form"
-              required
-            />
-          </div>
-        </div>
-        <br />
-        <div class="row">
-          <div class="col-6 m2">
-            <label for="lat">Radius</label>
-            <input
-              class="form-control"
-              type="text"
-              name="rad"
-              id="rad"
-              [disabled]="action ==='Update'"
-              placeholder="20"
-              value="{{my_radius}}"
-              #newValue
-              (change)="radiusChange(newValue)"
-              [(ngModel)]="local_data.cluster_radius"
-              required
-            />
-          </div>
-        </div>
-      </form>
-      <!--      TODO Remove stylesheet input -->
-      <div class="map-container">
-        <div class="map-frame">
-          <div id="map"></div>
-          <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css" />
-        </div>
-      </div>
-    </mat-form-field>
-  </div>
+            <form class="card-form">
+                <div class="row">
+                    <div class="col-6 m2">
+                        <label for="lat">Latitude</label>
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="lat"
+                            [disabled]="action ==='Update'"
+                            [(ngModel)]="local_data.cluster_latitude"
+                            placeholder="latitude"
+                            [formControl]="lat_form"
+                            required
+                        />
+                    </div>
+                    <div class="col-6 m2">
+                        <label for="lat">Longitude</label>
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="lng"
+                            [disabled]="action ==='Update'"
+                            [(ngModel)]="local_data.cluster_longitude"
+                            placeholder="longitude"
+                            [formControl]="lng_form"
+                            required
+                        />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-6 m2">
+                        <label for="lat">Radius</label>
+                        <input
+                            class="form-control"
+                            type="text"
+                            name="rad"
+                            id="rad"
+                            [disabled]="action ==='Update'"
+                            placeholder="20"
+                            value="{{my_radius}}"
+                            #newValue
+                            (change)="radiusChange(newValue)"
+                            [(ngModel)]="local_data.cluster_radius"
+                            required
+                        />
+                    </div>
+                </div>
+            </form>
+            <!--      TODO Remove stylesheet input -->
+            <div class="map-container">
+                <div class="map-frame">
+                    <div id="map"></div>
+                    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css" />
+                </div>
+            </div>
+        </mat-form-field>
+    </div>
 </mat-dialog-content>
 
 <mat-dialog-actions class="alignRight">
-  <button (click)="doAction()" color="primary" class="updateButton" mat-button mat-flat-button>
-    {{local_data.action}}
-  </button>
-  <button (click)="deleteCluster()" *ngIf="action ==='Update'" color="primary" mat-button mat-flat-button>
-    Delete
-  </button>
-  <button (click)="closeDialog()" color="primary" class="cancelButton" mat-button mat-flat-button>Cancel</button>
+    <button (click)="doAction()" color="primary" class="updateButton" mat-button mat-flat-button>
+        {{local_data.action}}
+    </button>
+    <button (click)="deleteCluster()" *ngIf="action ==='Update'" color="primary" mat-button mat-flat-button>
+        Delete
+    </button>
+    <button (click)="closeDialog()" color="primary" class="cancelButton" mat-button mat-flat-button>Cancel</button>
 </mat-dialog-actions>
 
 <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>

@@ -1,13 +1,13 @@
 .content-cards {
-  margin: 20px 20px 20px 40px;
+    margin: 20px 20px 20px 40px;
 }
 
 @media only screen and (max-width: 801px) {
-  #startTour {
-    display: none;
-  }
+    #startTour {
+        display: none;
+    }
 }
 
 .updateButton {
-  background-color: #4a7083;
+    background-color: #4a7083;
 }

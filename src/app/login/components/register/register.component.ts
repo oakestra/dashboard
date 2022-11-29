@@ -4,18 +4,18 @@ import { Router } from '@angular/router';
 // TODO Implement all missing stuff, are there the Endpoints for the registration?
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  constructor(private router: Router) {}
+    constructor(private router: Router) {}
 
-  public submitRegister() {
-    return;
-  }
+    public submitRegister() {
+        return;
+    }
 
-  loginForm() {
-    this.router.navigate(['']);
-  }
+    loginForm() {
+        this.router.navigate(['']);
+    }
 }
