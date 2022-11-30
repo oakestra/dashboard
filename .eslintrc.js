@@ -117,16 +117,17 @@ module.exports = {
         'use-isnan': 'error',
         'valid-typeof': 'error',
     },
+    parser: '@typescript-eslint/parser',
     overrides: [
         {
-            files: ['*.ts'],
+            files: ['*.ts', '*.tsx'], // Your TypeScript files extension
             extends: [
                 //'plugin:@typescript-eslint/recommended',
                 //'plugin:@typescript-eslint/recommended-requiring-type-checking',
             ],
-            parser: '@typescript-eslint/parser',
+
             parserOptions: {
-                project: ['./tsconfig.json'],
+                project: ['./tsconfig.json'], // Specify it only for TypeScript files
             },
             rules: {
                 'restrict-plus-operands': 'off',
