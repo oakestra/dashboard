@@ -332,7 +332,7 @@ export class DeployFormComponent implements OnInit, OnDestroy {
     addService() {
         this.api.addService(this.jsonContent).subscribe({
             next: () => {
-                this.router.navigate(['/control']).then();
+                void this.router.navigate(['/control']).then();
                 this.notifyService.notify(NotificationType.success, 'Service generation was successful');
             },
             error: () => this.notifyService.notify(NotificationType.error, 'File was not in the correct format'),

@@ -3,9 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { UserService } from '../modules/auth/user.service';
-import { NotificationService, NotificationType } from '../modules/notification/notification.service';
+import { NotificationService } from '../modules/notification/notification.service';
 import { environment } from '../../../environments/environment';
 import { WINDOW } from '../modules/helper/window.providers';
+import { NotificationType } from '../../root/interfaces/notification';
 
 @Injectable()
 export class RestService {

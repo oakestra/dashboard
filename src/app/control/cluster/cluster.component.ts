@@ -5,10 +5,11 @@ import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import { ICluster } from '../../root/interfaces/cluster';
 import { DialogConfirmationView } from '../dialogs/confirmation/dialogConfirmation';
-import { NotificationService, NotificationType } from '../../shared/modules/notification/notification.service';
+import { NotificationService } from '../../shared/modules/notification/notification.service';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { AuthService } from '../../shared/modules/auth/auth.service';
+import { NotificationType } from '../../root/interfaces/notification';
 
 @Component({
     selector: 'app-cluster',
@@ -78,6 +79,6 @@ export class ClusterComponent implements OnInit {
     }
 
     redirectTo(uri: string) {
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate([uri]));
+        void this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate([uri]));
     }
 }

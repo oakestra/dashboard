@@ -43,7 +43,7 @@ export class HelpComponent {
             {
                 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
                 action() {
-                    router.navigate(['/control/survey']).then();
+                    void router.navigate(['/control/survey']).then();
                     return shepherdService.next();
                 },
                 text: 'NEXT',
@@ -112,7 +112,7 @@ export class HelpComponent {
     }
 
     start() {
-        this.router.navigate(['/control']).then();
+        void this.router.navigate(['/control']).then();
 
         this.shepherdService.defaultStepOptions = this.defaultStepOptions;
         this.shepherdService.modal = true;

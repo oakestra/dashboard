@@ -118,14 +118,13 @@ module.exports = {
         'valid-typeof': 'error',
     },
     parser: '@typescript-eslint/parser',
-    overrides: [
+    /*overrides: [
         {
             files: ['*.ts', '*.tsx'], // Your TypeScript files extension
             extends: [
-                //'plugin:@typescript-eslint/recommended',
-                //'plugin:@typescript-eslint/recommended-requiring-type-checking',
+                'plugin:@typescript-eslint/recommended',
+                'plugin:@typescript-eslint/recommended-requiring-type-checking',
             ],
-
             parserOptions: {
                 project: ['./tsconfig.json'], // Specify it only for TypeScript files
             },
@@ -137,5 +136,5 @@ module.exports = {
                 '@typescript-eslint/unbound-method': 'off',
             },
         },
-    ],
+    ],*/
 };
