@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { UserService } from './user.service';
 import { Observable, of, pipe } from 'rxjs';
-import { ApiService } from '../api/api.service';
 import { map } from 'rxjs/operators';
+import { ApiService } from '../api/api.service';
 import { IUserRole } from '../../../root/interfaces/user';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {

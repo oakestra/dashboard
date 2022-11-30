@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { UserService } from '../modules/auth/user.service';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { NotificationService, Type } from '../modules/notification/notification.service';
+import { UserService } from '../modules/auth/user.service';
+import { NotificationService, NotificationType } from '../modules/notification/notification.service';
 import { environment } from '../../../environments/environment';
 import { WINDOW } from '../modules/helper/window.providers';
 
@@ -45,7 +45,7 @@ export class RestService {
                 return res;
             }),
             catchError((error) => {
-                this.notificationService.notify(Type.error, error.error);
+                this.notificationService.notify(NotificationType.error, error.error);
                 return throwError(error || 'Server error');
             }),
         );
@@ -67,7 +67,7 @@ export class RestService {
                 }
             }),
             catchError((error) => {
-                this.notificationService.notify(Type.error, error.error.message);
+                this.notificationService.notify(NotificationType.error, error.error.message);
                 return throwError(error || 'Server error');
             }),
         );
@@ -87,7 +87,7 @@ export class RestService {
                 }
             }),
             catchError((error) => {
-                this.notificationService.notify(Type.error, error.error.message);
+                this.notificationService.notify(NotificationType.error, error.error.message);
                 return throwError(error || 'Server error');
             }),
         );
@@ -97,7 +97,7 @@ export class RestService {
     public doPUTRequest<T>(url: string, object: any): Observable<T> {
         const request = this.http.put<T>(this.baseURL + url, object, this.requestOptions).pipe(
             catchError((error) => {
-                this.notificationService.notify(Type.error, error.error.message);
+                this.notificationService.notify(NotificationType.error, error.error.message);
                 return throwError(error || 'Server error');
             }),
         );
@@ -117,7 +117,7 @@ export class RestService {
                 }
             }),
             catchError((error) => {
-                this.notificationService.notify(Type.error, error.error.message);
+                this.notificationService.notify(NotificationType.error, error.error.message);
                 return throwError(error || 'Server error');
             }),
         );
@@ -126,7 +126,7 @@ export class RestService {
     public doPUTPublicRequest<T>(url: string, object: any): Observable<T> {
         return this.http.put<T>(this.baseURL + url, object, this.requestOptions).pipe(
             catchError((error) => {
-                this.notificationService.notify(Type.error, error.error.message);
+                this.notificationService.notify(NotificationType.error, error.error.message);
                 return throwError(error || 'Server error');
             }),
         );

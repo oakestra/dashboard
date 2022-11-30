@@ -27,8 +27,8 @@ export class ApiService extends RestService {
         super(http, userService, notificationService, window);
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    ///////////////////// Application Functions ///////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
+    // /////////////////// Application Functions ///////////////////////////////
 
     addApplication(app: IApplication) {
         return this.doPOSTRequest('/application/', app);
@@ -50,8 +50,8 @@ export class ApiService extends RestService {
         return this.doGETRequest('/applications/' + userId);
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    ///////////////////// Cluster Functions ///////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
+    // /////////////////// Cluster Functions ///////////////////////////////
 
     deleteCluster(clusterId: string) {
         return this.doDELRequest('/cluster/' + clusterId);
@@ -65,8 +65,8 @@ export class ApiService extends RestService {
         return this.doGETRequest('/cluster/' + clusterId);
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    ///////////////////// Service Functions ///////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
+    // /////////////////// Service Functions ///////////////////////////////////////
 
     addService(service: IService) {
         return this.doPOSTRequest('/service/', service);
@@ -96,8 +96,8 @@ export class ApiService extends RestService {
         return this.doPOSTRequest('/service/' + service._id?.$oid + '/instance', service);
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    //////////////////// User Functions ///////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
+    // ////////////////// User Functions ///////////////////////////////////////
 
     public registerUser(user: IUser): Observable<any> {
         return this.doPOSTRequest('/auth/register', user);
@@ -126,14 +126,14 @@ export class ApiService extends RestService {
         });
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    //////////////////// Functions  for Authorization /////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
+    // ////////////////// Functions  for Authorization /////////////////////////
 
     public getAuthorization(username: string): Observable<{ roles: IUserRole[] }> {
         return this.doGETRequest('/permission/' + username).pipe(
             map((authJSON: any) => {
                 const roles = Array<IUserRole>();
-                for (const r of authJSON['roles']) {
+                for (const r of authJSON.roles) {
                     roles.push(r);
                 }
                 return { roles };
@@ -151,8 +151,8 @@ export class ApiService extends RestService {
         return roles;
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    ///////////////////// Other Functions ///////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
+    // /////////////////// Other Functions ///////////////////////////////////////
 
     fileUpload(data: any) {
         return this.http.post(this.apiUrl + '/uploader', data);
@@ -160,7 +160,7 @@ export class ApiService extends RestService {
 
     resetPassword(username: string) {
         const obj = {
-            username: username,
+            username,
             domain: window.location.host,
         };
         return this.doPOSTPublicRequest('/user/', obj);

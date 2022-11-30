@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../../../shared/modules/api/api.service';
-import { NotificationService, Type } from '../../../shared/modules/notification/notification.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from '../../../shared/modules/api/api.service';
+import { NotificationService } from '../../../shared/modules/notification/notification.service';
+import { NotificationType } from '../../../root/interfaces/notification';
 
 @Component({
     selector: 'app-reset-password',
@@ -26,25 +27,25 @@ export class ResetPasswordComponent implements OnInit {
 
     ngOnInit() {
         this.activatedRoute.params.subscribe((params) => {
-            const paramToken = params['resetPasswordToken'];
+            const paramToken = params.resetPasswordToken;
             if (paramToken) {
                 this.resetPasswordToken = paramToken;
             } else {
-                this.router.navigate(['/']);
+                void this.router.navigate(['/']);
             }
         });
     }
 
     get samePasswords() {
-        return this.form.get('newPass')?.value == this.form.get('confirmPass')?.value;
+        return this.form.get('newPass')?.value === this.form.get('confirmPass')?.value;
     }
 
     public submitNewPassword(): void {
         const pass = this.form.get('newPass')?.value as string;
         this.api.saveResetPassword(this.resetPasswordToken, pass).subscribe(
             () => {
-                this.notifyService.notify(Type.success, 'New password saved!');
-                this.router.navigate(['/']);
+                this.notifyService.notify(NotificationType.success, 'New password saved!');
+                void this.router.navigate(['/']);
             },
             (e) => console.log(e),
         );

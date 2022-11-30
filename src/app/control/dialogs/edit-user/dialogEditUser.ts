@@ -41,10 +41,10 @@ export class DialogEditUserView {
                 name: [this.user.name],
                 email: [this.user.email],
                 roles: fb.group({
-                    ADMIN: this.user.roles.some((r: IUserRole) => r.name == 'Admin'),
-                    APPLICATION_PROVIDER: this.user.roles.some((r: IUserRole) => r.name == 'Application_Provider'),
+                    ADMIN: this.user.roles.some((r: IUserRole) => r.name === 'Admin'),
+                    APPLICATION_PROVIDER: this.user.roles.some((r: IUserRole) => r.name === 'Application_Provider'),
                     INFRASTRUCTURE_PROVIDER: this.user.roles.some(
-                        (r: IUserRole) => r.name == 'Infrastructure_Provider',
+                        (r: IUserRole) => r.name === 'Infrastructure_Provider',
                     ),
                 }),
             });

@@ -5,7 +5,7 @@
     </div>
 
     <div *ngIf="(instance !== null); else serviceDetails">
-        <line-chart [instance_list]="instance"></line-chart>
+        <line-chart [instanceList]="instance"></line-chart>
         <p><b>Disk:</b> {{instance.disk}}</p>
         <p><b>Cluster:</b> {{instance.cluster_id}}</p>
         <p><b>Node IP:</b> {{instance.public_ip}}</p>

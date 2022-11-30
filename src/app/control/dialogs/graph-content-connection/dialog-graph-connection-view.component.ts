@@ -24,7 +24,7 @@ export class DialogGraphConnectionView {
     constructor(public dialogRef: MatDialogRef<DialogGraphConnectionView>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
     onRadioChange(event: MatRadioChange) {
-        this.canViewLatConstrains = event.value == 1;
+        this.canViewLatConstrains = event.value === 1;
     }
 
     cancel() {

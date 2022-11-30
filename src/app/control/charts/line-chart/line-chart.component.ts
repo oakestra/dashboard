@@ -26,7 +26,7 @@ declare function initMap(lng: number, lat: number, radius: number): void;
     styleUrls: ['./line-chart.component.css'],
 })
 export class LineChartComponent implements OnInit {
-    @Input() instance_list: IInstance;
+    @Input() instanceList: IInstance;
 
     constructor() {
         Chart.register(
@@ -56,7 +56,7 @@ export class LineChartComponent implements OnInit {
                 datasets: [
                     {
                         label: 'usage [%]',
-                        data: [this.instance_list.cpu, 100 - this.instance_list.cpu],
+                        data: [this.instanceList.cpu, 100 - this.instanceList.cpu],
                         backgroundColor: ['rgb(235,54,75, 0.8)', 'rgba(90,246,93,0.8)'],
                         hoverOffset: 4,
                     },
@@ -80,7 +80,7 @@ export class LineChartComponent implements OnInit {
                 datasets: [
                     {
                         label: 'Memory [bytes]',
-                        data: [this.instance_list.memory, this.instance_list.memory],
+                        data: [this.instanceList.memory, this.instanceList.memory],
                         backgroundColor: 'rgb(36,90,238)',
                         borderColor: 'rgb(36,90,238)',
                         borderWidth: 1,
@@ -102,9 +102,9 @@ export class LineChartComponent implements OnInit {
         });
 
         // TODO Update map with real values and display only a polygon
-        const location_split = this.instance_list.cluster_location.split(',', 3) ?? [];
-        if (location_split.length === 3) {
-            initMap(+location_split[1], +location_split[0], +location_split[2]);
+        const locationSplit = this.instanceList.cluster_location.split(',', 3) ?? [];
+        if (locationSplit.length === 3) {
+            initMap(+locationSplit[1], +locationSplit[0], +locationSplit[2]);
         } else {
             initMap(0.0, 0.0, 19999999);
         }

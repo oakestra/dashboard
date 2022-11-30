@@ -16,6 +16,6 @@ export class RegisterComponent {
     }
 
     loginForm() {
-        this.router.navigate(['']);
+        void this.router.navigate(['']);
     }
 }

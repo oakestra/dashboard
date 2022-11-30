@@ -1,18 +1,19 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DialogAddApplicationView } from '../../dialogs/add-appllication/dialogAddApplication';
-import { DialogAction } from '../../../root/enums/dialogAction';
-import { NotificationService, Type } from '../../../shared/modules/notification/notification.service';
-import { IApplication } from '../../../root/interfaces/application';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { DialogAddApplicationView } from '../../dialogs/add-appllication/dialogAddApplication';
+import { DialogAction } from '../../../root/enums/dialogAction';
+import { NotificationService } from '../../../shared/modules/notification/notification.service';
+import { IApplication } from '../../../root/interfaces/application';
 import { SharedIDService } from '../../../shared/modules/helper/shared-id.service';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { UserService } from '../../../shared/modules/auth/user.service';
-import { Router } from '@angular/router';
 import { AuthService } from '../../../shared/modules/auth/auth.service';
 import { IService } from '../../../root/interfaces/service';
 import { IId } from '../../../root/interfaces/id';
 import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
+import { NotificationType } from '../../../root/interfaces/notification';
 
 @Component({
     selector: 'app-app-list',
@@ -53,7 +54,7 @@ export class AppListComponent implements OnInit {
 
         const data: IDialogAttribute = {
             content: app,
-            action: action,
+            action,
         };
 
         const dialogRef = this.dialog.open(DialogAddApplicationView, { data });
@@ -79,14 +80,14 @@ export class AppListComponent implements OnInit {
         this.api.deleteApplication(app).subscribe({
             next: () => {
                 this.notifyService.notify(
-                    Type.success,
+                    NotificationType.success,
                     'Application "' + app.application_name + '" deleted successfully!',
                 );
                 this.loadDataApplication();
             },
             error: () => {
                 this.notifyService.notify(
-                    Type.error,
+                    NotificationType.error,
                     'Error: Deleting application "' + app.application_name + '" failed!',
                 );
             },
@@ -102,7 +103,7 @@ export class AppListComponent implements OnInit {
             },
             error: () => {
                 this.notifyService.notify(
-                    Type.error,
+                    NotificationType.error,
                     'Error: Adding application "' + app.application_name + '" failed!',
                 );
             },
@@ -113,14 +114,14 @@ export class AppListComponent implements OnInit {
         this.api.updateApplication(app).subscribe({
             next: () => {
                 this.notifyService.notify(
-                    Type.success,
+                    NotificationType.success,
                     'Application "' + app.application_name + '" updated successfully!',
                 );
                 this.loadDataApplication();
             },
             error: () => {
                 this.notifyService.notify(
-                    Type.error,
+                    NotificationType.error,
                     'Error: Updating application "' + app.application_name + '" failed!',
                 );
             },
@@ -140,8 +141,8 @@ export class AppListComponent implements OnInit {
     handleChange() {
         this.api.getAppById(this.activeAppId.$oid).subscribe((app) => {
             this.sharedService.selectApplication(app);
-            //this.switchScreen(true, false, false); TODO why is this used?
-            this.router.navigate(['/control']).then();
+            // this.switchScreen(true, false, false); TODO why is this used?
+            void this.router.navigate(['/control']).then();
         });
     }
 }

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ICluster } from '../../root/interfaces/cluster';
-import { DialogConfirmationView } from '../dialogs/confirmation/dialogConfirmation';
-import { NotificationService, Type } from '../../shared/modules/notification/notification.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import * as L from 'leaflet';
+import { ICluster } from '../../root/interfaces/cluster';
+import { DialogConfirmationView } from '../dialogs/confirmation/dialogConfirmation';
+import { NotificationService, NotificationType } from '../../shared/modules/notification/notification.service';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { UserService } from '../../shared/modules/auth/user.service';
-import { Router } from '@angular/router';
 import { AuthService } from '../../shared/modules/auth/auth.service';
-import * as L from 'leaflet';
 
 @Component({
     selector: 'app-cluster',
@@ -55,19 +55,22 @@ export class ClusterComponent implements OnInit {
             text: 'Delete cluster: ' + cluster.cluster_name,
             type: 'cluster',
         };
-        const dialogRef = this.dialog.open(DialogConfirmationView, { data: data });
+        const dialogRef = this.dialog.open(DialogConfirmationView, { data });
         dialogRef.afterClosed().subscribe((result) => {
-            if (result.event == true) {
+            if (result.event === true) {
                 this.api.deleteCluster(cluster._id.$oid).subscribe({
                     next: () => {
                         this.notifyService.notify(
-                            Type.success,
+                            NotificationType.success,
                             'Cluster ' + cluster.cluster_name + ' deleted successfully!',
                         );
                         this.redirectTo('/control');
                     },
                     error: () => {
-                        this.notifyService.notify(Type.error, 'Error: Deleting cluster ' + cluster.cluster_name);
+                        this.notifyService.notify(
+                            NotificationType.error,
+                            'Error: Deleting cluster ' + cluster.cluster_name,
+                        );
                     },
                 });
             }

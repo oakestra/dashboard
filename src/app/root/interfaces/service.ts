@@ -1,3 +1,4 @@
+import { Virtualization } from '../enums/virtualization';
 import { IId } from './id';
 
 export interface IService {
@@ -22,12 +23,6 @@ export interface IService {
     constraints?: [];
     instance_list?: any[]; // TODO Create instance interface
     status?: string;
-}
-
-enum Virtualization {
-    Container = 'container',
-    Unikernel = 'unikernel',
-    Vm = 'vm',
 }
 
 export interface IAdresses {

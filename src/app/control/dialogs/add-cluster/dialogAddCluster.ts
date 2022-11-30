@@ -5,7 +5,7 @@ import 'leaflet-routing-machine';
 import 'node_modules/leaflet-geosearch/dist/geosearch.css';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { FormControl } from '@angular/forms';
-import { NotificationService, Type } from '../../../shared/modules/notification/notification.service';
+import { NotificationService, NotificationType } from '../../../shared/modules/notification/notification.service';
 
 @Component({
     selector: 'dialog-content-example-dialog',
@@ -34,10 +34,10 @@ export class DialogAddClusterView implements OnInit {
         this.local_data = { ...data };
         this.action = this.local_data.action;
 
-        if (this.action == 'Add') {
+        if (this.action === 'Add') {
             this.title = 'Add Cluster';
         }
-        /*if (this.action == 'Update') {
+        /* if (this.action == 'Update') {
         this.title = "Modify Cluster" }*/
     }
     private map: any;
@@ -66,7 +66,9 @@ export class DialogAddClusterView implements OnInit {
         this.map.addControl(search);
 
         this.map.on('click', (e: any) => {
-            if (this.marker && this.map.hasLayer(this.marker)) this.map.removeLayer(this.marker);
+            if (this.marker && this.map.hasLayer(this.marker)) {
+                this.map.removeLayer(this.marker);
+            }
 
             this.marker = L.marker([e.latlng.lat, e.latlng.lng])
                 .bindPopup('Lat, Lon : ' + e.latlng.lat + ', ' + e.latlng.lng)
@@ -78,7 +80,9 @@ export class DialogAddClusterView implements OnInit {
             this.lat = e.latlng.lat;
             this.lon = e.latlng.lng;
 
-            if (this.circlemarker && this.map.hasLayer(this.circlemarker)) this.map.removeLayer(this.circlemarker);
+            if (this.circlemarker && this.map.hasLayer(this.circlemarker)) {
+                this.map.removeLayer(this.circlemarker);
+            }
 
             this.circlemarker = L.circleMarker([e.latlng.lat, e.latlng.lng], { radius: this.my_radius });
             this.circlemarker.addTo(this.map).addTo(this.map);
@@ -99,10 +103,10 @@ export class DialogAddClusterView implements OnInit {
     doAction() {
         console.log(this.local_data);
 
-        if (this.local_data['cluster_name'].length < 3) {
-            this.notifyService.notify(Type.error, 'Please provide a valid cluster name.');
-        } else if (this.local_data['cluster_latitude'] == '' || this.local_data['cluster_longitude'] == '') {
-            this.notifyService.notify(Type.error, 'Please provide a valid location.');
+        if (this.local_data.cluster_name.length < 3) {
+            this.notifyService.notify(NotificationType.error, 'Please provide a valid cluster name.');
+        } else if (this.local_data.cluster_latitude === '' || this.local_data.cluster_longitude === '') {
+            this.notifyService.notify(NotificationType.error, 'Please provide a valid location.');
         } else {
             this.dialogRef.close({ event: this.action, data: this.local_data });
         }

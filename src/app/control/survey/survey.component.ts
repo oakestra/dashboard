@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
+import { IApplication } from '../../root/interfaces/application';
 import { SurveyService } from './survey.service';
 import { SurveyNotificationService } from './survey-notification.service';
-import { IApplication } from '../../root/interfaces/application';
 
 @Component({
     selector: 'app-survey',
@@ -27,7 +27,7 @@ export class SurveyComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.selected = localStorage.getItem('location')!;
+        this.selected = localStorage.getItem('location') ?? '';
         this.evaluated = this.surveyService.evaluated;
         this.correctTasks = this.surveyService.correctTasks;
         this.taskResults = this.surveyService.taskResults;
@@ -62,7 +62,7 @@ export class SurveyComponent implements OnInit {
         // Evaluation of the first task
         this.api.getApplicationsOfUser(this.sharedService.userID).subscribe((result: any) => {
             for (const a of result) {
-                if ((a.name == 'MyApplication' && a.namespace == 'survey') || a.description == 'survey task') {
+                if ((a.name === 'MyApplication' && a.namespace === 'survey') || a.description === 'survey task') {
                     this.taskResults[0] = true;
                     this.myapp = a;
                     this.correctTasks++;
@@ -72,7 +72,7 @@ export class SurveyComponent implements OnInit {
         });
 
         // Evaluation of the second task
-        if (localStorage.getItem('location') == '3') {
+        if (localStorage.getItem('location') === '3') {
             this.taskResults[1] = true;
             this.correctTasks++;
         }
@@ -82,7 +82,7 @@ export class SurveyComponent implements OnInit {
             this.taskResults[2] = true;
             this.correctTasks++;
             for (const u of users) {
-                if (u.name == 'Evil-user') {
+                if (u.name === 'Evil-user') {
                     this.taskResults[2] = false;
                     this.correctTasks--;
                 }
@@ -100,15 +100,15 @@ export class SurveyComponent implements OnInit {
         if (myapp) {
             this.api.getServicesOfApplication(myapp._id.$oid).subscribe((services: any) => {
                 for (const j of services) {
-                    if (j.microservice_name == 'Service1') {
-                        if (j.microservice_namespace == 'dev' && j.memory == 100) {
+                    if (j.microservice_name === 'Service1') {
+                        if (j.microservice_namespace === 'dev' && j.memory === 100) {
                             serviceA = true;
                         }
 
                         serviceAConnection = j.connectivity[0];
                     }
-                    if (j.microservice_name == 'Service2') {
-                        if (j.vcpus == 2) {
+                    if (j.microservice_name === 'Service2') {
+                        if (j.vcpus === 2) {
                             serviceB = true;
                         }
                         targetId = j.microserviceID;
@@ -127,9 +127,14 @@ export class SurveyComponent implements OnInit {
 
     evaluateLastTask(serviceAConnection: any, targetId: string) {
         // Evaluation of the fifth task
-        if (serviceAConnection && serviceAConnection.target_microservice_id == targetId) {
+        if (serviceAConnection && serviceAConnection.target_microservice_id === targetId) {
             const con = serviceAConnection.con_constraints[0];
-            if (con.type == 'latency' && con.threshold == 300 && con.rigidness == 50 && con.convergence_time == 250) {
+            if (
+                con.type === 'latency'
+                && con.threshold === 300
+                && con.rigidness === 50
+                && con.convergence_time === 250
+            ) {
                 this.taskResults[4] = true;
                 this.correctTasks++;
             }

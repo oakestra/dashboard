@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { NotificationComponent } from './notification.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationType } from '../../../root/interfaces/notification';
+import { NotificationComponent } from './notification.component';
 
 @Injectable({
     providedIn: 'root',
@@ -12,13 +13,13 @@ export class NotificationService {
 
     constructor(private snackBar: MatSnackBar) {}
 
-    notify(type: Type, data: any) {
+    notify(type: NotificationType, data: any) {
         this.type = type;
         this.massage = data;
 
-        if (type == Type.error) {
+        if (type === NotificationType.error) {
             this.panelClass = ['error-snackbar'];
-        } else if (type == Type.success) {
+        } else if (type === NotificationType.success) {
             this.panelClass = ['success-snackbar'];
         }
 
@@ -27,10 +28,4 @@ export class NotificationService {
             duration: 3000,
         });
     }
-}
-
-export enum Type {
-    error,
-    information,
-    success,
 }

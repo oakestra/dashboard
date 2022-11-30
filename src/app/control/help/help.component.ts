@@ -16,12 +16,14 @@ export class HelpComponent {
     constructor(private shepherdService: ShepherdService, private router: Router) {
         this.builtInButtons = [
             {
+                // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
                 action() {
                     return shepherdService.back();
                 },
                 text: 'BACK',
             },
             {
+                // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
                 action() {
                     return shepherdService.next();
                 },
@@ -32,12 +34,14 @@ export class HelpComponent {
 
         this.lastButtons = [
             {
+                // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
                 action() {
                     return shepherdService.back();
                 },
                 text: 'BACK',
             },
             {
+                // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
                 action() {
                     router.navigate(['/control/survey']).then();
                     return shepherdService.next();

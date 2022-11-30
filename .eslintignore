@@ -2,3 +2,5 @@
 package-lock.json
 dist
 e2e/**
+*.html
+*.eslintrc.js

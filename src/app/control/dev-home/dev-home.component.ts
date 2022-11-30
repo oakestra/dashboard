@@ -1,16 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { Router } from '@angular/router';
 import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
 import { ApiService } from '../../shared/modules/api/api.service';
-import { MatDialog } from '@angular/material/dialog';
 import { DialogServiceStatusView } from '../dialogs/service-status/dialogServiceStatus';
-import { Subscription } from 'rxjs/internal/Subscription';
 import { DialogConfirmationView } from '../dialogs/confirmation/dialogConfirmation';
-import { NotificationService, Type } from '../../shared/modules/notification/notification.service';
-import { Router } from '@angular/router';
-import * as L from 'leaflet';
+import { NotificationService } from '../../shared/modules/notification/notification.service';
 import { IService } from '../../root/interfaces/service';
 import { ICluster } from '../../root/interfaces/cluster';
 import { IInstance } from '../../root/interfaces/instance';
+import { NotificationType } from '../../root/interfaces/notification';
 
 @Component({
     selector: 'dev-home',
@@ -32,11 +32,6 @@ export class DevHomeComponent implements OnInit, OnDestroy {
 
     subscriptions: Subscription[] = [];
 
-    private cluster_map: any;
-    // FMI Garching coordinates
-    private lat = 48.262707753772624;
-    private lon = 11.668009155278707;
-
     constructor(
         public sharedService: SharedIDService,
         private api: ApiService,
@@ -45,25 +40,13 @@ export class DevHomeComponent implements OnInit, OnDestroy {
         private notifyService: NotificationService,
     ) {}
 
-    private initMap(): void {
-        this.cluster_map = L.map('card_map', {
-            center: [this.lat, this.lon],
-            attributionControl: false,
-            zoom: 14,
-        });
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 13,
-        }).addTo(this.cluster_map);
-    }
-
     ngOnInit(): void {
         const sub2 = this.sharedService.clusterObserver$.subscribe((x) => {
             this.cluster_info = x;
             this.clusterName = x.cluster_name || 'clu';
             this.clusterID = x._id.$oid;
             this.is_app = false;
-            //this.initMap()
+            // this.initMap()
         });
         this.subscriptions.push(sub2);
 
@@ -126,21 +109,24 @@ export class DevHomeComponent implements OnInit, OnDestroy {
             text: 'Delete cluster: ' + cluster.cluster_name,
             type: 'cluster',
         };
-        const dialogRef = this.dialog.open(DialogConfirmationView, { data: data });
+        const dialogRef = this.dialog.open(DialogConfirmationView, { data });
         dialogRef.afterClosed().subscribe((result) => {
-            if (result.event == true) {
+            if (result.event === true) {
                 this.api.deleteCluster(cluster._id.$oid).subscribe({
                     next: () => {
                         this.notifyService.notify(
-                            Type.success,
+                            NotificationType.success,
                             'Cluster ' + cluster.cluster_name + ' deleted successfully!',
                         );
-                        this.router
+                        void this.router
                             .navigateByUrl('/', { skipLocationChange: true })
                             .then(() => this.router.navigate(['/control']));
                     },
                     error: () => {
-                        this.notifyService.notify(Type.error, 'Error: Deleting cluster ' + cluster.cluster_name);
+                        this.notifyService.notify(
+                            NotificationType.error,
+                            'Error: Deleting cluster ' + cluster.cluster_name,
+                        );
                     },
                 });
             }
@@ -167,7 +153,9 @@ export class DevHomeComponent implements OnInit, OnDestroy {
     };
 
     downloadConfig(service: IService) {
-        if (service._id) delete service._id;
+        if (service._id) {
+            delete service._id;
+        }
         const fileName = service.microservice_name + '.json';
         if (!this.setting.element.dynamicDownload) {
             this.setting.element.dynamicDownload = document.createElement('a');

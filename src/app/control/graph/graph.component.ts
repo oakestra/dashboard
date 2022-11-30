@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { ApiService } from '../../shared/modules/api/api.service';
 import { MatDialog } from '@angular/material/dialog';
+import { ApiService } from '../../shared/modules/api/api.service';
 import { DialogGraphConnectionView } from '../dialogs/graph-content-connection/dialog-graph-connection-view.component';
 import { CleanJsonService } from '../../shared/util/clean-json.service';
 import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
@@ -19,10 +19,10 @@ export class GraphComponent implements OnChanges {
     links: any[] = [];
 
     @Output()
-    updated = new EventEmitter<string>();
+        updated = new EventEmitter<string>();
 
     @Input()
-    services: any;
+        services: any;
 
     constructor(public dialog: MatDialog, public api: ApiService, public shardService: SharedIDService) {}
 
@@ -55,14 +55,14 @@ export class GraphComponent implements OnChanges {
         }
         const dialogRef = this.dialog.open(DialogGraphConnectionView, { data });
         dialogRef.afterClosed().subscribe((result) => {
-            if (result.event == 'Save') {
-                this.saveGraphConstrains(result.data);
-            } else if (result.event == 'Cancel' && mode == 'new') {
+            if (result.event === 'Save') {
+                void this.saveGraphConstrains(result.data);
+            } else if (result.event === 'Cancel' && mode === 'new') {
                 deleteLink();
-            } else if (result.event == 'Delete') {
+            } else if (result.event === 'Delete') {
                 this.deleteOnlyLink(start, target);
-            } else if (result.event == 'Switch') {
-                this.openDialog(target, start, 'edit');
+            } else if (result.event === 'Switch') {
+                void this.openDialog(target, start, 'edit');
             }
         });
     }
@@ -70,17 +70,17 @@ export class GraphComponent implements OnChanges {
     findCorrectConstraint(target: string, arr: any) {
         let conn = null;
         for (const a of arr) {
-            if (a.target_microservice_id == target) {
+            if (a.target_microservice_id === target) {
                 conn = a.con_constraints;
             }
         }
         return conn;
     }
 
-    async saveGraphConstrains(data: any) {
+    async saveGraphConstrains(data: any): Promise<void> {
         const serviceProm: any = await this.getService(data.start_serviceID);
         const newService = serviceProm;
-        const index = newService.connectivity.findIndex((d: any) => d.target_microservice_id == data.target_serviceID);
+        const index = newService.connectivity.findIndex((d: any) => d.target_microservice_id === data.target_serviceID);
         if (index < 0) {
             // add new constrains
             newService.connectivity.push({
@@ -160,7 +160,7 @@ export class GraphComponent implements OnChanges {
 
     calculateLinks() {
         for (const service of this.services) {
-            if (service.connectivity != undefined) {
+            if (service.connectivity !== undefined) {
                 for (const targetService of service.connectivity) {
                     this.links.push({
                         source: service._id.$oid,
@@ -192,7 +192,7 @@ export class GraphComponent implements OnChanges {
 
     deleteOnlyLink(start: string, target: string) {
         this.api.getServiceByID(start).subscribe((service: any) => {
-            const index = service.connectivity.findIndex((d: any) => d.target_microservice_id == target);
+            const index = service.connectivity.findIndex((d: any) => d.target_microservice_id === target);
             service.connectivity.splice(index, 1);
             this.update(service);
         });
@@ -207,7 +207,7 @@ export class GraphComponent implements OnChanges {
         for (let x = 0; x < l.length; x++) {
             for (let i = 0; i < n.length; i++) {
                 for (let j = 0; j < n.length; j++) {
-                    if (l[x].source == n[i].idNumber && l[x].target == n[j].idNumber) {
+                    if (l[x].source === n[i].idNumber && l[x].target === n[j].idNumber) {
                         // To combine two links between nodes to one, but then you have problems with if you
                         // want to delete on connection.
 

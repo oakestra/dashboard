@@ -2,10 +2,10 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { delay, filter } from 'rxjs/operators';
+import { NavigationEnd, Router } from '@angular/router';
 import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { UserService } from '../../shared/modules/auth/user.service';
-import { NavigationEnd, Router } from '@angular/router';
 import { AuthService, Role } from '../../shared/modules/auth/auth.service';
 import { IApplication } from '../../root/interfaces/application';
 import { IUser } from '../../root/interfaces/user';
@@ -17,7 +17,7 @@ import { IUser } from '../../root/interfaces/user';
 })
 export class NavbarComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSidenav)
-    sidenav!: MatSidenav;
+        sidenav!: MatSidenav;
 
     apps: IApplication[];
 
@@ -64,17 +64,17 @@ export class NavbarComponent implements OnInit, AfterViewInit {
             .subscribe((res) => {
                 if (res.matches) {
                     this.sidenav.mode = 'over';
-                    this.sidenav.close().then();
+                    void this.sidenav.close();
                 } else {
                     this.sidenav.mode = 'side';
-                    this.sidenav.open().then();
+                    void this.sidenav.open();
                 }
             });
     }
 
     showData(url: string) {
-        this.settings =
-            url.includes('help') || url.includes('user') || url.includes('profile') || url.includes('survey');
+        this.settings
+            = url.includes('help') || url.includes('user') || url.includes('profile') || url.includes('survey');
     }
 
     updatePermissions(): void {
@@ -84,7 +84,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     }
 
     redirectTo(uri: string) {
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate([uri]));
+        void this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate([uri]));
     }
 
     switchScreen(app: boolean, list: boolean, cluster: boolean) {

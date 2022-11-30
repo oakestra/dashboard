@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { SurveyNotificationComponent } from './survey-notification.component';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { SurveyNotificationComponent } from './survey-notification.component';
 
 @Injectable({
     providedIn: 'root',

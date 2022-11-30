@@ -42,7 +42,7 @@ export class DialogServiceStatusView {
         //    'memory':'memory used by the service instance in bytes'
         //    'disk':'disk used by the service instance in bytes'
         //  }
-        //]
+        // ]
         console.log(this.instance);
 
         this._statusDetails.set('CREATED', 'The service is stored in the Database but not deployed.');
@@ -55,7 +55,7 @@ export class DialogServiceStatusView {
         if (!d) {
             this.details = 'Sorry, no exact description has been added for this status yet.';
         } else {
-            this.details = this._statusDetails.get(this.status)!;
+            this.details = this._statusDetails.get(this.status) ?? '';
         }
 
         // An entire microservice was passed and not just one instance

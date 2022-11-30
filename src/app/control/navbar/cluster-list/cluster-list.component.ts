@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
-import { NotificationService, Type } from '../../../shared/modules/notification/notification.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { NONE_TYPE } from '@angular/compiler';
+import { NotificationService } from '../../../shared/modules/notification/notification.service';
 import { SharedIDService } from '../../../shared/modules/helper/shared-id.service';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { UserService } from '../../../shared/modules/auth/user.service';
-import { Router } from '@angular/router';
 import { AuthService } from '../../../shared/modules/auth/auth.service';
 import { ICluster } from '../../../root/interfaces/cluster';
 import { DialogAddClusterView } from '../../dialogs/add-cluster/dialogAddCluster';
 import { DialogAction } from '../../../root/enums/dialogAction';
-import { NONE_TYPE } from '@angular/compiler';
 import { DialogGenerateTokenView } from '../../dialogs/generate-token/dialogGenerateToken';
 import { IId } from '../../../root/interfaces/id';
+import { NotificationType } from '../../../root/interfaces/notification';
 
 @Component({
     selector: 'app-cluster-list',
@@ -59,13 +60,13 @@ export class ClusterListComponent {
                 }
             },
             error: () => {
-                this.notifyService.notify(Type.error, 'Error: Getting clusters of ' + this.username);
+                this.notifyService.notify(NotificationType.error, 'Error: Getting clusters of ' + this.username);
             },
         });
     }
 
     openDialogCl(action: string, obj: any) {
-        if (action == 'Add') {
+        if (action === 'Add') {
             obj._id = { $oid: '' };
             obj.cluster_name = '';
             obj.cluster_latitude = '';
@@ -79,14 +80,14 @@ export class ClusterListComponent {
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            //TODO define data for Cluster
+            // TODO define data for Cluster
             if (result.event === DialogAction.ADD) {
-                //this.addCluster(result.data)
+                // this.addCluster(result.data)
                 this.userService.addCluster(result.data).subscribe({
                     next: (userServiceResponse: any) => {
-                        this.notifyService.notify(Type.success, 'Cluster added successfully!');
+                        this.notifyService.notify(NotificationType.success, 'Cluster added successfully!');
                         this.redirectTo('/control');
-                        if (userServiceResponse != NONE_TYPE) {
+                        if (userServiceResponse !== NONE_TYPE) {
                             // TODO: We need to pass the system_manager_URL as well
                             const my_data = {
                                 pairing_key: userServiceResponse.pairing_key,
@@ -101,7 +102,7 @@ export class ClusterListComponent {
                             dialogKey.afterClosed().subscribe(() => this.showClusters());
                         }
                     },
-                    error: (error) => this.notifyService.notify(Type.error, error),
+                    error: (error) => this.notifyService.notify(NotificationType.error, error),
                 });
             }
         });
@@ -111,12 +112,12 @@ export class ClusterListComponent {
         this.api.getClusterById(cluster._id.$oid).subscribe((cl) => {
             this.sharedService.selectCluster(cl);
             this.switchScreen(false, false, true);
-            this.router.navigate(['/control']).then();
+            void this.router.navigate(['/control']).then();
         });
     }
 
     redirectTo(uri: string) {
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate([uri]));
+        void this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate([uri]));
     }
 
     showClusters() {

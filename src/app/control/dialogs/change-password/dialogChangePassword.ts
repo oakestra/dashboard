@@ -1,7 +1,5 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ApiService } from '../../../shared/modules/api/api.service';
-import { NotificationService, Type } from '../../../shared/modules/notification/notification.service';
 import {
     AbstractControl,
     AbstractControlOptions,
@@ -10,8 +8,11 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
+import { ApiService } from '../../../shared/modules/api/api.service';
+import { NotificationService } from '../../../shared/modules/notification/notification.service';
 import { IUser } from '../../../root/interfaces/user';
 import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
+import { NotificationType } from '../../../root/interfaces/notification';
 
 @Component({
     selector: 'dialog-content-example-dialog',
@@ -65,7 +66,7 @@ export class DialogChangePasswordView {
         const newPassword = this.form.get('newPassword');
         if (oldPassword?.valid && newPassword?.valid) {
             this.api.changePassword(this.user.name, oldPassword.value, newPassword.value).subscribe(() => {
-                this.notifyService.notify(Type.success, 'Password changed');
+                this.notifyService.notify(NotificationType.success, 'Password changed');
                 this.closeDialog();
             });
         }
@@ -74,7 +75,7 @@ export class DialogChangePasswordView {
 
 export class PasswordValidators {
     static oldAndNewPassDifferent(control: AbstractControl): Validators | null {
-        if (control.get('oldPassword')?.value != control.get('newPassword')?.value) {
+        if (control.get('oldPassword')?.value !== control.get('newPassword')?.value) {
             return null;
         } else {
             return { oldAndNewPassDifferent: true };
@@ -82,7 +83,7 @@ export class PasswordValidators {
     }
 
     static newPasswordsSame(control: AbstractControl): Validators | null {
-        if (control.get('confirmNewPassword')?.value == control.get('newPassword')?.value) {
+        if (control.get('confirmNewPassword')?.value === control.get('newPassword')?.value) {
             return null;
         } else {
             return { newPasswordsSame: true };

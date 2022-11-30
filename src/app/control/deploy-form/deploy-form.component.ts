@@ -1,23 +1,24 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DialogConnectionSettingsView } from '../dialogs/content-connection/dialog-connection-settings-view.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { take } from 'rxjs/operators';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
 import { CleanJsonService } from '../../shared/util/clean-json.service';
-import { take } from 'rxjs/operators';
-import { Subscription } from 'rxjs/internal/Subscription';
-import { NotificationService, Type } from '../../shared/modules/notification/notification.service';
+import { DialogConnectionSettingsView } from '../dialogs/content-connection/dialog-connection-settings-view.component';
+import { NotificationService } from '../../shared/modules/notification/notification.service';
 import { IApplication } from '../../root/interfaces/application';
 import { IService } from '../../root/interfaces/service';
+import { NotificationType } from '../../root/interfaces/notification';
 
 @Component({
     selector: 'deploy-form',
     templateUrl: './deploy-form.component.html',
     styleUrls: ['./deploy-form.component.css'],
 })
-//TODO Refactor this Component and split it up to multiple small components
+// TODO Refactor this Component and split it up to multiple small components
 export class DeployFormComponent implements OnInit, OnDestroy {
     form: FormGroup;
     file: File | undefined;
@@ -112,7 +113,7 @@ export class DeployFormComponent implements OnInit, OnDestroy {
         this.route.paramMap.subscribe((pram) => {
             if (pram.get('id') !== null) {
                 this.editingService = true;
-                this.currentServiceID = pram.get('id')!; // Set the id to the id in the URL
+                this.currentServiceID = pram.get('id') ?? ''; // Set the id to the id in the URL
 
                 this.api.getServiceByID(this.currentServiceID).subscribe((service: IService) => {
                     this.service = service;
@@ -185,7 +186,7 @@ export class DeployFormComponent implements OnInit, OnDestroy {
     }
 
     addConstrains(type: string) {
-        if (type == 'geo') {
+        if (type === 'geo') {
             this.constraints.push(
                 new FormGroup({
                     type: new FormControl(['geo']),
@@ -211,7 +212,7 @@ export class DeployFormComponent implements OnInit, OnDestroy {
     }
 
     addFileInput() {
-        //TODO Fix this
+        // TODO Fix this
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         this.fileArrayForm.push(new FormControl());
@@ -231,7 +232,7 @@ export class DeployFormComponent implements OnInit, OnDestroy {
     // Saving the Dialog Data to the Array and the Form
     saveDialogData(data: any, index: number) {
         this.conConstrainsArray[index].clear();
-        if (this.conConstrainsArray[index].length == 0) {
+        if (this.conConstrainsArray[index].length === 0) {
             this.conConstrainsArray[index].push(
                 new FormGroup({
                     type: new FormControl(data.type),
@@ -262,37 +263,37 @@ export class DeployFormComponent implements OnInit, OnDestroy {
             let fc;
             path.subscribe({
                 next: (x: any) => {
-                    if (action == 'file') {
+                    if (action === 'file') {
                         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                         // @ts-ignore
                         // TODO fix
                         this.fileArrayForm.controls[index] = new FormControl([x.path]);
-                    } else if (action == 'code') {
+                    } else if (action === 'code') {
                         fc = this.form.get('code') as FormControl;
                         fc.setValue([x.path]);
-                    } else if (action == 'state') {
+                    } else if (action === 'state') {
                         fc = this.form.get('state') as FormControl;
                         fc.setValue([x.path]);
                     }
                 },
                 error: () => {
-                    this.notifyService.notify(Type.error, 'File not supported');
+                    this.notifyService.notify(NotificationType.error, 'File not supported');
                 },
             });
         }
     }
 
     loadFile(event: any) {
-        this.file = event.target.files[0];
+        this.file = event.target.files[0] as File;
         console.log(this.file);
-        this.filename = this.file!.name;
+        this.filename = this.file.name;
     }
 
     uploadDocument() {
         if (this.file) {
             const fileReader = new FileReader();
             fileReader.onload = () => {
-                const sla = JSON.parse(fileReader.result + '');
+                const sla = JSON.parse((fileReader.result ?? '').toString());
                 sla.applicationID = this.applicationId;
                 sla._id = null;
                 if (sla.job_name) {
@@ -332,9 +333,9 @@ export class DeployFormComponent implements OnInit, OnDestroy {
         this.api.addService(this.jsonContent).subscribe({
             next: () => {
                 this.router.navigate(['/control']).then();
-                this.notifyService.notify(Type.success, 'Service generation was successful');
+                this.notifyService.notify(NotificationType.success, 'Service generation was successful');
             },
-            error: () => this.notifyService.notify(Type.error, 'File was not in the correct format'),
+            error: () => this.notifyService.notify(NotificationType.error, 'File was not in the correct format'),
         });
     }
 
@@ -354,7 +355,7 @@ export class DeployFormComponent implements OnInit, OnDestroy {
             this.jsonContent.applications[0].microservices[0].microserviceID = this.currentServiceID;
             this.api.updateService(this.jsonContent, this.currentServiceID).subscribe({
                 next: () => {
-                    this.router.navigate(['/control']).then();
+                    void this.router.navigate(['/control']).then();
                 },
                 error: (err) => {
                     console.log(err);

@@ -4,9 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import jwt_decode from 'jwt-decode';
-import { NotificationService, Type } from '../notification/notification.service';
+import { NotificationService } from '../notification/notification.service';
 import { environment } from '../../../../environments/environment';
 import { ILoginRequest } from '../../../root/interfaces/user';
+import { NotificationType } from '../../../root/interfaces/notification';
 
 @Injectable({
     providedIn: 'root',
@@ -25,7 +26,7 @@ export class UserService {
     }
 
     getUsername(): string {
-        return this.getDecodedAccessToken(this.getAuthTokenRaw())['sub'];
+        return this.getDecodedAccessToken(this.getAuthTokenRaw()).sub;
     }
 
     login(request: ILoginRequest): Observable<boolean> {
@@ -38,7 +39,7 @@ export class UserService {
             }),
             catchError((error) => {
                 let errorMsg;
-                if (error.status == 0) {
+                if (error.status === 0) {
                     errorMsg = 'Server is not running';
                 } else {
                     // server is running and returned a json string
@@ -54,7 +55,7 @@ export class UserService {
         this.loggedIn = false;
         localStorage.removeItem('api_token');
         localStorage.removeItem('api_refresh_token');
-        this.router.navigate(['/'], { replaceUrl: true });
+        void this.router.navigate(['/'], { replaceUrl: true });
     }
 
     /** true if the user is logged in */
@@ -97,7 +98,7 @@ export class UserService {
                 return true;
             }),
             catchError((error) => {
-                this.notifyService.notify(Type.error, error.error.message);
+                this.notifyService.notify(NotificationType.error, error.error.message);
                 return throwError(error || 'Server error');
             }),
         );
@@ -105,10 +106,8 @@ export class UserService {
 
     renewToken(): Observable<boolean> {
         return this.tryTokenRenewal().pipe(
-            map(() => {
-                return true;
-            }),
-            catchError((_error: Error) => {
+            map(() => true),
+            catchError(() => {
                 this.redirectToLogin();
                 return of(false);
             }),
@@ -116,9 +115,9 @@ export class UserService {
     }
 
     redirectToLogin(): void {
-        this.notifyService.notify(Type.error, 'Your session has expired.');
+        this.notifyService.notify(NotificationType.error, 'Your session has expired.');
         this.logout();
-        this.router.navigate(['/']);
+        void this.router.navigate(['/']).then();
     }
 
     getDecodedAccessToken(token: any): any {
@@ -141,7 +140,7 @@ export class UserService {
 
     getJWTTokenRaw(key: string): string {
         if (this.checkIfTokenExists(key)) {
-            return localStorage.getItem(key)!;
+            return localStorage.getItem(key) ?? '';
         } else {
             throwError('No refresh token found');
             return '';
@@ -186,9 +185,10 @@ export class UserService {
         let key;
         if (this.loggedIn) {
             if (this.checkIfTokenExists('cluster_key')) {
-                key = localStorage.getItem('cluster_key')!;
-                if (!this.isTokenExpired(key)) return key;
-                else {
+                key = localStorage?.getItem('cluster_key') ?? '';
+                if (!this.isTokenExpired(key)) {
+                    return key;
+                } else {
                     throwError('The token is already expired');
                     return '';
                 }
@@ -211,7 +211,7 @@ export class UserService {
                 }),
                 catchError((error: any) => {
                     let errorMsg;
-                    if (error.status == 0) {
+                    if (error.status === 0) {
                         // server is not running
                         errorMsg = 'Server is not running';
                     } else {
