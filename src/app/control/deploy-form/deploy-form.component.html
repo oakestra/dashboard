@@ -281,13 +281,7 @@
                             </mat-form-field>
 
                             <div class="file-upload">
-                                <button
-                                    (click)="fileUpload.click()"
-                                    class="upload-btn"
-                                    color="primary"
-                                    mat-mini-fab
-                                    type="button"
-                                >
+                                <button (click)="fileUpload.click()" class="upload-btn" mat-mini-fab type="button">
                                     <mat-icon>attach_file</mat-icon>
                                 </button>
                                 <input
@@ -499,15 +493,8 @@
                             </div>
                         </div>
 
-                        <button color="primary" mat-button mat-flat-button type="submit">Save</button>
-                        <button
-                            class="cancel_buttons"
-                            color="primary"
-                            mat-button
-                            mat-flat-button
-                            routerLink="/control"
-                            type="button"
-                        >
+                        <button mat-button mat-flat-button type="submit">Save</button>
+                        <button class="cancel_buttons" mat-button mat-flat-button routerLink="/control" type="button">
                             Cancel
                         </button>
                         <mat-error *ngIf="formInvalid" class="alert alert-danger">
@@ -536,7 +523,6 @@
                                 (click)="uploadDocument()"
                                 [disabled]="file === undefined"
                                 class="upload-btn updateButton"
-                                color="primary"
                                 mat-flat-button
                                 type="button"
                             >

@@ -33,16 +33,15 @@
 </mat-dialog-content>
 
 <mat-dialog-actions class="alignRight">
-    <button (click)="doAction()" color="primary" class="updateButton" mat-button mat-flat-button>{{action}}</button>
+    <button (click)="doAction()" class="updateButton" mat-button mat-flat-button>{{buttonText}}</button>
     <button
         (click)="deleteApplication()"
         *ngIf="action === DialogAction.UPDATE"
-        color="primary"
         class="deleteButton"
         mat-button
         mat-flat-button
     >
         Delete
     </button>
-    <button (click)="closeDialog()" color="primary" class="cancelButton" mat-button mat-flat-button>Cancel</button>
+    <button (click)="closeDialog()" class="cancelButton" mat-button mat-flat-button>Cancel</button>
 </mat-dialog-actions>

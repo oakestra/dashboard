@@ -1,5 +1,28 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
+.deleteButton {
+    background-color: #e07074;
+    color: white;
+}
+.cancelButton {
+    background-color: #7b97a5;
+    color: white;
+}
+.updateButton {
+    background-color: #4a7083;
+    color: white;
+}
+
+.full-width {
+    width: 100%;
+}
+.alignRight {
+    text-align: right;
+}
+.input {
+    padding-right: 8px;
+}
+
 .alignRight {
     text-align: right;
 }

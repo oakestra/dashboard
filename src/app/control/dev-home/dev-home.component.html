@@ -75,23 +75,11 @@
                 </mat-accordion>
 
                 <mat-card-actions class="alignEnd">
-                    <button
-                        color="primary"
-                        id="createService"
-                        mat-flat-button
-                        routerLink="/control/deploy"
-                        class="updateButton"
-                    >
+                    <button id="createService" mat-flat-button routerLink="/control/deploy" class="updateButton">
                         <mat-icon>add_circle</mat-icon>
                         Create New Service
                     </button>
-                    <button
-                        (click)="deployAllServices()"
-                        color="primary"
-                        mat-flat-button
-                        type="button"
-                        class="updateButton"
-                    >
+                    <button (click)="deployAllServices()" mat-flat-button type="button" class="updateButton">
                         <mat-icon>send</mat-icon>
                         Deploy All
                     </button>
@@ -103,13 +91,7 @@
                 <p>No Service in this application.</p>
                 <br />
                 <div class="alignEnd">
-                    <button
-                        color="primary"
-                        id="createServiceEmpty"
-                        mat-flat-button
-                        routerLink="/control/deploy"
-                        class="updateButton"
-                    >
+                    <button id="createServiceEmpty" mat-flat-button routerLink="/control/deploy" class="updateButton">
                         <mat-icon>add_circle</mat-icon>
                         Create new service
                     </button>

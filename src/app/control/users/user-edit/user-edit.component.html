@@ -41,20 +41,12 @@
                     <br />
 
                     <div class="alignCenter">
-                        <button
-                            [disabled]="!form.valid"
-                            color="primary"
-                            class="updateButton"
-                            mat-button
-                            mat-flat-button
-                            type="submit"
-                        >
+                        <button [disabled]="!form.valid" class="updateButton" mat-button mat-flat-button type="submit">
                             Save
                         </button>
                         <button
                             (click)="openDialog(user)"
                             class="cancel_buttons updateButton"
-                            color="primary"
                             mat-flat-button
                             type="button"
                         >

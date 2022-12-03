@@ -5,7 +5,8 @@ import 'leaflet-routing-machine';
 import 'node_modules/leaflet-geosearch/dist/geosearch.css';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { FormControl } from '@angular/forms';
-import { NotificationService, NotificationType } from '../../../shared/modules/notification/notification.service';
+import { NotificationService } from '../../../shared/modules/notification/notification.service';
+import { NotificationType } from '../../../root/interfaces/notification';
 
 @Component({
     selector: 'dialog-content-example-dialog',

@@ -119,22 +119,22 @@ module.exports = {
     },
     parser: '@typescript-eslint/parser',
     /*overrides: [
-        {
-            files: ['*.ts', '*.tsx'], // Your TypeScript files extension
-            extends: [
-                'plugin:@typescript-eslint/recommended',
-                'plugin:@typescript-eslint/recommended-requiring-type-checking',
-            ],
-            parserOptions: {
-                project: ['./tsconfig.json'], // Specify it only for TypeScript files
-            },
-            rules: {
-                'restrict-plus-operands': 'off',
-                '@typescript-eslint/no-unsafe-return': 'off',
-                '@typescript-eslint/no-unsafe-argument': 'off',
-                '@typescript-eslint/no-floating-promises': 'off',
-                '@typescript-eslint/unbound-method': 'off',
-            },
-        },
-    ],*/
+      {
+          files: ['*.ts', '*.tsx'], // Your TypeScript files extension
+          extends: [
+              'plugin:@typescript-eslint/recommended',
+              'plugin:@typescript-eslint/recommended-requiring-type-checking',
+          ],
+          parserOptions: {
+              project: ['./tsconfig.json'], // Specify it only for TypeScript files
+          },
+          rules: {
+              'restrict-plus-operands': 'off',
+              '@typescript-eslint/no-unsafe-return': 'off',
+              '@typescript-eslint/no-unsafe-argument': 'off',
+              '@typescript-eslint/no-floating-promises': 'off',
+              '@typescript-eslint/unbound-method': 'off',
+          },
+      },
+  ],*/
 };

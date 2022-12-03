@@ -7,12 +7,8 @@ import { DialogGraphConnectionView } from '../graph-content-connection/dialog-gr
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-content-connection-settings.html',
     styles: [
-        '.full-width{width: 100%}',
-        '.alignCenter{text-align: center}',
         '::ng-deep .blackRadio .mat-radio-outer-circle{border-color: black}',
         'radioDiv{padding-bottom: 32px; margin: 20px 0 20px 0}',
-        '.cancelButton{background-color: #7b97a5}',
-        '.deleteButton{background-color: #e07074}',
     ],
 })
 export class DialogConnectionSettingsView {

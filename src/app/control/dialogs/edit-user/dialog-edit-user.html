@@ -45,15 +45,8 @@
 </mat-dialog-content>
 
 <mat-dialog-actions class="alignRight">
-    <button
-        (click)="doAction()"
-        [disabled]="!form.valid"
-        color="primary"
-        class="updateButton"
-        mat-button
-        mat-flat-button
-    >
+    <button (click)="doAction()" [disabled]="!form.valid" class="updateButton" mat-button mat-flat-button>
         {{buttonText}}
     </button>
-    <button (click)="closeDialog()" color="primary" class="cancelButton" mat-button mat-flat-button>Cancel</button>
+    <button (click)="closeDialog()" class="cancelButton" mat-button mat-flat-button>Cancel</button>
 </mat-dialog-actions>

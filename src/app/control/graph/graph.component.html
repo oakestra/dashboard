@@ -1,4 +1,4 @@
-<button (click)="multipleFunctions()" color="primary" class="graph-button" mat-button>
+<button (click)="multipleFunctions()" class="graph-button" mat-button>
     {{ showConButton }}
     <mat-icon>scatter_plot</mat-icon>
 </button>
@@ -24,7 +24,6 @@
         <div *ngIf="type.innerText.startsWith('Link'); else nodeButtons">
             <button
                 (click)="openDialog(start.innerText, target.innerText, 'edit')"
-                color="primary"
                 class="updateButton"
                 mat-button
                 mat-flat-button
@@ -36,7 +35,6 @@
 
         <ng-template #nodeButtons>
             <button
-                color="primary"
                 class="updateButton"
                 id="editElement"
                 mat-button

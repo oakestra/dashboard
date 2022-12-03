@@ -10,13 +10,6 @@ interface ConformationText {
 @Component({
     selector: 'dialog-conformation-dialog',
     templateUrl: 'dialog-confirmation.html',
-    styles: [
-        '.full-width{width: 100%}',
-        '.alignRight{text-align: right}',
-        'deleteText{padding-bottom: 32px; margin: 20px 0 20px 0}',
-        '.cancelButton{background-color: #7b97a5}',
-        '.deleteButton{background-color: #e07074}',
-    ],
 })
 export class DialogConfirmationView {
     text = '';

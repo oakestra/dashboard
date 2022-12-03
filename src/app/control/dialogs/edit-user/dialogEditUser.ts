@@ -9,13 +9,6 @@ import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
 @Component({
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-edit-user.html',
-    styles: [
-        '.full-width{width: 100%}',
-        '.alignRight{text-align: right}',
-        '.cancelButton{background-color: #7b97a5}',
-        '.updateButton{background-color: #4a7083}',
-        '.input{padding-right: 8px}',
-    ],
 })
 export class DialogEditUserView {
     DialogAction = DialogAction;

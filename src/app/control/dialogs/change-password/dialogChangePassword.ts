@@ -17,14 +17,6 @@ import { NotificationType } from '../../../root/interfaces/notification';
 @Component({
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-change-password.html',
-    styles: [
-        '.full-width{width: 100%}',
-        '.alignRight{text-align: right}',
-        '.alignCenter{text-align: center}',
-        '.mat-dialog-actions {justify-content: center}',
-        '.cancelButton{background-color: #7b97a5}',
-        '.updateButton{background-color: #4a7083}',
-    ],
 })
 export class DialogChangePasswordView {
     user: IUser;

@@ -31,23 +31,3 @@
     height: 100%;
     width: 100%;
 }
-
-.full-width {
-    width: 100%;
-}
-
-.alignRight {
-    text-align: right;
-}
-
-.input {
-    padding-right: 8px;
-}
-
-.cancelButton {
-    background-color: #7b97a5;
-}
-
-.updateButton {
-    background-color: #4a7083;
-}
