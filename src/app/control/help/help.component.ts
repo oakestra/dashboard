@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ShepherdService } from 'angular-shepherd';
+// import { ShepherdService } from 'angular-shepherd'; TODO Angular shepherd does not work with angular v15, search for alternative
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,12 +8,13 @@ import { Router } from '@angular/router';
     styleUrls: ['./help.component.css'],
 })
 export class HelpComponent {
-    defaultStepOptions;
+    // defaultStepOptions;
     productSteps: any;
-    builtInButtons;
-    lastButtons;
+    // builtInButtons;
+    // lastButtons;
 
-    constructor(private shepherdService: ShepherdService, private router: Router) {
+    constructor(private router: Router) {
+        /*
         this.builtInButtons = [
             {
                 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
@@ -109,15 +110,19 @@ export class HelpComponent {
                 text: 'Here you can find all user related settings.',
             },
         ];
+
+       */
     }
 
     start() {
         void this.router.navigate(['/control']).then();
-
+        /*
         this.shepherdService.defaultStepOptions = this.defaultStepOptions;
         this.shepherdService.modal = true;
         this.shepherdService.confirmCancel = true;
         this.shepherdService.addSteps(this.productSteps);
         this.shepherdService.start();
+
+        */
     }
 }

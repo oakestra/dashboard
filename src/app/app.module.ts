@@ -6,6 +6,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { appReducer } from 'src/app/root/store/index';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 import { SharedModule } from './shared/sheard.module';
 import { routes } from './app.routes';
 import { AppComponent } from './app.component';
@@ -22,6 +27,9 @@ import { AppComponent } from './app.component';
         RouterModule.forRoot(routes),
         MatSnackBarModule,
         MatIconModule,
+        StoreModule.forRoot(appReducer.reducers, {}),
+        EffectsModule.forRoot([]),
+        !environment.production ? StoreDevtoolsModule.instrument() : [],
     ],
     providers: [
         // should be empty as we import all global services through "SharedModule.forRoot()"

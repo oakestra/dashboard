@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
-import 'node_modules/leaflet-geosearch/dist/geosearch.css';
+// import 'node_modules/leaflet-geosearch/dist/geosearch.css';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { FormControl } from '@angular/forms';
 import { NotificationService } from '../../../shared/modules/notification/notification.service';

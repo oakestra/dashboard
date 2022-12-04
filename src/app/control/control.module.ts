@@ -25,6 +25,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatListModule } from '@angular/material/list';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import * as fromService from '../root/store/reducers/service.reducer';
+import { ServiceEffects } from '../root/store/effects/service.effects';
 import { UsersComponent } from './users/users.component';
 import { DialogEditUserView } from './dialogs/edit-user/dialogEditUser';
 import { UserEditComponent } from './users/user-edit/user-edit.component';
@@ -102,6 +106,8 @@ import { ClusterComponent } from './cluster/cluster.component';
         MatTableModule,
         MatChipsModule,
         MatListModule,
+        StoreModule.forFeature(fromService.serviceFeatureKey, fromService.reducer),
+        EffectsModule.forFeature([ServiceEffects]),
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

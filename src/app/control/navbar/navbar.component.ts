@@ -3,12 +3,15 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { delay, filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { appReducer } from 'src/app/root/store/index';
 import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { AuthService, Role } from '../../shared/modules/auth/auth.service';
 import { IApplication } from '../../root/interfaces/application';
 import { IUser } from '../../root/interfaces/user';
+import { selectCurrentService } from '../../root/store/selectors/service.selector';
 
 @Component({
     selector: 'app-navbar',
@@ -17,7 +20,7 @@ import { IUser } from '../../root/interfaces/user';
 })
 export class NavbarComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSidenav)
-        sidenav!: MatSidenav;
+    sidenav!: MatSidenav;
 
     apps: IApplication[];
 
@@ -34,6 +37,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     events: string[] = [];
     opened = true;
 
+    public services$ = this.store.pipe(select(selectCurrentService));
+
     constructor(
         private observer: BreakpointObserver,
         public sharedService: SharedIDService,
@@ -41,6 +46,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         public userService: UserService,
         private router: Router,
         private authService: AuthService,
+        public store: Store<appReducer.AppState>,
     ) {
         router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe((e: any) => {
             this.showData(e.url);
@@ -73,8 +79,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     }
 
     showData(url: string) {
-        this.settings
-            = url.includes('help') || url.includes('user') || url.includes('profile') || url.includes('survey');
+        this.settings =
+            url.includes('help') || url.includes('user') || url.includes('profile') || url.includes('survey');
     }
 
     updatePermissions(): void {

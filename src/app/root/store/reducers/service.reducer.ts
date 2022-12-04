@@ -1,0 +1,44 @@
+import { Action, createReducer, on } from '@ngrx/store';
+import * as serviceActions from '../actions/service.actions';
+import { IService } from '../../interfaces/service';
+
+export const serviceFeatureKey = 'service';
+
+export interface ServiceState {
+    service: IService;
+    loading: boolean;
+    error: unknown;
+}
+
+export const initialState: ServiceState = {
+    service: {},
+    loading: false,
+    error: {},
+};
+
+export const serviceReducer = createReducer(
+    initialState,
+
+    on(serviceActions.servicesLoaded, (state, action) => {
+        const service = action.service;
+        const loading = false;
+        return { ...state, service, loading };
+    }),
+    /*
+    on(serviceActions.loadServices, (state) => {
+        const service = {} as IService;
+        const loading = false;
+        return { ...state, service, loading };
+    }),
+
+    on(serviceActions.loadServicesError, (state, action) => {
+        const services = {} as IService;
+        const loading = false;
+        const error = action.error;
+        return { ...state, services, loading, error };
+    }),*/
+);
+
+export function reducer(state: ServiceState, action: Action) {
+    return serviceReducer(state, action);
+}

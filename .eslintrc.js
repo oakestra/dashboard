@@ -90,7 +90,7 @@ module.exports = {
         'no-whitespace-before-property': 'error',
         'object-shorthand': 'error',
         'one-var': ['error', 'never'],
-        'operator-linebreak': ['error', 'before'],
+        'operator-linebreak': ['off', 'after'],
         'prefer-arrow/prefer-arrow-functions': ['error', { allowStandaloneDeclarations: true }],
         'prefer-const': 'error',
         'quote-props': ['error', 'consistent-as-needed'],
