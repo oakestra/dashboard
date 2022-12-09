@@ -5,3 +5,6 @@ dist
 .eslintrc.js
 *min.js
 *min.css
+docker
+*conf.js
+*/assets/*
