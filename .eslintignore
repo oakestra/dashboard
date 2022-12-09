@@ -3,8 +3,8 @@ package-lock.json
 dist
 *.html
 .eslintrc.js
-*min.js
-*min.css
+*.min.js
+*.min.css
 docker
 *.conf.js
 src/assets/*
