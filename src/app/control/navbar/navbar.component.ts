@@ -4,14 +4,15 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { delay, filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { appReducer } from 'src/app/root/store/index';
+import { appReducer, loadUser } from 'src/app/root/store/index';
+import { Observable } from 'rxjs';
 import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { AuthService, Role } from '../../shared/modules/auth/auth.service';
 import { IApplication } from '../../root/interfaces/application';
 import { IUser } from '../../root/interfaces/user';
-import { selectCurrentService } from '../../root/store/selectors/service.selector';
+import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 
 @Component({
     selector: 'app-navbar',
@@ -28,16 +29,14 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     settings = false;
 
     // TODO Get the user instead of every single element
-    username = '';
     userID = '';
     isAdmin = false;
+    public user$: Observable<IUser> = this.store.pipe(select(selectCurrentUser));
 
     listClusters = false;
     clusterSelected = false;
     events: string[] = [];
     opened = true;
-
-    public services$ = this.store.pipe(select(selectCurrentService));
 
     constructor(
         private observer: BreakpointObserver,
@@ -54,10 +53,13 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-        this.username = this.userService.getUsername();
-        this.api.getUserByName(this.username).subscribe((data: IUser) => {
-            this.userID = data._id.$oid;
+        this.store.dispatch(loadUser({ name: this.userService.getUsername() }));
+
+        this.user$.subscribe((user: IUser) => {
+            this.userID = user._id.$oid;
         });
+
+        // TODO Try to delete the sharedService
         this.sharedService.userID = this.userID;
         this.updatePermissions();
     }

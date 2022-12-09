@@ -19,10 +19,10 @@ export class GraphComponent implements OnChanges {
     links: any[] = [];
 
     @Output()
-        updated = new EventEmitter<string>();
+    updated = new EventEmitter<string>();
 
     @Input()
-        services: any;
+    services: any;
 
     constructor(public dialog: MatDialog, public api: ApiService, public shardService: SharedIDService) {}
 
@@ -134,7 +134,7 @@ export class GraphComponent implements OnChanges {
                     microservices: [{}],
                 },
             ],
-            args: [],
+            args: [] as any[],
         };
         jsonContent.applications[0].microservices = [sla];
         jsonContent = CleanJsonService.cleanData(jsonContent);
