@@ -24,7 +24,7 @@ export class DialogEditUserView {
         @Optional() @Inject(MAT_DIALOG_DATA) public data: IDialogAttribute,
     ) {
         this.user = data.content as IUser;
-        this.action = data.action as DialogAction;
+        this.action = data.action;
         this.title = 'Editing user...';
 
         if (this.data.action === DialogAction.UPDATE) {

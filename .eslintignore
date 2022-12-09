@@ -6,5 +6,5 @@ dist
 *min.js
 *min.css
 docker
-*conf.js
-*/assets/*
+*.conf.js
+src/assets/*

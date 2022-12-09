@@ -41,7 +41,7 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     public submitNewPassword(): void {
-        const pass = this.form.get('newPass')?.value as string;
+        const pass = this.form.get('newPass')?.value;
         this.api.saveResetPassword(this.resetPasswordToken, pass).subscribe(
             () => {
                 this.notifyService.notify(NotificationType.success, 'New password saved!');

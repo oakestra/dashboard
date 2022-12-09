@@ -20,7 +20,7 @@ export class DialogAddApplicationView {
         public dialogRef: MatDialogRef<DialogAddApplicationView>,
         @Optional() @Inject(MAT_DIALOG_DATA) public data: IDialogAttribute,
     ) {
-        this.action = data.action as DialogAction;
+        this.action = data.action;
         this.app = data.content as IApplication;
         if (this.action === DialogAction.UPDATE) {
             this.title = 'Modify Application';
