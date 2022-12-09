@@ -4,7 +4,7 @@ import * as fromApp from '../reducers/app.reducer';
 
 const selectService = (state: fromApp.AppState) => state.service;
 
-export const selectCurrentService = createSelector(selectService, (state: fromService.ServiceState) => state.service);
+export const selectCurrentService = createSelector(selectService, (state: fromService.State) => state.service);
 
 /*
 

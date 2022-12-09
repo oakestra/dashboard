@@ -41,6 +41,11 @@ module.exports = {
             4,
             {
                 SwitchCase: 1,
+                ignoredNodes: [
+                    `FunctionExpression > .params[decorators.length > 0]`,
+                    `FunctionExpression > .params > :matches(Decorator, :not(:first-child))`,
+                    `ClassBody.body > PropertyDefinition[decorators.length > 0] > .key`,
+                ],
             },
         ],
         quotes: ['error', 'single'],

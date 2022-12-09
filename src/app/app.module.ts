@@ -14,6 +14,7 @@ import { environment } from '../environments/environment';
 import { SharedModule } from './shared/sheard.module';
 import { routes } from './app.routes';
 import { AppComponent } from './app.component';
+import { UserEffects } from './root/store';
 
 @NgModule({
     declarations: [AppComponent],
@@ -28,7 +29,7 @@ import { AppComponent } from './app.component';
         MatSnackBarModule,
         MatIconModule,
         StoreModule.forRoot(appReducer.reducers, {}),
-        EffectsModule.forRoot([]),
+        EffectsModule.forRoot([UserEffects]),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
     ],
     providers: [

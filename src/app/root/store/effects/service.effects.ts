@@ -21,5 +21,5 @@ export class ServiceEffects {
 
     constructor(private actions$: Actions, private apiService: ApiService) {}
 
-    // TODO Hier wird dann die richtige API aufgerufen
+    // TODO Add here the remaining effects
 }

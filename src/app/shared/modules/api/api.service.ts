@@ -42,7 +42,7 @@ export class ApiService extends RestService {
         return this.doDELRequest('/application/' + app._id.$oid);
     }
 
-    getAppById(appId: string) {
+    getAppById(appId: string): Observable<IApplication[]> {
         return this.doGETRequest('/application/' + appId);
     }
 

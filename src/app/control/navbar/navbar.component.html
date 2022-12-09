@@ -11,8 +11,8 @@
 
     <span class="example-spacer"></span>
 
-    <h4 class="name">
-        <small>{{ username }}&nbsp;&nbsp;</small>
+    <h4 class="name" *ngIf="user$ | async; let user">
+        <small>{{ user.name }}&nbsp;&nbsp;</small>
     </h4>
 
     <button [matMenuTriggerFor]="menu" id="userSetting" mat-icon-button>

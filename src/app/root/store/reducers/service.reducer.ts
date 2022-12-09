@@ -4,13 +4,13 @@ import { IService } from '../../interfaces/service';
 
 export const serviceFeatureKey = 'service';
 
-export interface ServiceState {
+export interface State {
     service: IService;
     loading: boolean;
     error: unknown;
 }
 
-export const initialState: ServiceState = {
+export const initialState: State = {
     service: {},
     loading: false,
     error: {},
@@ -24,7 +24,7 @@ export const serviceReducer = createReducer(
         const loading = false;
         return { ...state, service, loading };
     }),
-    /*
+
     on(serviceActions.loadServices, (state) => {
         const service = {} as IService;
         const loading = false;
@@ -36,9 +36,9 @@ export const serviceReducer = createReducer(
         const loading = false;
         const error = action.error;
         return { ...state, services, loading, error };
-    }),*/
+    }),
 );
 
-export function reducer(state: ServiceState, action: Action) {
+export function reducer(state: State, action: Action) {
     return serviceReducer(state, action);
 }
