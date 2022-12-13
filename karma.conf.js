@@ -1,7 +1,7 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
-module.exports = function (config) {
+module.exports = function(config) {
     config.set({
         basePath: '',
         frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -25,6 +25,7 @@ module.exports = function (config) {
             suppressAll: true, // removes the duplicated traces
         },
         coverageReporter: {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
             dir: require('path').join(__dirname, './coverage/hello-world'),
             subdir: '.',
             reporters: [{ type: 'html' }, { type: 'text-summary' }],
