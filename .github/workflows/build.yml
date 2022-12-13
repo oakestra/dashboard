@@ -2,7 +2,8 @@ name: Docker dashboard
 
 on:
   push:
-    tags: [ 'v*.*.*' ]
+    branches:
+      - refactoring
 
 env:
   # Use docker.io for Docker Hub if empty
