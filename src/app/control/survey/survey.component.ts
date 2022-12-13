@@ -130,10 +130,10 @@ export class SurveyComponent implements OnInit {
         if (serviceAConnection && serviceAConnection.target_microservice_id === targetId) {
             const con = serviceAConnection.con_constraints[0];
             if (
-                con.type === 'latency'
-                && con.threshold === 300
-                && con.rigidness === 50
-                && con.convergence_time === 250
+                con.type === 'latency' &&
+                con.threshold === 300 &&
+                con.rigidness === 50 &&
+                con.convergence_time === 250
             ) {
                 this.taskResults[4] = true;
                 this.correctTasks++;

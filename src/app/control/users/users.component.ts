@@ -87,20 +87,20 @@ export class UsersComponent implements OnInit {
 
     nameFilter(user: IUser): boolean {
         return (
-            !this.searchText
-            || this.searchText.length === 0
-            || user.name.toLowerCase().indexOf(this.searchText.toLowerCase()) !== -1
+            !this.searchText ||
+            this.searchText.length === 0 ||
+            user.name.toLowerCase().indexOf(this.searchText.toLowerCase()) !== -1
         );
     }
 
     roleFilter(user: IUser): boolean {
         return (
-            !this.selectedItems
-            || this.selectedItems.length === 0
-            || this.selectedItems.some(
+            !this.selectedItems ||
+            this.selectedItems.length === 0 ||
+            this.selectedItems.some(
                 (searchedRole: string) =>
-                    (searchedRole === 'None' && user.roles.length === 0)
-                    || user.roles.some((role: IUserRole) => role.name === searchedRole),
+                    (searchedRole === 'None' && user.roles.length === 0) ||
+                    user.roles.some((role: IUserRole) => role.name === searchedRole),
             )
         );
     }
