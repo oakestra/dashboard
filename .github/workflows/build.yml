@@ -9,7 +9,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}/dashboard
+  IMAGE_NAME: ${{ github.repository }}
 
 
 jobs:
@@ -71,7 +71,6 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v3
         with:
-          context: ./dashboard
           platforms: linux/amd64,linux/armhf,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
