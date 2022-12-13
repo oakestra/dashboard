@@ -5,7 +5,7 @@ module.exports = {
         node: true,
         mocha: true,
     },
-    ignorePatterns: ['dist/', 'types/', 'node_modules/', '.eslintrc.js', '*.config.[jt]s', 'assets/', 'docker/'],
+    ignorePatterns: ['dist/', 'types/', 'node_modules/', '.eslintrc.js', '*.conf.js', 'assets/', 'docker/'],
     extends: [
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
