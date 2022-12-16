@@ -2,10 +2,6 @@
     color: white;
 }
 
-.appSelectLable {
-    background-color: #4a7083;
-}
-
 ::ng-deep .mat-radio-outer-circle {
     border-color: white;
 }
@@ -14,10 +10,6 @@ mat-list-item {
     position: relative;
     list-style: none;
     transition: all 0.4s ease;
-}
-
-mat-list-item:hover {
-    background: #3e4e57;
 }
 
 mat-list-item .icon-link {
@@ -48,9 +40,8 @@ mat-list-item a .link_name {
     color: #fff;
 }
 
-mat-list-item .sub-menu {
-    padding: 6px 6px 14px 40px;
-    margin-top: -10px;
+.sub-menu {
+    padding: 0;
 }
 
 mat-list-item .sub-menu mat-list-item {
@@ -64,10 +55,6 @@ mat-list-item .sub-menu mat-list-item {
 
 mat-list-item .sub-menu a:hover {
     opacity: 1;
-}
-
-.application-panel {
-    background-color: #3e4e57;
 }
 
 .panel-title {

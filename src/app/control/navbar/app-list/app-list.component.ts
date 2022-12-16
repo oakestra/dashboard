@@ -18,7 +18,7 @@ import { NotificationType } from '../../../root/interfaces/notification';
 @Component({
     selector: 'app-app-list',
     templateUrl: './app-list.component.html',
-    styleUrls: ['./app-list.component.css'],
+    styleUrls: ['./app-list.component.css', '../navbar.component.css'],
 })
 export class AppListComponent implements OnInit {
     DialogAction = DialogAction;

@@ -1,9 +1,8 @@
-<div class="icon-link">
-    <a>
-        <mat-icon>apps</mat-icon>
-        <span class="link_name"> <a href="/control">Applications</a></span>
-    </a>
-</div>
+<button class="navButton" mat-flat-button routerLink="/control">
+    <mat-icon>apps</mat-icon>
+    Applications
+</button>
+
 <ul class="sub-menu">
     <mat-list-item>
         <div id="applicationTitle">
@@ -26,15 +25,9 @@
         </div>
     </mat-list-item>
     <mat-list class="inline-list">
-        <mat-list-item>
-            <span class="sidenav-text">Add</span>
-            <button
-                (click)="openDialogApp(DialogAction.ADD, undefined)"
-                class="menu-button sidenav-text"
-                mat-icon-button
-            >
-                <mat-icon>add</mat-icon>
-            </button>
-        </mat-list-item>
+        <button class="navButton" mat-flat-button (click)="openDialogApp(DialogAction.ADD, undefined)">
+            Add
+            <mat-icon>add</mat-icon>
+        </button>
     </mat-list>
 </ul>

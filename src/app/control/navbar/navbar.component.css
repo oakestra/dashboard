@@ -6,7 +6,7 @@ mat-toolbar {
 
 mat-sidenav {
     margin: 16px;
-    width: 335px;
+    width: 250px;
     border-right: none;
     background: #3b474e;
     color: white;
@@ -19,7 +19,7 @@ mat-sidenav {
     text-align: center;
     height: calc(100vh - 98px);
     border-radius: 10px;
-    margin: 16px 16px 16px 16px;
+    margin: 16px 16px 16px 32px;
     display: flex;
     justify-content: center;
     align-items: center;
