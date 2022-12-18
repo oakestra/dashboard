@@ -28,9 +28,10 @@ import { UserEffects } from './root/store';
         RouterModule.forRoot(routes),
         MatSnackBarModule,
         MatIconModule,
+        StoreDevtoolsModule,
         StoreModule.forRoot(appReducer.reducers, {}),
         EffectsModule.forRoot([UserEffects, ApplicationEffects]),
-        !environment.production ? StoreDevtoolsModule.instrument() : [],
+        // !environment.production ? StoreDevtoolsModule.instrument() : [], // TODO Do it like this
     ],
     providers: [
         // should be empty as we import all global services through "SharedModule.forRoot()"
