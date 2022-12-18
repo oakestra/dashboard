@@ -5,12 +5,3 @@ import * as fromApp from '../reducers/app.reducer';
 const selectService = (state: fromApp.AppState) => state.service;
 
 export const selectCurrentService = createSelector(selectService, (state: fromService.State) => state.service);
-
-/*
-
-export const isLoadingSelector = createSelector(selectFeature, (state) => state.isLoading);
-
-export const postsSelector = createSelector(selectFeature, (state) => state.services);
-
-export const errorSelector = createSelector(selectFeature, (state) => state.error);
-*/

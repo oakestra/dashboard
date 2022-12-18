@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import { IService } from '../../interfaces/service';
 
-export const loadServices = createAction('[Service] loadServices');
+export const getServices = createAction('[Service] getServices');
 
-export const servicesLoaded = createAction('[Service] servicesLoaded', props<{ service: IService }>());
+export const getServicesSuccess = createAction('[Service] getServicesSuccess', props<{ service: IService }>());
 
-export const loadServicesError = createAction('[Service] loadServicesError', props<{ error: string }>());
+export const getServicesError = createAction('[Service] getServicesError', props<{ error: string }>());

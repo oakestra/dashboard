@@ -19,19 +19,19 @@ export const initialState: State = {
 export const serviceReducer = createReducer(
     initialState,
 
-    on(serviceActions.servicesLoaded, (state, action) => {
+    on(serviceActions.getServicesSuccess, (state, action) => {
         const service = action.service;
         const loading = false;
         return { ...state, service, loading };
     }),
 
-    on(serviceActions.loadServices, (state) => {
+    on(serviceActions.getServices, (state) => {
         const service = {} as IService;
         const loading = false;
         return { ...state, service, loading };
     }),
 
-    on(serviceActions.loadServicesError, (state, action) => {
+    on(serviceActions.getServicesError, (state, action) => {
         const services = {} as IService;
         const loading = false;
         const error = action.error;

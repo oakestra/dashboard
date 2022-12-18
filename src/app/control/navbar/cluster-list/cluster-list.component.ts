@@ -20,6 +20,8 @@ import { NotificationType } from '../../../root/interfaces/notification';
     templateUrl: './cluster-list.component.html',
     styleUrls: ['./cluster-list.component.css'],
 })
+
+// TODO It is not my code. Check if is works and refactor it
 export class ClusterListComponent {
     clusters: ICluster[];
     events: string[] = [];

@@ -4,7 +4,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { delay, filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { appReducer, loadUser } from 'src/app/root/store/index';
+import { appReducer, getUser } from 'src/app/root/store/index';
 import { Observable } from 'rxjs';
 import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
 import { UserService } from '../../shared/modules/auth/user.service';
@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     sidenav!: MatSidenav;
     appSelected = false; // can i use activeApp != null?
     settings = false;
+
     // TODO Get the user instead of every single element
     userID = '';
     isAdmin = false;
@@ -47,7 +48,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-        this.store.dispatch(loadUser({ name: this.userService.getUsername() }));
+        this.store.dispatch(getUser({ name: this.userService.getUsername() }));
 
         this.user$.subscribe((user: IUser) => {
             console.log(user);

@@ -21,7 +21,6 @@ import { UserService } from '../../../shared/modules/auth/user.service';
 import { AuthService } from '../../../shared/modules/auth/auth.service';
 import { IId } from '../../../root/interfaces/id';
 import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
-import { NotificationType } from '../../../root/interfaces/notification';
 import { selectApplications } from '../../../root/store/selectors/application.selector';
 
 @Component({
@@ -72,17 +71,17 @@ export class AppListComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((result) => {
             if (result.event === DialogAction.ADD) {
-                this.addApplication(result.data);
+                this.store.dispatch(postApplication({ application: result.data }));
             } else if (result.event === DialogAction.UPDATE) {
-                this.updateApplication(result.data.applications[0]);
+                this.store.dispatch(updateApplication({ application: result.data.applications[0] }));
             } else if (result.event === DialogAction.DELETE) {
-                this.deleteApplication(result.data);
+                // this.deleteApplication(result.data);
+                this.store.dispatch(deleteApplication({ application: result.data }));
             }
         });
     }
-
+    /*
     deleteApplication(app: IApplication): void {
-        this.store.dispatch(deleteApplication({ application: app }));
         // TODO Check what happens with the services in a application if you delete the application
         /*
         this.api.getServicesOfApplication(app._id.$oid).subscribe((services: IService[]) => {
@@ -105,61 +104,10 @@ export class AppListComponent implements OnInit {
                     'Error: Deleting application "' + app.application_name + '" failed!',
                 );
             },
-        });*/
-    }
-
-    addApplication(app: IApplication): void {
-        this.store.dispatch(postApplication({ application: app }));
-
-        /*
-        this.api.addApplication(app).subscribe({
-            next: () => {
-                // this.loadDataApplication();
-            },
-            error: () => {
-                this.notifyService.notify(
-                    NotificationType.error,
-                    'Error: Adding application "' + app.application_name + '" failed!',
-                );
-            },
-        });*/
-    }
-
-    updateApplication(app: IApplication): void {
-        this.store.dispatch(updateApplication({ application: app }));
-        /*
-        this.api.updateApplication(app).subscribe({
-            next: () => {
-                this.notifyService.notify(
-                    NotificationType.success,
-                    'Application "' + app.application_name + '" updated successfully!',
-                );
-                // this.loadDataApplication();
-            },
-            error: () => {
-                this.notifyService.notify(
-                    NotificationType.error,
-                    'Error: Updating application "' + app.application_name + '" failed!',
-                );
-            },
-        });*/
-    }
-    /*
-    loadDataApplication() {
-        console.log('this.userID');
-        console.log(this.userID);
-        this.api.getApplicationsOfUser(this.userID).subscribe((apps: IApplication[]) => {
-            this.apps = apps;
-            console.log(apps);
-            if (apps[0]) {
-                this.activeAppId = apps[0]._id;
-                this.sharedService.selectApplication(apps[0]);
-            }
         });
     }*/
 
     handleChange() {
-        console.log(this.activeAppId);
         this.api.getAppById(this.activeAppId.$oid).subscribe((app) => {
             this.sharedService.selectApplication(app);
             // this.switchScreen(true, false, false); TODO why is this used?

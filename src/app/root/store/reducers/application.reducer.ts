@@ -23,14 +23,15 @@ export const applicationReducer = createReducer(
     // /////////////////////  GET APPLICATION  ///////////////////////////////////
     // ///////////////////////////////////////////////////////////////////////////
 
-    on(applicationActions.getApplicationSuccess, (state, action) => {
-        const applications = action.applications;
-        const loading = false;
-        return { ...state, applications, loading };
-    }),
     on(applicationActions.getApplication, (state) => {
         const applications = [] as IApplication[];
         const loading = true;
+        return { ...state, applications, loading };
+    }),
+
+    on(applicationActions.getApplicationSuccess, (state, action) => {
+        const applications = action.applications;
+        const loading = false;
         return { ...state, applications, loading };
     }),
 
@@ -44,14 +45,16 @@ export const applicationReducer = createReducer(
     // ///////////////////////////////////////////////////////////////////////////
     // /////////////////////  DELETE APPLICATION  ////////////////////////////////
     // ///////////////////////////////////////////////////////////////////////////
+
+    on(applicationActions.deleteApplication, (state) => {
+        const loading = true;
+        return { ...state, loading };
+    }),
+
     on(applicationActions.deleteApplicationSuccess, (state, action) => {
         const applications = state.applications.filter((app) => app !== action.application);
         const loading = false;
         return { ...state, applications, loading };
-    }),
-    on(applicationActions.deleteApplication, (state) => {
-        const loading = true;
-        return { ...state, loading };
     }),
 
     on(applicationActions.deleteApplicationError, (state, action) => {
@@ -64,15 +67,17 @@ export const applicationReducer = createReducer(
     // /////////////////////  UPDATE APPLICATION  ////////////////////////////////
     // ///////////////////////////////////////////////////////////////////////////
     // TODO
+
+    on(applicationActions.updateApplication, (state) => {
+        const loading = true;
+        return { ...state, loading };
+    }),
+
     on(applicationActions.updateApplicationSuccess, (state, action) => {
         console.log(action);
         const applications = state.applications;
         const loading = false;
         return { ...state, applications, loading };
-    }),
-    on(applicationActions.updateApplication, (state) => {
-        const loading = true;
-        return { ...state, loading };
     }),
 
     on(applicationActions.updateApplicationError, (state, action) => {
@@ -82,16 +87,18 @@ export const applicationReducer = createReducer(
     }),
 
     // ///////////////////////////////////////////////////////////////////////////
-    // /////////////////////  POST APPLICATION  ////////////////////////////////
+    // /////////////////////  POST APPLICATION  //////////////////////////////////
     // ///////////////////////////////////////////////////////////////////////////
+
+    on(applicationActions.postApplication, (state) => {
+        const loading = true;
+        return { ...state, loading };
+    }),
+
     on(applicationActions.postApplicationSuccess, (state, action) => {
         const applications = [...state.applications, action.application];
         const loading = false;
         return { ...state, applications, loading };
-    }),
-    on(applicationActions.postApplication, (state) => {
-        const loading = true;
-        return { ...state, loading };
     }),
 
     on(applicationActions.postApplicationError, (state, action) => {

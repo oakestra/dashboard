@@ -7,13 +7,13 @@ import { ApiService } from '../../../shared/modules/api/api.service';
 
 @Injectable()
 export class ServiceEffects {
-    loadServices$ = createEffect(() =>
+    getServices$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(serviceActions.loadServices),
+            ofType(serviceActions.getServices),
             mergeMap(() =>
                 this.apiService.getServiceByID('qwaedrf').pipe(
-                    map((service) => serviceActions.servicesLoaded({ service })),
-                    catchError((error) => of(serviceActions.loadServicesError({ error: error.message }))),
+                    map((service) => serviceActions.getServicesSuccess({ service })),
+                    catchError((error) => of(serviceActions.getServicesError({ error: error.message }))),
                 ),
             ),
         ),

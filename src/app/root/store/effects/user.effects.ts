@@ -7,13 +7,49 @@ import { ApiService } from '../../../shared/modules/api/api.service';
 
 @Injectable()
 export class UserEffects {
-    loadUser$ = createEffect(() =>
+    getUser$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(userActions.loadUser),
+            ofType(userActions.getUser),
             switchMap(({ name }) =>
                 this.apiService.getUserByName(name).pipe(
-                    map((user) => userActions.userLoaded({ user })),
-                    catchError((error) => of(userActions.loadUserError({ error: error.message }))),
+                    map((user) => userActions.getUserSuccess({ user })),
+                    catchError((error) => of(userActions.getUserError({ error: error.message }))),
+                ),
+            ),
+        ),
+    );
+
+    postUser$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(userActions.postUser),
+            switchMap(({ user }) =>
+                this.apiService.registerUser(user).pipe(
+                    map(() => userActions.postUserSuccess({ user })),
+                    catchError((error) => of(userActions.postUserError({ error: error.message }))),
+                ),
+            ),
+        ),
+    );
+
+    updateUser$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(userActions.updateUser),
+            switchMap(({ user }) =>
+                this.apiService.updateUser(user).pipe(
+                    map(() => userActions.updateUserSuccess({ user })),
+                    catchError((error) => of(userActions.updateUserError({ error: error.message }))),
+                ),
+            ),
+        ),
+    );
+
+    deleteUser$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(userActions.deleteUser),
+            switchMap(({ user }) =>
+                this.apiService.deleteUser(user).pipe(
+                    map(() => userActions.deleteUserSuccess({ user })),
+                    catchError((error) => of(userActions.deleteUserError({ error: error.message }))),
                 ),
             ),
         ),
