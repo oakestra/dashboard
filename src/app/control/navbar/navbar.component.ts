@@ -77,8 +77,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     }
 
     showData(url: string) {
-        this.settings =
-            url.includes('help') || url.includes('user') || url.includes('profile') || url.includes('survey');
+        this.settings = url.includes('help') || url.includes('user') || url.includes('profile');
     }
 
     updatePermissions(): void {

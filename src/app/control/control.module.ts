@@ -36,7 +36,6 @@ import { DialogChangePasswordView } from './dialogs/change-password/dialogChange
 import { DialogServiceStatusView } from './dialogs/service-status/dialogServiceStatus';
 import { LineChartComponent } from './charts/line-chart/line-chart.component';
 import { HelpComponent } from './help/help.component';
-import { SurveyComponent } from './survey/survey.component';
 import { DialogConfirmationView } from './dialogs/confirmation/dialogConfirmation';
 import { DialogGenerateTokenView } from './dialogs/generate-token/dialogGenerateToken';
 import { GraphComponent } from './graph/graph.component';
@@ -72,7 +71,6 @@ import { ClusterComponent } from './cluster/cluster.component';
         DialogServiceStatusView,
         LineChartComponent,
         HelpComponent,
-        SurveyComponent,
         DialogConfirmationView,
         AppListComponent,
         ClusterListComponent,

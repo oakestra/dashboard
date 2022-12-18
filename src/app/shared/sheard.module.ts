@@ -3,8 +3,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { SurveyNotificationComponent } from '../control/survey/survey-notification.component';
-import { SurveyNotificationService } from '../control/survey/survey-notification.service';
 import { UserService } from './modules/auth/user.service';
 import { SharedIDService } from './modules/helper/shared-id.service';
 import { AuthService } from './modules/auth/auth.service';
@@ -27,7 +25,7 @@ import { WINDOW_PROVIDERS } from './modules/helper/window.providers';
         RoleRouterGuard,
         WINDOW_PROVIDERS,
     ],
-    declarations: [NotificationComponent, SurveyNotificationComponent],
+    declarations: [NotificationComponent],
 })
 export class SharedModule {
     static forRoot(): ModuleWithProviders<any> {
@@ -44,7 +42,6 @@ export class SharedModule {
                 SharedIDService,
                 AuthGuardService,
                 NotificationService,
-                SurveyNotificationService,
             ],
         };
     }

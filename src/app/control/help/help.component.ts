@@ -44,7 +44,6 @@ export class HelpComponent {
             {
                 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
                 action() {
-                    void router.navigate(['/control/survey']).then();
                     return shepherdService.next();
                 },
                 text: 'NEXT',

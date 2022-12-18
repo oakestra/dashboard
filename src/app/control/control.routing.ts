@@ -8,7 +8,6 @@ import { DeployFormComponent } from './deploy-form/deploy-form.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UsersComponent } from './users/users.component';
 import { UserEditComponent } from './users/user-edit/user-edit.component';
-import { SurveyComponent } from './survey/survey.component';
 import { ClusterComponent } from './cluster/cluster.component';
 
 export const routes: Routes = [
@@ -25,11 +24,6 @@ export const routes: Routes = [
             {
                 path: 'help',
                 component: HelpComponent,
-                canActivate: [AuthGuardService],
-            },
-            {
-                path: 'survey',
-                component: SurveyComponent,
                 canActivate: [AuthGuardService],
             },
             {
