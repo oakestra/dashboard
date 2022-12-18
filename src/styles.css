@@ -13,6 +13,15 @@
     color: white;
 }
 
+.mdc-button__label {
+    color: white;
+}
+
+.mat-mdc-unelevated-button.mat-unthemed {
+    --mdc-filled-button-container-color: rgba(255, 255, 255, 0);
+    --mdc-filled-button-label-text-color: #ffffff;
+}
+
 .full-width {
     width: 100%;
 }

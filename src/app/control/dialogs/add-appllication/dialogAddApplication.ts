@@ -29,7 +29,7 @@ export class DialogAddApplicationView {
     }
 
     doAction() {
-        this.dialogRef.close({ event: DialogAction.ADD, data: this.app });
+        this.dialogRef.close({ event: this.action, data: this.app });
     }
 
     deleteApplication() {

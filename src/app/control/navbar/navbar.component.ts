@@ -7,10 +7,8 @@ import { select, Store } from '@ngrx/store';
 import { appReducer, loadUser } from 'src/app/root/store/index';
 import { Observable } from 'rxjs';
 import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
-import { ApiService } from '../../shared/modules/api/api.service';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { AuthService, Role } from '../../shared/modules/auth/auth.service';
-import { IApplication } from '../../root/interfaces/application';
 import { IUser } from '../../root/interfaces/user';
 import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 
@@ -22,15 +20,12 @@ import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 export class NavbarComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSidenav)
     sidenav!: MatSidenav;
-
-    apps: IApplication[];
-
     appSelected = false; // can i use activeApp != null?
     settings = false;
-
     // TODO Get the user instead of every single element
     userID = '';
     isAdmin = false;
+
     public user$: Observable<IUser> = this.store.pipe(select(selectCurrentUser));
 
     listClusters = false;
@@ -41,7 +36,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     constructor(
         private observer: BreakpointObserver,
         public sharedService: SharedIDService,
-        private api: ApiService,
         public userService: UserService,
         private router: Router,
         private authService: AuthService,

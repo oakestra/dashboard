@@ -64,6 +64,10 @@ mat-card-title {
     color: white;
 }
 
+.mat-mdc-unelevated-button .mat-mdc-button-touch-target {
+    background-color: #3b474e;
+}
+
 mat-card p {
     margin-bottom: 0;
 }
@@ -195,10 +199,6 @@ mat-card {
     height: 64px;
 }
 
-.application-panel {
-    background-color: #3e4e57;
-}
-
 .panel-title {
     color: white;
     align-items: center;
@@ -221,6 +221,7 @@ mat-card {
 .nav-item {
     margin-top: 30px;
     margin-bottom: 30px;
+    background-color: #3b474e;
 }
 
 /deep/ .application-panel .mat-expansion-indicator::after {
@@ -250,5 +251,4 @@ mat-card {
 .navButton {
     width: 90%;
     background: transparent;
-    color: white;
 }

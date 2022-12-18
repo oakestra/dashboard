@@ -79,3 +79,11 @@ mat-list-item .sub-menu a:hover {
 /deep/ .application-panel .mat-expansion-indicator::after {
     color: white !important;
 }
+
+.application-panel {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    background-color: #3b474e;
+}

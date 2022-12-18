@@ -2,6 +2,15 @@ import { Component, Input, OnInit } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import {
+    appReducer,
+    deleteApplication,
+    getApplication,
+    postApplication,
+    updateApplication,
+} from 'src/app/root/store/index';
 import { DialogAddApplicationView } from '../../dialogs/add-appllication/dialogAddApplication';
 import { DialogAction } from '../../../root/enums/dialogAction';
 import { NotificationService } from '../../../shared/modules/notification/notification.service';
@@ -10,10 +19,10 @@ import { SharedIDService } from '../../../shared/modules/helper/shared-id.servic
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { UserService } from '../../../shared/modules/auth/user.service';
 import { AuthService } from '../../../shared/modules/auth/auth.service';
-import { IService } from '../../../root/interfaces/service';
 import { IId } from '../../../root/interfaces/id';
 import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
 import { NotificationType } from '../../../root/interfaces/notification';
+import { selectApplications } from '../../../root/store/selectors/application.selector';
 
 @Component({
     selector: 'app-app-list',
@@ -22,10 +31,11 @@ import { NotificationType } from '../../../root/interfaces/notification';
 })
 export class AppListComponent implements OnInit {
     DialogAction = DialogAction;
-    @Input() userID = '';
+    @Input() userID: string;
 
-    apps: IApplication[];
     activeAppId: IId;
+
+    public apps$: Observable<IApplication[]> = this.store.pipe(select(selectApplications));
 
     constructor(
         private observer: BreakpointObserver,
@@ -36,10 +46,11 @@ export class AppListComponent implements OnInit {
         private router: Router,
         private authService: AuthService,
         private notifyService: NotificationService,
+        private store: Store<appReducer.AppState>,
     ) {}
 
     ngOnInit(): void {
-        this.loadDataApplication();
+        this.store.dispatch(getApplication({ id: this.userID }));
     }
 
     openDialogApp(action: DialogAction, app: IApplication | undefined) {
@@ -71,6 +82,9 @@ export class AppListComponent implements OnInit {
     }
 
     deleteApplication(app: IApplication): void {
+        this.store.dispatch(deleteApplication({ application: app }));
+        // TODO Check what happens with the services in a application if you delete the application
+        /*
         this.api.getServicesOfApplication(app._id.$oid).subscribe((services: IService[]) => {
             for (const j of services) {
                 this.api.deleteService(j);
@@ -83,7 +97,7 @@ export class AppListComponent implements OnInit {
                     NotificationType.success,
                     'Application "' + app.application_name + '" deleted successfully!',
                 );
-                this.loadDataApplication();
+                // this.loadDataApplication();
             },
             error: () => {
                 this.notifyService.notify(
@@ -91,15 +105,16 @@ export class AppListComponent implements OnInit {
                     'Error: Deleting application "' + app.application_name + '" failed!',
                 );
             },
-        });
+        });*/
     }
 
     addApplication(app: IApplication): void {
-        console.log(app);
-        console.log('Add');
+        this.store.dispatch(postApplication({ application: app }));
+
+        /*
         this.api.addApplication(app).subscribe({
             next: () => {
-                this.loadDataApplication();
+                // this.loadDataApplication();
             },
             error: () => {
                 this.notifyService.notify(
@@ -107,17 +122,19 @@ export class AppListComponent implements OnInit {
                     'Error: Adding application "' + app.application_name + '" failed!',
                 );
             },
-        });
+        });*/
     }
 
     updateApplication(app: IApplication): void {
+        this.store.dispatch(updateApplication({ application: app }));
+        /*
         this.api.updateApplication(app).subscribe({
             next: () => {
                 this.notifyService.notify(
                     NotificationType.success,
                     'Application "' + app.application_name + '" updated successfully!',
                 );
-                this.loadDataApplication();
+                // this.loadDataApplication();
             },
             error: () => {
                 this.notifyService.notify(
@@ -125,20 +142,24 @@ export class AppListComponent implements OnInit {
                     'Error: Updating application "' + app.application_name + '" failed!',
                 );
             },
-        });
+        });*/
     }
-
+    /*
     loadDataApplication() {
+        console.log('this.userID');
+        console.log(this.userID);
         this.api.getApplicationsOfUser(this.userID).subscribe((apps: IApplication[]) => {
             this.apps = apps;
+            console.log(apps);
             if (apps[0]) {
                 this.activeAppId = apps[0]._id;
                 this.sharedService.selectApplication(apps[0]);
             }
         });
-    }
+    }*/
 
     handleChange() {
+        console.log(this.activeAppId);
         this.api.getAppById(this.activeAppId.$oid).subscribe((app) => {
             this.sharedService.selectApplication(app);
             // this.switchScreen(true, false, false); TODO why is this used?
