@@ -1,7 +1,7 @@
-<button class="navButton" mat-flat-button routerLink="/control">
-    <mat-icon>apps</mat-icon>
-    Applications
-</button>
+<!--<button class="navButton" mat-flat-button routerLink="/control">-->
+<!--    <mat-icon>apps</mat-icon>-->
+<!--    Applications-->
+<!--</button>-->
 
 <ul class="sub-menu">
     <div id="applicationTitle">
@@ -11,7 +11,7 @@
             </mat-expansion-panel-header>
             <div *ngFor="let app of apps$ | async" class="items">
                 <mat-radio-group (change)="handleChange()" [(ngModel)]="activeAppId" routerLink="/control">
-                    <mat-radio-button [value]="app._id" class="menu-button">
+                    <mat-radio-button [value]="app._id" class="radioButton">
                         <span class="sidenav-text">{{ app.application_name }}</span>
                     </mat-radio-button>
                 </mat-radio-group>
@@ -24,8 +24,8 @@
     </div>
     <mat-list class="inline-list">
         <button class="navButton" mat-flat-button (click)="openDialogApp(DialogAction.ADD, undefined)">
-            Add
-            <mat-icon>add</mat-icon>
+            Add Application
+            <mat-icon>add_circle</mat-icon>
         </button>
     </mat-list>
 </ul>

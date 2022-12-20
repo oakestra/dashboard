@@ -2,10 +2,6 @@
     color: white;
 }
 
-::ng-deep .mat-radio-outer-circle {
-    border-color: white;
-}
-
 mat-list-item {
     position: relative;
     list-style: none;
@@ -76,13 +72,16 @@ mat-list-item .sub-menu a:hover {
     padding: 0;
 }
 
-/deep/ .application-panel .mat-expansion-indicator::after {
-    color: white !important;
-}
-
 .application-panel {
     box-shadow: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     background-color: #3b474e;
+}
+.mat-radio-button {
+    border-color: white !important;
+}
+
+.mdc-form-field > label {
+    margin: 0;
 }
