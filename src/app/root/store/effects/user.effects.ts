@@ -12,7 +12,7 @@ export class UserEffects {
             ofType(userActions.getUser),
             switchMap(({ name }) =>
                 this.apiService.getUserByName(name).pipe(
-                    map((user) => userActions.getUserSuccess({ user })),
+                    map((currentUser) => userActions.getUserSuccess({ currentUser })),
                     catchError((error) => of(userActions.getUserError({ error: error.message }))),
                 ),
             ),
@@ -50,6 +50,18 @@ export class UserEffects {
                 this.apiService.deleteUser(user).pipe(
                     map(() => userActions.deleteUserSuccess({ user })),
                     catchError((error) => of(userActions.deleteUserError({ error: error.message }))),
+                ),
+            ),
+        ),
+    );
+
+    getAllUser$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(userActions.getAllUser),
+            switchMap(() =>
+                this.apiService.getAllUser().pipe(
+                    map((users) => userActions.getAllUserSuccess({ users })),
+                    catchError((error) => of(userActions.getAllUserError({ error: error.message }))),
                 ),
             ),
         ),

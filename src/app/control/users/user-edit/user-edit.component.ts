@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
 import { DialogChangePasswordView } from '../../dialogs/change-password/dialogChangePassword';
 import { UserService } from '../../../shared/modules/auth/user.service';
-import { ApiService } from '../../../shared/modules/api/api.service';
-import { NotificationService } from '../../../shared/modules/notification/notification.service';
 import { IUser } from '../../../root/interfaces/user';
 import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
-import { NotificationType } from '../../../root/interfaces/notification';
+import { appReducer, getUser, updateUser } from '../../../root/store';
+import { selectCurrentUser } from '../../../root/store/selectors/user.selector';
 
 @Component({
     selector: 'app-user-edit',
@@ -18,15 +19,15 @@ import { NotificationType } from '../../../root/interfaces/notification';
 export class UserEditComponent implements OnInit {
     form: FormGroup;
     user: IUser;
-    dataReady = false;
+
+    public user$: Observable<IUser> = this.store.pipe(select(selectCurrentUser));
 
     constructor(
         private fb: FormBuilder,
         public dialog: MatDialog,
         private userService: UserService,
-        private api: ApiService,
         private router: Router,
-        private notifyService: NotificationService,
+        private store: Store<appReducer.AppState>,
     ) {
         this.form = fb.group({
             email: ['', Validators.email],
@@ -34,20 +35,20 @@ export class UserEditComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const username = this.userService.getUsername();
-        this.api.getUserByName(username).subscribe((data: IUser) => {
-            this.user = data;
-            this.dataReady = true;
+        this.store.dispatch(getUser({ name: this.userService.getUsername() }));
+
+        this.user$.subscribe((u: IUser) => {
+            this.user = u;
             this.form.patchValue({ email: this.user.email });
         });
     }
 
     onSubmit() {
-        this.user.email = this.form.get('email')?.value;
-        this.api.updateUser(this.user).subscribe(() => {
-            this.notifyService.notify(NotificationType.success, 'Changes saved successfully');
-            void this.router.navigate(['/control']).then();
-        });
+        const updatedUser: IUser = {
+            ...this.user,
+            email: this.form.get('email')?.value,
+        };
+        this.store.dispatch(updateUser({ user: updatedUser }));
     }
 
     openDialog(user: IUser) {

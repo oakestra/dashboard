@@ -63,16 +63,23 @@ export class DialogEditUserView {
     }
 
     doAction() {
-        const newRoles = [];
+        const newRoles: IUserRole[] = [];
         for (const r of Object.keys(Role)) {
             if (this.form.value.roles[r]) {
-                newRoles.push(r);
+                // newRoles.push(r); // TODO Add real roles | or change how to store a role
             }
         }
-        this.user.email = this.form.value.email;
-        this.user.name = this.form.value.name;
-        this.user.roles = this.form.value.newRoles;
-        this.dialogRef.close({ event: this.action, data: this.user.roles });
+        const user: IUser = {
+            _id: this.user._id,
+            created_at: '',
+            email: this.form.value.email,
+            password: this.form.value.password,
+            roles: newRoles,
+            name: this.form.value.name,
+        };
+        console.log(newRoles);
+        console.log(user);
+        this.dialogRef.close({ event: this.action, data: user });
     }
 
     closeDialog() {

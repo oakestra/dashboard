@@ -42,6 +42,7 @@ export class ApiService extends RestService {
         return this.doDELRequest('/application/' + app._id.$oid);
     }
 
+    // TODO find a away to delete this
     getAppById(appId: string): Observable<IApplication[]> {
         return this.doGETRequest('/application/' + appId);
     }
@@ -68,9 +69,12 @@ export class ApiService extends RestService {
     // /////////////////////////////////////////////////////////////////////////
     // /////////////////// Service Functions ///////////////////////////////////////
 
+    // TODO Are service APIs still needed? Or can we use only the endpoints for the Application.
+
     addService(service: IService) {
         return this.doPOSTRequest('/service/', service);
     }
+
     // sla and not service is here the argument?
     updateService(service: any, serviceID: string) {
         return this.doPUTRequest('/service/' + serviceID, service);

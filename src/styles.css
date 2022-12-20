@@ -1,15 +1,15 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 .deleteButton {
-    background-color: #e07074;
+    background-color: #e07074 !important;
     color: white;
 }
 .cancelButton {
-    background-color: #7b97a5;
+    background-color: #7b97a5 !important;
     color: white;
 }
 .updateButton {
-    background-color: #4a7083;
+    background-color: #4a7083 !important;
     color: white;
 }
 
@@ -20,6 +20,10 @@
 .mat-mdc-unelevated-button.mat-unthemed {
     --mdc-filled-button-container-color: rgba(255, 255, 255, 0);
     --mdc-filled-button-label-text-color: #ffffff;
+}
+
+.mat-mdc-dialog-actions {
+    justify-content: end !important;
 }
 
 .full-width {
@@ -36,8 +40,16 @@
     text-align: right;
 }
 
+.mdc-button {
+    background-color: transparent;
+}
+
 .mat-dialog-actions {
     justify-content: flex-end;
+}
+
+.mdc-evolution-chip__text-label {
+    color: white !important;
 }
 
 * {

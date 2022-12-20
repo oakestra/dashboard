@@ -5,13 +5,15 @@ import { IUser } from '../../interfaces/user';
 export const userFeatureKey = 'user';
 
 export interface State {
-    user: IUser;
+    currentUser: IUser;
+    users: IUser[];
     loading: boolean;
     error: unknown;
 }
 
 export const initialState: State = {
-    user: null,
+    currentUser: null,
+    users: [],
     loading: false,
     error: {},
 };
@@ -19,61 +21,57 @@ export const initialState: State = {
 export const userReducer = createReducer(
     initialState,
     // ///////////////////////////////////////////////////////////////////////////
-    // /////////////////////  GET APPLICATION  ///////////////////////////////////
+    // /////////////////////  GET USER  ///////////////////////////////////
     // ///////////////////////////////////////////////////////////////////////////
 
     on(userActions.getUser, (state) => {
-        const user = {} as IUser;
         const loading = true;
-        return { ...state, user, loading };
+        return { ...state, loading };
     }),
 
     on(userActions.getUserSuccess, (state, action) => {
-        const user = action.user;
+        const currentUser = action.currentUser;
         const loading = false;
-        return { ...state, user, loading };
+        return { ...state, currentUser, loading };
     }),
 
     on(userActions.getUserError, (state, action) => {
-        const user = {} as IUser;
         const loading = false;
         const error = action.error;
-        return { ...state, user, loading, error };
+        return { ...state, loading, error };
     }),
 
     // ///////////////////////////////////////////////////////////////////////////
-    // /////////////////////  POST APPLICATION  ///////////////////////////////////
+    // /////////////////////  POST USER  ///////////////////////////////////
     // ///////////////////////////////////////////////////////////////////////////
 
     on(userActions.postUser, (state) => {
-        const user = {} as IUser;
         const loading = true;
-        return { ...state, user, loading };
+        return { ...state, loading };
     }),
 
     on(userActions.postUserSuccess, (state, action) => {
-        const user = action.user;
+        const users = [...state.users, action.user];
         const loading = false;
-        return { ...state, user, loading };
+        return { ...state, users, loading };
     }),
 
     on(userActions.postUserError, (state, action) => {
-        const user = {} as IUser;
         const loading = false;
         const error = action.error;
-        return { ...state, user, loading, error };
+        return { ...state, loading, error };
     }),
 
     // ///////////////////////////////////////////////////////////////////////////
-    // /////////////////////  UPDATE APPLICATION  ///////////////////////////////////
+    // /////////////////////  UPDATE USER  ///////////////////////////////////
     // ///////////////////////////////////////////////////////////////////////////
 
     on(userActions.updateUser, (state) => {
-        const user = {} as IUser;
         const loading = true;
-        return { ...state, user, loading };
+        return { ...state, loading };
     }),
 
+    // TODO Fix this
     on(userActions.updateUserSuccess, (state, action) => {
         const user = action.user;
         const loading = false;
@@ -81,26 +79,24 @@ export const userReducer = createReducer(
     }),
 
     on(userActions.updateUserError, (state, action) => {
-        const user = {} as IUser;
         const loading = false;
         const error = action.error;
-        return { ...state, user, loading, error };
+        return { ...state, loading, error };
     }),
 
     // ///////////////////////////////////////////////////////////////////////////
-    // /////////////////////  DELETE APPLICATION  ///////////////////////////////////
+    // /////////////////////  DELETE USER  ///////////////////////////////////
     // ///////////////////////////////////////////////////////////////////////////
 
     on(userActions.deleteUser, (state) => {
-        const user = {} as IUser;
         const loading = true;
-        return { ...state, user, loading };
+        return { ...state, loading };
     }),
 
     on(userActions.deleteUserSuccess, (state, action) => {
-        const user = action.user;
+        const users = state.users.filter((user) => user !== action.user);
         const loading = false;
-        return { ...state, user, loading };
+        return { ...state, users, loading };
     }),
 
     on(userActions.deleteUserError, (state, action) => {
@@ -108,6 +104,27 @@ export const userReducer = createReducer(
         const loading = false;
         const error = action.error;
         return { ...state, user, loading, error };
+    }),
+
+    // ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////  GET ALL USER  ///////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////////////
+
+    on(userActions.getAllUser, (state) => {
+        const loading = true;
+        return { ...state, loading };
+    }),
+
+    on(userActions.getAllUserSuccess, (state, action) => {
+        const users = action.users;
+        const loading = false;
+        return { ...state, users, loading };
+    }),
+
+    on(userActions.getAllUserError, (state, action) => {
+        const loading = false;
+        const error = action.error;
+        return { ...state, loading, error };
     }),
 );
 

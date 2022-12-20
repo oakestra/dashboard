@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { ApplicationEffects, appReducer } from 'src/app/root/store/index';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 import { SharedModule } from './shared/sheard.module';
 import { routes } from './app.routes';
 import { AppComponent } from './app.component';
@@ -30,7 +31,7 @@ import { UserEffects } from './root/store';
         StoreDevtoolsModule,
         StoreModule.forRoot(appReducer.reducers, {}),
         EffectsModule.forRoot([UserEffects, ApplicationEffects]),
-        // !environment.production ? StoreDevtoolsModule.instrument() : [], // TODO Do it like this
+        !environment.production ? StoreDevtoolsModule.instrument() : [], // TODO Do it like this
     ],
     providers: [
         // should be empty as we import all global services through "SharedModule.forRoot()"

@@ -1,5 +1,3 @@
-<!--<script src="https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/js/shepherd.min.js"></script>-->
-
 <mat-toolbar class="mat-elevation-z8">
     <mat-icon id="toolBar" (click)="onToolbarToggle()">menu</mat-icon>
 
@@ -45,7 +43,7 @@
                 </button>
             </div>
 
-            <div class="nav-item" *ngIf="userID">
+            <div class="nav-item">
                 <app-app-list [userID]="userID"></app-app-list>
             </div>
 

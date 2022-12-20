@@ -3,11 +3,11 @@
         <div>
             <mat-card-title>Profile</mat-card-title>
             <mat-card-content>
-                <form (ngSubmit)="onSubmit()" *ngIf="dataReady" [formGroup]="form" class="form">
+                <form (ngSubmit)="onSubmit()" *ngIf="user$ | async" [formGroup]="form" class="form">
                     <div>
                         <mat-form-field appearance="fill" class="input-field">
                             <mat-label>Name</mat-label>
-                            <input [value]="user.name" disabled matInput />
+                            <input [value]="(user$ | async).name" disabled matInput />
                         </mat-form-field>
                     </div>
 
@@ -22,7 +22,7 @@
                         <h5>Your Roles</h5>
                         <mat-chip-list aria-label="roles">
                             <mat-chip
-                                *ngFor="let r of user.roles"
+                                *ngFor="let r of (user$ | async).roles"
                                 [ngStyle]="{
                                     'background-color':
                                         r.name === 'Admin'

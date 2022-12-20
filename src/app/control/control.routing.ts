@@ -8,7 +8,7 @@ import { DeployFormComponent } from './deploy-form/deploy-form.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UsersComponent } from './users/users.component';
 import { UserEditComponent } from './users/user-edit/user-edit.component';
-import { ClusterComponent } from './cluster/cluster.component';
+// import { ClusterComponent } from './cluster/cluster.component';
 
 export const routes: Routes = [
     {
@@ -46,11 +46,12 @@ export const routes: Routes = [
                 component: UserEditComponent,
                 canActivate: [AuthGuardService],
             },
+            /*
             {
                 path: 'cluster',
                 component: ClusterComponent,
                 canActivate: [AuthGuardService],
-            },
+            },*/
             { path: '**', component: NotFoundComponent },
         ],
     },

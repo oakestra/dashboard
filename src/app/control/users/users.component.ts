@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { DialogEditUserView } from '../dialogs/edit-user/dialogEditUser';
 import { NotificationService } from '../../shared/modules/notification/notification.service';
@@ -11,6 +13,8 @@ import { IUser, IUserRole } from '../../root/interfaces/user';
 import { DialogAction } from '../../root/enums/dialogAction';
 import { IDialogAttribute } from '../../root/interfaces/dialogAttribute';
 import { NotificationType } from '../../root/interfaces/notification';
+import { appReducer, deleteUser, getAllUser, postUser, updateUser } from '../../root/store';
+import { selectAllUser } from '../../root/store/selectors/user.selector';
 
 @Component({
     templateUrl: './users.component.html',
@@ -19,13 +23,13 @@ import { NotificationType } from '../../root/interfaces/notification';
 export class UsersComponent implements OnInit {
     DialogAction = DialogAction;
     displayedColumns: string[] = ['name', 'created_at', 'roles', 'symbol'];
-
-    users: Array<IUser> = [];
     searchedUsers: Array<IUser> = [];
     searchText = '';
     selectedItems = [''];
     dropdown = new FormControl();
     dropdownList: string[] = [];
+
+    public users$: Observable<IUser[]> = this.store.pipe(select(selectAllUser));
 
     constructor(
         private router: Router,
@@ -34,35 +38,34 @@ export class UsersComponent implements OnInit {
         private dialog: MatDialog,
         private datePipe: DatePipe,
         private notifyService: NotificationService,
+        private store: Store<appReducer.AppState>,
     ) {}
 
     ngOnInit() {
         this.dropdownList = this.api.getRoles().map((roles) => roles.name);
         this.loadData();
+        this.store.dispatch(getAllUser());
     }
 
     loadData(): void {
-        this.api.getAllUser().subscribe((users: IUser[]) => {
-            this.users = users;
-            this.route.queryParams.subscribe((params) => {
-                this.searchText = params.searchText;
-                this.selectedItems = [];
+        this.route.queryParams.subscribe((params) => {
+            this.searchText = params.searchText;
+            this.selectedItems = [];
 
-                if (params.searchRoles) {
-                    let searchRoles = [];
-                    if (Array.isArray(params.searchRoles)) {
-                        searchRoles = params.searchRoles;
-                    } else {
-                        searchRoles.push(params.searchRoles);
-                    }
-                    this.dropdown.patchValue(searchRoles);
-                    searchRoles.forEach((searched) => {
-                        const found = this.dropdownList.find((role) => role === searched) ?? '';
-                        this.selectedItems.push(found);
-                    });
+            if (params.searchRoles) {
+                let searchRoles = [];
+                if (Array.isArray(params.searchRoles)) {
+                    searchRoles = params.searchRoles;
+                } else {
+                    searchRoles.push(params.searchRoles);
                 }
-                this.doFilter();
-            });
+                this.dropdown.patchValue(searchRoles);
+                searchRoles.forEach((searched) => {
+                    const found = this.dropdownList.find((role) => role === searched) ?? '';
+                    this.selectedItems.push(found);
+                });
+            }
+            this.doFilter();
         });
     }
 
@@ -82,7 +85,9 @@ export class UsersComponent implements OnInit {
     }
 
     doFilter(): void {
-        this.searchedUsers = this.users.filter((user) => this.nameFilter(user) && this.roleFilter(user));
+        this.users$.subscribe((u) => {
+            this.searchedUsers = u.filter((user) => this.nameFilter(user) && this.roleFilter(user));
+        });
     }
 
     nameFilter(user: IUser): boolean {
@@ -106,15 +111,8 @@ export class UsersComponent implements OnInit {
     }
 
     deleteUser(user: IUser): void {
-        this.api.deleteUser(user).subscribe({
-            next: () => {
-                this.notifyService.notify(NotificationType.success, 'User ' + user.name + ' deleted successfully!');
-                this.loadData();
-            },
-            error: () => {
-                this.notifyService.notify(NotificationType.error, 'Error: Deleting user ' + user.name + ' failed!');
-            },
-        });
+        this.store.dispatch(deleteUser({ user }));
+        this.doFilter();
     }
 
     openDeleteDialog(obj: IUser) {
@@ -150,30 +148,24 @@ export class UsersComponent implements OnInit {
         const dialogRef = this.dialog.open(DialogEditUserView, { data });
 
         dialogRef.afterClosed().subscribe((result) => {
-            if (result.event === 'add') {
+            console.log(result);
+            if (result.event === DialogAction.ADD) {
                 this.addUser(result.data);
-            } else if (result.event === 'edit') {
+            } else if (result.event === DialogAction.UPDATE) {
                 this.updateUser(result.data);
             }
         });
     }
 
     updateUser(user: IUser) {
-        this.api.updateUser(user).subscribe(() => this.loadData());
+        this.store.dispatch(updateUser({ user }));
     }
 
     addUser(user: IUser) {
+        // TODO Do this in the Dialog Component
         if (user.name.length !== 0 && user.password.length !== 0) {
             user.created_at = this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm') ?? '';
-            this.api.registerUser(user).subscribe({
-                next: () => {
-                    this.notifyService.notify(NotificationType.success, 'User registered successfully.');
-                    this.loadData();
-                },
-                error: (error) => {
-                    this.notifyService.notify(NotificationType.error, error.error.message);
-                },
-            });
+            this.store.dispatch(postUser({ user }));
         } else {
             this.notifyService.notify(NotificationType.error, 'Please provide valid inputs for user registration.');
         }

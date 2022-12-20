@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { Store } from '@ngrx/store';
+import { appReducer } from '../../../root/store';
 
 @Injectable({
     providedIn: 'root',
@@ -7,6 +9,8 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 // TODO Do not use this anymore
 export class SharedIDService {
+    constructor(private store: Store<appReducer.AppState>) {}
+
     private clusterService = new BehaviorSubject<any>(null);
     private applicationService = new BehaviorSubject<any>(null);
     private _userID = '';

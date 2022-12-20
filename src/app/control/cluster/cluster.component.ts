@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import * as L from 'leaflet';
+// import * as L from 'leaflet';
 import { ICluster } from '../../root/interfaces/cluster';
 import { DialogConfirmationView } from '../dialogs/confirmation/dialogConfirmation';
 import { NotificationService } from '../../shared/modules/notification/notification.service';
@@ -19,11 +19,14 @@ import { NotificationType } from '../../root/interfaces/notification';
 export class ClusterComponent implements OnInit {
     clusters: ICluster[]; // Make this as input form parent class
 
+    /*
     private map: any;
 
     // FMI Garching coordinates
     private lat = 48.262707753772624;
     private lon = 11.668009155278707;
+
+   */
 
     constructor(
         private observer: BreakpointObserver,
@@ -36,9 +39,9 @@ export class ClusterComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.initMap();
+        // this.initMap();
     }
-
+    /*
     private initMap(): void {
         this.map = L.map('card_map', {
             center: [this.lat, this.lon],
@@ -50,6 +53,8 @@ export class ClusterComponent implements OnInit {
             maxZoom: 13,
         }).addTo(this.map);
     }
+
+ */
 
     deleteCluster(cluster: ICluster) {
         const data = {

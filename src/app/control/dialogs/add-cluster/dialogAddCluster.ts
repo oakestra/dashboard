@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import * as L from 'leaflet';
-import 'leaflet-routing-machine';
+// import * as L from 'leaflet';
+// import 'leaflet-routing-machine';
 // import 'node_modules/leaflet-geosearch/dist/geosearch.css';
-import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { FormControl } from '@angular/forms';
 import { NotificationService } from '../../../shared/modules/notification/notification.service';
 import { NotificationType } from '../../../root/interfaces/notification';
@@ -45,9 +44,10 @@ export class DialogAddClusterView implements OnInit {
     // FMI Garching coordinates
     private lat = 48.262707753772624;
     private lon = 11.668009155278707;
-
+    /*
     private initMap(): void {
-        this.map = L.map('map', {
+
+      this.map = L.map('map', {
             center: [this.lat, this.lon],
             attributionControl: false,
             zoom: 14,
@@ -89,16 +89,16 @@ export class DialogAddClusterView implements OnInit {
             this.circlemarker.addTo(this.map).addTo(this.map);
         });
     }
-
+*/
     radiusChange(new_val: any) {
         this.my_radius = new_val.value;
         this.map.removeLayer(this.circlemarker);
-        this.circlemarker = L.circleMarker([this.lat, this.lon], { radius: new_val.value });
+        // this.circlemarker = L.circleMarker([this.lat, this.lon], { radius: new_val.value });
         this.circlemarker.addTo(this.map).addTo(this.map);
     }
 
     ngOnInit(): void {
-        this.initMap();
+        // this.initMap();
     }
 
     doAction() {

@@ -41,6 +41,7 @@ export class DevHomeComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
+        /*
         const sub2 = this.sharedService.clusterObserver$.subscribe((x) => {
             this.cluster_info = x;
             this.clusterName = x.cluster_name || 'clu';
@@ -50,6 +51,7 @@ export class DevHomeComponent implements OnInit, OnDestroy {
         });
         this.subscriptions.push(sub2);
 
+
         const sub = this.sharedService.applicationObserver$.subscribe((x) => {
             this.appName = x.application_name;
             this.appID = x._id.$oid;
@@ -57,6 +59,7 @@ export class DevHomeComponent implements OnInit, OnDestroy {
             this.loadData();
         });
         this.subscriptions.push(sub);
+        */
     }
 
     ngOnDestroy() {

@@ -15,7 +15,6 @@ import { DialogAddApplicationView } from '../../dialogs/add-appllication/dialogA
 import { DialogAction } from '../../../root/enums/dialogAction';
 import { NotificationService } from '../../../shared/modules/notification/notification.service';
 import { IApplication } from '../../../root/interfaces/application';
-import { SharedIDService } from '../../../shared/modules/helper/shared-id.service';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { UserService } from '../../../shared/modules/auth/user.service';
 import { AuthService } from '../../../shared/modules/auth/auth.service';
@@ -39,7 +38,6 @@ export class AppListComponent implements OnInit {
     constructor(
         private observer: BreakpointObserver,
         public dialog: MatDialog,
-        public sharedService: SharedIDService,
         private api: ApiService,
         public userService: UserService,
         private router: Router,
@@ -75,8 +73,8 @@ export class AppListComponent implements OnInit {
             } else if (result.event === DialogAction.UPDATE) {
                 this.store.dispatch(updateApplication({ application: result.data.applications[0] }));
             } else if (result.event === DialogAction.DELETE) {
-                // this.deleteApplication(result.data);
                 this.store.dispatch(deleteApplication({ application: result.data }));
+                // this.deleteApplication(result.data);
             }
         });
     }
@@ -108,8 +106,10 @@ export class AppListComponent implements OnInit {
     }*/
 
     handleChange() {
+        // TODO is shared Service needed?
         this.api.getAppById(this.activeAppId.$oid).subscribe((app) => {
-            this.sharedService.selectApplication(app);
+            console.log(app);
+            // this.sharedService.selectApplication(app);
             // this.switchScreen(true, false, false); TODO why is this used?
             void this.router.navigate(['/control']).then();
         });
