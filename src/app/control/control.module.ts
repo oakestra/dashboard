@@ -51,7 +51,6 @@ import { routes } from './control.routing';
 import { AppListComponent } from './navbar/app-list/app-list.component';
 import { ClusterListComponent } from './navbar/cluster-list/cluster-list.component';
 import { ClusterComponent } from './cluster/cluster.component';
-import { MatLegacyChipsModule } from '@angular/material/legacy-chips';
 
 @NgModule({
     declarations: [
@@ -107,7 +106,6 @@ import { MatLegacyChipsModule } from '@angular/material/legacy-chips';
         MatListModule,
         StoreModule.forFeature(fromService.serviceFeatureKey, fromService.reducer),
         EffectsModule.forFeature([ServiceEffects]),
-        MatLegacyChipsModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
