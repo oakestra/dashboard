@@ -31,7 +31,23 @@ export class ApiService extends RestService {
     // /////////////////// Application Functions ///////////////////////////////
 
     addApplication(app: IApplication) {
-        return this.doPOSTRequest('/application/', app);
+        const test: any = [];
+        const sla = {
+            sla_version: '1.1',
+            customerID: '63a06c75deb55deb20f77fa6',
+            applications: [
+                {
+                    applicationID: app._id,
+                    application_name: app.application_name,
+                    application_namespace: app.application_namespace,
+                    application_desc: app.application_desc,
+                    microservices: test,
+                },
+            ],
+            args: ['string'],
+        };
+
+        return this.doPOSTRequest('/application/', sla);
     }
 
     updateApplication(app: IApplication) {

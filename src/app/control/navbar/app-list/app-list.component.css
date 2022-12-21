@@ -82,6 +82,10 @@ mat-list-item .sub-menu a:hover {
     border-color: white !important;
 }
 
-.mdc-form-field > label {
+/deep/ .mdc-form-field > label {
     margin: 0;
+}
+
+/deep/ .mdc-radio__outer-circle {
+    border-color: white !important;
 }

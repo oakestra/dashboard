@@ -45,7 +45,7 @@ export class ApplicationEffects {
 
     updateApplication$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(applicationActions.postApplication),
+            ofType(applicationActions.updateApplication),
             switchMap(({ application }) =>
                 this.apiService.updateApplication(application).pipe(
                     map(() => applicationActions.updateApplicationSuccess({ application })),
