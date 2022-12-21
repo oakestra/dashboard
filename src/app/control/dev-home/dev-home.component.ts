@@ -17,16 +17,11 @@ import { NotificationType } from '../../root/interfaces/notification';
     templateUrl: './dev-home.component.html',
     styleUrls: ['./dev-home.component.css'],
 })
-
-// TODO Delete Cluster stuff from here
 export class DevHomeComponent implements OnInit, OnDestroy {
     services: IService[];
     servicesCount = 0;
     appName = '';
     appID = '';
-    clusterName = '';
-    clusterID = '';
-    cluster_info: any;
 
     is_app = true;
 
@@ -41,25 +36,7 @@ export class DevHomeComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        /*
-        const sub2 = this.sharedService.clusterObserver$.subscribe((x) => {
-            this.cluster_info = x;
-            this.clusterName = x.cluster_name || 'clu';
-            this.clusterID = x._id.$oid;
-            this.is_app = false;
-            // this.initMap()
-        });
-        this.subscriptions.push(sub2);
-
-
-        const sub = this.sharedService.applicationObserver$.subscribe((x) => {
-            this.appName = x.application_name;
-            this.appID = x._id.$oid;
-            this.is_app = true;
-            this.loadData();
-        });
-        this.subscriptions.push(sub);
-        */
+        console.log('In Dev');
     }
 
     ngOnDestroy() {

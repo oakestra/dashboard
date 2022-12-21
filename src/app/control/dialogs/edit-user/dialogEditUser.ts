@@ -1,6 +1,7 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 import { IUser, IUserRole } from '../../../root/interfaces/user';
 import { DialogAction } from '../../../root/enums/dialogAction';
 import { Role } from '../../../root/enums/roles';
@@ -21,6 +22,7 @@ export class DialogEditUserView {
     constructor(
         public dialogRef: MatDialogRef<DialogEditUserView>,
         private fb: FormBuilder,
+        private datePipe: DatePipe,
         @Optional() @Inject(MAT_DIALOG_DATA) public data: IDialogAttribute,
     ) {
         this.user = data.content as IUser;
@@ -64,6 +66,7 @@ export class DialogEditUserView {
 
     doAction() {
         const newRoles: IUserRole[] = [];
+        const date = this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm') ?? '';
         for (const r of Object.keys(Role)) {
             if (this.form.value.roles[r]) {
                 // newRoles.push(r); // TODO Add real roles | or change how to store a role
@@ -71,14 +74,12 @@ export class DialogEditUserView {
         }
         const user: IUser = {
             _id: this.user._id,
-            created_at: '',
+            created_at: date,
             email: this.form.value.email,
             password: this.form.value.password,
             roles: newRoles,
             name: this.form.value.name,
         };
-        console.log(newRoles);
-        console.log(user);
         this.dialogRef.close({ event: this.action, data: user });
     }
 

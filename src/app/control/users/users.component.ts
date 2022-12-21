@@ -12,7 +12,6 @@ import { DialogConfirmationView } from '../dialogs/confirmation/dialogConfirmati
 import { IUser, IUserRole } from '../../root/interfaces/user';
 import { DialogAction } from '../../root/enums/dialogAction';
 import { IDialogAttribute } from '../../root/interfaces/dialogAttribute';
-import { NotificationType } from '../../root/interfaces/notification';
 import { appReducer, deleteUser, getAllUser, postUser, updateUser } from '../../root/store';
 import { selectAllUser } from '../../root/store/selectors/user.selector';
 
@@ -148,26 +147,11 @@ export class UsersComponent implements OnInit {
         const dialogRef = this.dialog.open(DialogEditUserView, { data });
 
         dialogRef.afterClosed().subscribe((result) => {
-            console.log(result);
             if (result.event === DialogAction.ADD) {
-                this.addUser(result.data);
+                this.store.dispatch(postUser({ user: result.data }));
             } else if (result.event === DialogAction.UPDATE) {
-                this.updateUser(result.data);
+                this.store.dispatch(updateUser({ user: result.data }));
             }
         });
-    }
-
-    updateUser(user: IUser) {
-        this.store.dispatch(updateUser({ user }));
-    }
-
-    addUser(user: IUser) {
-        // TODO Do this in the Dialog Component
-        if (user.name.length !== 0 && user.password.length !== 0) {
-            user.created_at = this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm') ?? '';
-            this.store.dispatch(postUser({ user }));
-        } else {
-            this.notifyService.notify(NotificationType.error, 'Please provide valid inputs for user registration.');
-        }
     }
 }
