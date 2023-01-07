@@ -85,8 +85,6 @@ export class ApiService extends RestService {
     // /////////////////////////////////////////////////////////////////////////
     // /////////////////// Service Functions ///////////////////////////////////////
 
-    // TODO Are service APIs still needed? Or can we use only the endpoints for the Application.
-
     addService(service: IService) {
         return this.doPOSTRequest('/service/', service);
     }

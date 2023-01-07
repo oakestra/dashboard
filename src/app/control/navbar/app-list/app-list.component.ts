@@ -110,7 +110,6 @@ export class AppListComponent implements OnInit {
         this.api.getAppById(this.activeAppId.$oid).subscribe((app) => {
             console.log(app);
             // this.sharedService.selectApplication(app);
-            // this.switchScreen(true, false, false); TODO why is this used?
             void this.router.navigate(['/control']).then();
         });
     }

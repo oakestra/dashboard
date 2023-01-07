@@ -19,6 +19,10 @@ export const initialState: State = {
 export const serviceReducer = createReducer(
     initialState,
 
+    // ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////  GET SERVICE  //////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////////////
+
     on(serviceActions.getServicesSuccess, (state, action) => {
         const service = action.service;
         const loading = false;
@@ -36,6 +40,74 @@ export const serviceReducer = createReducer(
         const loading = false;
         const error = action.error;
         return { ...state, services, loading, error };
+    }),
+
+    // ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////  POST SERVICE  //////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////////////
+
+    on(serviceActions.postService, (state) => {
+        const loading = true;
+        return { ...state, loading };
+    }),
+
+    on(serviceActions.postServiceSuccess, (state, action) => {
+        // const services = [...state.service, action.service];
+        const services = action.service;
+        const loading = false;
+        return { ...state, services, loading };
+    }),
+
+    on(serviceActions.postServiceError, (state, action) => {
+        const loading = false;
+        const error = action.error;
+        return { ...state, loading, error };
+    }),
+
+    // ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////  UPDATE SERVICE  ////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////////////
+    // TODO
+
+    on(serviceActions.updateService, (state) => {
+        const loading = true;
+        return { ...state, loading };
+    }),
+
+    on(serviceActions.updateServiceSuccess, (state, action) => {
+        console.log(action);
+        const service = state.service;
+        const loading = false;
+        return { ...state, service, loading };
+    }),
+
+    on(serviceActions.updateServiceError, (state, action) => {
+        const loading = false;
+        const error = action.error;
+        return { ...state, loading, error };
+    }),
+
+    // ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////  DELETE SERVICE  ////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////////////
+
+    on(serviceActions.deleteService, (state) => {
+        const loading = true;
+        return { ...state, loading };
+    }),
+
+    on(serviceActions.deleteServiceSuccess, (state, action) => {
+        // TODO
+        const service = action.service;
+        // const service = state.service.filter((s: IService) => s !== action.service);
+        const loading = false;
+        return { ...state, service, loading };
+    }),
+
+    on(serviceActions.deleteServiceError, (state, action) => {
+        const loading = false;
+        const error = action.error;
+        return { ...state, loading, error };
     }),
 );
 
