@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Router } from '@angular/router';
-import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
+import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { DialogServiceStatusView } from '../dialogs/service-status/dialogServiceStatus';
 import { DialogConfirmationView } from '../dialogs/confirmation/dialogConfirmation';
@@ -11,6 +12,9 @@ import { IService } from '../../root/interfaces/service';
 import { ICluster } from '../../root/interfaces/cluster';
 import { IInstance } from '../../root/interfaces/instance';
 import { NotificationType } from '../../root/interfaces/notification';
+import { IApplication } from '../../root/interfaces/application';
+import { selectCurrentApplication } from '../../root/store/selectors/application.selector';
+import { appReducer } from '../../root/store';
 
 @Component({
     selector: 'dev-home',
@@ -20,19 +24,18 @@ import { NotificationType } from '../../root/interfaces/notification';
 export class DevHomeComponent implements OnInit, OnDestroy {
     services: IService[];
     servicesCount = 0;
-    appName = '';
     appID = '';
-
-    is_app = true;
 
     subscriptions: Subscription[] = [];
 
+    public currentApps$: Observable<IApplication> = this.store.pipe(select(selectCurrentApplication));
+
     constructor(
-        public sharedService: SharedIDService,
         private api: ApiService,
         public dialog: MatDialog,
         private router: Router,
         private notifyService: NotificationService,
+        private store: Store<appReducer.AppState>,
     ) {}
 
     ngOnInit(): void {

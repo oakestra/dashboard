@@ -59,7 +59,7 @@ export class ApiService extends RestService {
     }
 
     // TODO find a away to delete this
-    getAppById(appId: string): Observable<IApplication[]> {
+    getAppById(appId: string): Observable<IApplication> {
         return this.doGETRequest('/application/' + appId);
     }
 

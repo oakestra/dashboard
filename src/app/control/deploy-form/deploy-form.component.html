@@ -492,11 +492,8 @@
                                 </mat-card>
                             </div>
                         </div>
-
-                        <button mat-button mat-flat-button type="submit">Save</button>
-                        <button class="cancel_buttons" mat-button mat-flat-button routerLink="/control" type="button">
-                            Cancel
-                        </button>
+                        <button mat-flat-button class="updateButton" type="submit">Save</button>
+                        <button class="cancelButton" mat-flat-button routerLink="/control" type="button">Cancel</button>
                         <mat-error *ngIf="formInvalid" class="alert alert-danger">
                             some required field's are still missing
                         </mat-error>
@@ -522,7 +519,7 @@
                             <button
                                 (click)="uploadDocument()"
                                 [disabled]="file === undefined"
-                                class="upload-btn updateButton"
+                                class="updateButton"
                                 mat-flat-button
                                 type="button"
                             >

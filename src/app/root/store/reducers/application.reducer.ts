@@ -5,12 +5,14 @@ import * as applicationActions from '../actions/application.action';
 export const userFeatureKey = 'user';
 
 export interface State {
+    currentApplication: IApplication;
     applications: IApplication[];
     loading: boolean;
     error: unknown;
 }
 
 export const initialState: State = {
+    currentApplication: null,
     applications: [],
     loading: false,
     error: {},
@@ -20,7 +22,7 @@ export const applicationReducer = createReducer(
     initialState,
 
     // ///////////////////////////////////////////////////////////////////////////
-    // /////////////////////  GET APPLICATION  ///////////////////////////////////
+    // /////////////////////  GET APPLICATIONS  //////////////////////////////////
     // ///////////////////////////////////////////////////////////////////////////
 
     on(applicationActions.getApplication, (state) => {
@@ -105,6 +107,15 @@ export const applicationReducer = createReducer(
         const loading = false;
         const error = action.error;
         return { ...state, loading, error };
+    }),
+
+    // ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////  SET CURRENT APPLICATION  ///////////////////////////
+    // ///////////////////////////////////////////////////////////////////////////
+
+    on(applicationActions.setCurrentApplication, (state, action) => {
+        const currentApplication = action.application;
+        return { ...state, currentApplication };
     }),
 );
 

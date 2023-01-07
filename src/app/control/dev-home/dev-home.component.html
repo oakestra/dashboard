@@ -1,7 +1,7 @@
 <div class="content-cards">
     <mat-card class="serviceCard" id="content">
-        <div *ngIf="is_app">
-            <mat-card-title>Application: {{ appName }}</mat-card-title>
+        <div *ngIf="currentApps$ | async">
+            <mat-card-title>Application:{{ (currentApps$ | async).application_name }}</mat-card-title>
             <div *ngIf="servicesCount > 0">
                 <mat-accordion *ngFor="let service of services" multi>
                     <mat-expansion-panel>
@@ -9,7 +9,6 @@
                             <mat-panel-title class="w3-col s4 l5 m4">
                                 {{ service.microservice_name }}
                             </mat-panel-title>
-
                             <mat-panel-description
                                 class="w3-col s5 w3-right statusField"
                                 (click)="$event.stopPropagation()"

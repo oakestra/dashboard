@@ -66,3 +66,7 @@ button {
 .addButtonDiv {
     padding: 10px;
 }
+
+.cancelButton {
+    margin-left: 10px;
+}

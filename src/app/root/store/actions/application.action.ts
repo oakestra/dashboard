@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { IApplication } from '../../interfaces/application';
 
-// //////////// GET /////////////
+// //////////// GET BY USER /////////////
 export const getApplication = createAction('[Application] getApplication', props<{ id: string }>());
 export const getApplicationSuccess = createAction(
     '[Application] getApplicationSuccess',
@@ -39,3 +39,9 @@ export const postApplicationSuccess = createAction(
     props<{ application: IApplication }>(),
 );
 export const postApplicationError = createAction('[Application] postApplicationError', props<{ error: string }>());
+
+// ////////////// SET CURRENT ////////////////////
+export const setCurrentApplication = createAction(
+    '[Application] setCurrentApplication',
+    props<{ application: IApplication }>(),
+);

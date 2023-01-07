@@ -9,6 +9,7 @@ import {
     deleteApplication,
     getApplication,
     postApplication,
+    setCurrentApplication,
     updateApplication,
 } from 'src/app/root/store/index';
 import { DialogAddApplicationView } from '../../dialogs/add-appllication/dialogAddApplication';
@@ -106,10 +107,9 @@ export class AppListComponent implements OnInit {
     }*/
 
     handleChange() {
-        // TODO is shared Service needed?
-        this.api.getAppById(this.activeAppId.$oid).subscribe((app) => {
-            console.log(app);
-            // this.sharedService.selectApplication(app);
+        this.apps$.subscribe((app) => {
+            const application = app.filter((app) => app._id.$oid === this.activeAppId.$oid)[0];
+            this.store.dispatch(setCurrentApplication({ application }));
             void this.router.navigate(['/control']).then();
         });
     }
