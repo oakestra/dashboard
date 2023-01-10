@@ -31,9 +31,7 @@ import { selectApplications } from '../../../root/store/selectors/application.se
 export class AppListComponent implements OnInit {
     DialogAction = DialogAction;
     @Input() userID: string;
-
     activeAppId: IId;
-
     public apps$: Observable<IApplication[]> = this.store.pipe(select(selectApplications));
 
     constructor(

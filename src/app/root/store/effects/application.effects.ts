@@ -4,6 +4,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import * as applicationActions from '../actions/application.action';
+import * as serviceActions from '../actions/service.actions';
 
 @Injectable()
 export class ApplicationEffects {
@@ -50,6 +51,18 @@ export class ApplicationEffects {
                 this.apiService.updateApplication(application).pipe(
                     map(() => applicationActions.updateApplicationSuccess({ application })),
                     catchError((error) => of(applicationActions.updateApplicationError({ error: error.message }))),
+                ),
+            ),
+        ),
+    );
+
+    onApplicationChange$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(applicationActions.setCurrentApplication),
+            switchMap(({ application }) =>
+                this.apiService.getServicesOfApplication(application._id.$oid).pipe(
+                    map((services) => serviceActions.getServicesSuccess({ services })),
+                    catchError((error) => of(serviceActions.getServicesError({ error: error.message }))),
                 ),
             ),
         ),

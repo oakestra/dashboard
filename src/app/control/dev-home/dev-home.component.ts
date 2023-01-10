@@ -1,119 +1,46 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription } from 'rxjs/internal/Subscription';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { DialogServiceStatusView } from '../dialogs/service-status/dialogServiceStatus';
-import { DialogConfirmationView } from '../dialogs/confirmation/dialogConfirmation';
-import { NotificationService } from '../../shared/modules/notification/notification.service';
 import { IService } from '../../root/interfaces/service';
-import { ICluster } from '../../root/interfaces/cluster';
 import { IInstance } from '../../root/interfaces/instance';
-import { NotificationType } from '../../root/interfaces/notification';
 import { IApplication } from '../../root/interfaces/application';
 import { selectCurrentApplication } from '../../root/store/selectors/application.selector';
-import { appReducer } from '../../root/store';
+import { appReducer, deleteService } from '../../root/store';
+import { selectCurrentServices } from '../../root/store/selectors/service.selector';
 
 @Component({
     selector: 'dev-home',
     templateUrl: './dev-home.component.html',
     styleUrls: ['./dev-home.component.css'],
 })
-export class DevHomeComponent implements OnInit, OnDestroy {
-    services: IService[];
-    servicesCount = 0;
-    appID = '';
+export class DevHomeComponent implements OnInit {
+    public currentApp$: Observable<IApplication> = this.store.pipe(select(selectCurrentApplication));
+    public services$: Observable<IService[]> = this.store.pipe(select(selectCurrentServices));
 
-    subscriptions: Subscription[] = [];
-
-    public currentApps$: Observable<IApplication> = this.store.pipe(select(selectCurrentApplication));
-
-    constructor(
-        private api: ApiService,
-        public dialog: MatDialog,
-        private router: Router,
-        private notifyService: NotificationService,
-        private store: Store<appReducer.AppState>,
-    ) {}
+    constructor(private api: ApiService, public dialog: MatDialog, private store: Store<appReducer.AppState>) {}
 
     ngOnInit(): void {
         console.log('In Dev');
     }
 
-    ngOnDestroy() {
-        for (const s of this.subscriptions) {
-            s.unsubscribe();
-        }
-    }
-
-    loadData(): void {
-        const sub = this.api.getServicesOfApplication(this.appID).subscribe({
-            next: (services: IService[]) => {
-                this.services = services;
-                this.servicesCount = services.length;
-            },
-            error: (err) => {
-                console.log(err);
-            },
-        });
-        this.subscriptions.push(sub);
-    }
-
     deleteService(service: IService) {
-        this.api.deleteService(service).subscribe(() => {
-            this.loadData();
-        });
+        this.store.dispatch(deleteService({ service }));
     }
 
     deleteInstance(service: IService, instance: IInstance) {
-        this.api.deleteInstance(service, instance).subscribe(() => {
-            this.loadData();
-        });
+        this.api.deleteInstance(service, instance).subscribe();
     }
 
     deployService(service: IService) {
-        this.api.deployService(service).subscribe(() => {
-            this.loadData();
-        });
+        this.api.deployService(service).subscribe();
     }
 
     deleteServiceWithGraph(id: string) {
         const service: IService = { _id: { $oid: id } };
-        this.api.deleteService(service).subscribe(() => {
-            this.loadData();
-        });
-    }
-
-    // repeated function in navbar.component.ts // TODO Why repeated?
-    deleteCluster(cluster: ICluster) {
-        const data = {
-            text: 'Delete cluster: ' + cluster.cluster_name,
-            type: 'cluster',
-        };
-        const dialogRef = this.dialog.open(DialogConfirmationView, { data });
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result.event === true) {
-                this.api.deleteCluster(cluster._id.$oid).subscribe({
-                    next: () => {
-                        this.notifyService.notify(
-                            NotificationType.success,
-                            'Cluster ' + cluster.cluster_name + ' deleted successfully!',
-                        );
-                        void this.router
-                            .navigateByUrl('/', { skipLocationChange: true })
-                            .then(() => this.router.navigate(['/control']));
-                    },
-                    error: () => {
-                        this.notifyService.notify(
-                            NotificationType.error,
-                            'Error: Deleting cluster ' + cluster.cluster_name,
-                        );
-                    },
-                });
-            }
-        });
+        this.deleteService(service);
     }
 
     openStatusDialog(service: IService) {
@@ -124,9 +51,8 @@ export class DevHomeComponent implements OnInit, OnDestroy {
     }
 
     deployAllServices() {
-        for (const j of this.services) {
-            this.deployService(j);
-        }
+        // TODO implement functionality
+        console.log('Not implemented');
     }
 
     private setting = {
@@ -135,6 +61,7 @@ export class DevHomeComponent implements OnInit, OnDestroy {
         },
     };
 
+    // TODO Put this in a service
     downloadConfig(service: IService) {
         if (service._id) {
             delete service._id;
@@ -147,7 +74,6 @@ export class DevHomeComponent implements OnInit, OnDestroy {
         const fileType = fileName.indexOf('.json') > -1 ? 'text/json' : 'text/plain';
         element.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(JSON.stringify(service))}`);
         element.setAttribute('download', fileName);
-
         const event = new MouseEvent('click');
         element.dispatchEvent(event);
     }

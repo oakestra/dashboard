@@ -5,13 +5,15 @@ import { IService } from '../../interfaces/service';
 export const serviceFeatureKey = 'service';
 
 export interface State {
-    service: IService;
+    servicesOfApp: IService[];
+    // service: IService;
     loading: boolean;
     error: unknown;
 }
 
 export const initialState: State = {
-    service: {},
+    servicesOfApp: [],
+    // service: {},
     loading: false,
     error: {},
 };
@@ -23,8 +25,11 @@ export const serviceReducer = createReducer(
     // /////////////////////  GET SERVICE  //////////////////////////////////
     // ///////////////////////////////////////////////////////////////////////////
 
+    // TODO FIX gets called multiple times
     on(serviceActions.getServicesSuccess, (state, action) => {
-        const service = action.service;
+        console.log('action.services');
+        console.log(action.services);
+        const service = action.services;
         const loading = false;
         return { ...state, service, loading };
     }),
@@ -36,10 +41,10 @@ export const serviceReducer = createReducer(
     }),
 
     on(serviceActions.getServicesError, (state, action) => {
-        const services = {} as IService;
+        const service = {} as IService;
         const loading = false;
         const error = action.error;
-        return { ...state, services, loading, error };
+        return { ...state, service, loading, error };
     }),
 
     // ///////////////////////////////////////////////////////////////////////////
@@ -53,9 +58,9 @@ export const serviceReducer = createReducer(
 
     on(serviceActions.postServiceSuccess, (state, action) => {
         // const services = [...state.service, action.service];
-        const services = action.service;
+        const service = action.service;
         const loading = false;
-        return { ...state, services, loading };
+        return { ...state, service, loading };
     }),
 
     on(serviceActions.postServiceError, (state, action) => {
@@ -76,7 +81,7 @@ export const serviceReducer = createReducer(
 
     on(serviceActions.updateServiceSuccess, (state, action) => {
         console.log(action);
-        const service = state.service;
+        const service = state.servicesOfApp;
         const loading = false;
         return { ...state, service, loading };
     }),

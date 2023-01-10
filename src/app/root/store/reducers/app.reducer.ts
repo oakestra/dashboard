@@ -4,13 +4,13 @@ import * as fromUser from './user.reducer';
 import * as fromApplication from './application.reducer';
 
 export interface AppState {
-    service: fromService.State;
+    services: fromService.State;
     user: fromUser.State;
     applications: fromApplication.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
-    service: fromService.serviceReducer,
+    services: fromService.serviceReducer,
     user: fromUser.userReducer,
     applications: fromApplication.applicationReducer,
 };

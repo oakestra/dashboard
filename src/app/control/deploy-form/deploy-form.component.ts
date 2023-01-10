@@ -4,6 +4,8 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
 import { CleanJsonService } from '../../shared/util/clean-json.service';
@@ -12,6 +14,8 @@ import { NotificationService } from '../../shared/modules/notification/notificat
 import { IApplication } from '../../root/interfaces/application';
 import { IService } from '../../root/interfaces/service';
 import { NotificationType } from '../../root/interfaces/notification';
+import { appReducer, postServiceSuccess, updateServiceSuccess } from '../../root/store';
+import { selectCurrentApplication } from '../../root/store/selectors/application.selector';
 
 @Component({
     selector: 'deploy-form',
@@ -37,6 +41,8 @@ export class DeployFormComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
     formInvalid = false;
 
+    app$: Observable<IApplication> = this.store.pipe(select(selectCurrentApplication));
+
     conConstrainsArray: FormArray[] = [
         new FormArray([
             new FormGroup({
@@ -56,12 +62,15 @@ export class DeployFormComponent implements OnInit, OnDestroy {
         private router: Router,
         private shardService: SharedIDService,
         private notifyService: NotificationService,
+        private store: Store<appReducer.AppState>,
     ) {
         this.currentServiceID = 'not yet defined';
-        const sub = this.shardService.applicationObserver$.subscribe((app) => {
+        this.app$.subscribe((app) => {
+            console.log(app);
             this.currentApplication = app;
             this.applicationId = app._id.$oid;
             const s = this.api
+                // TODO Do not subscribe here, use the data in the store instead
                 .getServicesOfApplication(this.applicationId)
                 .pipe(take(1))
                 .subscribe({
@@ -74,7 +83,6 @@ export class DeployFormComponent implements OnInit, OnDestroy {
                 });
             this.subscriptions.push(s);
         });
-        this.subscriptions.push(sub);
 
         this.form = fb.group({
             microserviceID: [],
@@ -306,9 +314,9 @@ export class DeployFormComponent implements OnInit, OnDestroy {
         }
     }
 
+    // TODO Put this in a service
     generateSLA(sla: any) {
         this.jsonContent = {
-            api_version: 'v2.0',
             sla_version: 'v2.0',
             customerID: this.shardService.userID,
             applications: [
@@ -330,8 +338,19 @@ export class DeployFormComponent implements OnInit, OnDestroy {
     }
 
     addService() {
+        // HOTFIXES to successfully push a service
+        // Do this later better and implement the corresponding fields
+        this.jsonContent.applications[0].microservices[0].cmd = [];
+        this.jsonContent.applications[0].microservices[0].sla_violation_strategy = '';
+        this.jsonContent.applications[0].microservices[0].target_node = '';
+        this.jsonContent.applications[0].microservices[0].args = [];
+        this.jsonContent.applications[0].microservices[0].enviroment = [];
+
+        console.log(this.jsonContent);
         this.api.addService(this.jsonContent).subscribe({
             next: () => {
+                // TODO is this this correct way? or how can i do that without the subscribe
+                this.store.dispatch(postServiceSuccess({ service: this.jsonContent }));
                 void this.router.navigate(['/control']).then();
                 this.notifyService.notify(NotificationType.success, 'Service generation was successful');
             },
@@ -352,9 +371,13 @@ export class DeployFormComponent implements OnInit, OnDestroy {
         if (this.editingService) {
             // content.microserviceID = this.currentServiceID
             this.generateSLA(content);
+
             this.jsonContent.applications[0].microservices[0].microserviceID = this.currentServiceID;
+
             this.api.updateService(this.jsonContent, this.currentServiceID).subscribe({
                 next: () => {
+                    // TODO This is not the correct way, update the store properly
+                    this.store.dispatch(updateServiceSuccess(this.jsonContent));
                     void this.router.navigate(['/control']).then();
                 },
                 error: (err) => {

@@ -70,6 +70,10 @@ export class ApiService extends RestService {
     // /////////////////////////////////////////////////////////////////////////
     // /////////////////// Cluster Functions ///////////////////////////////
 
+    /* TODO Decide how to use the cluster and if we need them implement the functionality
+        and use the store for the cluster data
+     */
+
     deleteCluster(clusterId: string) {
         return this.doDELRequest('/cluster/' + clusterId);
     }
@@ -83,23 +87,19 @@ export class ApiService extends RestService {
     }
 
     // /////////////////////////////////////////////////////////////////////////
-    // /////////////////// Service Functions ///////////////////////////////////////
+    // /////////////////// Service Functions ///////////////////////////////////
 
     addService(service: IService) {
         return this.doPOSTRequest('/service/', service);
     }
 
-    // sla and not service is here the argument?
+    // sla and not service is here the argument? //TODO Why 2 parameters and not one
     updateService(service: any, serviceID: string) {
         return this.doPUTRequest('/service/' + serviceID, service);
     }
 
     deleteService(service: IService) {
         return this.doDELRequest('/service/' + service._id?.$oid);
-    }
-
-    deleteInstance(service: IService, instance: any) {
-        return this.doDELRequest('/service/' + service._id?.$oid + '/instance/' + instance.instance_number);
     }
 
     getServiceByID(serviceID: string): Observable<IService> {
@@ -112,6 +112,10 @@ export class ApiService extends RestService {
 
     deployService(service: IService) {
         return this.doPOSTRequest('/service/' + service._id?.$oid + '/instance', service);
+    }
+
+    deleteInstance(service: IService, instance: any) {
+        return this.doDELRequest('/service/' + service._id?.$oid + '/instance/' + instance.instance_number);
     }
 
     // /////////////////////////////////////////////////////////////////////////

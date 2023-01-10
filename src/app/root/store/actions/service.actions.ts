@@ -1,9 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 import { IService } from '../../interfaces/service';
 
-// //////////// GET /////////////
-export const getServices = createAction('[Service] getServices');
-export const getServicesSuccess = createAction('[Service] getServicesSuccess', props<{ service: IService }>());
+// //////////// GET Services of APP /////////////
+export const getServices = createAction('[Service] getServices', props<{ appId: string }>());
+export const getServicesSuccess = createAction('[Service] getServicesSuccess', props<{ services: IService[] }>());
 export const getServicesError = createAction('[Service] getServicesError', props<{ error: string }>());
 
 // ////////////// POST ////////////////////
