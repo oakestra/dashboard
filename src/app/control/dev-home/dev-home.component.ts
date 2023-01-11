@@ -10,6 +10,7 @@ import { IApplication } from '../../root/interfaces/application';
 import { selectCurrentApplication } from '../../root/store/selectors/application.selector';
 import { appReducer, deleteService } from '../../root/store';
 import { selectCurrentServices } from '../../root/store/selectors/service.selector';
+import { ConfigDownloadService } from '../../shared/modules/helper/configDownload.service';
 
 @Component({
     selector: 'dev-home',
@@ -23,7 +24,7 @@ export class DevHomeComponent implements OnInit {
     constructor(private api: ApiService, public dialog: MatDialog, private store: Store<appReducer.AppState>) {}
 
     ngOnInit(): void {
-        console.log('In Dev');
+        console.log('In Service Overview');
     }
 
     deleteService(service: IService) {
@@ -50,31 +51,12 @@ export class DevHomeComponent implements OnInit {
         });
     }
 
+    downloadConfig(service: IService) {
+        ConfigDownloadService.download(service);
+    }
+
     deployAllServices() {
         // TODO implement functionality
         console.log('Not implemented');
-    }
-
-    private setting = {
-        element: {
-            dynamicDownload: null as any,
-        },
-    };
-
-    // TODO Put this in a service
-    downloadConfig(service: IService) {
-        if (service._id) {
-            delete service._id;
-        }
-        const fileName = service.microservice_name + '.json';
-        if (!this.setting.element.dynamicDownload) {
-            this.setting.element.dynamicDownload = document.createElement('a');
-        }
-        const element = this.setting.element.dynamicDownload;
-        const fileType = fileName.indexOf('.json') > -1 ? 'text/json' : 'text/plain';
-        element.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(JSON.stringify(service))}`);
-        element.setAttribute('download', fileName);
-        const event = new MouseEvent('click');
-        element.dispatchEvent(event);
     }
 }
