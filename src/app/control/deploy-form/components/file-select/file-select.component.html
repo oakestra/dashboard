@@ -1,0 +1,75 @@
+<div class="fileDiv">
+    <mat-form-field class="fileForm">
+        <mat-label>Code</mat-label>
+        <input
+            matInput
+            matTooltip="File containing the code for the service"
+            placeholder="https://urlToCode"
+            required
+            type="url"
+        />
+    </mat-form-field>
+
+    <div class="file-upload">
+        <button (click)="fileUploadCode.click()" class="add-btn" mat-mini-fab type="button">
+            <mat-icon>attach_file</mat-icon>
+        </button>
+        <input #fileUploadCode (change)="onFileSelected($event, 0, 'code')" class="file-input" type="file" />
+        <input #fileUploadCode class="file-input" type="file" />
+    </div>
+</div>
+
+<div class="fileDiv">
+    <mat-form-field class="fileForm">
+        <mat-label>State</mat-label>
+        <input
+            matInput
+            matTooltip="File containing the state of the service"
+            placeholder="https://urlToState"
+            required
+            type="url"
+            value=""
+        />
+    </mat-form-field>
+    <div class="file-upload">
+        <button (click)="fileUploadState.click()" class="add-btn" mat-mini-fab type="button">
+            <mat-icon>attach_file</mat-icon>
+        </button>
+        <input #fileUploadState (change)="onFileSelected($event, 1, 'state')" class="file-input" type="file" />
+        <input #fileUploadState class="file-input" type="file" />
+    </div>
+</div>
+
+<br />
+
+<div>
+    <p class="addButtonDiv">Files:</p>
+    <button (click)="addFileInput()" class="add-btn" mat-mini-fab type="button">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+
+<div *ngFor="let f of fileArrayForm; index as i">
+    <mat-form-field class="addedFiles">
+        <mat-label>File Url</mat-label>
+        <input
+            [formControl]="$any(fileArrayForm).controls[i]"
+            class="addButtonDiv"
+            matInput
+            placeholder="https://urlToFile"
+            type="url"
+            value=""
+        />
+    </mat-form-field>
+
+    <div class="file-upload">
+        <button (click)="fileUpload.click()" class="upload-btn" mat-mini-fab type="button">
+            <mat-icon>attach_file</mat-icon>
+        </button>
+        <input #fileUpload (change)="onFileSelected($event, i, 'file')" accept="txt" class="file-input" type="file" />
+
+        <button (click)="deleteFiles(i)" class="settingsButton" mat-icon-button type="button">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</div>

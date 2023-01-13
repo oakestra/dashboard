@@ -1,0 +1,51 @@
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title
+            >Addresses
+            <mat-icon
+                matTooltip="Optional - If the specified IP addresses are unoccupied, the service will be provided at these addresses."
+            >
+                info
+            </mat-icon>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+        <mat-label>RR-IP</mat-label>
+        <input matInput matTooltip="Optional - IP chosen for round-robin addressation" type="text" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Closest_ip</mat-label>
+        <input
+            matInput
+            matTooltip="Optional - The orchestrator may choose the closest IP to the given one"
+            type="text"
+        />
+    </mat-form-field>
+
+    <!--  // TODO Support instances array-->
+    <div class="full-width instance">
+        <p>Instances:</p>
+        <div class="w3-col l3 m4 s12 w3-row-padding">
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input matInput type="text" />
+            </mat-form-field>
+        </div>
+
+        <div class="w3-col l3 m4 s12 w3-row-padding">
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input matInput type="text" />
+            </mat-form-field>
+        </div>
+
+        <div class="w3-col l3 m4 s12 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Start</mat-label>
+                <input matInput type="text" />
+            </mat-form-field>
+        </div>
+    </div>
+</mat-expansion-panel>

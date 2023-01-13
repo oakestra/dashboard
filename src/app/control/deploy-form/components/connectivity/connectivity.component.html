@@ -1,0 +1,37 @@
+<div>
+    <h4 class="addButtonDiv">Connectivity:</h4>
+    <button (click)="addConnectivity()" class="add-btn" mat-mini-fab type="button">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+
+<div>
+    <div *ngFor="let conn of connectivity; let i = index" id="contentInside">
+        <mat-card class="connectivityCard">
+            <div class="w3-col s8">
+                <mat-form-field>
+                    <mat-label>target_microservice_id {{ conn.target_microservice_id }}</mat-label>
+                    <mat-select>
+                        <!--                    <select (change)="openDialog(i)" formControlName="target_microservice_id" matNativeControl required>-->
+                        <!--                        <mat-option *ngFor="let service of allServices" [value]="service._id.$oid">-->
+                        <!--                            {{ service.microservice_name }} (id: {{ service._id.$oid }})-->
+                        <!--                        </mat-option>-->
+                        <!--                        TODO-->
+                        <mat-option>
+                            <p>List here all other services</p>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="w3-col s4">
+                <button (click)="deleteConnection(i)" class="settingsButton" mat-flat-button type="button">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button (click)="openDialog(i)" class="settingsButton" mat-flat-button type="button">
+                    <mat-icon>settings</mat-icon>
+                </button>
+            </div>
+        </mat-card>
+    </div>
+</div>

@@ -16,6 +16,7 @@ import { NotificationType } from '../../root/interfaces/notification';
     templateUrl: './cluster.component.html',
     styleUrls: ['./cluster.component.css'],
 })
+// TODO is currently not used, refactor before using it
 export class ClusterComponent implements OnInit {
     clusters: ICluster[]; // Make this as input form parent class
 

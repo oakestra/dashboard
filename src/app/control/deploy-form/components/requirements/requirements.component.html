@@ -1,0 +1,79 @@
+<h4>Requirements:</h4>
+<form [formGroup]="form">
+    <div>
+        <div class="w3-col l3 m4 s6 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Memory</mat-label>
+                <input matInput min="0" formControlName="memory" placeholder="1024" required type="number" />
+                <p matSuffix>MB</p>
+            </mat-form-field>
+        </div>
+
+        <div class="w3-col l3 m4 s6 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Vcpus</mat-label>
+                <input matInput min="0" formControlName="vcpus" required type="number" value="1" />
+            </mat-form-field>
+        </div>
+
+        <div class="w3-col l3 m4 s6 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Vgpus</mat-label>
+                <input matInput min="0" formControlName="vgpus" required type="number" value="0" />
+            </mat-form-field>
+        </div>
+
+        <div class="w3-col l3 m4 s6 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Vtpus</mat-label>
+                <input matInput min="0" formControlName="vtpus" required type="number" value="0" />
+            </mat-form-field>
+        </div>
+
+        <div class="w3-col l3 m4 s6 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Bandwidth_in</mat-label>
+                <input
+                    matInput
+                    matTooltip="Minimum bandwidth-ingress needed for service"
+                    min="0"
+                    required
+                    type="number"
+                    value="0"
+                    formControlName="bandwidth_in"
+                />
+                <p matSuffix>KB</p>
+            </mat-form-field>
+        </div>
+
+        <div class="w3-col l3 m4 s6 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Bandwidth_out</mat-label>
+                <input
+                    matInput
+                    matTooltip="Minimum bandwidth-egress needed for service"
+                    min="0"
+                    required
+                    type="number"
+                    value="0"
+                    formControlName="bandwidth_out"
+                />
+                <p matSuffix>KB</p>
+            </mat-form-field>
+        </div>
+
+        <div class="w3-col l3 m4 s6 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Storage</mat-label>
+                <input matInput min="0" formControlName="storage" required type="number" value="0" />
+                <p matSuffix>MB</p>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field>
+            <mat-label>Port</mat-label>
+            <input matInput formControlName="port" matTooltip="Port for exposure of the service" required type="text" />
+        </mat-form-field>
+    </div>
+    <form [formGroup]="form"></form>
+</form>

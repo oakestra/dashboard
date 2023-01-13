@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NONE_TYPE } from '@angular/compiler';
 import { NotificationService } from '../../../shared/modules/notification/notification.service';
-import { SharedIDService } from '../../../shared/modules/helper/shared-id.service';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { UserService } from '../../../shared/modules/auth/user.service';
 import { AuthService } from '../../../shared/modules/auth/auth.service';
@@ -41,7 +40,6 @@ export class ClusterListComponent {
     constructor(
         private observer: BreakpointObserver,
         public dialog: MatDialog,
-        public sharedService: SharedIDService,
         private api: ApiService,
         public userService: UserService,
         private router: Router,
@@ -58,7 +56,7 @@ export class ClusterListComponent {
                     this.appSelected = false;
                     this.settings = false;
                     this.listClusters = true;
-                    this.sharedService.selectCluster(result[0]);
+                    // this.sharedService.selectCluster(result[0]);
                 }
             },
             error: () => {
@@ -112,7 +110,8 @@ export class ClusterListComponent {
 
     handleChangeCluster(cluster: ICluster) {
         this.api.getClusterById(cluster._id.$oid).subscribe((cl) => {
-            this.sharedService.selectCluster(cl);
+            // this.sharedService.selectCluster(cl);
+            console.log(cl);
             this.switchScreen(false, false, true);
             void this.router.navigate(['/control']).then();
         });

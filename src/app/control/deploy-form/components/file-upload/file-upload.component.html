@@ -1,0 +1,21 @@
+<div>
+    <div (click)="fileUpload.click()" class="content">
+        {{ filename }}
+    </div>
+
+    <div class="file-upload-div">
+        <div class="file-upload">
+            <input #fileUpload (change)="loadFile($event)" accept="application/JSON" class="file-input" type="file" />
+        </div>
+        <button
+            (click)="uploadDocument()"
+            [disabled]="file === undefined"
+            class="updateButton"
+            mat-flat-button
+            type="button"
+        >
+            Upload Config
+        </button>
+        <p>The file should contain only the microservice object</p>
+    </div>
+</div>

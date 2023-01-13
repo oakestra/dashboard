@@ -1,58 +1,61 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
-import { Subscription } from 'rxjs/internal/Subscription';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../shared/modules/api/api.service';
-import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
-import { CleanJsonService } from '../../shared/util/clean-json.service';
-import { DialogConnectionSettingsView } from '../dialogs/content-connection/dialog-connection-settings-view.component';
 import { NotificationService } from '../../shared/modules/notification/notification.service';
 import { IApplication } from '../../root/interfaces/application';
 import { IService } from '../../root/interfaces/service';
 import { NotificationType } from '../../root/interfaces/notification';
 import { appReducer, postServiceSuccess, updateServiceSuccess } from '../../root/store';
 import { selectCurrentApplication } from '../../root/store/selectors/application.selector';
+import { SlaGeneratorService } from '../../shared/modules/helper/sla-generator.service';
+import { ServiceGeneratorService } from '../../shared/modules/helper/service-generator.service';
+import { ServiceInfoComponent } from './components/service-info/service-info.component';
+import { RequirementsComponent } from './components/requirements/requirements.component';
+import { FileSelectComponent } from './components/file-select/file-select.component';
+import { AddressesComponent } from './components/addresses/addresses.component';
+import { ArgumentsComponent } from './components/arguments/arguments.component';
+import { ConstraintsComponent } from './components/constraints/constraints.component';
+import { ConnectivityComponent } from './components/connectivity/connectivity.component';
 
 @Component({
     selector: 'deploy-form',
     templateUrl: './deploy-form.component.html',
     styleUrls: ['./deploy-form.component.css'],
 })
+
 // TODO Refactor this Component and split it up to multiple small components
-export class DeployFormComponent implements OnInit, OnDestroy {
+export class DeployFormComponent implements OnInit {
+    @ViewChild('serviceInfo') serviceInfo: ServiceInfoComponent;
+    @ViewChild('requirements') requirements: RequirementsComponent;
+    @ViewChild('fileSelect') fileSelect: FileSelectComponent;
+    @ViewChild('addresses') addresses: AddressesComponent;
+    @ViewChild('arguments') arguments: ArgumentsComponent;
+    @ViewChild('constraints') constraints: ConstraintsComponent;
+    @ViewChild('connectivity') connectivity: ConnectivityComponent;
+
     form: FormGroup;
     file: File | undefined;
     filename = 'Select File to Upload';
     fileArrayForm = new FormArray([]);
-    canViewLatConstrains: boolean[] = [];
+
     service: any = null;
     editingService = false; // True if the user is editing the service
     currentServiceID = ''; // This one is uses to get the service from the DB
     applicationId = '';
     currentApplication: IApplication;
-    argsArray: string[] = [];
-    argsText = '';
     allServices: any; // For the Dropdown list of the connections
     jsonContent: any; // The final SLA witch is generated form the form
-    subscriptions: Subscription[] = [];
-    formInvalid = false;
 
     app$: Observable<IApplication> = this.store.pipe(select(selectCurrentApplication));
 
-    conConstrainsArray: FormArray[] = [
-        new FormArray([
-            new FormGroup({
-                type: new FormControl(0),
-                threshold: new FormControl(0),
-                rigidness: new FormControl(0),
-                convergence_time: new FormControl(0),
-            }),
-        ]),
-    ];
+    testService: IService = {
+        microservice_name: 'daniel',
+    };
 
     constructor(
         public dialog: MatDialog,
@@ -60,16 +63,17 @@ export class DeployFormComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private api: ApiService,
         private router: Router,
-        private shardService: SharedIDService,
         private notifyService: NotificationService,
         private store: Store<appReducer.AppState>,
+        private slaGenerator: SlaGeneratorService,
+        private serviceGenerator: ServiceGeneratorService,
     ) {
         this.currentServiceID = 'not yet defined';
         this.app$.subscribe((app) => {
             console.log(app);
             this.currentApplication = app;
             this.applicationId = app._id.$oid;
-            const s = this.api
+            this.api
                 // TODO Do not subscribe here, use the data in the store instead
                 .getServicesOfApplication(this.applicationId)
                 .pipe(take(1))
@@ -81,39 +85,6 @@ export class DeployFormComponent implements OnInit, OnDestroy {
                         console.log(err);
                     },
                 });
-            this.subscriptions.push(s);
-        });
-
-        this.form = fb.group({
-            microserviceID: [],
-            microservice_name: ['Default_Service'],
-            microservice_namespace: ['test'],
-            virtualization: ['container'],
-            description: ['This is a default service'],
-            memory: [50],
-            vcpus: [1],
-            vgpus: [0],
-            vtpus: [0],
-            bandwidth_in: [0],
-            bandwidth_out: [0],
-            storage: [0],
-            code: ['URL to code'],
-            state: ['URL to state'],
-            port: ['80'],
-            addresses: fb.group({
-                rr_ip: [],
-                closest_ip: [],
-                instances: fb.group({
-                    from: [],
-                    to: [],
-                    start: [],
-                }),
-            }),
-            added_files: this.fileArrayForm,
-            constraints: new FormArray([]),
-            connectivity: new FormArray([]),
-            args: this.argsArray,
-            status: 'CREATED',
         });
     }
 
@@ -134,17 +105,11 @@ export class DeployFormComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
-        for (const s of this.subscriptions) {
-            s.unsubscribe();
-        }
-    }
-
     createEditFormGroup(): void {
         if (!this.service.constraints.empty) {
             const constraintsNumber = this.service.constraints.length;
             for (let i = 0; i < constraintsNumber; i++) {
-                this.addConstrains(this.service.constraints[i].type);
+                // this.addConstrains(this.service.constraints[i].type);
             }
         }
 
@@ -161,7 +126,6 @@ export class DeployFormComponent implements OnInit, OnDestroy {
                 this.addFileInput();
             }
         }
-        this.form.patchValue(this.service);
     }
 
     // Add connectivity's between Services
@@ -170,53 +134,14 @@ export class DeployFormComponent implements OnInit, OnDestroy {
         // @ts-ignore
         // TODO find better solution
         this.conConstrainsArray.push(new FormArray([]));
-        const n = this.connectivity.length;
+        // const n = this.connectivity.length;
 
-        this.connectivity.push(
-            new FormGroup({
-                target_microservice_id: new FormControl(),
-                con_constraints: this.conConstrainsArray[n],
-            }),
-        );
-    }
-
-    deleteConnection(index: number) {
-        this.connectivity.removeAt(index);
-    }
-
-    deleteFiles(index: number) {
-        this.fileArrayForm.controls.splice(index, 1);
-    }
-
-    deleteConstrains(index: number) {
-        this.constraints.controls.splice(index, 1);
-        this.canViewLatConstrains.splice(index, 1);
-    }
-
-    addConstrains(type: string) {
-        if (type === 'geo') {
-            this.constraints.push(
-                new FormGroup({
-                    type: new FormControl(['geo']),
-                    location: new FormControl(),
-                    threshold: new FormControl(),
-                    rigidness: new FormControl(),
-                    convergence_time: new FormControl(),
-                }),
-            );
-            this.canViewLatConstrains?.push(false);
-        } else {
-            this.constraints.push(
-                new FormGroup({
-                    type: new FormControl(['latency']),
-                    area: new FormControl(),
-                    threshold: new FormControl(),
-                    rigidness: new FormControl(),
-                    convergence_time: new FormControl(),
-                }),
-            );
-            this.canViewLatConstrains?.push(true);
-        }
+        // this.connectivity.push(
+        //     new FormGroup({
+        //         target_microservice_id: new FormControl(),
+        //         con_constraints: this.conConstrainsArray[n],
+        //     }),
+        // );
     }
 
     addFileInput() {
@@ -224,117 +149,6 @@ export class DeployFormComponent implements OnInit, OnDestroy {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         this.fileArrayForm.push(new FormControl());
-    }
-
-    // Dialog for the connection settings
-    openDialog(index: number) {
-        let data = this.conConstrainsArray[index].value[0];
-        const dialogRef = this.dialog.open(DialogConnectionSettingsView, { data });
-
-        dialogRef.afterClosed().subscribe((result) => {
-            this.saveDialogData(result, index);
-            data = result;
-        });
-    }
-
-    // Saving the Dialog Data to the Array and the Form
-    saveDialogData(data: any, index: number) {
-        this.conConstrainsArray[index].clear();
-        if (this.conConstrainsArray[index].length === 0) {
-            this.conConstrainsArray[index].push(
-                new FormGroup({
-                    type: new FormControl(data.type),
-                    threshold: new FormControl(data.threshold),
-                    rigidness: new FormControl(data.rigidness),
-                    convergence_time: new FormControl(data.convergence_time),
-                }),
-            );
-        }
-    }
-
-    get constraints() {
-        return this.form.get('constraints') as FormArray;
-    }
-
-    get connectivity() {
-        return this.form.get('connectivity') as FormArray;
-    }
-
-    onFileSelected(event: any, index: number, action: string) {
-        const file: File = event.target.files[0];
-
-        if (file) {
-            const formData = new FormData();
-            formData.append('file', file);
-
-            const path = this.api.fileUpload(formData);
-            let fc;
-            path.subscribe({
-                next: (x: any) => {
-                    if (action === 'file') {
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-ignore
-                        // TODO fix
-                        this.fileArrayForm.controls[index] = new FormControl([x.path]);
-                    } else if (action === 'code') {
-                        fc = this.form.get('code') as FormControl;
-                        fc.setValue([x.path]);
-                    } else if (action === 'state') {
-                        fc = this.form.get('state') as FormControl;
-                        fc.setValue([x.path]);
-                    }
-                },
-                error: () => {
-                    this.notifyService.notify(NotificationType.error, 'File not supported');
-                },
-            });
-        }
-    }
-
-    loadFile(event: any) {
-        this.file = event.target.files[0] as File;
-        console.log(this.file);
-        this.filename = this.file.name;
-    }
-
-    uploadDocument() {
-        if (this.file) {
-            const fileReader = new FileReader();
-            fileReader.onload = () => {
-                const sla = JSON.parse((fileReader.result ?? '').toString());
-                sla.applicationID = this.applicationId;
-                sla._id = null;
-                if (sla.job_name) {
-                    delete sla.job_name;
-                }
-                this.generateSLA(sla);
-                this.addService();
-            };
-            fileReader.readAsText(this.file);
-        }
-    }
-
-    // TODO Put this in a service
-    generateSLA(sla: any) {
-        this.jsonContent = {
-            sla_version: 'v2.0',
-            customerID: this.shardService.userID,
-            applications: [
-                {
-                    applicationID: this.currentApplication._id.$oid,
-                    application_name: this.currentApplication.application_name,
-                    application_namespace: this.currentApplication.application_namespace,
-                    application_desc: this.currentApplication.application_desc,
-                    microservices: [{}],
-                },
-            ],
-            args: [],
-        };
-
-        // Is set in de mongodb
-        sla.microserviceID = '';
-        this.jsonContent.applications[0].microservices = [sla];
-        this.jsonContent = CleanJsonService.cleanData(this.jsonContent);
     }
 
     addService() {
@@ -359,18 +173,26 @@ export class DeployFormComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
-        if (this.form.invalid) {
-            this.formInvalid = true;
-            return;
-        }
+        console.log('submit');
 
-        const content = this.form.value;
-        content.applicationID = this.applicationId;
-        content.args = [this.argsText];
+        // 1. TODO Get the data from the subcomponents and create the sla.
+        // 2. TODO Create service from this data
+        const service = this.serviceGenerator.generateService(
+            this.serviceInfo.getData(),
+            this.requirements.getData(),
+            this.fileSelect.getData(),
+            this.addresses.getData(),
+            this.arguments.getData(),
+            this.constraints.getData(),
+            this.connectivity.getData(),
+        );
+
+        console.log('Generated Service');
+        console.log(service);
+        // 3. TODO Generate SLA from the service
 
         if (this.editingService) {
-            // content.microserviceID = this.currentServiceID
-            this.generateSLA(content);
+            this.slaGenerator.generateSLA(service);
 
             this.jsonContent.applications[0].microservices[0].microserviceID = this.currentServiceID;
 
@@ -385,7 +207,7 @@ export class DeployFormComponent implements OnInit, OnDestroy {
                 },
             });
         } else {
-            this.generateSLA(content);
+            this.slaGenerator.generateSLA(service);
             this.addService();
         }
     }

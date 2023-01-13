@@ -70,3 +70,7 @@ button {
 .cancelButton {
     margin-left: 10px;
 }
+
+.settingsButton {
+    background-color: #0c5460;
+}

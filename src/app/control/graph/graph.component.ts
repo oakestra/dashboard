@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { DialogGraphConnectionView } from '../dialogs/graph-content-connection/dialog-graph-connection-view.component';
 import { CleanJsonService } from '../../shared/util/clean-json.service';
-import { SharedIDService } from '../../shared/modules/helper/shared-id.service';
 
 declare function start(nodes: any, links: any): void;
 declare function deleteLink(): void;
@@ -24,7 +23,7 @@ export class GraphComponent implements OnChanges {
     @Input()
     services: any;
 
-    constructor(public dialog: MatDialog, public api: ApiService, public shardService: SharedIDService) {}
+    constructor(public dialog: MatDialog, public api: ApiService) {}
 
     ngOnChanges() {
         this.showConnections = false;
@@ -124,7 +123,7 @@ export class GraphComponent implements OnChanges {
         let jsonContent = {
             api_version: 'v2.0',
             sla_version: 'v2.0',
-            customerID: this.shardService.userID,
+            customerID: '',
             applications: [
                 {
                     // "applicationID": this.currentApplication._id.$oid,

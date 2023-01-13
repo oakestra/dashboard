@@ -184,6 +184,7 @@ td {
 
 .settingsButton {
     float: right;
+    background-color: #4a7083 !important;
 }
 
 .leftInput {

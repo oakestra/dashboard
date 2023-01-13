@@ -51,6 +51,14 @@ import { routes } from './control.routing';
 import { AppListComponent } from './navbar/app-list/app-list.component';
 import { ClusterListComponent } from './navbar/cluster-list/cluster-list.component';
 import { ClusterComponent } from './cluster/cluster.component';
+import { ConnectivityComponent } from './deploy-form/components/connectivity/connectivity.component';
+import { ConstraintsComponent } from './deploy-form/components/constraints/constraints.component';
+import { FileSelectComponent } from './deploy-form/components/file-select/file-select.component';
+import { FileUploadComponent } from './deploy-form/components/file-upload/file-upload.component';
+import { ServiceInfoComponent } from './deploy-form/components/service-info/service-info.component';
+import { RequirementsComponent } from './deploy-form/components/requirements/requirements.component';
+import { AddressesComponent } from './deploy-form/components/addresses/addresses.component';
+import { ArgumentsComponent } from './deploy-form/components/arguments/arguments.component';
 
 @NgModule({
     declarations: [
@@ -75,6 +83,14 @@ import { ClusterComponent } from './cluster/cluster.component';
         AppListComponent,
         ClusterListComponent,
         ClusterComponent,
+        ConnectivityComponent,
+        ConstraintsComponent,
+        FileSelectComponent,
+        FileUploadComponent,
+        ServiceInfoComponent,
+        RequirementsComponent,
+        AddressesComponent,
+        ArgumentsComponent,
     ],
     imports: [
         CommonModule,

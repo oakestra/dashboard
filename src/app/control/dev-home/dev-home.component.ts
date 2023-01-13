@@ -10,7 +10,7 @@ import { IApplication } from '../../root/interfaces/application';
 import { selectCurrentApplication } from '../../root/store/selectors/application.selector';
 import { appReducer, deleteService } from '../../root/store';
 import { selectCurrentServices } from '../../root/store/selectors/service.selector';
-import { ConfigDownloadService } from '../../shared/modules/helper/configDownload.service';
+import { ConfigDownloadService } from '../../shared/modules/helper/config-download.service';
 
 @Component({
     selector: 'dev-home',
