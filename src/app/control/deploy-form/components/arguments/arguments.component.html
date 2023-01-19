@@ -1,4 +1,16 @@
-<mat-form-field>
-    <mat-label>Args - Key Value</mat-label>
-    <input [(ngModel)]="argsText" matInput type="text" />
-</mat-form-field>
+<div>
+    <h4 class="addButtonDiv">Arguments:</h4>
+    <button (click)="addArgument()" class="add-btn" mat-mini-fab type="button">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+
+<div *ngFor="let args of argsArray; index as i; trackBy: trackByIdx">
+    <mat-form-field>
+        <mat-label>Args - Key Value</mat-label>
+        <input [(ngModel)]="argsArray[i]" matInput type="text" />
+    </mat-form-field>
+    <button (click)="deleteArgument(i)" mat-icon-button type="button">
+        <mat-icon>delete</mat-icon>
+    </button>
+</div>

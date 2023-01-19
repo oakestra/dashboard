@@ -8,9 +8,23 @@ import { SubComponent } from '../../../../root/classes/subComponent';
 })
 export class ArgumentsComponent extends SubComponent {
     // TODO Add add button and then create a array with multiple arguments
-    argsText = '';
+    argsArray: string[] = ['Test', 'Test2'];
+
+    addArgument() {
+        this.argsArray.push('');
+    }
+
+    deleteArgument(index: number) {
+        this.argsArray.splice(index, 1);
+    }
 
     getData(): any {
-        return '';
+        return {
+            args: this.argsArray,
+        };
+    }
+
+    trackByIdx(index: number): any {
+        return index;
     }
 }
