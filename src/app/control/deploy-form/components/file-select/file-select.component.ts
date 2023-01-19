@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { NotificationType } from '../../../../root/interfaces/notification';
 import { ApiService } from '../../../../shared/modules/api/api.service';
 import { NotificationService } from '../../../../shared/modules/notification/notification.service';
 import { SubComponent } from '../../../../root/classes/subComponent';
 
+type FileSelectorType = {
+    code: string;
+    state: string;
+    added_files: string[];
+};
 @Component({
     selector: 'form-file-select',
     templateUrl: './file-select.component.html',
@@ -15,44 +19,36 @@ export class FileSelectComponent extends SubComponent {
         super();
     }
 
-    fileArrayForm: any[] = [];
+    data: FileSelectorType = {
+        code: '',
+        state: '',
+        added_files: [],
+    };
 
     deleteFiles(index: number) {
-        this.fileArrayForm.splice(index, 1);
+        this.data.added_files.splice(index, 1);
     }
 
     addFileInput() {
-        // TODO Fix this
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        this.fileArrayForm.push(new FormControl());
+        this.data.added_files.push('');
     }
 
+    // Currently not used since it is not clear if the backend supports this.
     onFileSelected(event: any, index: number, action: string) {
         const file: File = event.target.files[0];
 
         if (file) {
             const formData = new FormData();
             formData.append('file', file);
-
             const path = this.api.fileUpload(formData);
-            let fc;
-            console.log(fc);
             path.subscribe({
-                next: (x: any) => {
+                next: (file: any) => {
                     if (action === 'file') {
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-ignore
-                        // TODO fix
-                        this.fileArrayForm.controls[index] = new FormControl([x.path]);
+                        this.data.added_files[index] = file.path;
                     } else if (action === 'code') {
-                        // TODO
-                        // fc = this.form.get('code') as FormControl;
-                        // fc.setValue([x.path]);
+                        this.data.code = file.path;
                     } else if (action === 'state') {
-                        // TODO
-                        // fc = this.form.get('state') as FormControl;
-                        // fc.setValue([x.path]);
+                        this.data.state = file.path;
                     }
                 },
                 error: () => {
@@ -62,7 +58,11 @@ export class FileSelectComponent extends SubComponent {
         }
     }
 
-    getData(): any {
-        return '';
+    getData(): FileSelectorType {
+        return this.data;
+    }
+
+    trackByIdx(index: number): any {
+        return index;
     }
 }

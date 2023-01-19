@@ -34,16 +34,6 @@ button {
     background-color: #4a7083;
 }
 
-.file-upload-div {
-    align-content: baseline;
-    text-align: center;
-}
-
-.file-upload {
-    float: left;
-    position: relative;
-}
-
 .instance {
     display: inline-block;
     margin-left: -8px;

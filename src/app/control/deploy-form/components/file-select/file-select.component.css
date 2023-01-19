@@ -2,3 +2,13 @@
     max-width: 90%;
     display: inline-flex;
 }
+
+.file-upload-div {
+    align-content: baseline;
+    text-align: center;
+}
+
+.file-upload {
+    float: left;
+    position: relative;
+}

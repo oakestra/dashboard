@@ -7,16 +7,18 @@
             placeholder="https://urlToCode"
             required
             type="url"
+            [(ngModel)]="data.code"
         />
     </mat-form-field>
 
-    <div class="file-upload">
-        <button (click)="fileUploadCode.click()" class="add-btn" mat-mini-fab type="button">
-            <mat-icon>attach_file</mat-icon>
-        </button>
-        <input #fileUploadCode (change)="onFileSelected($event, 0, 'code')" class="file-input" type="file" />
-        <input #fileUploadCode class="file-input" type="file" />
-    </div>
+    <!--  TODO Currently not supported, what happens in the backend with the file-->
+    <!--    <div class="file-upload">-->
+    <!--        <button (click)="fileUploadCode.click()" class="add-btn" mat-mini-fab type="button">-->
+    <!--            <mat-icon>attach_file</mat-icon>-->
+    <!--        </button>-->
+    <!--        <input #fileUploadCode (change)="onFileSelected($event, 0, 'code')" class="file-input" type="file" />-->
+    <!--        <input #fileUploadCode class="file-input" type="file" />-->
+    <!--    </div>-->
 </div>
 
 <div class="fileDiv">
@@ -28,16 +30,18 @@
             placeholder="https://urlToState"
             required
             type="url"
-            value=""
+            [(ngModel)]="data.state"
         />
     </mat-form-field>
-    <div class="file-upload">
-        <button (click)="fileUploadState.click()" class="add-btn" mat-mini-fab type="button">
-            <mat-icon>attach_file</mat-icon>
-        </button>
-        <input #fileUploadState (change)="onFileSelected($event, 1, 'state')" class="file-input" type="file" />
-        <input #fileUploadState class="file-input" type="file" />
-    </div>
+
+    <!--      TODO Same here as before -->
+    <!--    <div class="file-upload">-->
+    <!--        <button (click)="fileUploadState.click()" class="add-btn" mat-mini-fab type="button">-->
+    <!--            <mat-icon>attach_file</mat-icon>-->
+    <!--        </button>-->
+    <!--        <input #fileUploadState (change)="onFileSelected($event, 1, 'state')" class="file-input" type="file" />-->
+    <!--        <input #fileUploadState class="file-input" type="file" />-->
+    <!--    </div>-->
 </div>
 
 <br />
@@ -49,16 +53,15 @@
     </button>
 </div>
 
-<div *ngFor="let f of fileArrayForm; index as i">
+<div *ngFor="let f of data.added_files; index as i; trackBy: trackByIdx">
     <mat-form-field class="addedFiles">
         <mat-label>File Url</mat-label>
         <input
-            [formControl]="$any(fileArrayForm).controls[i]"
             class="addButtonDiv"
             matInput
             placeholder="https://urlToFile"
             type="url"
-            value=""
+            [(ngModel)]="data.added_files[i]"
         />
     </mat-form-field>
 
@@ -68,7 +71,7 @@
         </button>
         <input #fileUpload (change)="onFileSelected($event, i, 'file')" accept="txt" class="file-input" type="file" />
 
-        <button (click)="deleteFiles(i)" class="settingsButton" mat-icon-button type="button">
+        <button (click)="deleteFiles(i)" class="upload-btn" mat-icon-button type="button">
             <mat-icon>delete</mat-icon>
         </button>
     </div>
