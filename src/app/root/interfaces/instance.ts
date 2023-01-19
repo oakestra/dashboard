@@ -1,4 +1,4 @@
-import { IAdresses } from './service';
+import { IAddresses } from './service';
 
 export interface IInstance {
     cpu: number;
@@ -9,5 +9,5 @@ export interface IInstance {
     public_ip: string;
     status: string;
     instance_list: string[];
-    addresses: IAdresses;
+    addresses: IAddresses;
 }

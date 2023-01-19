@@ -9,42 +9,48 @@
             </mat-icon>
         </mat-panel-title>
     </mat-expansion-panel-header>
+    <div [formGroup]="form">
+        <mat-form-field>
+            <mat-label>RR-IP</mat-label>
+            <input
+                matInput
+                formControlName="rr_ip"
+                matTooltip="Optional - IP chosen for round-robin addressation"
+                type="text"
+            />
+        </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>RR-IP</mat-label>
-        <input matInput matTooltip="Optional - IP chosen for round-robin addressation" type="text" />
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>Closest_ip</mat-label>
-        <input
-            matInput
-            matTooltip="Optional - The orchestrator may choose the closest IP to the given one"
-            type="text"
-        />
-    </mat-form-field>
-
+        <mat-form-field>
+            <mat-label>Closest_ip</mat-label>
+            <input
+                matInput
+                matTooltip="Optional - The orchestrator may choose the closest IP to the given one"
+                type="text"
+                formControlName="closest_ip"
+            />
+        </mat-form-field>
+    </div>
     <!--  // TODO Support instances array-->
-    <div class="full-width instance">
+    <div *ngFor="let inst of instances; index as i; trackBy: trackByIdx" class="full-width instance">
         <p>Instances:</p>
         <div class="w3-col l3 m4 s12 w3-row-padding">
             <mat-form-field>
                 <mat-label>From</mat-label>
-                <input matInput type="text" />
+                <input matInput type="text" [(ngModel)]="instances[i].from" />
             </mat-form-field>
         </div>
 
         <div class="w3-col l3 m4 s12 w3-row-padding">
             <mat-form-field>
                 <mat-label>To</mat-label>
-                <input matInput type="text" />
+                <input matInput type="text" [(ngModel)]="instances[i].to" />
             </mat-form-field>
         </div>
 
         <div class="w3-col l3 m4 s12 w3-row-padding">
             <mat-form-field>
                 <mat-label>Start</mat-label>
-                <input matInput type="text" />
+                <input matInput type="text" [(ngModel)]="instances[i].start" />
             </mat-form-field>
         </div>
     </div>

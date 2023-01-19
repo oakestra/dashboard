@@ -1,5 +1,6 @@
 import { Virtualization } from '../enums/virtualization';
 import { IId } from './id';
+import { IInstance } from './instance';
 
 export interface IService {
     _id?: IId;
@@ -19,22 +20,18 @@ export interface IService {
     code?: string;
     state?: string;
     port?: string;
-    addresses?: IAdresses;
+    addresses?: IAddresses;
     added_files?: string[];
     constraints?: [];
-    instance_list?: any[]; // TODO Create instance interface
+    instance_list?: IInstance[];
     status?: string;
     connectivity?: IConnectivity[];
 }
 
-export interface IAdresses {
+export interface IAddresses {
     rr_ip?: string;
     closest_ip?: string[];
-    instances?: {
-        from?: string;
-        start?: string;
-        end?: string;
-    };
+    instances?: IInstanceAddress[];
 }
 
 export interface IConnectivity {
@@ -58,4 +55,10 @@ export interface IConstraints {
     threshold: 0;
     rigidness: 0;
     convergence_time: 0;
+}
+
+export interface IInstanceAddress {
+    from: string;
+    to: string;
+    start: string;
 }

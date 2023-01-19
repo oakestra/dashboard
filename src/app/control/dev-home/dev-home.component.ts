@@ -44,7 +44,7 @@ export class DevHomeComponent implements OnInit {
         this.deleteService(service);
     }
 
-    openStatusDialog(service: IService) {
+    openStatusDialog(service: any) {
         const dialogRef = this.dialog.open(DialogServiceStatusView, { data: service });
         dialogRef.afterClosed().subscribe((result) => {
             console.log(result);
