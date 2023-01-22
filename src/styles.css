@@ -156,10 +156,6 @@ mat-card p {
     height: 100%;
 }
 
-form {
-    padding: 10px;
-}
-
 .form {
     min-width: 150px;
     width: 100%;
@@ -187,14 +183,6 @@ td {
     background-color: #4a7083 !important;
 }
 
-.leftInput {
-    padding-right: 8px;
-}
-
-.rightInput {
-    padding-left: 8px;
-}
-
 @media only screen and (max-width: 1000px) {
     .leftInput {
         padding-right: 0;
@@ -208,6 +196,7 @@ td {
 .addButtonDiv {
     display: inline-block;
     vertical-align: middle;
+    padding-right: 10px;
 }
 
 .cancel_buttons {

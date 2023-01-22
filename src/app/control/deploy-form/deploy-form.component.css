@@ -12,15 +12,6 @@
     padding-top: 20px;
 }
 
-.mat-form-field {
-    width: 100%;
-}
-
-.fileDiv {
-    max-width: 90%;
-    display: inline-flex;
-}
-
 .fileForm {
     width: 70vh;
 }
@@ -63,4 +54,8 @@ button {
 
 .settingsButton {
     background-color: #0c5460;
+}
+
+.inputGroup {
+    padding: 10px !important;
 }
