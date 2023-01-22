@@ -7,8 +7,7 @@ import { SubComponent } from '../../../../root/classes/subComponent';
     styleUrls: ['./arguments.component.css'],
 })
 export class ArgumentsComponent extends SubComponent {
-    // TODO Add add button and then create a array with multiple arguments
-    argsArray: string[] = ['Test', 'Test2'];
+    argsArray: string[] = [''];
 
     addArgument() {
         this.argsArray.push('');

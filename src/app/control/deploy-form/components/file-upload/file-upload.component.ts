@@ -27,9 +27,6 @@ export class FileUploadComponent extends SubComponent {
                 if (sla.job_name) {
                     delete sla.job_name;
                 }
-                // TODO Creat a service for thees two functions
-                // this.generateSLA(sla);
-                // this.addService();
             };
             fileReader.readAsText(this.file);
         }

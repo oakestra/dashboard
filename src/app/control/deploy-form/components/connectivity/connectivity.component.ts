@@ -61,6 +61,8 @@ export class ConnectivityComponent extends SubComponent {
     }
 
     getData(): any {
-        return this.connectivity;
+        return {
+            connectivity: this.connectivity,
+        };
     }
 }

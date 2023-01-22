@@ -46,6 +46,8 @@ export class ConstraintsComponent extends SubComponent {
     }
 
     getData() {
-        return this.constraints;
+        return {
+            constraints: this.constraints,
+        };
     }
 }
