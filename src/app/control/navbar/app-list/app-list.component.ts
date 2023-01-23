@@ -70,7 +70,9 @@ export class AppListComponent implements OnInit {
             if (result.event === DialogAction.ADD) {
                 this.store.dispatch(postApplication({ application: result.data }));
             } else if (result.event === DialogAction.UPDATE) {
-                this.store.dispatch(updateApplication({ application: result.data.applications[0] }));
+                console.log('Update');
+                console.log(result);
+                this.store.dispatch(updateApplication({ application: result.data }));
             } else if (result.event === DialogAction.DELETE) {
                 this.store.dispatch(deleteApplication({ application: result.data }));
                 // this.deleteApplication(result.data);

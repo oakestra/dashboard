@@ -54,7 +54,7 @@ export const applicationReducer = createReducer(
     }),
 
     on(applicationActions.deleteApplicationSuccess, (state, action) => {
-        const applications = state.applications.filter((app) => app !== action.application);
+        const applications = state.applications.filter((app) => app._id.$oid !== action.application._id.$oid);
         const loading = false;
         return { ...state, applications, loading };
     }),
@@ -68,7 +68,6 @@ export const applicationReducer = createReducer(
     // ///////////////////////////////////////////////////////////////////////////
     // /////////////////////  UPDATE APPLICATION  ////////////////////////////////
     // ///////////////////////////////////////////////////////////////////////////
-    // TODO
 
     on(applicationActions.updateApplication, (state) => {
         const loading = true;
@@ -76,8 +75,8 @@ export const applicationReducer = createReducer(
     }),
 
     on(applicationActions.updateApplicationSuccess, (state, action) => {
-        console.log(action);
-        const applications = state.applications;
+        const applications = state.applications.filter((app) => app._id.$oid !== action.application._id.$oid);
+        applications.push(action.application);
         const loading = false;
         return { ...state, applications, loading };
     }),
@@ -98,6 +97,7 @@ export const applicationReducer = createReducer(
     }),
 
     on(applicationActions.postApplicationSuccess, (state, action) => {
+        console.log(action.application);
         const applications = [...state.applications, action.application];
         const loading = false;
         return { ...state, applications, loading };
