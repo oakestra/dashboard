@@ -12,6 +12,8 @@ import { appReducer, postServiceSuccess, updateServiceSuccess } from '../../root
 import { selectCurrentApplication } from '../../root/store/selectors/application.selector';
 import { SlaGeneratorService } from '../../shared/modules/helper/sla-generator.service';
 import { ServiceGeneratorService } from '../../shared/modules/helper/service-generator.service';
+import { IUser } from '../../root/interfaces/user';
+import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 import { ServiceInfoComponent } from './components/service-info/service-info.component';
 import { RequirementsComponent } from './components/requirements/requirements.component';
 import { FileSelectComponent } from './components/file-select/file-select.component';
@@ -40,13 +42,16 @@ export class DeployFormComponent implements OnInit {
 
     currentServiceID = ''; // This one is uses to get the service from the DB
     applicationId = '';
-    currentApplication: IApplication;
 
+    currentApplication: IApplication;
     allServices: any; // For the Dropdown list of the connections
     app$: Observable<IApplication> = this.store.pipe(select(selectCurrentApplication));
 
+    currentUser$: Observable<IUser> = this.store.pipe(select(selectCurrentUser));
+    currentUser: IUser;
+
     testService: IService = {
-        microservice_name: 'daniel',
+        microservice_name: '',
     };
 
     constructor(
@@ -80,6 +85,7 @@ export class DeployFormComponent implements OnInit {
 
     ngOnInit() {
         console.log('In service form');
+        this.currentUser$.subscribe((user) => (this.currentUser = user));
     }
 
     onSubmit() {
@@ -94,7 +100,8 @@ export class DeployFormComponent implements OnInit {
         );
 
         console.log(service);
-        const sla = this.slaGenerator.generateSLA(service);
+        const sla = this.slaGenerator.generateSLA(service, this.currentApplication, this.currentUser);
+        console.log(sla);
         if (this.editingService) {
             this.updateService(sla);
         } else {

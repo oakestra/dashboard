@@ -69,7 +69,8 @@ export class DialogEditUserView {
         const date = this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm') ?? '';
         for (const r of Object.keys(Role)) {
             if (this.form.value.roles[r]) {
-                // newRoles.push(r); // TODO Add real roles | or change how to store a role
+                // newRoles.push(r);
+                // TODO Add real roles | or change how to store a role, a simple string array would be better
             }
         }
         const user: IUser = {

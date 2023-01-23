@@ -5,7 +5,6 @@ import { IService } from '../../../root/interfaces/service';
     providedIn: 'root',
 })
 export class ServiceGeneratorService {
-    // TODO Add the service data in the correct way
     public generateService(
         serviceInfo: any,
         requirements: any,
@@ -15,7 +14,7 @@ export class ServiceGeneratorService {
         constraints: any,
         connectivity: any,
     ): IService {
-        const service: IService = {
+        return {
             ...serviceInfo,
             ...requirements,
             ...fileSelect,
@@ -24,6 +23,5 @@ export class ServiceGeneratorService {
             ...constraints,
             ...connectivity,
         };
-        return service;
     }
 }

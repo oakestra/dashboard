@@ -71,11 +71,17 @@ export const userReducer = createReducer(
         return { ...state, loading };
     }),
 
-    // TODO Fix this
     on(userActions.updateUserSuccess, (state, action) => {
-        const user = action.user;
+        const users = state.users.filter((user) => user._id.$oid !== action.user._id.$oid);
+        users.push(action.user);
+
+        let currentUser = state.currentUser;
+        if (state.currentUser._id.$oid === action.user._id.$oid) {
+            currentUser = action.user;
+        }
+
         const loading = false;
-        return { ...state, user, loading };
+        return { ...state, users, currentUser, loading };
     }),
 
     on(userActions.updateUserError, (state, action) => {
