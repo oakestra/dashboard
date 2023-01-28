@@ -7,12 +7,7 @@ import { IInstance } from '../../../root/interfaces/instance';
 @Component({
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-service-status.html',
-    styles: [
-        '.width70{width: 70%}',
-        '.full-width{width: 100%}',
-        '.alignRight{text-align: right}',
-        '.cancelButton{background-color: #7b97a5}',
-    ],
+    styles: ['.full-width{width: 100%}', '.alignRight{text-align: right}', '.cancelButton{background-color: #7b97a5}'],
 })
 
 // TODO Check if this works as it should and write it better

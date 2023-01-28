@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { take } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../shared/modules/api/api.service';
@@ -14,6 +13,7 @@ import { SlaGeneratorService } from '../../shared/modules/helper/sla-generator.s
 import { ServiceGeneratorService } from '../../shared/modules/helper/service-generator.service';
 import { IUser } from '../../root/interfaces/user';
 import { selectCurrentUser } from '../../root/store/selectors/user.selector';
+import { selectCurrentServices } from '../../root/store/selectors/service.selector';
 import { ServiceInfoComponent } from './components/service-info/service-info.component';
 import { RequirementsComponent } from './components/requirements/requirements.component';
 import { FileSelectComponent } from './components/file-select/file-select.component';
@@ -36,19 +36,21 @@ export class DeployFormComponent implements OnInit {
     @ViewChild('constraints') constraints: ConstraintsComponent;
     @ViewChild('connectivity') connectivity: ConnectivityComponent;
 
-    service: any = null;
-
     editingService = false; // True if the user is editing the service
 
     currentServiceID = ''; // This one is uses to get the service from the DB
     applicationId = '';
 
     currentApplication: IApplication;
+
     allServices: any; // For the Dropdown list of the connections
     app$: Observable<IApplication> = this.store.pipe(select(selectCurrentApplication));
 
     currentUser$: Observable<IUser> = this.store.pipe(select(selectCurrentUser));
     currentUser: IUser;
+
+    services$: Observable<IService[]> = this.store.pipe(select(selectCurrentServices));
+    service: IService;
 
     testService: IService = {
         microservice_name: '',
@@ -68,19 +70,17 @@ export class DeployFormComponent implements OnInit {
             console.log(app);
             this.currentApplication = app;
             this.applicationId = app._id.$oid;
-            this.api
-                // TODO Do not subscribe here, use the data in the store instead
-                .getServicesOfApplication(this.applicationId)
-                .pipe(take(1))
-                .subscribe({
-                    next: (services: IService[]) => {
-                        this.allServices = services.filter((s: IService) => s._id?.$oid !== this.currentServiceID);
-                    },
-                    error: (err) => {
-                        console.log(err);
-                    },
-                });
         });
+
+        this.services$.subscribe({
+            next: (services: IService[]) => {
+                this.service = services.filter((s: IService) => s._id?.$oid !== this.currentServiceID)[0];
+            },
+            error: (err) => {
+                console.log(err);
+            },
+        });
+        console.log(this.service);
     }
 
     ngOnInit() {

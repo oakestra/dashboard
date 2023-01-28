@@ -6,14 +6,12 @@ export const serviceFeatureKey = 'service';
 
 export interface State {
     servicesOfApp: IService[];
-    // service: IService;
     loading: boolean;
     error: unknown;
 }
 
 export const initialState: State = {
     servicesOfApp: [],
-    // service: {},
     loading: false,
     error: {},
 };
@@ -29,9 +27,9 @@ export const serviceReducer = createReducer(
     on(serviceActions.getServicesSuccess, (state, action) => {
         console.log('action.services');
         console.log(action.services);
-        const service = action.services;
+        const servicesOfApp = action.services;
         const loading = false;
-        return { ...state, service, loading };
+        return { ...state, servicesOfApp, loading };
     }),
 
     on(serviceActions.getServices, (state) => {

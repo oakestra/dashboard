@@ -1,9 +1,9 @@
 <div class="content-cards">
     <mat-card class="serviceCard" id="content">
         <div *ngIf="currentApp$ | async">
-            <mat-card-title>Application:{{ (currentApp$ | async).application_name }}</mat-card-title>
-            <div *ngIf="(services$ | async).length > 0">
-                <mat-accordion *ngFor="let service of services$ | async" multi>
+            <mat-card-title>Application: {{ (currentApp$ | async).application_name }}</mat-card-title>
+            <div *ngIf="(services$ | async).length > 0" class="servicesList">
+                <mat-accordion *ngFor="let service of services$ | async" multi class="service">
                     <mat-expansion-panel>
                         <mat-expansion-panel-header class="disable_ripple">
                             <mat-panel-title class="w3-col s4 l5 m4">
@@ -83,8 +83,8 @@
                         Deploy All
                     </button>
                 </mat-card-actions>
-
-                <graph (updated)="deleteServiceWithGraph($event)" [services]="services$ | async"></graph>
+                <!-- TODO Not used for now needs a refactoring -->
+                <!--                <graph (updated)="deleteServiceWithGraph($event)" [services]="services$ | async"></graph>-->
             </div>
             <div *ngIf="(services$ | async).length === 0" class="content mat-elevation-z8">
                 <p>No Service in this application.</p>

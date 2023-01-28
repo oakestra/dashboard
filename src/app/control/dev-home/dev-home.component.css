@@ -162,5 +162,14 @@ mat-card p {
 }
 
 .alignEnd {
-    text-align: end;
+    text-align: end !important;
+    padding: 0;
+    justify-content: space-between;
+}
+
+.servicesList {
+    padding: 10px;
+}
+
+service {
 }

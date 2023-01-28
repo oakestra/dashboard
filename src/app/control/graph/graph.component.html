@@ -16,8 +16,8 @@
             <button
                 (click)="openDialog(start.innerText, target.innerText, 'new')"
                 id="configureLink"
-                mat-button
                 mat-flat-button
+                class="updateButton"
             ></button>
         </div>
 
@@ -25,7 +25,6 @@
             <button
                 (click)="openDialog(start.innerText, target.innerText, 'edit')"
                 class="updateButton"
-                mat-button
                 mat-flat-button
             >
                 <mat-icon>settings</mat-icon>
@@ -34,13 +33,7 @@
         </div>
 
         <ng-template #nodeButtons>
-            <button
-                class="updateButton"
-                id="editElement"
-                mat-button
-                mat-flat-button
-                routerLink="deploy/{{ nodeID.innerText }}"
-            >
+            <button class="updateButton" id="editElement" mat-flat-button routerLink="deploy/{{ nodeID.innerText }}">
                 <mat-icon>settings</mat-icon>
                 Configure Service
             </button>
