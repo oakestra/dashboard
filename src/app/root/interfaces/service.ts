@@ -26,6 +26,7 @@ export interface IService {
     instance_list?: IInstance[];
     status?: string;
     connectivity?: IConnectivity[];
+    args?: string[];
 }
 
 export interface IAddresses {

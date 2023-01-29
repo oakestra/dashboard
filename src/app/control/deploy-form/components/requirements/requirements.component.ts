@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SubComponent } from '../../../../root/classes/subComponent';
+import { IService } from '../../../../root/interfaces/service';
 
 type requirementsType = {
     memory?: number;
@@ -19,6 +20,7 @@ type requirementsType = {
     styleUrls: ['./requirements.component.css'],
 })
 export class RequirementsComponent extends SubComponent implements OnInit {
+    @Input() service: IService;
     form: FormGroup;
     requirements: requirementsType = {};
 
@@ -28,14 +30,14 @@ export class RequirementsComponent extends SubComponent implements OnInit {
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            memory: [50],
-            vcpus: [1],
-            vgpus: [0],
-            vtpus: [0],
-            bandwidth_in: [0],
-            bandwidth_out: [0],
-            storage: [0],
-            port: [''],
+            memory: [this.service?.memory ?? 50],
+            vcpus: [this.service?.vcpus ?? 1],
+            vgpus: [this.service?.vgpus ?? 0],
+            vtpus: [this.service?.vtpus ?? 0],
+            bandwidth_in: [this.service?.bandwidth_in ?? 0],
+            bandwidth_out: [this.service?.bandwidth_out ?? 0],
+            storage: [this.service?.storage ?? 0],
+            port: [this.service?.port ?? ''],
         });
 
         this.form.patchValue(this.requirements);

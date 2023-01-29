@@ -1,13 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SubComponent } from '../../../../root/classes/subComponent';
+import { IService } from '../../../../root/interfaces/service';
 
 @Component({
     selector: 'form-arguments',
     templateUrl: './arguments.component.html',
     styleUrls: ['./arguments.component.css'],
 })
-export class ArgumentsComponent extends SubComponent {
-    argsArray: string[] = [''];
+export class ArgumentsComponent extends SubComponent implements OnInit {
+    @Input() service: IService;
+    argsArray: string[];
+
+    ngOnInit(): void {
+        this.argsArray = this.service?.args ?? [''];
+    }
 
     addArgument() {
         this.argsArray.push('');

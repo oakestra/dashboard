@@ -28,10 +28,10 @@ export class ServiceInfoComponent extends SubComponent implements OnInit {
     ngOnInit(): void {
         this.form = this.fb.group({
             microserviceID: [''],
-            microservice_name: [this.service.microservice_name ?? '', Validators.required],
-            microservice_namespace: [this.service.microservice_namespace ?? ''],
-            virtualization: [this.service.virtualization ?? ''],
-            description: [this.service.description ?? ''],
+            microservice_name: [this.service?.microservice_name ?? '', Validators.required],
+            microservice_namespace: [this.service?.microservice_namespace ?? ''],
+            virtualization: [this.service?.virtualization ?? ''],
+            description: [this.service?.description ?? ''],
         });
     }
 

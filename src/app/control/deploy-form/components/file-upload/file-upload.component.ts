@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SubComponent } from '../../../../root/classes/subComponent';
+import { IService } from '../../../../root/interfaces/service';
 
 @Component({
     selector: 'form-file-upload',
@@ -7,6 +8,7 @@ import { SubComponent } from '../../../../root/classes/subComponent';
     styleUrls: ['./file-upload.component.css'],
 })
 export class FileUploadComponent extends SubComponent {
+    @Input() service: IService;
     file: File | undefined;
     filename = 'Select File to Upload';
     applicationId = '123'; // TODO

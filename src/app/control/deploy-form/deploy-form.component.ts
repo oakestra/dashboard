@@ -71,21 +71,24 @@ export class DeployFormComponent implements OnInit {
             this.currentApplication = app;
             this.applicationId = app._id.$oid;
         });
+    }
+
+    ngOnInit() {
+        // TODO Check if we create a new service or if we edit one
+        console.log('In service form');
+        this.currentUser$.subscribe((user) => (this.currentUser = user));
 
         this.services$.subscribe({
             next: (services: IService[]) => {
                 this.service = services.filter((s: IService) => s._id?.$oid !== this.currentServiceID)[0];
+                console.log('In service sub');
+                console.log(this.service);
+                this.service = null;
             },
             error: (err) => {
                 console.log(err);
             },
         });
-        console.log(this.service);
-    }
-
-    ngOnInit() {
-        console.log('In service form');
-        this.currentUser$.subscribe((user) => (this.currentUser = user));
     }
 
     onSubmit() {

@@ -3,19 +3,19 @@
         <mat-card-title>Configure Service</mat-card-title>
         <mat-tab-group animationDuration="0ms" class="mat-elevation-z4 inputGroup" mat-stretch-tabs>
             <mat-tab label="FORM">
-                <form-service-info [service]="testService" #serviceInfo></form-service-info>
+                <form-service-info [service]="service" #serviceInfo></form-service-info>
 
-                <form-requirements #requirements></form-requirements>
+                <form-requirements [service]="service" #requirements></form-requirements>
 
-                <form-file-select #fileSelect></form-file-select>
+                <form-file-select [service]="service" #fileSelect></form-file-select>
 
-                <form-addresses #addresses></form-addresses>
+                <form-addresses [service]="service" #addresses></form-addresses>
 
-                <form-arguments #arguments></form-arguments>
+                <form-arguments [service]="service" #arguments></form-arguments>
 
-                <form-constraints #constraints></form-constraints>
+                <form-constraints [service]="service" #constraints></form-constraints>
 
-                <form-connectivity #connectivity></form-connectivity>
+                <form-connectivity [service]="service" #connectivity></form-connectivity>
 
                 <button (click)="onSubmit()" mat-flat-button class="updateButton" type="submit">Save</button>
 

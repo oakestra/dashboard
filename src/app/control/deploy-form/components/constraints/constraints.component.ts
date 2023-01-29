@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { IConstraints } from '../../../../root/interfaces/service';
+import { IConstraints, IService } from '../../../../root/interfaces/service';
 import { SubComponent } from '../../../../root/classes/subComponent';
 
 @Component({
@@ -9,6 +9,7 @@ import { SubComponent } from '../../../../root/classes/subComponent';
     styleUrls: ['./constraints.component.css'],
 })
 export class ConstraintsComponent extends SubComponent {
+    @Input() service: IService;
     constraints: IConstraints[] = [];
     canViewLatConstrains: boolean[] = [];
 

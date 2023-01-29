@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ICon_constraints, IConnectivity } from '../../../../root/interfaces/service';
+import { ICon_constraints, IConnectivity, IService } from '../../../../root/interfaces/service';
 import { DialogConnectionSettingsView } from '../../../dialogs/content-connection/dialog-connection-settings-view.component';
 import { SubComponent } from '../../../../root/classes/subComponent';
 
@@ -11,12 +11,17 @@ import { SubComponent } from '../../../../root/classes/subComponent';
 })
 
 // TODO Simplify this and dont use a form array. or only a local one
-export class ConnectivityComponent extends SubComponent {
+export class ConnectivityComponent extends SubComponent implements OnInit {
+    @Input() service: IService;
     connectivity: IConnectivity[] = [];
     @Output() dataChanged: EventEmitter<IConnectivity[]> = new EventEmitter();
 
     constructor(public dialog: MatDialog) {
         super();
+    }
+
+    ngOnInit(): void {
+        this.connectivity = this.service?.connectivity ?? [];
     }
 
     addConnectivity() {

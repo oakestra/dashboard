@@ -1,29 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NotificationType } from '../../../../root/interfaces/notification';
 import { ApiService } from '../../../../shared/modules/api/api.service';
 import { NotificationService } from '../../../../shared/modules/notification/notification.service';
 import { SubComponent } from '../../../../root/classes/subComponent';
+import { IService } from '../../../../root/interfaces/service';
+import { FileSelectorType } from '../../../../root/interfaces/fileSelector';
 
-type FileSelectorType = {
-    code: string;
-    state: string;
-    added_files: string[];
-};
 @Component({
     selector: 'form-file-select',
     templateUrl: './file-select.component.html',
     styleUrls: ['./file-select.component.css'],
 })
-export class FileSelectComponent extends SubComponent {
+export class FileSelectComponent extends SubComponent implements OnInit {
+    @Input() service: IService;
+    data: FileSelectorType;
+
     constructor(private api: ApiService, private notifyService: NotificationService) {
         super();
     }
 
-    data: FileSelectorType = {
-        code: '',
-        state: '',
-        added_files: [],
-    };
+    ngOnInit() {
+        this.data = {
+            code: this.service?.code ?? '',
+            state: this.service?.state ?? '',
+            added_files: this.service?.added_files ?? [],
+        };
+    }
 
     deleteFiles(index: number) {
         this.data.added_files.splice(index, 1);
