@@ -74,6 +74,16 @@
             <mat-label>Port</mat-label>
             <input matInput formControlName="port" matTooltip="Port for exposure of the service" required type="text" />
         </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Sla violation strategy</mat-label>
+            <input matInput formControlName="port" type="text" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Target node</mat-label>
+            <input matInput formControlName="port" type="text" />
+        </mat-form-field>
     </div>
     <form [formGroup]="form"></form>
 </form>

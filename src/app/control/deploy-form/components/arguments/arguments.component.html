@@ -14,3 +14,37 @@
         <mat-icon>delete</mat-icon>
     </button>
 </div>
+
+<div>
+    <h4 class="addButtonDiv">Environment:</h4>
+    <button (click)="addEnvironment()" class="add-btn" mat-mini-fab type="button">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+
+<div *ngFor="let env of environment; index as i; trackBy: trackByIdx">
+    <mat-form-field>
+        <mat-label>Environment</mat-label>
+        <input [(ngModel)]="environment[i]" matInput type="text" />
+    </mat-form-field>
+    <button (click)="deleteEnvironment(i)" mat-icon-button type="button">
+        <mat-icon>delete</mat-icon>
+    </button>
+</div>
+
+<div>
+    <h4 class="addButtonDiv">Cmd:</h4>
+    <button (click)="addCmd()" class="add-btn" mat-mini-fab type="button">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+
+<div *ngFor="let cmd of cmdArray; index as i; trackBy: trackByIdx">
+    <mat-form-field>
+        <mat-label>Cmd</mat-label>
+        <input [(ngModel)]="cmdArray[i]" matInput type="text" />
+    </mat-form-field>
+    <button (click)="deleteCmd(i)" mat-icon-button type="button">
+        <mat-icon>delete</mat-icon>
+    </button>
+</div>

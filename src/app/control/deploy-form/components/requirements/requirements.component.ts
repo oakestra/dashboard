@@ -12,6 +12,8 @@ type requirementsType = {
     bandwidth_out?: number;
     storage?: number;
     port?: string;
+    target_node?: string;
+    sla_violation_strategy?: string;
 };
 
 @Component({
@@ -38,6 +40,8 @@ export class RequirementsComponent extends SubComponent implements OnInit {
             bandwidth_out: [this.service?.bandwidth_out ?? 0],
             storage: [this.service?.storage ?? 0],
             port: [this.service?.port ?? ''],
+            target_node: [this.service?.target_node ?? ''],
+            sla_violation_strategy: [this.service?.sla_violation_strategy ?? ''],
         });
 
         this.form.patchValue(this.requirements);

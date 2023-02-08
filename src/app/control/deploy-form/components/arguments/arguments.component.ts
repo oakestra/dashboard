@@ -10,9 +10,13 @@ import { IService } from '../../../../root/interfaces/service';
 export class ArgumentsComponent extends SubComponent implements OnInit {
     @Input() service: IService;
     argsArray: string[];
+    environment: string[];
+    cmdArray: string[];
 
     ngOnInit(): void {
-        this.argsArray = this.service?.args ?? [''];
+        this.argsArray = this.service?.args ?? [];
+        this.environment = this.service?.environment ?? [];
+        this.cmdArray = this.service?.cmd ?? [];
     }
 
     addArgument() {
@@ -23,9 +27,26 @@ export class ArgumentsComponent extends SubComponent implements OnInit {
         this.argsArray.splice(index, 1);
     }
 
+    addEnvironment() {
+        this.environment.push('');
+    }
+
+    deleteEnvironment(index: number) {
+        this.environment.splice(index, 1);
+    }
+
+    addCmd() {
+        this.cmdArray.push('');
+    }
+
+    deleteCmd(index: number) {
+        this.cmdArray.splice(index, 1);
+    }
+
     getData(): any {
         return {
             args: this.argsArray,
+            environment: this.environment,
         };
     }
 

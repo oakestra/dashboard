@@ -111,14 +111,6 @@ export class DeployFormComponent implements OnInit {
     }
 
     addService(sla: any) {
-        // HOTFIXES to successfully push a service
-        // TODO Implement the corresponding fields
-        sla.applications[0].microservices[0].cmd = [];
-        sla.applications[0].microservices[0].sla_violation_strategy = '';
-        sla.applications[0].microservices[0].target_node = '';
-        sla.applications[0].microservices[0].args = [];
-        sla.applications[0].microservices[0].enviroment = [];
-
         // TODO Call here dispatch
         this.api.updateApplicationWithService(sla).subscribe({
             // this.api.addService(sla).subscribe({
