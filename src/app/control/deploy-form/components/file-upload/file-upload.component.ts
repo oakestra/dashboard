@@ -11,7 +11,6 @@ export class FileUploadComponent extends SubComponent {
     @Input() service: IService;
     file: File | undefined;
     filename = 'Select File to Upload';
-    applicationId = '123'; // TODO
 
     loadFile(event: any) {
         this.file = event.target.files[0] as File;
@@ -24,7 +23,6 @@ export class FileUploadComponent extends SubComponent {
             const fileReader = new FileReader();
             fileReader.onload = () => {
                 const sla = JSON.parse((fileReader.result ?? '').toString());
-                sla.applicationID = this.applicationId;
                 sla._id = null;
                 if (sla.job_name) {
                     delete sla.job_name;

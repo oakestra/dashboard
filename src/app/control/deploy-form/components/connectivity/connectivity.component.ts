@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ICon_constraints, IConnectivity, IService } from '../../../../root/interfaces/service';
 import { DialogConnectionSettingsView } from '../../../dialogs/content-connection/dialog-connection-settings-view.component';
@@ -14,7 +14,6 @@ import { SubComponent } from '../../../../root/classes/subComponent';
 export class ConnectivityComponent extends SubComponent implements OnInit {
     @Input() service: IService;
     connectivity: IConnectivity[] = [];
-    @Output() dataChanged: EventEmitter<IConnectivity[]> = new EventEmitter();
 
     constructor(public dialog: MatDialog) {
         super();
@@ -29,18 +28,13 @@ export class ConnectivityComponent extends SubComponent implements OnInit {
             con_constraints: [],
             target_microservice_id: 'has to be selected',
         };
-
         this.connectivity.push(c);
-
-        // TODO Do this somewhere else
-        this.dataChanged.emit(this.connectivity);
     }
 
     deleteConnection(index: number) {
         this.connectivity.splice(index, 1);
     }
 
-    // Dialog for the connection settings
     openDialog(index: number) {
         const dialogRef = this.dialog.open(DialogConnectionSettingsView, { data: this.connectivity[index] });
 
