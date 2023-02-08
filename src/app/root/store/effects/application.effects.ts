@@ -69,6 +69,4 @@ export class ApplicationEffects {
     );
 
     constructor(private actions$: Actions, private apiService: ApiService) {}
-
-    // TODO Add here the remaining effects
 }

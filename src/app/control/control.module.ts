@@ -27,6 +27,7 @@ import { MatListModule } from '@angular/material/list';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { MatLegacyChipsModule } from '@angular/material/legacy-chips';
 import * as fromService from '../root/store/reducers/service.reducer';
 import { ServiceEffects } from '../root/store';
 import { UsersComponent } from './users/users.component';
@@ -122,6 +123,7 @@ import { ArgumentsComponent } from './deploy-form/components/arguments/arguments
         MatListModule,
         StoreModule.forFeature(fromService.serviceFeatureKey, fromService.reducer),
         EffectsModule.forFeature([ServiceEffects]),
+        MatLegacyChipsModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

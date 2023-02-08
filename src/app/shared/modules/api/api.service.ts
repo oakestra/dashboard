@@ -55,6 +55,15 @@ export class ApiService extends RestService {
         return this.doPUTRequest('/application/' + app._id.$oid, app);
     }
 
+    updateApplicationWithService(sla: any) {
+        console.log(sla);
+        const app = sla.applications[0];
+        console.log(app);
+        // return this.doPOSTRequest('/application/', app);
+        return this.doPOSTRequest('/service/', sla);
+        // return this.doPOSTRequest('/application/' + app.applicationID, app);
+    }
+
     deleteApplication(app: IApplication) {
         return this.doDELRequest('/application/' + app._id.$oid);
     }
@@ -90,12 +99,12 @@ export class ApiService extends RestService {
     // /////////////////////////////////////////////////////////////////////////
     // /////////////////// Service Functions ///////////////////////////////////
 
-    addService(service: IService) {
+    addService(service: IService): Observable<IService> {
         return this.doPOSTRequest('/application/', service);
     }
 
     // sla and not service is here the argument? //TODO Why 2 parameters and not one
-    updateService(service: any, serviceID: string) {
+    updateService(service: any, serviceID: string): Observable<IService> {
         return this.doPUTRequest('/service/' + serviceID, service);
     }
 

@@ -11,7 +11,7 @@ export class SlaGeneratorService {
     public generateSLA(service: IService, app: IApplication, user: IUser) {
         const sla = {
             sla_version: 'v2.0',
-            customerID: 'Admin',
+            customerID: user.name,
             applications: [
                 {
                     applicationID: app._id.$oid,

@@ -48,11 +48,6 @@
                 <app-app-list [userID]="userID"></app-app-list>
             </div>
 
-            <!--          TODO implement the cluster management -->
-            <!--            <div class="nav-item">-->
-            <!--                <app-cluster-list></app-cluster-list>-->
-            <!--            </div>-->
-
             <div class="nav-item">
                 <button class="navButton" mat-flat-button routerLink="/control/help">
                     <mat-icon>help_outline</mat-icon>
@@ -63,7 +58,6 @@
     </mat-sidenav>
 
     <mat-sidenav-content id="content">
-        <!--        <div *ngIf="viewSelected(); else nothingSelected">-->
         <div>
             <router-outlet></router-outlet>
         </div>

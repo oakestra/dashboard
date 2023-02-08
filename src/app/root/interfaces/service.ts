@@ -27,6 +27,9 @@ export interface IService {
     status?: string;
     connectivity?: IConnectivity[];
     args?: string[];
+    environment?: string[];
+    sla_violation_strategy?: string;
+    target_node?: string;
 }
 
 export interface IAddresses {

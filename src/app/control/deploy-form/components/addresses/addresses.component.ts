@@ -19,8 +19,8 @@ export class AddressesComponent extends SubComponent implements OnInit {
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            rr_ip: [''],
-            closest_ip: [],
+            rr_ip: this.service?.addresses?.rr_ip ?? [''],
+            closest_ip: this.service?.addresses?.closest_ip ?? [''],
         });
 
         this.instances.push({

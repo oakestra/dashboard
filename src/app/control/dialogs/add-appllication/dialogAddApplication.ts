@@ -7,7 +7,6 @@ import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
 @Component({
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-add-application.html',
-    // styles: ['.full-width{width: 100%}', '.alignRight{text-align: right}', '.input{padding-right: 8px}'],
 })
 export class DialogAddApplicationView {
     DialogAction = DialogAction;

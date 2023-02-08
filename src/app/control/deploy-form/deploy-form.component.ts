@@ -38,23 +38,15 @@ export class DeployFormComponent implements OnInit {
 
     editingService = false; // True if the user is editing the service
 
-    currentServiceID = ''; // This one is uses to get the service from the DB
-    applicationId = '';
-
-    currentApplication: IApplication;
-
-    allServices: any; // For the Dropdown list of the connections
     app$: Observable<IApplication> = this.store.pipe(select(selectCurrentApplication));
+    currentApplication: IApplication;
 
     currentUser$: Observable<IUser> = this.store.pipe(select(selectCurrentUser));
     currentUser: IUser;
 
     services$: Observable<IService[]> = this.store.pipe(select(selectCurrentServices));
     service: IService;
-
-    testService: IService = {
-        microservice_name: '',
-    };
+    currentServiceID = ''; // This one is uses to get the service from the DB
 
     constructor(
         private route: ActivatedRoute,
@@ -69,21 +61,16 @@ export class DeployFormComponent implements OnInit {
         this.app$.subscribe((app) => {
             console.log(app);
             this.currentApplication = app;
-            this.applicationId = app._id.$oid;
         });
     }
 
     ngOnInit() {
-        // TODO Check if we create a new service or if we edit one
-        console.log('In service form');
         this.currentUser$.subscribe((user) => (this.currentUser = user));
 
         this.services$.subscribe({
             next: (services: IService[]) => {
-                this.service = services.filter((s: IService) => s._id?.$oid !== this.currentServiceID)[0];
-                console.log('In service sub');
-                console.log(this.service);
-                this.service = null;
+                const s = services.filter((s: IService) => s._id?.$oid !== this.currentServiceID);
+                this.service = s.length === 0 ? null : s[0];
             },
             error: (err) => {
                 console.log(err);
@@ -102,9 +89,7 @@ export class DeployFormComponent implements OnInit {
             this.connectivity.getData(),
         );
 
-        console.log(service);
         const sla = this.slaGenerator.generateSLA(service, this.currentApplication, this.currentUser);
-        console.log(sla);
         if (this.editingService) {
             this.updateService(sla);
         } else {
@@ -127,17 +112,18 @@ export class DeployFormComponent implements OnInit {
 
     addService(sla: any) {
         // HOTFIXES to successfully push a service
-        // TODO Do this later better and implement the corresponding fields
+        // TODO Implement the corresponding fields
         sla.applications[0].microservices[0].cmd = [];
         sla.applications[0].microservices[0].sla_violation_strategy = '';
         sla.applications[0].microservices[0].target_node = '';
         sla.applications[0].microservices[0].args = [];
         sla.applications[0].microservices[0].enviroment = [];
 
-        console.log(sla);
-        this.api.addService(sla).subscribe({
+        // TODO Call here dispatch
+        this.api.updateApplicationWithService(sla).subscribe({
+            // this.api.addService(sla).subscribe({
             next: () => {
-                // TODO is this this correct way? or how can i do that without the subscribe
+                // TODO return in the backend the service and add it in the effect
                 this.store.dispatch(postServiceSuccess({ service: sla }));
                 void this.router.navigate(['/control']).then();
                 this.notifyService.notify(NotificationType.success, 'Service generation was successful');

@@ -26,7 +26,7 @@ export class AuthGuardService implements CanActivate, CanLoad, CanActivateChild 
     }
 
     canLoad() {
-        return true; // this.doUserCheck()
+        return this.doUserCheck();
     }
 
     canActivateChild(): Observable<boolean> {

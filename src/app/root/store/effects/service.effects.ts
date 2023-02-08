@@ -20,20 +20,6 @@ export class ServiceEffects {
             ),
         ),
     );
-    /*
-    getServiceByID$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(serviceActions.getServices),
-            mergeMap(() =>
-                this.apiService.getServiceByID('qwaedrf').pipe(
-                    map((service) => serviceActions.getServicesSuccess({ service })),
-                    catchError((error) => of(serviceActions.getServicesError({ error: error.message }))),
-                ),
-            ),
-        ),
-    );
-
- */
 
     postServices$ = createEffect(() =>
         this.actions$.pipe(
@@ -55,7 +41,7 @@ export class ServiceEffects {
             ofType(serviceActions.deleteService),
             switchMap(({ service }) =>
                 this.apiService.deleteService(service).pipe(
-                    map((service) => serviceActions.deleteServiceSuccess({ service })),
+                    map(() => serviceActions.deleteServiceSuccess({ service })),
                     catchError((error) => of(serviceActions.deleteServiceError({ error: error.message }))),
                 ),
             ),
