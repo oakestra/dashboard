@@ -30,8 +30,6 @@ export class DialogEditUserView {
         this.title = 'Editing user...';
 
         if (this.data.action === DialogAction.UPDATE) {
-            this.buttonText = 'Save changes';
-
             this.form = fb.group({
                 name: [this.user.name],
                 email: [this.user.email],
@@ -43,6 +41,9 @@ export class DialogEditUserView {
                     ),
                 }),
             });
+
+            this.buttonText = 'Save changes';
+            this.form.get('name').disable();
         } else {
             this.buttonText = 'Create';
             this.title = 'Create new user...';
