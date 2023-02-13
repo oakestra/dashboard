@@ -6,11 +6,11 @@ on:
   push:
     branches:
       - main
-      - refactoring
+      - develop
   pull_request:
     branches:
       - main
-      - refactoring
+      - develop
 
 jobs:
   run-linters:

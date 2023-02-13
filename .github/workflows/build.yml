@@ -3,7 +3,7 @@ name: Docker dashboard
 on:
   push:
     branches:
-      - refactoring
+      - main
 
 env:
   # Use docker.io for Docker Hub if empty
