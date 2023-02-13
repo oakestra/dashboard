@@ -36,6 +36,8 @@ export class DeployFormComponent implements OnInit {
     @ViewChild('constraints') constraints: ConstraintsComponent;
     @ViewChild('connectivity') connectivity: ConnectivityComponent;
 
+    public serviceId: string;
+
     editingService = false; // True if the user is editing the service
 
     app$: Observable<IApplication> = this.store.pipe(select(selectCurrentApplication));
@@ -46,7 +48,6 @@ export class DeployFormComponent implements OnInit {
 
     services$: Observable<IService[]> = this.store.pipe(select(selectCurrentServices));
     service: IService;
-    currentServiceID = ''; // This one is uses to get the service from the DB
 
     constructor(
         private route: ActivatedRoute,
@@ -57,7 +58,6 @@ export class DeployFormComponent implements OnInit {
         private slaGenerator: SlaGeneratorService,
         private serviceGenerator: ServiceGeneratorService,
     ) {
-        this.currentServiceID = 'not yet defined';
         this.app$.subscribe((app) => {
             console.log(app);
             this.currentApplication = app;
@@ -65,11 +65,11 @@ export class DeployFormComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.serviceId = this.route.snapshot.paramMap.get('id');
         this.currentUser$.subscribe((user) => (this.currentUser = user));
-
         this.services$.subscribe({
             next: (services: IService[]) => {
-                const s = services.filter((s: IService) => s._id?.$oid !== this.currentServiceID);
+                const s = services.filter((s: IService) => s._id?.$oid === this.serviceId);
                 this.service = s.length === 0 ? null : s[0];
             },
             error: (err) => {
@@ -98,7 +98,7 @@ export class DeployFormComponent implements OnInit {
     }
 
     updateService(sla: any) {
-        this.api.updateService(sla, this.currentServiceID).subscribe({
+        this.api.updateService(sla, this.serviceId).subscribe({
             next: () => {
                 // TODO This is not the correct way, update the store properly
                 this.store.dispatch(updateServiceSuccess(sla));
@@ -112,8 +112,8 @@ export class DeployFormComponent implements OnInit {
 
     addService(sla: any) {
         //  TODO Call here dispatch
-        this.api.updateApplicationWithService(sla).subscribe({
-            // this.api.addService(sla).subscribe({
+        // this.api.updateApplicationWithService(sla).subscribe({
+        this.api.addService(sla).subscribe({
             next: () => {
                 // TODO return in the backend the service and add it in the effect
                 this.store.dispatch(postServiceSuccess({ service: sla }));

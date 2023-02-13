@@ -100,7 +100,7 @@ export class ApiService extends RestService {
     // /////////////////// Service Functions ///////////////////////////////////
 
     addService(service: IService): Observable<IService> {
-        return this.doPOSTRequest('/application/', service);
+        return this.doPOSTRequest('/service/', service);
     }
 
     // sla and not service is here the argument? //TODO Why 2 parameters and not one
