@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
 import * as serviceActions from '../actions/service.actions';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { NotificationType } from '../../interfaces/notification';
@@ -26,7 +27,8 @@ export class ServiceEffects {
             ofType(serviceActions.postService),
             switchMap(({ service }) =>
                 this.apiService.addService(service).pipe(
-                    map((service) => serviceActions.postServiceSuccess({ service })),
+                    map((serviceId: string) => serviceActions.postServiceSuccess({ service, serviceId })),
+                    tap(() => this.router.navigate(['/control'])),
                     catchError((error) => {
                         this.notifyService.notify(NotificationType.error, 'File was not in the correct format');
                         return of(serviceActions.postServiceError({ error: error.message }));
@@ -64,5 +66,6 @@ export class ServiceEffects {
         private actions$: Actions,
         private apiService: ApiService,
         private notifyService: NotificationService,
+        private router: Router,
     ) {}
 }

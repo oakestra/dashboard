@@ -55,8 +55,12 @@ export const serviceReducer = createReducer(
     }),
 
     on(serviceActions.postServiceSuccess, (state, action) => {
-        // const services = [...state.service, action.service];
-        const service = action.service;
+        // Get the service form the sla.
+        const service = {
+            $oid: action.serviceId,
+            ...action.service.applications[0].microservices[0],
+        };
+        service.microserviceID = action.serviceId;
         const loading = false;
         return { ...state, service, loading };
     }),
