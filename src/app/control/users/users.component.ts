@@ -127,7 +127,7 @@ export class UsersComponent implements OnInit {
         });
     }
 
-    openDialog(action: DialogAction, user: IUser | undefined) {
+    openDialog(action: DialogAction, user?: IUser) {
         if (action === DialogAction.ADD) {
             user = {
                 // New UserEntity
