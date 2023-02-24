@@ -28,11 +28,11 @@ export class DialogEditUserView {
         this.user = data.content as IUser;
         this.action = data.action;
         this.title = 'Editing user...';
-
         if (this.data.action === DialogAction.UPDATE) {
             this.form = fb.group({
                 name: [this.user.name],
                 email: [this.user.email],
+                password: [this.user.password],
                 roles: fb.group({
                     ADMIN: this.user.roles.some((r: IUserRole) => r.name === 'Admin'),
                     APPLICATION_PROVIDER: this.user.roles.some((r: IUserRole) => r.name === 'Application_Provider'),
@@ -80,7 +80,7 @@ export class DialogEditUserView {
             email: this.form.value.email,
             password: this.form.value.password,
             roles: newRoles,
-            name: this.form.value.name,
+            name: this.form.value.name ?? this.user.name,
         };
         this.dialogRef.close({ event: this.action, data: user });
     }

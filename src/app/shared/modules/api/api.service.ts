@@ -99,7 +99,7 @@ export class ApiService extends RestService {
     // /////////////////////////////////////////////////////////////////////////
     // /////////////////// Service Functions ///////////////////////////////////
 
-    addService(service: IService): Observable<IService> {
+    addService(service: IService): Observable<string> {
         return this.doPOSTRequest('/service/', service);
     }
 

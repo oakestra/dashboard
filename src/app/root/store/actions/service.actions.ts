@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { IService } from '../../interfaces/service';
+import { ISla } from '../../interfaces/sla';
 
 // //////////// GET Services of APP /////////////
 export const getServices = createAction('[Service] getServices', props<{ appId: string }>());
@@ -7,8 +8,11 @@ export const getServicesSuccess = createAction('[Service] getServicesSuccess', p
 export const getServicesError = createAction('[Service] getServicesError', props<{ error: string }>());
 
 // ////////////// POST ////////////////////
-export const postService = createAction('[Service] postService', props<{ service: IService }>());
-export const postServiceSuccess = createAction('[Service] postServiceSuccess', props<{ service: IService }>());
+export const postService = createAction('[Service] postService', props<{ service: ISla }>());
+export const postServiceSuccess = createAction(
+    '[Service] postServiceSuccess',
+    props<{ service: ISla; serviceId: string }>(),
+);
 export const postServiceError = createAction('[Service] postServiceError', props<{ error: string }>());
 
 // ////////////// UPDATE ////////////////////

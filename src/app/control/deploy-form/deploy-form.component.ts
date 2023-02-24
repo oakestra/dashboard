@@ -6,8 +6,7 @@ import { ApiService } from '../../shared/modules/api/api.service';
 import { NotificationService } from '../../shared/modules/notification/notification.service';
 import { IApplication } from '../../root/interfaces/application';
 import { IService } from '../../root/interfaces/service';
-import { NotificationType } from '../../root/interfaces/notification';
-import { appReducer, postServiceSuccess, updateServiceSuccess } from '../../root/store';
+import { appReducer, postService, updateServiceSuccess } from '../../root/store';
 import { selectCurrentApplication } from '../../root/store/selectors/application.selector';
 import { SlaGeneratorService } from '../../shared/modules/helper/sla-generator.service';
 import { ServiceGeneratorService } from '../../shared/modules/helper/service-generator.service';
@@ -111,16 +110,6 @@ export class DeployFormComponent implements OnInit {
     }
 
     addService(sla: any) {
-        //  TODO Call here dispatch
-        // this.api.updateApplicationWithService(sla).subscribe({
-        this.api.addService(sla).subscribe({
-            next: () => {
-                // TODO return in the backend the service and add it in the effect
-                this.store.dispatch(postServiceSuccess({ service: sla }));
-                void this.router.navigate(['/control']).then();
-                this.notifyService.notify(NotificationType.success, 'Service generation was successful');
-            },
-            error: () => this.notifyService.notify(NotificationType.error, 'File was not in the correct format'),
-        });
+        this.store.dispatch(postService({ service: sla }));
     }
 }

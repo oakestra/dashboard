@@ -31,4 +31,37 @@ export class CleanJsonService {
         }
         return o;
     }
+
+    static deleteEmptyValues(obj: Record<string, any>): Record<string, any> {
+        if (!obj) {
+            return obj;
+        }
+
+        Object.keys(obj).forEach((key) => {
+            const value = obj[key];
+
+            if (Array.isArray(value)) {
+                obj[key] = value.filter((v) => {
+                    if (typeof v === 'object') {
+                        this.deleteEmptyValues(v);
+                    }
+                    return v !== '' && v.length !== 0;
+                });
+
+                if (obj[key].length === 0) {
+                    delete obj[key];
+                }
+            } else if (typeof value === 'object' && value !== null) {
+                this.deleteEmptyValues(value);
+
+                if (Object.keys(value).length === 0) {
+                    delete obj[key];
+                }
+            } else if (value === '') {
+                delete obj[key];
+            }
+        });
+
+        return obj;
+    }
 }
