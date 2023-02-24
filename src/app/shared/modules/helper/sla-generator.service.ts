@@ -23,6 +23,6 @@ export class SlaGeneratorService {
             ],
             args: [''],
         };
-        return CleanJsonService.cleanData(sla);
+        return CleanJsonService.deleteEmptyValues(sla);
     }
 }

@@ -24,7 +24,7 @@
         <div class="w3-col l6 s12">
             <mat-form-field matTooltip="Type of virtualization chosen for the service">
                 <mat-label>Virtualization</mat-label>
-                <mat-select matNativeControl required>
+                <mat-select matNativeControl formControlName="virtualization" required>
                     <mat-option value="container">Container</mat-option>
                     <mat-option value="unikernel">Unikernel</mat-option>
                     <mat-option value="vm">Vm</mat-option>
