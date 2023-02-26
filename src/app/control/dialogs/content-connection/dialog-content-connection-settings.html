@@ -13,28 +13,28 @@
         </mat-radio-group>
     </div>
 
-    <div class="full-width w3-row">
-        <div class="w3-col s12 m4 l4">
+    <div class="w3-row">
+        <div class="w3-col l4 m4 s12 w3-row-padding">
             <mat-form-field class="full-width">
                 <mat-label>Threshold</mat-label>
                 <input [(ngModel)]="data.threshold" matInput type="number" />
-                <p matSuffix>ms</p>
+                <p matSuffix>ms&#160;</p>
             </mat-form-field>
         </div>
 
-        <div class="w3-col s12 m4 l4">
+        <div class="w3-col l4 m4 s12 w3-row-padding">
             <mat-form-field class="full-width">
                 <mat-label>Rigidness</mat-label>
                 <input [(ngModel)]="data.rigidness" matInput max="100" min="0" type="number" />
-                <p matSuffix>%</p>
+                <p matSuffix>%&#160;</p>
             </mat-form-field>
         </div>
 
-        <div class="w3-col s12 m4 l4">
+        <div class="w3-col l4 m4 s12 w3-row-padding">
             <mat-form-field class="full-width">
                 <mat-label>Convergence Time</mat-label>
                 <input [(ngModel)]="data.convergence_time" matInput type="number" />
-                <p matSuffix>sec</p>
+                <p matSuffix>sec&#160;</p>
             </mat-form-field>
         </div>
     </div>

@@ -11,7 +11,7 @@
 
 <!-- TODO Create inputs for the new attributes-->
 <div>
-    <mat-card *ngFor="let cons of constraints; let i = index">
+    <div *ngFor="let cons of constraints; let i = index">
         <div>
             <div *ngIf="canViewLatConstrains[i]" class="constraints">
                 <div>
@@ -20,37 +20,44 @@
                         <mat-icon>delete</mat-icon>
                     </button>
                 </div>
-                <mat-form-field>
-                    <mat-label>Area</mat-label>
-                    <select
-                        matNativeControl
-                        matTooltip="Specifies the area in which the constraint is in effect"
-                        required
-                    >
-                        <!-- // TODO Add the real locations -->
-                        <option value="munich1">Munich 1</option>
-                        <option value="munich2">Munich 2</option>
-                        <option value="frankfurt">Frankfurt</option>
-                    </select>
-                </mat-form-field>
-
-                <mat-form-field>
-                    <mat-label>Threshold</mat-label>
-                    <input matInput matTooltip="Maximum latency" type="number" value="0" />
-                    <p matSuffix>ms</p>
-                </mat-form-field>
-
-                <mat-form-field>
-                    <mat-label>Rigidness</mat-label>
-                    <input matInput max="1" min="0" step="0.01" type="number" value="0" />
-                    <p matSuffix>%</p>
-                </mat-form-field>
-
-                <mat-form-field>
-                    <mat-label>Convergence Time</mat-label>
-                    <input matInput type="number" value="300" />
-                    <p matSuffix>sec</p>
-                </mat-form-field>
+                <div class="w3-row">
+                    <div class="w3-col l12 m12 s12 w3-row-padding">
+                        <mat-form-field>
+                            <mat-label>Area</mat-label>
+                            <mat-select
+                                matNativeControl
+                                matTooltip="Specifies the area in which the constraint is in effect"
+                                required
+                            >
+                                <!-- // TODO Add the real locations -->
+                                <mat-option value="munich1">Munich 1</mat-option>
+                                <mat-option value="munich2">Munich 2</mat-option>
+                                <mat-option value="frankfurt">Frankfurt</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="w3-col l4 m4 s6 w3-row-padding">
+                        <mat-form-field>
+                            <mat-label>Threshold</mat-label>
+                            <input matInput matTooltip="Maximum latency" type="number" value="0" />
+                            <p matSuffix>ms&#160;</p>
+                        </mat-form-field>
+                    </div>
+                    <div class="w3-col l4 m4 s6 w3-row-padding">
+                        <mat-form-field>
+                            <mat-label>Rigidness</mat-label>
+                            <input matInput max="1" min="0" step="0.01" type="number" value="0" />
+                            <p matSuffix>%&#160;</p>
+                        </mat-form-field>
+                    </div>
+                    <div class="w3-col l4 m4 s6 w3-row-padding">
+                        <mat-form-field>
+                            <mat-label>Convergence Time</mat-label>
+                            <input matInput type="number" value="300" />
+                            <p matSuffix>sec&#160;</p>
+                        </mat-form-field>
+                    </div>
+                </div>
             </div>
 
             <div *ngIf="!canViewLatConstrains[i]" class="constraints">
@@ -61,42 +68,47 @@
                     </button>
                 </div>
 
-                <div class="w3-col l4 m4 s6">
-                    <mat-form-field>
-                        <mat-label>Longitude</mat-label>
-                        <input #long matInput type="number" />
-                    </mat-form-field>
+                <div class="w3-row">
+                    <div class="w3-col l4 m4 s6 w3-row-padding">
+                        <mat-form-field>
+                            <mat-label>Longitude</mat-label>
+                            <input [(ngModel)]="longitude[i]" (change)="updateLongLat(i)" matInput type="number" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="w3-col l4 m4 s6 w3-row-padding">
+                        <mat-form-field>
+                            <mat-label>Latitude</mat-label>
+                            <input [(ngModel)]="latitude[i]" (change)="updateLongLat(i)" matInput type="number" />
+                        </mat-form-field>
+                    </div>
+                    <div class="w3-col w3-rest"></div>
+
+                    <div class="w3-col l4 m4 s12 w3-row-padding">
+                        <mat-form-field>
+                            <mat-label>Threshold</mat-label>
+                            <input matInput type="number" />
+                            <p matSuffix>km&#160;</p>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="w3-col l4 m4 s12 w3-row-padding">
+                        <mat-form-field>
+                            <mat-label>Rigidness</mat-label>
+                            <input matInput max="100" min="0" type="number" value="0" />
+                            <p matSuffix>%&#160;</p>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="w3-col l4 m4 s12 w3-row-padding">
+                        <mat-form-field>
+                            <mat-label>Convergence Time</mat-label>
+                            <input matInput type="number" value="300" />
+                            <p matSuffix>sec&#160;</p>
+                        </mat-form-field>
+                    </div>
                 </div>
-
-                <div class="w3-col l4 m4 s6">
-                    <mat-form-field>
-                        <mat-label>Latitude</mat-label>
-                        <input #lat matInput type="number" />
-                    </mat-form-field>
-                </div>
-
-                <div class="location">
-                    <input [ngModel]="'(' + long.value + ',' + lat.value + ')'" matInput />
-                </div>
-
-                <mat-form-field>
-                    <mat-label>Threshold</mat-label>
-                    <input matInput type="number" />
-                    <p matSuffix>km</p>
-                </mat-form-field>
-
-                <mat-form-field>
-                    <mat-label>Rigidness</mat-label>
-                    <input matInput max="100" min="0" type="number" value="0" />
-                    <p matSuffix>%</p>
-                </mat-form-field>
-
-                <mat-form-field>
-                    <mat-label>Convergence Time</mat-label>
-                    <input matInput type="number" value="300" />
-                    <p matSuffix>sec</p>
-                </mat-form-field>
             </div>
         </div>
-    </mat-card>
+    </div>
 </div>

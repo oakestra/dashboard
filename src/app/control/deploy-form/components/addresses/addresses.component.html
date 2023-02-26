@@ -1,57 +1,71 @@
-<mat-expansion-panel>
-    <mat-expansion-panel-header>
-        <mat-panel-title
-            >Addresses
-            <mat-icon
-                matTooltip="Optional - If the specified IP addresses are unoccupied, the service will be provided at these addresses."
-            >
-                info
-            </mat-icon>
-        </mat-panel-title>
-    </mat-expansion-panel-header>
-    <div [formGroup]="form">
-        <mat-form-field>
-            <mat-label>RR-IP</mat-label>
-            <input
-                matInput
-                formControlName="rr_ip"
-                matTooltip="Optional - IP chosen for round-robin addressation (10.30.30.30)"
-                type="text"
-            />
-        </mat-form-field>
+<div class="w3-row">
+    <div class="w3-row-padding">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title
+                    >Addresses
+                    <mat-icon
+                        matTooltip="Optional - If the specified IP addresses are unoccupied, the service will be provided at these addresses."
+                    >
+                        info
+                    </mat-icon>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div [formGroup]="form">
+                <div class="w3-row">
+                    <div class="w3-col l5 m5 s12 w3-row-padding">
+                        <mat-form-field>
+                            <mat-label>RR-IP</mat-label>
+                            <input
+                                matInput
+                                formControlName="rr_ip"
+                                matTooltip="Optional - IP chosen for round-robin addressation (10.30.30.30)"
+                                type="text"
+                            />
+                        </mat-form-field>
+                    </div>
 
-        <mat-form-field>
-            <mat-label>Closest_ip</mat-label>
-            <input
-                matInput
-                matTooltip="Optional - The orchestrator may choose the closest IP to the given one"
-                type="text"
-                formControlName="closest_ip"
-            />
-        </mat-form-field>
+                    <div class="w3-col l5 m5 s12 w3-row-padding">
+                        <mat-form-field>
+                            <mat-label>Closest_ip</mat-label>
+                            <input
+                                matInput
+                                matTooltip="Optional - The orchestrator may choose the closest IP to the given one"
+                                type="text"
+                                formControlName="closest_ip"
+                            />
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <!--  // TODO Support instances array-->
+            <div *ngFor="let inst of instances; index as i; trackBy: trackByIdx" class="full-width instance">
+                <h5>Instances:</h5>
+                <div class="w3-row">
+                    <div class="w3-col l3 m3 s12 w3-row-padding">
+                        <mat-form-field>
+                            <mat-label>From</mat-label>
+                            <input matInput type="text" [(ngModel)]="instances[i].from" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="w3-col l3 m3 s12 w3-row-padding">
+                        <mat-form-field>
+                            <mat-label>To</mat-label>
+                            <input matInput type="text" [(ngModel)]="instances[i].to" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="w3-col l3 m3 s12 w3-row-padding">
+                        <mat-form-field>
+                            <mat-label>Start</mat-label>
+                            <input matInput type="text" [(ngModel)]="instances[i].start" />
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
     </div>
-    <!--  // TODO Support instances array-->
-    <div *ngFor="let inst of instances; index as i; trackBy: trackByIdx" class="full-width instance">
-        <p>Instances:</p>
-        <div class="w3-col l3 m4 s12 w3-row-padding">
-            <mat-form-field>
-                <mat-label>From</mat-label>
-                <input matInput type="text" [(ngModel)]="instances[i].from" />
-            </mat-form-field>
-        </div>
-
-        <div class="w3-col l3 m4 s12 w3-row-padding">
-            <mat-form-field>
-                <mat-label>To</mat-label>
-                <input matInput type="text" [(ngModel)]="instances[i].to" />
-            </mat-form-field>
-        </div>
-
-        <div class="w3-col l3 m4 s12 w3-row-padding">
-            <mat-form-field>
-                <mat-label>Start</mat-label>
-                <input matInput type="text" [(ngModel)]="instances[i].start" />
-            </mat-form-field>
-        </div>
-    </div>
-</mat-expansion-panel>
+</div>
+<br />

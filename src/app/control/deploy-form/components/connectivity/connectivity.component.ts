@@ -3,30 +3,44 @@ import { MatDialog } from '@angular/material/dialog';
 import { ICon_constraints, IConnectivity, IService } from '../../../../root/interfaces/service';
 import { DialogConnectionSettingsView } from '../../../dialogs/content-connection/dialog-connection-settings-view.component';
 import { SubComponent } from '../../../../root/classes/subComponent';
+import { filter, Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { selectCurrentServices } from '../../../../root/store/selectors/service.selector';
+import { appReducer } from '../../../../root/store';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'form-connectivity',
     templateUrl: './connectivity.component.html',
     styleUrls: ['./connectivity.component.css'],
 })
-
-// TODO Simplify this and dont use a form array. or only a local one
 export class ConnectivityComponent extends SubComponent implements OnInit {
     @Input() service: IService;
     connectivity: IConnectivity[] = [];
+    services$: Observable<IService[]> = this.store.pipe(select(selectCurrentServices));
+    dropdownServices: IService[];
 
-    constructor(public dialog: MatDialog) {
+    constructor(public dialog: MatDialog, private store: Store<appReducer.AppState>) {
         super();
     }
 
     ngOnInit(): void {
         this.connectivity = this.service?.connectivity ?? [];
+        this.services$
+            .pipe(
+                map((s) =>
+                    this.service ? s.filter((service) => service.microserviceID !== this.service.microserviceID) : s,
+                ),
+                tap((filteredServices) => (this.dropdownServices = filteredServices)),
+            )
+            .subscribe();
+        console.log(this.dropdownServices);
     }
 
     addConnectivity() {
         const c: IConnectivity = {
             con_constraints: [],
-            target_microservice_id: 'has to be selected',
+            target_microservice_id: '',
         };
         this.connectivity.push(c);
     }
