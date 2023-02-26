@@ -5,14 +5,19 @@
     </button>
 </div>
 
-<div *ngFor="let args of argsArray; index as i; trackBy: trackByIdx">
-    <mat-form-field>
-        <mat-label>Args - Key Value</mat-label>
-        <input [(ngModel)]="argsArray[i]" matInput type="text" />
-    </mat-form-field>
-    <button (click)="deleteArgument(i)" mat-icon-button type="button">
-        <mat-icon>delete</mat-icon>
-    </button>
+<div class="w3-row">
+    <div *ngFor="let args of argsArray; index as i; trackBy: trackByIdx">
+        <div class="w3-col l4 m6 s12 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Args - Key Value</mat-label>
+                <input [(ngModel)]="argsArray[i]" class="addButtonDiv" matInput type="text" />
+
+                <button matSuffix (click)="deleteArgument(i)" mat-icon-button type="button">
+                    <mat-icon>clear</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+    </div>
 </div>
 
 <div>
@@ -22,14 +27,19 @@
     </button>
 </div>
 
-<div *ngFor="let env of environment; index as i; trackBy: trackByIdx">
-    <mat-form-field>
-        <mat-label>Environment</mat-label>
-        <input [(ngModel)]="environment[i]" matInput type="text" />
-    </mat-form-field>
-    <button (click)="deleteEnvironment(i)" mat-icon-button type="button">
-        <mat-icon>delete</mat-icon>
-    </button>
+<div class="w3-row">
+    <div *ngFor="let env of environment; index as i; trackBy: trackByIdx">
+        <div class="w3-col l4 m6 s12 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Environment</mat-label>
+                <input [(ngModel)]="environment[i]" matInput type="text" />
+
+                <button matSuffix (click)="deleteEnvironment(i)" mat-icon-button type="button">
+                    <mat-icon>clear</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+    </div>
 </div>
 
 <div>
@@ -39,12 +49,16 @@
     </button>
 </div>
 
-<div *ngFor="let cmd of cmdArray; index as i; trackBy: trackByIdx">
-    <mat-form-field>
-        <mat-label>Cmd</mat-label>
-        <input [(ngModel)]="cmdArray[i]" matInput type="text" />
-    </mat-form-field>
-    <button (click)="deleteCmd(i)" mat-icon-button type="button">
-        <mat-icon>delete</mat-icon>
-    </button>
+<div class="w3-row">
+    <div *ngFor="let cmd of cmdArray; index as i; trackBy: trackByIdx">
+        <div class="w3-col l4 m6 s12 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Cmd</mat-label>
+                <input [(ngModel)]="cmdArray[i]" matInput type="text" />
+                <button matSuffix (click)="deleteCmd(i)" mat-icon-button type="button">
+                    <mat-icon>clear</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+    </div>
 </div>

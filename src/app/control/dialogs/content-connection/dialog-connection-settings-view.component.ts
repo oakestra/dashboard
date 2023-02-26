@@ -9,6 +9,7 @@ import { DialogGraphConnectionView } from '../graph-content-connection/dialog-gr
     styles: [
         '::ng-deep .blackRadio .mat-radio-outer-circle{border-color: black}',
         'radioDiv{padding-bottom: 32px; margin: 20px 0 20px 0}',
+        '.mdc-radio__outer-circle {border-color: black !important}',
     ],
 })
 export class DialogConnectionSettingsView {

@@ -1,29 +1,29 @@
 <h4>Requirements:</h4>
 <form [formGroup]="form">
     <div class="w3-row">
-        <div class="w3-col l3 m4 s6">
+        <div class="w3-col l3 m4 s6 w3-row-padding">
             <mat-form-field>
                 <mat-label>Memory</mat-label>
                 <input matInput min="0" formControlName="memory" placeholder="1024" required type="number" />
-                <p matSuffix>MB</p>
+                <p matSuffix>MB&#160;</p>
             </mat-form-field>
         </div>
 
-        <div class="w3-col l3 m4 s6">
+        <div class="w3-col l3 m4 s6 w3-row-padding">
             <mat-form-field>
                 <mat-label>Vcpus</mat-label>
                 <input matInput min="0" formControlName="vcpus" required type="number" value="1" />
             </mat-form-field>
         </div>
 
-        <div class="w3-col l3 m4 s6">
+        <div class="w3-col l3 m4 s6 w3-row-padding">
             <mat-form-field>
                 <mat-label>Vgpus</mat-label>
                 <input matInput min="0" formControlName="vgpus" required type="number" value="0" />
             </mat-form-field>
         </div>
 
-        <div class="w3-col l3 m4 s6">
+        <div class="w3-col l3 m4 s6 w3-row-padding">
             <mat-form-field>
                 <mat-label>Vtpus</mat-label>
                 <input matInput min="0" formControlName="vtpus" required type="number" value="0" />
@@ -42,11 +42,11 @@
                     value="0"
                     formControlName="bandwidth_in"
                 />
-                <p matSuffix>KB</p>
+                <p matSuffix>KB&#160;</p>
             </mat-form-field>
         </div>
 
-        <div class="w3-col l3 m4 s6">
+        <div class="w3-col l3 m4 s6 w3-row-padding">
             <mat-form-field>
                 <mat-label>Bandwidth_out</mat-label>
                 <input
@@ -58,32 +58,44 @@
                     value="0"
                     formControlName="bandwidth_out"
                 />
-                <p matSuffix>KB</p>
+                <p matSuffix>KB&#160;</p>
             </mat-form-field>
         </div>
 
-        <div class="w3-col l3 m4 s6">
+        <div class="w3-col l3 m4 s6 w3-row-padding">
             <mat-form-field>
                 <mat-label>Storage</mat-label>
                 <input matInput min="0" formControlName="storage" required type="number" value="0" />
-                <p matSuffix>MB</p>
+                <p matSuffix>MB&#160;</p>
             </mat-form-field>
         </div>
 
-        <mat-form-field>
-            <mat-label>Port</mat-label>
-            <input matInput formControlName="port" matTooltip="Port for exposure of the service" required type="text" />
-        </mat-form-field>
+        <div class="w3-col l3 m4 s6 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Port</mat-label>
+                <input
+                    matInput
+                    formControlName="port"
+                    matTooltip="Port for exposure of the service"
+                    required
+                    type="text"
+                />
+            </mat-form-field>
+        </div>
 
-        <mat-form-field>
-            <mat-label>Sla violation strategy</mat-label>
-            <input matInput formControlName="port" type="text" />
-        </mat-form-field>
+        <div class="w3-col l3 m4 s6 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Sla violation strategy</mat-label>
+                <input matInput formControlName="sla_violation_strategy" type="text" />
+            </mat-form-field>
+        </div>
 
-        <mat-form-field>
-            <mat-label>Target node</mat-label>
-            <input matInput formControlName="port" type="text" />
-        </mat-form-field>
+        <div class="w3-col l3 m4 s6 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Target node</mat-label>
+                <input matInput formControlName="target_node" type="text" />
+            </mat-form-field>
+        </div>
     </div>
     <form [formGroup]="form"></form>
 </form>
