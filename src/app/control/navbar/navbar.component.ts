@@ -43,7 +43,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         this.store.dispatch(getUser({ name: this.userService.getUsername() }));
 
         this.user$.subscribe((user: IUser) => {
-            this.userID = user._id.$oid;
+            if (user) {
+                this.userID = user._id.$oid;
+            }
         });
 
         this.updatePermissions();

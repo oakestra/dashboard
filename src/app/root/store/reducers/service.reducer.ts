@@ -25,8 +25,6 @@ export const serviceReducer = createReducer(
 
     // TODO FIX gets called multiple times
     on(serviceActions.getServicesSuccess, (state, action) => {
-        console.log('action.services');
-        console.log(action.services);
         const servicesOfApp = action.services;
         const loading = false;
         return { ...state, servicesOfApp, loading };

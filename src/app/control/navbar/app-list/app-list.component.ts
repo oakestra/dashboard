@@ -47,6 +47,13 @@ export class AppListComponent implements OnInit {
 
     ngOnInit(): void {
         this.store.dispatch(getApplication({ id: this.userID }));
+        this.apps$.subscribe((apps) => {
+            const active = apps.filter((a) => a._id.$oid === sessionStorage.getItem('id'))[0];
+            if (active) {
+                this.store.dispatch(setCurrentApplication({ application: active }));
+                this.activeAppId = active._id;
+            }
+        });
     }
 
     openDialogApp(action: DialogAction, app: IApplication | undefined) {
@@ -70,8 +77,6 @@ export class AppListComponent implements OnInit {
             if (result.event === DialogAction.ADD) {
                 this.store.dispatch(postApplication({ application: result.data }));
             } else if (result.event === DialogAction.UPDATE) {
-                console.log('Update');
-                console.log(result);
                 this.store.dispatch(updateApplication({ application: result.data }));
             } else if (result.event === DialogAction.DELETE) {
                 this.store.dispatch(deleteApplication({ application: result.data }));
@@ -107,6 +112,7 @@ export class AppListComponent implements OnInit {
     }*/
 
     handleChange() {
+        sessionStorage.setItem('id', this.activeAppId.$oid);
         this.apps$.subscribe((app) => {
             const application = app.filter((app) => app._id.$oid === this.activeAppId.$oid)[0];
             this.store.dispatch(setCurrentApplication({ application }));
