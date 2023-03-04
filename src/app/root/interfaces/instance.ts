@@ -10,4 +10,5 @@ export interface IInstance {
     status: string;
     instance_list: string[];
     addresses: IAddresses;
+    status_detail: string;
 }

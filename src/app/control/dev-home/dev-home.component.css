@@ -86,6 +86,8 @@ mat-card p {
 
 .statusField {
     cursor: pointer;
+    align-items: end;
+    display: inline-flex;
 }
 
 .mat-expansion-panel {
@@ -123,6 +125,8 @@ mat-card p {
     padding: 16px;
     border-left: 2px solid;
     border-left-color: #adacac;
+    display: flex;
+    align-items: center;
 }
 
 .instance:hover {

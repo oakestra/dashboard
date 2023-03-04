@@ -100,7 +100,7 @@ export class LineChartComponent implements OnInit {
                 },
             },
         });
-
+        /*
         // TODO Update map with real values and display only a polygon
         const locationSplit = this.instanceList.cluster_location.split(',', 3) ?? [];
         if (locationSplit.length === 3) {
@@ -108,5 +108,8 @@ export class LineChartComponent implements OnInit {
         } else {
             initMap(0.0, 0.0, 19999999);
         }
+        */
+
+        initMap(0.0, 0.0, 19999999);
     }
 }

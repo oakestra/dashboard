@@ -13,7 +13,7 @@
                                 class="w3-col s5 w3-right statusField"
                                 (click)="$event.stopPropagation()"
                             >
-                                <div (click)="openStatusDialog(service)" *ngIf="service.status">
+                                <div *ngIf="service.status" class="statusField">
                                     <button mat-icon-button type="button">
                                         <mat-icon [class]="service.status">fiber_manual_record</mat-icon>
                                     </button>
@@ -50,10 +50,12 @@
                             No instances of this service.
                         </div>
 
-                        <div *ngFor="let instance of service.instance_list" class="w3-row instance">
-                            <div class="w3-col s6 l5 m5">Instance</div>
+                        <div *ngFor="let instance of service.instance_list; let i = index" class="w3-row instance">
+                            <div class="w3-col s6 l5 m5">
+                                <p>Instance {{ i + 1 }}</p>
+                            </div>
 
-                            <div (click)="openStatusDialog(instance)" class="w3-col s5 statusField">
+                            <div (click)="openStatusDialog(instance)" class="w3-col l5 m6 s5 statusField">
                                 <button mat-icon-button type="button">
                                     <mat-icon [class]="instance.status">fiber_manual_record</mat-icon>
                                 </button>
@@ -61,11 +63,7 @@
                             </div>
 
                             <div class="w3-col s1 w3-right">
-                                <button
-                                    class="instanceDelete"
-                                    mat-flat-button
-                                    (click)="deleteInstance(service, instance)"
-                                >
+                                <button (click)="deleteInstance(service, instance)" mat-icon-button type="button">
                                     <mat-icon>delete</mat-icon>
                                 </button>
                             </div>

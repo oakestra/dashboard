@@ -1,20 +1,18 @@
-<h2 mat-dialog-title>Status: {{status}}</h2>
+<h2 mat-dialog-title>Status: {{instance.status}}</h2>
 <mat-dialog-content class="mat-typography">
     <div class="alert alert-info width70">
-        <p>{{details}}</p>
+        <p>{{instance.status_detail}}</p>
     </div>
 
-    <div *ngIf="(instance !== null); else serviceDetails">
-        <line-chart [instanceList]="instance"></line-chart>
+    <div>
+        <!--        <line-chart [instanceList]="instance"></line-chart>-->
+        <p><b>CPU:</b> {{instance.cpu}}</p>
+        <p><b>Memory:</b> {{instance.memory}}</p>
         <p><b>Disk:</b> {{instance.disk}}</p>
         <p><b>Cluster:</b> {{instance.cluster_id}}</p>
         <p><b>Node IP:</b> {{instance.public_ip}}</p>
         <a [href]="grafanaLink" rel="noopener noreferrer" target="_blank">View in Grafana</a>
     </div>
-    <ng-template #serviceDetails>
-        <p><b>Addresses:</b> {{service.addresses | json}}</p>
-        <p><b>Number of Instances:</b> {{instanceCount}}</p>
-    </ng-template>
 </mat-dialog-content>
 
 <mat-dialog-actions class="alignRight">
