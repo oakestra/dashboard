@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
 import { ICon_constraints, IConnectivity, IService } from '../../../../root/interfaces/service';
 import { DialogConnectionSettingsView } from '../../../dialogs/content-connection/dialog-connection-settings-view.component';
 import { SubComponent } from '../../../../root/classes/subComponent';
-import { filter, Observable } from 'rxjs';
-import { select, Store } from '@ngrx/store';
 import { selectCurrentServices } from '../../../../root/store/selectors/service.selector';
 import { appReducer } from '../../../../root/store';
-import { map, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'form-connectivity',
