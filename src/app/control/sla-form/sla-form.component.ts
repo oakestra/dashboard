@@ -22,11 +22,11 @@ import { ConstraintsComponent } from './components/constraints/constraints.compo
 import { ConnectivityComponent } from './components/connectivity/connectivity.component';
 
 @Component({
-    selector: 'deploy-form',
-    templateUrl: './deploy-form.component.html',
-    styleUrls: ['./deploy-form.component.css'],
+    selector: 'sla-form',
+    templateUrl: './sla-form.component.html',
+    styleUrls: ['./sla-form.component.css'],
 })
-export class DeployFormComponent implements OnInit {
+export class SlaFormComponent implements OnInit {
     @ViewChild('serviceInfo') serviceInfo: ServiceInfoComponent;
     @ViewChild('requirements') requirements: RequirementsComponent;
     @ViewChild('fileSelect') fileSelect: FileSelectComponent;

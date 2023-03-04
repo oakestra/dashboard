@@ -47,23 +47,23 @@ import { DialogConnectionSettingsView } from './dialogs/content-connection/dialo
 import { NavbarComponent } from './navbar/navbar.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { DevHomeComponent } from './dev-home/dev-home.component';
-import { DeployFormComponent } from './deploy-form/deploy-form.component';
+import { SlaFormComponent } from './sla-form/sla-form.component';
 import { routes } from './control.routing';
 import { AppListComponent } from './navbar/app-list/app-list.component';
 import { ClusterListComponent } from './navbar/cluster-list/cluster-list.component';
 import { ClusterComponent } from './cluster/cluster.component';
-import { ConnectivityComponent } from './deploy-form/components/connectivity/connectivity.component';
-import { ConstraintsComponent } from './deploy-form/components/constraints/constraints.component';
-import { FileSelectComponent } from './deploy-form/components/file-select/file-select.component';
-import { FileUploadComponent } from './deploy-form/components/file-upload/file-upload.component';
-import { ServiceInfoComponent } from './deploy-form/components/service-info/service-info.component';
-import { RequirementsComponent } from './deploy-form/components/requirements/requirements.component';
-import { AddressesComponent } from './deploy-form/components/addresses/addresses.component';
-import { ArgumentsComponent } from './deploy-form/components/arguments/arguments.component';
+import { ConnectivityComponent } from './sla-form/components/connectivity/connectivity.component';
+import { ConstraintsComponent } from './sla-form/components/constraints/constraints.component';
+import { FileSelectComponent } from './sla-form/components/file-select/file-select.component';
+import { FileUploadComponent } from './sla-form/components/file-upload/file-upload.component';
+import { ServiceInfoComponent } from './sla-form/components/service-info/service-info.component';
+import { RequirementsComponent } from './sla-form/components/requirements/requirements.component';
+import { AddressesComponent } from './sla-form/components/addresses/addresses.component';
+import { ArgumentsComponent } from './sla-form/components/arguments/arguments.component';
 
 @NgModule({
     declarations: [
-        DeployFormComponent,
+        SlaFormComponent,
         DevHomeComponent,
         NotFoundComponent,
         NavbarComponent,

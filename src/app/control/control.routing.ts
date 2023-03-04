@@ -4,7 +4,7 @@ import { RoleRouterGuard } from '../shared/modules/auth/role-guard.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DevHomeComponent } from './dev-home/dev-home.component';
 import { HelpComponent } from './help/help.component';
-import { DeployFormComponent } from './deploy-form/deploy-form.component';
+import { SlaFormComponent } from './sla-form/sla-form.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UsersComponent } from './users/users.component';
 import { UserEditComponent } from './users/user-edit/user-edit.component';
@@ -28,12 +28,12 @@ export const routes: Routes = [
             },
             {
                 path: 'deploy/:id',
-                component: DeployFormComponent,
+                component: SlaFormComponent,
                 canActivate: [AuthGuardService],
             },
             {
                 path: 'deploy',
-                component: DeployFormComponent,
+                component: SlaFormComponent,
                 canActivate: [AuthGuardService],
             },
             {
