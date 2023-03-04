@@ -60,6 +60,7 @@ import { ServiceInfoComponent } from './sla-form/components/service-info/service
 import { RequirementsComponent } from './sla-form/components/requirements/requirements.component';
 import { AddressesComponent } from './sla-form/components/addresses/addresses.component';
 import { ArgumentsComponent } from './sla-form/components/arguments/arguments.component';
+import { InfrastructureComponent } from './infrastructure/infrastructure.component';
 
 @NgModule({
     declarations: [
@@ -92,6 +93,7 @@ import { ArgumentsComponent } from './sla-form/components/arguments/arguments.co
         RequirementsComponent,
         AddressesComponent,
         ArgumentsComponent,
+        InfrastructureComponent,
     ],
     imports: [
         CommonModule,

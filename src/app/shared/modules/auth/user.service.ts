@@ -55,6 +55,8 @@ export class UserService {
         this.loggedIn = false;
         localStorage.removeItem('api_token');
         localStorage.removeItem('api_refresh_token');
+        sessionStorage.removeItem('id');
+        // TODO reset the store
         void this.router.navigate(['/'], { replaceUrl: true });
     }
 

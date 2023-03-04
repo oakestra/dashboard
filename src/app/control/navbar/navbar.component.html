@@ -44,7 +44,8 @@
             </div>
             <hr />
 
-            <div class="nav-item">
+            <!--          *ngIf="isAdmin || isDev"-->
+            <div class="nav-item" *ngIf="isAdmin">
                 <app-app-list [userID]="userID"></app-app-list>
             </div>
 

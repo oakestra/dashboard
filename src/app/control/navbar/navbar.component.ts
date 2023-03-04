@@ -68,6 +68,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     }
 
     updatePermissions(): void {
+        // TODO Set Roles in JWT and dont make a extra api call.
         this.authService.hasRole(Role.ADMIN).subscribe((isAdmin) => {
             this.isAdmin = isAdmin;
         });
