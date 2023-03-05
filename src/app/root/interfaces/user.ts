@@ -9,6 +9,7 @@ export interface IUser {
     roles: Array<IUserRole>;
 }
 export interface ILoginRequest {
+    organization?: string;
     username: string;
     password: string;
 }

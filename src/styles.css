@@ -13,6 +13,11 @@
     color: white;
 }
 
+.updateButton:disabled {
+    background-color: rgba(74, 112, 131, 0.5) !important;
+    color: white;
+}
+
 .mdc-button__label {
     color: white;
 }
@@ -39,6 +44,14 @@
 
 .mat-mdc-dialog-actions {
     justify-content: end !important;
+}
+
+.mat-mdc-tab-body.mat-mdc-tab-body-active {
+    overflow: hidden !important;
+}
+
+.mat-mdc-tab-body-content {
+    overflow: hidden !important;
 }
 
 .full-width {

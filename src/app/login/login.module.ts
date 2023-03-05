@@ -9,7 +9,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
-import { RegisterComponent } from './components/register/register.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { LoginComponent } from './components/login/login.component';
 import { routes } from './login.routing';
@@ -27,9 +28,11 @@ import { routes } from './login.routing';
         MatFormFieldModule,
         MatInputModule,
         MatDialogModule,
+        MatTabsModule,
+        MatSlideToggleModule,
     ],
     providers: [],
-    declarations: [LoginComponent, ResetPasswordComponent, RegisterComponent],
+    declarations: [LoginComponent, ResetPasswordComponent],
     exports: [RouterModule],
 })
 export class LoginModule {}

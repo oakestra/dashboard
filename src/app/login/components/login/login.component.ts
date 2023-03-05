@@ -27,31 +27,33 @@ export class LoginComponent {
         private fb: FormBuilder,
     ) {
         this.form = fb.group({
+            organization: ['', [Validators.required]],
             username: ['', [Validators.required]],
             password: ['', [Validators.required]],
         });
     }
 
-    public submitLogin() {
-        const username = this.form.get('username');
-        const password = this.form.get('password');
-        if (username?.valid && password?.valid) {
-            const loginRequest: ILoginRequest = {
-                username: username.value,
-                password: password.value,
-            };
-
-            this.userService.login(loginRequest).subscribe({
-                next: (userServiceResponse: boolean) => {
-                    if (userServiceResponse) {
-                        this.authService.getAuthorization().subscribe(() => void this.router.navigate(['/control']));
-                    }
-                },
-                error: (error) => this.notifyService.notify(NotificationType.error, error),
-            });
+    public tabChanged(event: any) {
+        if (event.index === 0) {
+            this.form.get('organization').enable();
         } else {
-            this.notifyService.notify(NotificationType.error, 'Please provide valid inputs for login.');
+            this.form.get('organization').disable();
         }
+    }
+
+    public submitLogin() {
+        const loginRequest: ILoginRequest = {
+            ...this.form.value,
+        };
+
+        this.userService.login(loginRequest).subscribe({
+            next: (userServiceResponse: boolean) => {
+                if (userServiceResponse) {
+                    this.authService.getAuthorization().subscribe(() => void this.router.navigate(['/control']));
+                }
+            },
+            error: (error) => this.notifyService.notify(NotificationType.error, error),
+        });
     }
 
     public forgotPassword() {
@@ -63,9 +65,5 @@ export class LoginComponent {
         } else {
             this.notifyService.notify(NotificationType.error, 'Please provide a valid username');
         }
-    }
-
-    public registerForm() {
-        void this.router.navigate(['/register']).then();
     }
 }
