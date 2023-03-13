@@ -1,0 +1,75 @@
+.organization-sidenav-side {
+    width: 20vw;
+}
+
+.organization-sidenav {
+    /*height: 60vh;*/
+}
+
+.sidenav-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-right: 10px;
+}
+
+.mat-drawer-content {
+    background-color: white;
+    padding: 10px;
+}
+
+.organization-list {
+    padding-top: 40px;
+}
+
+.organization-entry {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.organization-entry:hover {
+    background-color: #f3f3f3;
+}
+
+.organization-button {
+    width: 80%;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.organization-button mat-icon {
+    vertical-align: bottom;
+}
+
+.selected {
+    background-color: #f3f3f3;
+}
+
+.member-list {
+}
+
+.member-item {
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    align-content: center;
+    flex-wrap: wrap;
+    padding: 5px;
+}
+
+.member-item:hover {
+    background-color: #f3f3f3;
+}
+
+.member-item-person {
+    display: flex;
+}
+
+.remove {
+    cursor: pointer;
+}
+
+.tab {
+    padding: 50px;
+}

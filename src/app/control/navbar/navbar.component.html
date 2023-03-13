@@ -22,8 +22,12 @@
             <mat-icon>person</mat-icon>
             Profile
         </button>
-        <button (click)="show()" *ngIf="isAdmin" mat-menu-item routerLink="users">
+        <button (click)="show()" *ngIf="isAdmin" mat-menu-item routerLink="organization">
             <mat-icon>people</mat-icon>
+            Organization Management
+        </button>
+        <button (click)="show()" *ngIf="isAdmin" mat-menu-item routerLink="users">
+            <mat-icon>manage_accounts</mat-icon>
             User Management
         </button>
         <button (click)="logout()" mat-menu-item>

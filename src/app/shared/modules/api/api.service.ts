@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { RestService } from '../../util/rest.service';
 import { UserService } from '../auth/user.service';
 import { NotificationService } from '../notification/notification.service';
@@ -11,6 +11,7 @@ import { IUser, IUserRole } from '../../../root/interfaces/user';
 import { IApplication } from '../../../root/interfaces/application';
 import { IService } from '../../../root/interfaces/service';
 import { ICluster } from '../../../root/interfaces/cluster';
+import { IOrganization } from '../../../root/interfaces/organization';
 
 @Injectable({
     providedIn: 'root',
@@ -156,6 +157,40 @@ export class ApiService extends RestService {
             oldPassword,
             newPassword,
         });
+    }
+
+    // /////////////////////////////////////////////////////////////////////////
+    // /////////////////// Organization Functions ///////////////////////////////
+
+    addOrganization(org: IOrganization) {
+        return of(org);
+        return this.doPOSTRequest('/organization/', org);
+    }
+
+    updateOrganization(app: IOrganization) {
+        return this.doPUTRequest('/organization/' + app._id.$oid, app);
+    }
+
+    deleteOrganization(app: IOrganization) {
+        return this.doDELRequest('/organization/' + app._id.$oid);
+    }
+
+    getOrganization(): Observable<IOrganization[]> {
+        console.log('in api');
+        const o: IOrganization[] = [
+            {
+                _id: null,
+                name: 'Org1',
+                member: ['Daniel', 'Simon', 'Michael'],
+            },
+            {
+                _id: null,
+                name: 'Org2',
+                member: ['Nitinder', 'Giovanni'],
+            },
+        ];
+        return of(o);
+        // return this.doGETRequest('/organization/');
     }
 
     // /////////////////////////////////////////////////////////////////////////

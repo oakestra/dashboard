@@ -127,6 +127,7 @@ mat-card p {
     border-left-color: #adacac;
     display: flex;
     align-items: center;
+    background-color: #f3f3f3;
 }
 
 .instance:hover {

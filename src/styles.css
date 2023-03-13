@@ -54,6 +54,14 @@
     overflow: hidden !important;
 }
 
+.mat-expansion-panel {
+    margin-bottom: 8px !important;
+}
+
+.mat-typography p {
+    margin: 0 !important;
+}
+
 .full-width {
     width: 100%;
 }
