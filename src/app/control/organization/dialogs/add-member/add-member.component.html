@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ title }}</h2>
+<h2 mat-dialog-title>Add Member</h2>
 <mat-dialog-content class="mat-typography">
     <div class="w3-row">
         <div class="w3-col l12 s12 m12">
@@ -8,18 +8,16 @@
             </mat-form-field>
         </div>
     </div>
-    <mat-section [(ngModel)]="user">
+    <mat-section [formGroup]="selection">
         <h4>Member</h4>
         <mat-option class="userEntry" *ngFor="let u of user">
-            <mat-checkbox> {{ u.name }}</mat-checkbox>
+            <mat-checkbox [formControlName]="u.name"> {{ u.name }}</mat-checkbox>
         </mat-option>
     </mat-section>
+    <p *ngIf="user.length === 0">There are no additional users that could be added</p>
 </mat-dialog-content>
 
 <mat-dialog-actions class="alignRight">
-    <button (click)="doAction()" class="updateButton" mat-flat-button>{{ buttonText }}</button>
-    <button (click)="deleteApplication()" *ngIf="action === DialogAction.UPDATE" class="deleteButton" mat-flat-button>
-        Delete
-    </button>
+    <button (click)="doAction()" class="updateButton" mat-flat-button>Add</button>
     <button (click)="closeDialog()" class="cancelButton" mat-flat-button>Cancel</button>
 </mat-dialog-actions>

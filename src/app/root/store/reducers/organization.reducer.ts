@@ -23,7 +23,6 @@ export const organizationReducer = createReducer(
 
     on(organizationActions.getOrganization, (state) => {
         const organizations = [] as IOrganization[];
-        console.log('Hier');
         const loading = true;
         return { ...state, organizations, loading };
     }),
@@ -95,8 +94,11 @@ export const organizationReducer = createReducer(
     }),
 
     on(organizationActions.postOrganizationSuccess, (state, action) => {
-        console.log(action.organization);
-        const organizations = [...state.organizations, action.organization];
+        const organization = {
+            _id: { $oid: action.id },
+            ...action.organization,
+        };
+        const organizations = [...state.organizations, organization];
         const loading = false;
         return { ...state, organizations, loading };
     }),

@@ -1,10 +1,8 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { IApplication } from '../../../../root/interfaces/application';
-import { IDialogAttribute } from '../../../../root/interfaces/dialogAttribute';
+import { FormBuilder } from '@angular/forms';
 import { DialogAction } from '../../../../root/enums/dialogAction';
 import { appReducer, getAllUser } from '../../../../root/store';
 import { IUser } from '../../../../root/interfaces/user';
@@ -17,10 +15,6 @@ import { selectAllUser } from '../../../../root/store/selectors/user.selector';
 })
 export class AddMemberComponent implements OnInit {
     DialogAction = DialogAction;
-    action: DialogAction;
-    app: IApplication;
-    title = 'Add Application';
-    buttonText = 'Add';
     searchText = '';
     user: IUser[];
     selection: any;
@@ -29,33 +23,31 @@ export class AddMemberComponent implements OnInit {
 
     constructor(
         public dialogRef: MatDialogRef<AddMemberComponent>,
-        @Optional() @Inject(MAT_DIALOG_DATA) public data: IDialogAttribute,
+        @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
         private store: Store<appReducer.AppState>,
         private fb: FormBuilder,
-    ) {
-        this.title = 'Add Member';
-        this.buttonText = 'Update';
-    }
+    ) {}
 
     ngOnInit() {
         this.store.dispatch(getAllUser());
-        this.user$.subscribe((u) => {
-            this.user = u;
-            console.log(u);
-        });
 
-        this.selection = this.fb.group({
-            ...this.user,
+        this.user$.subscribe((user) => {
+            this.user = user.filter((u) => !this.data.currentMember.includes(u.name));
+
+            this.selection = this.fb.group(
+                this.user
+                    .map((u) => u.name)
+                    .reduce((obj: any, entry) => {
+                        obj[entry] = false;
+                        return obj;
+                    }, {}),
+            );
         });
     }
 
     doAction() {
-        console.log(this.selection);
-        // this.dialogRef.close({ event: this.action, data: this.app });
-    }
-
-    deleteApplication() {
-        this.dialogRef.close({ event: DialogAction.DELETE, data: this.app });
+        const newMember = Object.keys(this.selection.value).filter((key) => this.selection.value[key]);
+        this.dialogRef.close({ event: DialogAction.ADD, data: newMember });
     }
 
     closeDialog() {

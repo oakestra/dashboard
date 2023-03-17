@@ -5,14 +5,11 @@
                 <mat-icon>arrow_back</mat-icon>
                 Back
             </button>
-            <button class="add-btn" (click)="addOrganizationEntry()" mat-mini-fab type="button">
-                <mat-icon>add</mat-icon>
-            </button>
         </div>
         <div class="organization-list">
             <div
                 class="organization-entry"
-                [class.selected]="o.name === selected.name"
+                [class.selected]="o._id === selected?._id"
                 *ngFor="let o of organizations$ | async"
             >
                 <button (click)="changeSelected(o)" class="organization-button" type="button">
@@ -22,24 +19,20 @@
             </div>
         </div>
     </mat-drawer>
-    <mat-drawer-content>
+    <mat-drawer-content class="matContainer">
         <div>
-            <h2>Current Organization: {{ selected.name }}</h2>
+            <h2>Current Organization: {{ selected?.name }}</h2>
         </div>
         <mat-tab-group>
             <mat-tab class="tab" label="General">
                 <div class="tab">
                     <mat-form-field appearance="fill" class="input-field searchForm">
                         <mat-label>Organization Name</mat-label>
-                        <input matInput type="text" [value]="selected?.name" />
+                        <input (change)="save()" matInput type="text" [(ngModel)]="name" />
                     </mat-form-field>
-                    <button mat-flat-button class="updateButton">
-                        <mat-icon>save</mat-icon>
-                        Save
-                    </button>
                 </div>
             </mat-tab>
-            <mat-tab label="Manage Members ({{ selected.member.length }})">
+            <mat-tab label="Manage Members ({{ selected?.member.length }})">
                 <div class="tab">
                     <div class="w3-row addOrganization">
                         <div class="w3-col l7 m8">
@@ -52,7 +45,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="w3-col l4 m4 w3-right-align">
+                        <div class="w3-col l5 m4 w3-right-align">
                             <button (click)="addMember()" mat-flat-button class="updateButton">
                                 <mat-icon>add_circle_outline</mat-icon>
                                 Add member
@@ -65,7 +58,7 @@
                                 <mat-icon>account_circle</mat-icon>
                                 <p>&#160;{{ m }}</p>
                             </div>
-                            <button mat-icon-button (click)="remove()">
+                            <button mat-icon-button (click)="remove(m)">
                                 <mat-icon class="remove">highlight_off</mat-icon>
                             </button>
                         </div>

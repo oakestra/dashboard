@@ -11,6 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { LoginComponent } from './components/login/login.component';
 import { routes } from './login.routing';
@@ -30,6 +32,8 @@ import { routes } from './login.routing';
         MatDialogModule,
         MatTabsModule,
         MatSlideToggleModule,
+        MatSelectModule,
+        MatCheckboxModule,
     ],
     providers: [],
     declarations: [LoginComponent, ResetPasswordComponent],

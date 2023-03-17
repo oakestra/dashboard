@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { UserService } from '../../../shared/modules/auth/user.service';
 import { AuthService } from '../../../shared/modules/auth/auth.service';
 import { ApiService } from '../../../shared/modules/api/api.service';
@@ -17,6 +18,7 @@ import { NotificationType } from '../../../root/interfaces/notification';
 export class LoginComponent {
     sm_ip = environment.apiUrl;
     form: FormGroup;
+    useOrganization = false;
 
     constructor(
         private router: Router,
@@ -33,8 +35,9 @@ export class LoginComponent {
         });
     }
 
-    public tabChanged(event: any) {
-        if (event.index === 0) {
+    public tabChanged(event: MatCheckboxChange) {
+        this.useOrganization = event.checked;
+        if (this.useOrganization) {
             this.form.get('organization').enable();
         } else {
             this.form.get('organization').disable();

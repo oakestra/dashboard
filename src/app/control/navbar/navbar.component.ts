@@ -56,7 +56,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         this.updatePermissions();
 
         if (this.isAdmin) {
-            // TODO is OakestraAdmin
             this.store.dispatch(getOrganization());
             this.org$.subscribe((x) => console.log(x));
         }

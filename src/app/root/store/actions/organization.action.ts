@@ -44,6 +44,6 @@ export const postOrganization = createAction(
 );
 export const postOrganizationSuccess = createAction(
     '[Organization] postOrganizationSuccess',
-    props<{ organization: IOrganization }>(),
+    props<{ organization: IOrganization; id: string }>(),
 );
 export const postOrganizationError = createAction('[Organization] postOrganizationError', props<{ error: string }>());

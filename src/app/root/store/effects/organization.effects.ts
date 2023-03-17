@@ -36,7 +36,7 @@ export class OrganizationEffects {
             ofType(organizationActions.postOrganization),
             switchMap(({ organization }) =>
                 this.apiService.addOrganization(organization).pipe(
-                    map(() => organizationActions.postOrganizationSuccess({ organization })),
+                    map((id: string) => organizationActions.postOrganizationSuccess({ organization, id })),
                     catchError((error) => of(organizationActions.postOrganizationError({ error: error.message }))),
                 ),
             ),

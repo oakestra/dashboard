@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { RestService } from '../../util/rest.service';
 import { UserService } from '../auth/user.service';
 import { NotificationService } from '../notification/notification.service';
@@ -162,8 +162,7 @@ export class ApiService extends RestService {
     // /////////////////////////////////////////////////////////////////////////
     // /////////////////// Organization Functions ///////////////////////////////
 
-    addOrganization(org: IOrganization) {
-        return of(org);
+    addOrganization(org: IOrganization): Observable<string> {
         return this.doPOSTRequest('/organization/', org);
     }
 
@@ -176,21 +175,8 @@ export class ApiService extends RestService {
     }
 
     getOrganization(): Observable<IOrganization[]> {
-        console.log('in api');
-        const o: IOrganization[] = [
-            {
-                _id: null,
-                name: 'Org1',
-                member: ['Daniel', 'Simon', 'Michael'],
-            },
-            {
-                _id: null,
-                name: 'Org2',
-                member: ['Nitinder', 'Giovanni'],
-            },
-        ];
-        return of(o);
-        // return this.doGETRequest('/organization/');
+        this.doGETRequest('/organization/').subscribe((x) => console.log(x));
+        return this.doGETRequest('/organization/');
     }
 
     // /////////////////////////////////////////////////////////////////////////

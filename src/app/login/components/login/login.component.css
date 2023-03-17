@@ -44,6 +44,12 @@
     float: right;
 }
 
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 @media only screen and (min-width: 801px) {
     .login-form {
         width: 60%;

@@ -8,7 +8,7 @@ import { IOrganization } from '../../../root/interfaces/organization';
 import { selectOrganization } from '../../../root/store/selectors/organization.selector';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { NotificationService } from '../../../shared/modules/notification/notification.service';
-import { appReducer, postOrganization } from '../../../root/store';
+import { appReducer, deleteOrganization, postOrganization } from '../../../root/store';
 import { DialogConfirmationView } from '../../dialogs/confirmation/dialogConfirmation';
 
 @Component({
@@ -54,12 +54,6 @@ export class ListOrganizationComponent implements OnInit {
         );
     }
 
-    deleteUser(organizations: IOrganization): void {
-        // this.store.dispatch(deleteUser({ user }));
-        console.log(organizations);
-        // this.doFilter();
-    }
-
     editOrganization(organization: IOrganization) {
         console.log('sub edit');
         console.log(organization);
@@ -75,15 +69,16 @@ export class ListOrganizationComponent implements OnInit {
         this.editOrganization(organization);
     }
 
-    openDeleteDialog(obj: IOrganization) {
+    openDeleteDialog(organization: IOrganization) {
         const data = {
-            text: 'Delete organization: ' + obj.name,
-            type: 'user',
+            text: 'Delete organization: ' + organization.name,
+            type: 'organization',
         };
         const dialogRef = this.dialog.open(DialogConfirmationView, { data });
         dialogRef.afterClosed().subscribe((result) => {
+            console.log(result);
             if (result.event === true) {
-                this.deleteUser(obj);
+                this.store.dispatch(deleteOrganization({ organization }));
             }
         });
     }
