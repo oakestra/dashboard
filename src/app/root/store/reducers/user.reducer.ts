@@ -132,6 +132,9 @@ export const userReducer = createReducer(
         const error = action.error;
         return { ...state, loading, error };
     }),
+
+    // /////////////////////// RESET USER ///////////////////////////////////////////
+    on(userActions.resetUser, () => Object.assign({}, initialState)),
 );
 
 export function reducer(state: State, action: Action) {

@@ -108,6 +108,8 @@ export const organizationReducer = createReducer(
         const error = action.error;
         return { ...state, loading, error };
     }),
+
+    on(organizationActions.resetOrganization, () => Object.assign({}, initialState)),
 );
 
 export function reducer(state: State, action: Action) {

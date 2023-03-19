@@ -9,11 +9,12 @@ import { ApiService } from '../../shared/modules/api/api.service';
 import { DialogEditUserView } from '../dialogs/edit-user/dialogEditUser';
 import { NotificationService } from '../../shared/modules/notification/notification.service';
 import { DialogConfirmationView } from '../dialogs/confirmation/dialogConfirmation';
-import { IUser, IUserRole } from '../../root/interfaces/user';
+import { IUser } from '../../root/interfaces/user';
 import { DialogAction } from '../../root/enums/dialogAction';
 import { IDialogAttribute } from '../../root/interfaces/dialogAttribute';
 import { appReducer, deleteUser, getAllUser, postUser, updateUser } from '../../root/store';
 import { selectAllUser } from '../../root/store/selectors/user.selector';
+import { Role } from '../../root/enums/roles';
 
 @Component({
     templateUrl: './users.component.html',
@@ -41,7 +42,7 @@ export class UsersComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.dropdownList = this.api.getRoles().map((roles) => roles.name);
+        this.dropdownList = Object.keys(Role);
         this.loadData();
         this.store.dispatch(getAllUser());
     }
@@ -104,7 +105,7 @@ export class UsersComponent implements OnInit {
             this.selectedItems.some(
                 (searchedRole: string) =>
                     (searchedRole === 'None' && user.roles.length === 0) ||
-                    user.roles.some((role: IUserRole) => role.name === searchedRole),
+                    user.roles.some((role) => role === searchedRole),
             )
         );
     }

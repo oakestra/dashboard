@@ -33,6 +33,8 @@ export class LoginComponent {
             username: ['', [Validators.required]],
             password: ['', [Validators.required]],
         });
+
+        this.form.get('organization').disable();
     }
 
     public tabChanged(event: MatCheckboxChange) {

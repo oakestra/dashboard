@@ -61,15 +61,11 @@
                                 *ngFor="let e of element.roles"
                                 [ngStyle]="{
                                     'background-color':
-                                        e.name === 'Admin'
-                                            ? '#DE686B'
-                                            : e.name === 'Application_Provider'
-                                            ? '#3DA23C'
-                                            : '#ADA23C'
+                                        e === 'Admin' ? '#DE686B' : e === 'Application_Provider' ? '#3DA23C' : '#ADA23C'
                                 }"
                                 selected
                             >
-                                {{ e.name }}
+                                {{ e }}
                             </mat-chip>
                         </mat-chip-list>
                     </td>

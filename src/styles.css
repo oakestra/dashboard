@@ -88,6 +88,10 @@
     color: white !important;
 }
 
+.mat-mdc-standard-chip .mdc-evolution-chip__action--primary {
+    padding: 0 !important;
+}
+
 * {
     font-family: CMUSansSerif, sans-serif;
 }

@@ -117,6 +117,11 @@ export const applicationReducer = createReducer(
         const currentApplication = action.application;
         return { ...state, currentApplication };
     }),
+
+    // ///////////////////////////////////////////////////////////////////////////
+    // ///////////////////  RESET CURRENT APPLICATION  ///////////////////////////
+    // ///////////////////////////////////////////////////////////////////////////
+    on(applicationActions.resetApplication, () => Object.assign({}, initialState)),
 );
 
 export function reducer(state: State, action: Action) {

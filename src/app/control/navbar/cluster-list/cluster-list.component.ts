@@ -20,11 +20,10 @@ import { NotificationType } from '../../../root/interfaces/notification';
     styleUrls: ['./cluster-list.component.css'],
 })
 
-// TODO It is not my code. Check if is works and refactor it
+// TODO Check if is works and refactor it
 export class ClusterListComponent {
     clusters: ICluster[];
     events: string[] = [];
-    opened = true;
 
     activeAppId: IId; // is that really needed
     appSelected = false; // can i use activeApp != null?

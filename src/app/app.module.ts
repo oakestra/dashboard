@@ -31,7 +31,7 @@ import { UserEffects } from './root/store';
         StoreDevtoolsModule,
         StoreModule.forRoot(appReducer.reducers, {}),
         EffectsModule.forRoot([UserEffects, ApplicationEffects, ServiceEffects, OrganizationEffects]),
-        !environment.production ? StoreDevtoolsModule.instrument() : [], // TODO Do it like this
+        !environment.production ? StoreDevtoolsModule.instrument() : [],
     ],
     providers: [
         // should be empty as we import all global services through "SharedModule.forRoot()"

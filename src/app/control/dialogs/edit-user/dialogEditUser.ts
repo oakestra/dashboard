@@ -2,7 +2,7 @@ import { Component, Inject, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { IUser, IUserRole } from '../../../root/interfaces/user';
+import { IUser } from '../../../root/interfaces/user';
 import { DialogAction } from '../../../root/enums/dialogAction';
 import { Role } from '../../../root/enums/roles';
 import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
@@ -13,11 +13,13 @@ import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
 })
 export class DialogEditUserView {
     DialogAction = DialogAction;
+    roles = Object.values(Role);
     action: DialogAction;
     user: IUser;
     title: string;
     form: FormGroup;
     buttonText = '';
+    roleOptions: FormGroup;
 
     constructor(
         public dialogRef: MatDialogRef<DialogEditUserView>,
@@ -28,18 +30,20 @@ export class DialogEditUserView {
         this.user = data.content as IUser;
         this.action = data.action;
         this.title = 'Editing user...';
+
+        this.roleOptions = this.fb.group(
+            this.roles.reduce((obj: any, entry) => {
+                obj[entry] = this.getRoleOptions(entry);
+                return obj;
+            }, {}),
+        );
+
         if (this.data.action === DialogAction.UPDATE) {
             this.form = fb.group({
                 name: [this.user.name],
                 email: [this.user.email],
                 password: [this.user.password],
-                roles: fb.group({
-                    ADMIN: this.user.roles.some((r: IUserRole) => r.name === 'Admin'),
-                    APPLICATION_PROVIDER: this.user.roles.some((r: IUserRole) => r.name === 'Application_Provider'),
-                    INFRASTRUCTURE_PROVIDER: this.user.roles.some(
-                        (r: IUserRole) => r.name === 'Infrastructure_Provider',
-                    ),
-                }),
+                roles: [this.user.roles],
             });
 
             this.buttonText = 'Save changes';
@@ -52,11 +56,7 @@ export class DialogEditUserView {
                 name: ['', UserValidators.containsWhitespace],
                 email: [''],
                 password: [''],
-                roles: fb.group({
-                    ADMIN: false,
-                    APPLICATION_PROVIDER: false,
-                    INFRASTRUCTURE_PROVIDER: false,
-                }),
+                roles: [this.roleOptions],
             });
         }
     }
@@ -65,21 +65,20 @@ export class DialogEditUserView {
         return this.form.get('name');
     }
 
+    private getRoleOptions(role: Role) {
+        return this.user.roles.includes(role);
+    }
+
     doAction() {
-        const newRoles: IUserRole[] = [];
         const date = this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm') ?? '';
-        for (const r of Object.keys(Role)) {
-            if (this.form.value.roles[r]) {
-                // newRoles.push(r);
-                // TODO Add real roles | or change how to store a role, a simple string array would be better
-            }
-        }
+        const r = Object.keys(this.roleOptions.value).filter((key) => this.roleOptions.value[key]) as Role[];
+
         const user: IUser = {
             _id: this.user._id,
             created_at: date,
             email: this.form.value.email,
             password: this.form.value.password,
-            roles: newRoles,
+            roles: r,
             name: this.form.value.name ?? this.user.name,
         };
         this.dialogRef.close({ event: this.action, data: user });

@@ -47,3 +47,6 @@ export const postOrganizationSuccess = createAction(
     props<{ organization: IOrganization; id: string }>(),
 );
 export const postOrganizationError = createAction('[Organization] postOrganizationError', props<{ error: string }>());
+
+// ////////////// RESET STATE ////////////////////
+export const resetOrganization = createAction('[Organization] resetOrganization');

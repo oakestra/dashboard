@@ -7,12 +7,13 @@ import { select, Store } from '@ngrx/store';
 import { appReducer, getOrganization, getUser } from 'src/app/root/store/index';
 import { Observable } from 'rxjs';
 import { UserService } from '../../shared/modules/auth/user.service';
-import { AuthService, Role } from '../../shared/modules/auth/auth.service';
+import { AuthService } from '../../shared/modules/auth/auth.service';
 import { IUser } from '../../root/interfaces/user';
 import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { IOrganization } from '../../root/interfaces/organization';
 import { selectOrganization } from '../../root/store/selectors/organization.selector';
+import { Role } from '../../root/enums/roles';
 
 @Component({
     selector: 'app-navbar',
@@ -78,10 +79,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     }
 
     updatePermissions(): void {
-        // TODO Set Roles in JWT and dont make a extra api call.
-        this.authService.hasRole(Role.ADMIN).subscribe((isAdmin) => {
-            this.isAdmin = isAdmin;
-        });
+        this.isAdmin = this.userService.hasRole(Role.ADMIN);
     }
 
     switchScreen(app: boolean, list: boolean, cluster: boolean) {
