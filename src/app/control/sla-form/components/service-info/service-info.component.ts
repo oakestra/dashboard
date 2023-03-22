@@ -13,7 +13,7 @@ type serviceInfo = {
 @Component({
     selector: 'form-service-info',
     templateUrl: './service-info.component.html',
-    styleUrls: ['./service-info.component.css'],
+    styleUrls: ['./service-info.component.scss'],
 })
 export class ServiceInfoComponent extends SubComponent implements OnInit {
     applicationId = 'to set';

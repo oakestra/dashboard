@@ -9,7 +9,7 @@ import { FileSelectorType } from '../../../../root/interfaces/fileSelector';
 @Component({
     selector: 'form-file-select',
     templateUrl: './file-select.component.html',
-    styleUrls: ['./file-select.component.css'],
+    styleUrls: ['./file-select.component.scss'],
 })
 export class FileSelectComponent extends SubComponent implements OnInit {
     @Input() service: IService;

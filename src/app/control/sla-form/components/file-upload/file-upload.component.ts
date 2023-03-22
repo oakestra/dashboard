@@ -5,7 +5,7 @@ import { IService } from '../../../../root/interfaces/service';
 @Component({
     selector: 'form-file-upload',
     templateUrl: './file-upload.component.html',
-    styleUrls: ['./file-upload.component.css'],
+    styleUrls: ['./file-upload.component.scss'],
 })
 export class FileUploadComponent extends SubComponent {
     @Input() service: IService;

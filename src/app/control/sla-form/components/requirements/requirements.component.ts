@@ -19,7 +19,7 @@ type requirementsType = {
 @Component({
     selector: 'form-requirements',
     templateUrl: './requirements.component.html',
-    styleUrls: ['./requirements.component.css'],
+    styleUrls: ['./requirements.component.scss'],
 })
 export class RequirementsComponent extends SubComponent implements OnInit {
     @Input() service: IService;

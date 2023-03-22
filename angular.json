@@ -17,7 +17,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/edgeIO-frontend",
+                        "outputPath": "dist/oakestra-dashboard",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -32,7 +32,8 @@
                             }
                         ],
                         "styles": [
-                            "src/styles.css",
+                            "src/styles.scss",
+                            "src/theme.scss",
                             "node_modules/shepherd.js/dist/css/shepherd.css",
                             "node_modules/leaflet/dist/leaflet.css",
                             "node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css"
@@ -125,6 +126,11 @@
         }
     },
     "defaultProject": "edgeIO-frontend",
+    "schematics": {
+      "@schematics/angular:component": {
+        "style": "scss"
+      }
+    },
     "cli": {
         "analytics": false,
         "defaultCollection": "@angular-eslint/schematics"

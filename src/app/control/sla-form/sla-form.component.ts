@@ -24,7 +24,7 @@ import { ConnectivityComponent } from './components/connectivity/connectivity.co
 @Component({
     selector: 'sla-form',
     templateUrl: './sla-form.component.html',
-    styleUrls: ['./sla-form.component.css'],
+    styleUrls: ['./sla-form.component.scss'],
 })
 export class SlaFormComponent implements OnInit {
     @ViewChild('serviceInfo') serviceInfo: ServiceInfoComponent;

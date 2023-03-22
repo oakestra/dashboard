@@ -17,23 +17,19 @@
                 (click)="openDialog(start.innerText, target.innerText, 'new')"
                 id="configureLink"
                 mat-flat-button
-                class="updateButton"
+                color="primary"
             ></button>
         </div>
 
         <div *ngIf="type.innerText.startsWith('Link'); else nodeButtons">
-            <button
-                (click)="openDialog(start.innerText, target.innerText, 'edit')"
-                class="updateButton"
-                mat-flat-button
-            >
+            <button (click)="openDialog(start.innerText, target.innerText, 'edit')" color="primary" mat-flat-button>
                 <mat-icon>settings</mat-icon>
                 Configure Connection
             </button>
         </div>
 
         <ng-template #nodeButtons>
-            <button class="updateButton" id="editElement" mat-flat-button routerLink="deploy/{{ nodeID.innerText }}">
+            <button color="primary" id="editElement" mat-flat-button routerLink="deploy/{{ nodeID.innerText }}">
                 <mat-icon>settings</mat-icon>
                 Configure Service
             </button>

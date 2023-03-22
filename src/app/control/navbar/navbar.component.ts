@@ -14,7 +14,7 @@ import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.css'],
+    styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSidenav)
@@ -71,6 +71,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         // TODO Set Roles in JWT and dont make a extra api call.
         this.authService.hasRole(Role.ADMIN).subscribe((isAdmin) => {
             this.isAdmin = isAdmin;
+            this.isAdmin = true;
         });
     }
 

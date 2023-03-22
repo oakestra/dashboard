@@ -17,7 +17,7 @@ import { selectAllUser } from '../../root/store/selectors/user.selector';
 
 @Component({
     templateUrl: './users.component.html',
-    styleUrls: ['./users.component.css'],
+    styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
     DialogAction = DialogAction;

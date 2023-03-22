@@ -6,7 +6,7 @@ import { IInstanceAddress, IService } from '../../../../root/interfaces/service'
 @Component({
     selector: 'form-addresses',
     templateUrl: './addresses.component.html',
-    styleUrls: ['./addresses.component.css'],
+    styleUrls: ['./addresses.component.scss'],
 })
 export class AddressesComponent extends SubComponent implements OnInit {
     @Input() service: IService;
