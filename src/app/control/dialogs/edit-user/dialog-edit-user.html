@@ -27,6 +27,10 @@
             </mat-form-field>
         </div>
 
+        <div *ngIf="action === DialogAction.ADD" class="w3-col l6 s12 m6">
+            <button (click)="downloadCredentials()" color="primary" mat-flat-button>Download Credentials</button>
+        </div>
+
         <div class="w3-col l12 s12 m12">
             <h3>Roles</h3>
             <section class="example-section" [formGroup]="roleOptions">
