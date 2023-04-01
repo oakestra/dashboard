@@ -29,7 +29,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     public user$: Observable<IUser> = this.store.pipe(select(selectCurrentUser));
     public org$: Observable<IOrganization[]> = this.store.pipe(select(selectOrganization));
     userID = '';
+    // TODO Do not create a var for every role, do this different
     isAdmin = false;
+    isOrgaProvider = false;
 
     listClusters = false;
     clusterSelected = false;
@@ -55,11 +57,12 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         });
 
         this.updatePermissions();
-
         if (this.isAdmin) {
             this.store.dispatch(getOrganization());
             this.org$.subscribe((x) => console.log(x));
         }
+
+        this.isOrgaProvider = this.userService.hasRole(Role.ORGANIZATION_ADMIN);
     }
 
     // For the responsive sidenav

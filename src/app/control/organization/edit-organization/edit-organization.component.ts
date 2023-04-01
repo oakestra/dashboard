@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
-import { IOrganization } from '../../../root/interfaces/organization';
-import { appReducer, getAllUser, postOrganization, updateOrganization } from '../../../root/store';
+import { IOrganization, RoleEntry } from '../../../root/interfaces/organization';
+import { appReducer, getAllUser, getOrganization, updateOrganization } from '../../../root/store';
 import { AddMemberComponent } from '../dialogs/add-member/add-member.component';
 import { DialogAction } from '../../../root/enums/dialogAction';
+import { IUser } from '../../../root/interfaces/user';
+import { selectAllUser } from '../../../root/store/selectors/user.selector';
 
 @Component({
     selector: 'app-edit-organization',
@@ -17,15 +19,22 @@ export class EditOrganizationComponent implements OnInit {
     @Input() selected: IOrganization;
     @Output() back = new EventEmitter<void>();
     name: string;
-    member: string[];
+    member: IUser[] = [];
     searchText = '';
-    searchedMember: string[];
+    searchedMember: IUser[] = [];
+
+    user$: Observable<IUser[]> = this.store.pipe(select(selectAllUser));
+    user: IUser[];
 
     constructor(private store: Store<appReducer.AppState>, public dialog: MatDialog) {}
 
     ngOnInit(): void {
-        this.store.dispatch(getAllUser());
-        this.setValues();
+        this.store.dispatch(getAllUser({ organization_id: '' }));
+        this.user$.subscribe((user) => {
+            this.user = user;
+            this.getMemberNames();
+        });
+        this.name = this.selected.name;
 
         if (!this.selected._id) {
             const n = this.selected.name;
@@ -35,34 +44,51 @@ export class EditOrganizationComponent implements OnInit {
         }
     }
 
-    setValues() {
-        this.searchedMember = this.selected?.member;
-        this.name = this.selected.name;
-        this.member = [...this.selected.member];
+    private getMemberNames() {
+        const mem: IUser[] = [];
+        const user_ids = this.selected.member.map((entry) => entry.user_id);
+        this.member = this.user.filter((u) => user_ids.includes(u._id.$oid));
+
+        this.member.forEach((m) => {
+            const roleEntry = this.selected.member.find((s) => s.user_id === m._id.$oid);
+            mem.push({
+                ...m,
+                roles: roleEntry.roles,
+            });
+        });
+        this.member = [...mem];
+        this.searchedMember = [...this.member];
     }
 
     changeSelected(organization: IOrganization) {
         this.selected = organization;
-        this.setValues();
-    }
-
-    addOrganizationEntry() {
-        const organization: IOrganization = {
-            name: 'New Organization',
-            member: [],
-        };
-        this.selected = organization;
-        this.store.dispatch(postOrganization({ organization }));
+        this.name = this.selected.name;
+        this.getMemberNames();
     }
 
     addMember() {
         const dialogRef = this.dialog.open(AddMemberComponent, { data: { currentMember: this.member } });
 
         dialogRef.afterClosed().subscribe((result) => {
+            const member = [...this.selected.member];
             if (result.event === DialogAction.ADD) {
-                this.member = this.member.concat(result.data);
-                this.search(this.searchText);
-                this.save();
+                const user = result.data;
+                user.forEach((u: IUser) => {
+                    const entry: RoleEntry = {
+                        user_id: u._id.$oid,
+                        roles: [] as any[],
+                    };
+                    member.push(entry);
+                });
+                const organization: IOrganization = {
+                    ...this.selected,
+                    member,
+                };
+                this.selected = organization;
+                // TODO avoid two dispatch
+                this.store.dispatch(updateOrganization({ organization }));
+                this.store.dispatch(getOrganization());
+                this.search('');
             }
         });
     }
@@ -71,9 +97,21 @@ export class EditOrganizationComponent implements OnInit {
         const organization = {
             ...this.selected,
             name: this.name,
-            member: this.member,
         };
         this.selected = organization;
+        this.store.dispatch(updateOrganization({ organization }));
+    }
+
+    updateOrganization(user: IUser) {
+        const newRoleEntry: RoleEntry = {
+            user_id: user._id.$oid,
+            roles: user.roles,
+        };
+        const member = this.selected.member.filter((m) => m.user_id !== user._id.$oid);
+        const organization: IOrganization = {
+            ...this.selected,
+            member: [...member, newRoleEntry],
+        };
         this.store.dispatch(updateOrganization({ organization }));
     }
 
@@ -83,12 +121,19 @@ export class EditOrganizationComponent implements OnInit {
     }
 
     search(event: any) {
-        this.searchedMember = this.member.filter((m) => m.toLowerCase().indexOf(event.toLowerCase()) !== -1);
+        this.searchedMember = this.member.filter(
+            (m) => m.name.toLowerCase().indexOf(event?.toLowerCase() ?? '') !== -1,
+        );
     }
 
-    remove(member: string) {
+    remove(member: IUser) {
+        const newOrga = {
+            ...this.selected,
+            member: this.selected.member.filter((u) => u.user_id !== member._id.$oid),
+        };
+        this.store.dispatch(updateOrganization({ organization: newOrga }));
+        this.store.dispatch(getOrganization());
         this.member = this.member.filter((m) => m !== member);
         this.search(this.searchText);
-        this.save();
     }
 }

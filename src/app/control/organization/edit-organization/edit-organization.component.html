@@ -52,17 +52,12 @@
                             </button>
                         </div>
                     </div>
-                    <div class="member-list">
-                        <div class="member-item" *ngFor="let m of searchedMember">
-                            <div class="member-item-person">
-                                <mat-icon>account_circle</mat-icon>
-                                <p>&#160;{{ m }}</p>
-                            </div>
-                            <button mat-icon-button (click)="remove(m)">
-                                <mat-icon class="remove">highlight_off</mat-icon>
-                            </button>
-                        </div>
-                    </div>
+                    <app-member-item
+                        *ngIf="user.length !== 0"
+                        [searchedMember]="searchedMember"
+                        (removeEvent)="remove($event)"
+                        (updateRoles)="updateOrganization($event)"
+                    ></app-member-item>
                 </div>
             </mat-tab>
         </mat-tab-group>

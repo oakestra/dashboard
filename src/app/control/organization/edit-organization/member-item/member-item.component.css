@@ -1,0 +1,44 @@
+.roleSelect {
+    cursor: pointer;
+}
+
+.roleSelectField {
+    margin-bottom: -1.25em;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.roleSelect p {
+    overflow: auto;
+    color: gray;
+}
+
+.noMember {
+    padding-top: 50px;
+    text-align: center;
+}
+
+.noMember p {
+    font-size: 2rem;
+    color: lightgrey;
+}
+
+.member-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    align-items: center;
+}
+
+.member-item:hover {
+    background-color: #f3f3f3;
+}
+
+.member-item-person {
+    display: flex;
+    align-items: center;
+}
+
+.editButtons {
+    text-align: end;
+}

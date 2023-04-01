@@ -105,11 +105,11 @@ export class ApiService extends RestService {
     // /////////////////////////////////////////////////////////////////////////
     // ////////////////// User Functions ///////////////////////////////////////
 
-    public registerUser(user: IUser): Observable<any> {
+    public registerUser(user: IUser): Observable<IUser> {
         return this.doPOSTRequest('/auth/register', user);
     }
 
-    public updateUser(user: IUser) {
+    public updateUser(user: IUser): Observable<IUser> {
         return this.doPUTRequest('/user/' + user.name, user);
     }
 
@@ -121,8 +121,12 @@ export class ApiService extends RestService {
         return this.doGETRequest('/user/' + username);
     }
 
-    public getAllUser(): Observable<IUser[]> {
-        return this.doGETRequest('/users/');
+    public getAllUser(organization_id: string): Observable<IUser[]> {
+        if (organization_id !== '') {
+            return this.doGETRequest(`/users/${organization_id}`);
+        } else {
+            return this.doGETRequest('/users/');
+        }
     }
 
     changePassword(username: string, oldPassword: string, newPassword: string) {

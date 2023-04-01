@@ -27,7 +27,7 @@ export const deleteUserError = createAction('[User] deleteUserError', props<{ er
 
 // //////////////// GET ALL ///////////////////////
 
-export const getAllUser = createAction('[User] getAllUser');
+export const getAllUser = createAction('[User] getAllUser', props<{ organization_id: string }>());
 export const getAllUserSuccess = createAction('[User] getAllUserSuccess', props<{ users: IUser[] }>());
 export const getAllUserError = createAction('[User] getAllUserError', props<{ error: string }>());
 

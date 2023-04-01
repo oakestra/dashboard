@@ -16,7 +16,7 @@ export class RoleRouterGuard implements CanActivate, CanLoad, CanActivateChild {
     ) {}
 
     doRoleCheck(): boolean {
-        if (!this.userService.hasRole(Role.ADMIN)) {
+        if (!this.userService.hasRole(Role.ADMIN) && !this.userService.hasRole(Role.ORGANIZATION_ADMIN)) {
             this.notifyService.notify(NotificationType.error, 'You have not enough permissions!');
             void this.router.navigate(['/control']);
             return false;

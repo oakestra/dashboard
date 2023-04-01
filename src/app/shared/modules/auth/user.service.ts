@@ -46,7 +46,7 @@ export class UserService {
     }
 
     getOrganization(): string {
-        return this.getDecodedAccessToken(this.getAuthTokenRaw()).sub ?? '';
+        return this.getDecodedAccessToken(this.getAuthTokenRaw())?.organization ?? '';
     }
 
     login(request: ILoginRequest): Observable<boolean> {

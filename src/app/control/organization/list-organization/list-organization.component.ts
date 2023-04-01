@@ -55,8 +55,6 @@ export class ListOrganizationComponent implements OnInit {
     }
 
     editOrganization(organization: IOrganization) {
-        console.log('sub edit');
-        console.log(organization);
         this.selectedOrga.emit(organization);
     }
 

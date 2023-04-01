@@ -1,5 +1,22 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+}
+
 .deleteButton {
     background-color: #e07074 !important;
     color: white;

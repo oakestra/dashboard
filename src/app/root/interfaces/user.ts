@@ -3,6 +3,7 @@ import { IId } from './id';
 
 export interface IUser {
     _id: IId;
+    organization_id?: string;
     name: string;
     password: string;
     email: string;

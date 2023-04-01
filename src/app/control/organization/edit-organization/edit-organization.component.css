@@ -2,10 +2,6 @@
     width: 20vw;
 }
 
-.organization-sidenav {
-    /*height: 60vh;*/
-}
-
 .sidenav-buttons {
     display: flex;
     justify-content: space-between;
@@ -36,6 +32,7 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
+    text-align: inherit;
 }
 
 .addOrganization {
@@ -49,27 +46,6 @@
 
 .selected {
     background-color: #f3f3f3;
-}
-
-.member-list {
-}
-
-.member-item {
-    display: flex;
-    justify-content: space-between;
-    height: 50px;
-    align-content: center;
-    flex-wrap: wrap;
-    padding: 5px;
-}
-
-.member-item:hover {
-    background-color: #f3f3f3;
-}
-
-.member-item-person {
-    display: flex;
-    align-items: center;
 }
 
 .remove {

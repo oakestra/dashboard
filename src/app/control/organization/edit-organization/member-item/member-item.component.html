@@ -1,0 +1,30 @@
+<div class="member-list">
+    <div *ngFor="let m of searchedMember; let index = index" class="w3-row member-item">
+        <div class="w3-col l3 m3 member-item-person">
+            <mat-icon>account_circle</mat-icon>
+            <p>&#160;{{ m.name }}</p>
+        </div>
+        <div class="w3-col l6 m6 roleSelect">
+            <p *ngIf="!editItem[index]">{{ m.roles }}</p>
+            <mat-form-field *ngIf="editItem[index]" class="roleSelectField">
+                <mat-select [formControl]="roles[index]" multiple>
+                    <mat-option *ngFor="let role of rolesList" [value]="role">{{ role }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="w3-col l3 m3 editButtons">
+            <button (click)="saveRoles(index)" *ngIf="editItem[index]" mat-icon-button>
+                <mat-icon>save</mat-icon>
+            </button>
+            <button (click)="toggleEdit(index)" *ngIf="!editItem[index]" mat-icon-button>
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button (click)="removeMember(m)" mat-icon-button>
+                <mat-icon>highlight_off</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="searchedMember.length === 0" class="noMember">
+        <p>No member found in this organization</p>
+    </div>
+</div>

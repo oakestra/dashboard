@@ -29,20 +29,20 @@ export class LoginComponent {
         private fb: FormBuilder,
     ) {
         this.form = fb.group({
-            organization: ['', [Validators.required]],
+            organization_name: ['', [Validators.required]],
             username: ['', [Validators.required]],
             password: ['', [Validators.required]],
         });
 
-        this.form.get('organization').disable();
+        this.form.get('organization_name').disable();
     }
 
     public tabChanged(event: MatCheckboxChange) {
         this.useOrganization = event.checked;
         if (this.useOrganization) {
-            this.form.get('organization').enable();
+            this.form.get('organization_name').enable();
         } else {
-            this.form.get('organization').disable();
+            this.form.get('organization_name').disable();
         }
     }
 
@@ -52,10 +52,8 @@ export class LoginComponent {
         };
 
         this.userService.login(loginRequest).subscribe({
-            next: (userServiceResponse: boolean) => {
-                if (userServiceResponse) {
-                    this.authService.getAuthorization().subscribe(() => void this.router.navigate(['/control']));
-                }
+            next: () => {
+                void this.router.navigate(['/control']);
             },
             error: (error) => this.notifyService.notify(NotificationType.error, error),
         });

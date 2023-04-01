@@ -15,6 +15,7 @@ import { IDialogAttribute } from '../../root/interfaces/dialogAttribute';
 import { appReducer, deleteUser, getAllUser, postUser, updateUser } from '../../root/store';
 import { selectAllUser } from '../../root/store/selectors/user.selector';
 import { Role } from '../../root/enums/roles';
+import { UserService } from '../../shared/modules/auth/user.service';
 
 @Component({
     templateUrl: './users.component.html',
@@ -39,12 +40,16 @@ export class UsersComponent implements OnInit {
         private datePipe: DatePipe,
         private notifyService: NotificationService,
         private store: Store<appReducer.AppState>,
+        private userService: UserService,
     ) {}
 
     ngOnInit() {
         this.dropdownList = Object.keys(Role);
         this.loadData();
-        this.store.dispatch(getAllUser());
+        const organization_id = this.userService.getOrganization();
+        console.log(organization_id);
+        this.store.dispatch(getAllUser({ organization_id }));
+        this.users$.subscribe((x) => console.log(x));
     }
 
     loadData(): void {

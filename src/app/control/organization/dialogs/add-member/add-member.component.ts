@@ -29,10 +29,11 @@ export class AddMemberComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.store.dispatch(getAllUser());
+        this.store.dispatch(getAllUser({ organization_id: '' }));
 
         this.user$.subscribe((user) => {
-            this.user = user.filter((u) => !this.data.currentMember.includes(u.name));
+            const organizationUser = this.data.currentMember.map((u: IUser) => u.name);
+            this.user = user.filter((u) => !organizationUser.includes(u.name));
 
             this.selection = this.fb.group(
                 this.user
@@ -47,7 +48,8 @@ export class AddMemberComponent implements OnInit {
 
     doAction() {
         const newMember = Object.keys(this.selection.value).filter((key) => this.selection.value[key]);
-        this.dialogRef.close({ event: DialogAction.ADD, data: newMember });
+        this.user = this.user.filter((u) => newMember.includes(u.name));
+        this.dialogRef.close({ event: DialogAction.ADD, data: this.user });
     }
 
     closeDialog() {

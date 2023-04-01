@@ -65,6 +65,7 @@ import { OrganizationComponent } from './organization/organization.component';
 import { EditOrganizationComponent } from './organization/edit-organization/edit-organization.component';
 import { ListOrganizationComponent } from './organization/list-organization/list-organization.component';
 import { AddMemberComponent } from './organization/dialogs/add-member/add-member.component';
+import { MemberItemComponent } from './organization/edit-organization/member-item/member-item.component';
 
 @NgModule({
     declarations: [
@@ -102,6 +103,7 @@ import { AddMemberComponent } from './organization/dialogs/add-member/add-member
         EditOrganizationComponent,
         ListOrganizationComponent,
         AddMemberComponent,
+        MemberItemComponent,
     ],
     imports: [
         CommonModule,
