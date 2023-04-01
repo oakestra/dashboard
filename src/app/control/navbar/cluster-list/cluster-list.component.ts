@@ -17,7 +17,7 @@ import { NotificationType } from '../../../root/interfaces/notification';
 @Component({
     selector: 'app-cluster-list',
     templateUrl: './cluster-list.component.html',
-    styleUrls: ['./cluster-list.component.css'],
+    styleUrls: ['./cluster-list.component.scss'],
 })
 
 // TODO It is not my code. Check if is works and refactor it

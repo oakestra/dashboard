@@ -14,7 +14,7 @@ import { NotificationType } from '../../root/interfaces/notification';
 @Component({
     selector: 'app-cluster',
     templateUrl: './cluster.component.html',
-    styleUrls: ['./cluster.component.css'],
+    styleUrls: ['./cluster.component.scss'],
 })
 // TODO is currently not used, refactor before using it
 export class ClusterComponent implements OnInit {

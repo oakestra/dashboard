@@ -12,7 +12,7 @@ import { NotificationType } from '../../../root/interfaces/notification';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css'],
+    styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
     sm_ip = environment.apiUrl;

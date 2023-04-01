@@ -12,7 +12,7 @@ import { appReducer } from '../../../../root/store';
 @Component({
     selector: 'form-connectivity',
     templateUrl: './connectivity.component.html',
-    styleUrls: ['./connectivity.component.css'],
+    styleUrls: ['./connectivity.component.scss'],
 })
 export class ConnectivityComponent extends SubComponent implements OnInit {
     @Input() service: IService;

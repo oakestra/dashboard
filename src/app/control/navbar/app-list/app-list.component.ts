@@ -26,7 +26,7 @@ import { selectApplications } from '../../../root/store/selectors/application.se
 @Component({
     selector: 'app-app-list',
     templateUrl: './app-list.component.html',
-    styleUrls: ['./app-list.component.css', '../navbar.component.css'],
+    styleUrls: ['./app-list.component.scss', '../navbar.component.scss'],
 })
 export class AppListComponent implements OnInit {
     DialogAction = DialogAction;
