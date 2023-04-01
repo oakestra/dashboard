@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { UserService } from './user.service';
 
@@ -7,7 +7,7 @@ import { UserService } from './user.service';
     providedIn: 'root',
 })
 export class AuthGuardService implements CanActivate, CanLoad, CanActivateChild {
-    constructor(private userService: UserService, private router: Router) {}
+    constructor(private userService: UserService) {}
 
     doUserCheck(route: ActivatedRouteSnapshot): Observable<boolean> {
         if (!this.userService.isLoggedIn()) {
@@ -15,6 +15,7 @@ export class AuthGuardService implements CanActivate, CanLoad, CanActivateChild 
                 return this.userService.renewToken();
             } else {
                 this.userService.redirectToLogin();
+                console.log(route);
                 return of(false);
             }
         }
