@@ -1,11 +1,9 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
-@import "colors";
+@import 'colors';
 
 .mdc-button__label {
     color: white;
 }
-
-
 
 .mat-mdc-form-field {
     --mat-mdc-form-field-floating-label-scale: 0.75;
@@ -132,13 +130,13 @@ mat-card p {
 }
 
 .mat-expansion-indicator::after {
-  color: white;
+    color: white;
 }
 
 .mdc-form-field {
-  display: inline-flex;
-  align-items: flex-end !important;
-  vertical-align: middle;
+    display: inline-flex;
+    align-items: flex-end !important;
+    vertical-align: middle;
 }
 
 .content-cards {
