@@ -1,7 +1,7 @@
 <mat-drawer-container class="organization-sidenav">
     <mat-drawer class="organization-sidenav-side" mode="side" opened>
         <div class="sidenav-buttons">
-            <button mat-flat-button (click)="back.emit()" class="updateButton">
+            <button mat-flat-button (click)="back.emit()" color="primary">
                 <mat-icon>arrow_back</mat-icon>
                 Back
             </button>
@@ -46,7 +46,7 @@
                         </div>
 
                         <div class="w3-col l5 m4 w3-right-align">
-                            <button (click)="addMember()" mat-flat-button class="updateButton">
+                            <button (click)="addMember()" mat-flat-button color="primary">
                                 <mat-icon>add_circle_outline</mat-icon>
                                 Add member
                             </button>

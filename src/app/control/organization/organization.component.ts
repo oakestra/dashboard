@@ -8,7 +8,7 @@ import { selectOrganization } from '../../root/store/selectors/organization.sele
 @Component({
     selector: 'app-organization',
     templateUrl: './organization.component.html',
-    styleUrls: ['./organization.component.css'],
+    styleUrls: ['./organization.component.scss'],
 })
 export class OrganizationComponent {
     public organizations$: Observable<IOrganization[]> = this.store.pipe(select(selectOrganization));

@@ -14,7 +14,7 @@ import { DialogConfirmationView } from '../../dialogs/confirmation/dialogConfirm
 @Component({
     selector: 'app-list-organization',
     templateUrl: './list-organization.component.html',
-    styleUrls: ['./list-organization.component.css'],
+    styleUrls: ['./list-organization.component.scss'],
 })
 export class ListOrganizationComponent implements OnInit {
     @Output() selectedOrga = new EventEmitter<IOrganization>();

@@ -12,7 +12,7 @@ import { selectAllUser } from '../../../root/store/selectors/user.selector';
 @Component({
     selector: 'app-edit-organization',
     templateUrl: './edit-organization.component.html',
-    styleUrls: ['./edit-organization.component.css'],
+    styleUrls: ['./edit-organization.component.scss'],
 })
 export class EditOrganizationComponent implements OnInit {
     @Input() organizations$: Observable<IOrganization[]>;

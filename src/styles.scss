@@ -17,24 +17,6 @@
     background: transparent;
 }
 
-.deleteButton {
-    background-color: #e07074 !important;
-    color: white;
-}
-.cancelButton {
-    background-color: #7b97a5 !important;
-    color: white;
-}
-.updateButton {
-    background-color: #4a7083 !important;
-    color: white;
-}
-
-.updateButton:disabled {
-    background-color: rgba(74, 112, 131, 0.5) !important;
-    color: white;
-}
-
 .mdc-button__label {
     color: white;
 }
@@ -65,6 +47,10 @@
 
 .mat-typography p {
     margin: 0 !important;
+}
+
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle {
+  border-color: #fff !important;
 }
 
 .full-width {
