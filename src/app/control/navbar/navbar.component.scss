@@ -32,29 +32,6 @@ mat-sidenav-container {
     flex: 1;
 }
 
-.avatar {
-    margin-top: 16px;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-}
-
-.name {
-    font-weight: normal;
-}
-
-.designation {
-    margin-top: 2px;
-    font-size: 0.7rem;
-    color: lightgrey;
-}
-
-mat-divider {
-    margin-top: 16px;
-    margin-bottom: 16px;
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
 mat-card-title {
     /* background: #004a9f;*/
     background-color: #4a7083;
@@ -77,18 +54,6 @@ mat-card p {
 
 .example-spacer {
     flex: 1 1 auto;
-}
-
-.appSelectLable {
-    color: white;
-}
-
-.appSelectLable {
-    background-color: #4a7083;
-}
-
-body {
-    background-color: #4a7083;
 }
 
 ::ng-deep .mat-radio-outer-circle {
@@ -222,10 +187,10 @@ mat-card {
     margin-bottom: 30px;
     background-color: #3b474e;
 }
-
+/*
 /deep/ .application-panel .mat-expansion-indicator::after {
     color: white !important;
-}
+}*/
 
 /* width */
 ::-webkit-scrollbar {
@@ -249,5 +214,9 @@ mat-card {
 
 .navButton {
     width: 90%;
-    background: transparent;
+    background: transparent !important;
+
+    mat-icon {
+        color: white !important;
+    }
 }

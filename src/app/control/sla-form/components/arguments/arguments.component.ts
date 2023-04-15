@@ -5,7 +5,7 @@ import { IService } from '../../../../root/interfaces/service';
 @Component({
     selector: 'form-arguments',
     templateUrl: './arguments.component.html',
-    styleUrls: ['./arguments.component.css'],
+    styleUrls: ['./arguments.component.scss'],
 })
 export class ArgumentsComponent extends SubComponent implements OnInit {
     @Input() service: IService;

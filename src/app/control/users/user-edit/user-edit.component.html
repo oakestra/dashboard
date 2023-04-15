@@ -37,14 +37,15 @@
                     <br />
 
                     <div class="alignCenter">
-                        <button [disabled]="!form.valid" class="updateButton" mat-button mat-flat-button type="submit">
+                        <button [disabled]="!form.valid" color="primary" mat-button mat-flat-button type="submit">
                             Save
                         </button>
                         <button
                             (click)="openDialog(user)"
-                            class="cancel_buttons updateButton"
+                            class="cancel_buttons"
                             mat-flat-button
                             type="button"
+                            color="primary"
                         >
                             Change Password
                         </button>

@@ -84,9 +84,9 @@
 </mat-dialog-content>
 
 <mat-dialog-actions class="alignRight">
-    <button (click)="doAction()" class="updateButton" mat-button mat-flat-button>{{local_data.action}}</button>
-    <button (click)="deleteCluster()" *ngIf="action ==='Update'" mat-button mat-flat-button>Delete</button>
-    <button (click)="closeDialog()" class="cancelButton" mat-button mat-flat-button>Cancel</button>
+    <button (click)="doAction()" color="primary" mat-flat-button>{{local_data.action}}</button>
+    <button (click)="deleteCluster()" color="warn" *ngIf="action ==='Update'" mat-flat-button>Delete</button>
+    <button (click)="closeDialog()" color="accent" mat-button mat-flat-button>Cancel</button>
 </mat-dialog-actions>
 
 <!--<script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>-->

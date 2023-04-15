@@ -23,7 +23,7 @@ declare function initMap(lng: number, lat: number, radius: number): void;
 @Component({
     selector: 'line-chart',
     templateUrl: './line-chart.component.html',
-    styleUrls: ['./line-chart.component.css'],
+    styleUrls: ['./line-chart.component.scss'],
 })
 export class LineChartComponent implements OnInit {
     @Input() instanceList: IInstance;

@@ -15,7 +15,7 @@ import { ConfigDownloadService } from '../../shared/modules/helper/config-downlo
 @Component({
     selector: 'dev-home',
     templateUrl: './dev-home.component.html',
-    styleUrls: ['./dev-home.component.css'],
+    styleUrls: ['./dev-home.component.scss'],
 })
 export class DevHomeComponent implements OnInit {
     public currentApp$: Observable<IApplication> = this.store.pipe(select(selectCurrentApplication));

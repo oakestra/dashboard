@@ -10,7 +10,7 @@ import { NotificationType } from '../../../root/interfaces/notification';
 @Component({
     selector: 'dialog-content-example-dialog',
     templateUrl: './dialog-add-cluster.html',
-    styleUrls: ['./dialog-add-cluster.css'],
+    styleUrls: ['./dialog-add-cluster.scss'],
 })
 
 // TODO Check if this code works and improve it (.ts .html file)

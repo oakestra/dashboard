@@ -5,7 +5,7 @@ import { SubComponent } from '../../../../root/classes/subComponent';
 @Component({
     selector: 'form-constraints',
     templateUrl: './constraints.component.html',
-    styleUrls: ['./constraints.component.css'],
+    styleUrls: ['./constraints.component.scss'],
 })
 export class ConstraintsComponent extends SubComponent {
     @Input() service: IService;

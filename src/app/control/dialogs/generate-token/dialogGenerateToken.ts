@@ -6,7 +6,7 @@ import { environment } from '../../../../environments/environment';
 @Component({
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-generate-token.html',
-    styleUrls: ['./dialog-generate-token.css'],
+    styleUrls: ['./dialog-generate-token.scss'],
 })
 // TODO Fix this component - what should it do?-->
 export class DialogGenerateTokenView {

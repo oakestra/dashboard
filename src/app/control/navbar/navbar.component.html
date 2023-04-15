@@ -2,14 +2,14 @@
     <mat-icon id="toolBar" (click)="onToolbarToggle()">menu</mat-icon>
 
     <div class="sidebar">
-        <button id="homeNavbar" (click)="resetDashboard()" mat-button routerLink="/control">
+        <button class="navButton" (click)="resetDashboard()" mat-button routerLink="/control">
             <img src="favicon.ico" class="favicon" alt="Oakestra" />
         </button>
     </div>
 
     <span class="example-spacer"></span>
 
-    <h4 class="name" *ngIf="user$ | async; let user">
+    <h4 *ngIf="user$ | async; let user">
         <small>{{ user.name }}&nbsp;&nbsp;</small>
     </h4>
 

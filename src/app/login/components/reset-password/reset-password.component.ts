@@ -8,7 +8,7 @@ import { NotificationType } from '../../../root/interfaces/notification';
 @Component({
     selector: 'app-reset-password',
     templateUrl: './reset-password.component.html',
-    styleUrls: ['./reset-password.component.css'],
+    styleUrls: ['./reset-password.component.scss'],
 })
 export class ResetPasswordComponent implements OnInit {
     form = new FormGroup({

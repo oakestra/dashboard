@@ -81,11 +81,12 @@ mat-list-item .sub-menu a:hover {
 .mat-radio-button {
     border-color: white !important;
 }
-
+/*
 /deep/ .mdc-form-field > label {
     margin: 0;
 }
+*/
 
-/deep/ .mdc-radio__outer-circle {
+.mdc-radio__outer-circle {
     border-color: white !important;
 }
