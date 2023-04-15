@@ -1,22 +1,20 @@
-
 :root {
-
 }
 
 .mat-mdc-unelevated-button.mat-unthemed {
-  --mdc-filled-button-container-color: rgba(255, 255, 255, 0);
-  --mdc-filled-button-label-text-color: #ffffff;
+    --mdc-filled-button-container-color: rgba(255, 255, 255, 0);
+    --mdc-filled-button-label-text-color: #ffffff;
 }
 
 .mat-mdc-radio-button,
 .mat-mdc-radio-button:hover {
-  --mdc-radio-unselected-icon-color: #ffffff;
-  --mdc-radio-unselected-hover-icon-color: #ffffff;
+    --mdc-radio-unselected-icon-color: #ffffff;
+    --mdc-radio-unselected-hover-icon-color: #ffffff;
 }
 
 .mat-mdc-fab.mat-accent,
 .mat-mdc-mini-fab.mat-accent {
-  --mdc-fab-container-color: #4a7083;
-  --mdc-fab-icon-color: #fff;
-  --mat-mdc-fab-color: #fff;
+    --mdc-fab-container-color: #4a7083;
+    --mdc-fab-icon-color: #fff;
+    --mat-mdc-fab-color: #fff;
 }
