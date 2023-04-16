@@ -10,6 +10,7 @@ import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
 @Component({
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-edit-user.html',
+    styles: ['.download-credentials{display:flex; flex-direction: row-reverse; padding-right: 8px}'],
 })
 export class DialogEditUserView {
     DialogAction = DialogAction;

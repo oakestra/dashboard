@@ -35,7 +35,7 @@ export class ApiService extends RestService {
     // /////////////////// Application Functions ///////////////////////////////
 
     addApplication(app: IApplication) {
-        const sla = this.slaGenerator.generateSLA({}, app, this.userService.getUser());
+        const sla = this.slaGenerator.generateSLA(undefined, app, this.userService.getUser());
         return this.doPOSTRequest('/application/', sla);
     }
 

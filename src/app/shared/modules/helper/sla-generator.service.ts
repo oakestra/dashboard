@@ -13,9 +13,10 @@ export class SlaGeneratorService {
         userService.getOrganization();
     }
 
-    public generateSLA(service: IService, app: IApplication, user: IUser) {
+    public generateSLA(s: IService, app: IApplication, user: IUser) {
         const org = this.userService.getOrganization();
         const customer = org === 'root' ? user._id.$oid : org;
+        const service = s === undefined ? [] : [s];
         const sla = {
             sla_version: 'v2.0',
             customerID: customer,
@@ -25,7 +26,7 @@ export class SlaGeneratorService {
                     application_name: app.application_name,
                     application_namespace: app.application_namespace,
                     application_desc: app.application_desc,
-                    microservices: [service],
+                    microservices: service,
                 },
             ],
             args: [''],
