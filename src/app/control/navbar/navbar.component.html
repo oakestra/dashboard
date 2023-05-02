@@ -2,7 +2,7 @@
     <mat-icon id="toolBar" (click)="onToolbarToggle()">menu</mat-icon>
 
     <div class="sidebar">
-        <button class="navButton" (click)="resetDashboard()" mat-button routerLink="/control">
+        <button class="navButton" mat-button routerLink="/control">
             <img src="favicon.ico" class="favicon" alt="Oakestra" />
         </button>
     </div>
@@ -22,7 +22,7 @@
             <mat-icon>person</mat-icon>
             Profile
         </button>
-        <button (click)="show()" *ngIf="isAdmin" mat-menu-item routerLink="users">
+        <button *ngIf="isAdmin" mat-menu-item routerLink="users">
             <mat-icon>people</mat-icon>
             User Management
         </button>
@@ -59,11 +59,13 @@
     </mat-sidenav>
 
     <mat-sidenav-content id="content">
+        <div *ngIf="showWelcome" class="welcome">
+            <h1>Welcome to Oakestra!</h1>
+            <img src="assets/img/color-min.png" />
+            <h3>Create or select an application to get started.</h3>
+        </div>
         <div>
             <router-outlet></router-outlet>
         </div>
-        <ng-template #nothingSelected>
-            <div class="content mat-elevation-z8">There is nothing selected.</div>
-        </ng-template>
     </mat-sidenav-content>
 </mat-sidenav-container>

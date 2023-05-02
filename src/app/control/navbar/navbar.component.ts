@@ -1,15 +1,16 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { delay } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { delay, filter, startWith, tap, withLatestFrom } from 'rxjs/operators';
+import { NavigationEnd, NavigationStart, Router, Scroll } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { appReducer, getUser } from 'src/app/root/store/index';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable, zip } from 'rxjs';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { AuthService, Role } from '../../shared/modules/auth/auth.service';
 import { IUser } from '../../root/interfaces/user';
 import { selectCurrentUser } from '../../root/store/selectors/user.selector';
+import { selectCurrentApplication } from '../../root/store/selectors/application.selector';
 
 @Component({
     selector: 'app-navbar',
@@ -19,12 +20,15 @@ import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 export class NavbarComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSidenav)
     sidenav!: MatSidenav;
-    appSelected = false;
-    settings = false;
 
     public user$: Observable<IUser> = this.store.pipe(select(selectCurrentUser));
     userID = '';
     isAdmin = false;
+    showWelcome = true;
+
+    private b1 = false;
+    private appSelected = false;
+    private appView = false;
 
     listClusters = false;
     clusterSelected = false;
@@ -34,9 +38,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     constructor(
         private observer: BreakpointObserver,
         public userService: UserService,
-        private router: Router,
         private authService: AuthService,
         public store: Store<appReducer.AppState>,
+        private router: Router,
     ) {}
 
     ngOnInit(): void {
@@ -49,6 +53,34 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         });
 
         this.updatePermissions();
+
+        // To show the welcome page if nothing is selected
+        this.router.events
+            .pipe(
+                tap(() => {
+                    this.showWelcome = false;
+                    this.appView = false;
+                }),
+                filter((event) => event instanceof Scroll && event.routerEvent.url === '/control'),
+            )
+            .subscribe(() => {
+                this.appView = true;
+                this.showWelcome = this.appSelected;
+            });
+
+        this.store
+            .select(selectCurrentApplication)
+            .pipe(
+                tap(() => {
+                    this.showWelcome = false;
+                    this.appSelected = false;
+                }),
+                filter((app) => app === null),
+            )
+            .subscribe(() => {
+                this.appSelected = true;
+                this.showWelcome = this.appView;
+            });
     }
 
     // For the responsive sidenav
@@ -68,7 +100,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     }
 
     updatePermissions(): void {
-        // TODO Set Roles in JWT and dont make a extra api call.
         this.authService.hasRole(Role.ADMIN).subscribe((isAdmin) => {
             this.isAdmin = isAdmin;
             this.isAdmin = true;
@@ -87,10 +118,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
     onToolbarToggle() {
         this.opened = !this.opened;
-    }
-
-    show() {
-        this.appSelected = true;
     }
 
     logout() {
