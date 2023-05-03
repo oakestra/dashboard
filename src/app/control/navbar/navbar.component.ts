@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { delay } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { delay, filter, startWith, tap, withLatestFrom } from 'rxjs/operators';
+import { NavigationEnd, NavigationStart, Router, Scroll } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { appReducer, getOrganization, getUser } from 'src/app/root/store/index';
 import { Observable } from 'rxjs';
@@ -14,6 +14,7 @@ import { ApiService } from '../../shared/modules/api/api.service';
 import { IOrganization } from '../../root/interfaces/organization';
 import { selectOrganization } from '../../root/store/selectors/organization.selector';
 import { Role } from '../../root/enums/roles';
+import { selectCurrentApplication } from 'src/app/root/store/selectors/application.selector';
 
 @Component({
     selector: 'app-navbar',
@@ -23,8 +24,6 @@ import { Role } from '../../root/enums/roles';
 export class NavbarComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSidenav)
     sidenav!: MatSidenav;
-    appSelected = false;
-    settings = false;
 
     public user$: Observable<IUser> = this.store.pipe(select(selectCurrentUser));
     public org$: Observable<IOrganization[]> = this.store.pipe(select(selectOrganization));
@@ -32,6 +31,11 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     // TODO Do not create a var for every role, do this different
     isAdmin = false;
     isOrgaProvider = false;
+    showWelcome = true;
+
+    private b1 = false;
+    private appSelected = false;
+    private appView = false;
 
     listClusters = false;
     clusterSelected = false;
@@ -41,10 +45,10 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     constructor(
         private observer: BreakpointObserver,
         public userService: UserService,
-        private router: Router,
         private authService: AuthService,
         public store: Store<appReducer.AppState>,
         public api: ApiService,
+        private router: Router,
     ) {}
 
     ngOnInit(): void {
@@ -63,6 +67,34 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         }
 
         this.isOrgaProvider = this.userService.hasRole(Role.ORGANIZATION_ADMIN);
+
+        // To show the welcome page if nothing is selected
+        this.router.events
+            .pipe(
+                tap(() => {
+                    this.showWelcome = false;
+                    this.appView = false;
+                }),
+                filter((event) => event instanceof Scroll && event.routerEvent.url === '/control'),
+            )
+            .subscribe(() => {
+                this.appView = true;
+                this.showWelcome = this.appSelected;
+            });
+
+        this.store
+            .select(selectCurrentApplication)
+            .pipe(
+                tap(() => {
+                    this.showWelcome = false;
+                    this.appSelected = false;
+                }),
+                filter((app) => app === null),
+            )
+            .subscribe(() => {
+                this.appSelected = true;
+                this.showWelcome = this.appView;
+            });
     }
 
     // For the responsive sidenav
@@ -97,10 +129,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
     onToolbarToggle() {
         this.opened = !this.opened;
-    }
-
-    show() {
-        this.appSelected = true;
     }
 
     logout() {
