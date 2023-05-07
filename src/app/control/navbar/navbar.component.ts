@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { delay, filter, startWith, tap, withLatestFrom } from 'rxjs/operators';
-import { NavigationEnd, NavigationStart, Router, Scroll } from '@angular/router';
+import { delay, filter, tap } from 'rxjs/operators';
+import { Router, Scroll } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { appReducer, getOrganization, getUser } from 'src/app/root/store/index';
 import { Observable } from 'rxjs';
+import { selectCurrentApplication } from 'src/app/root/store/selectors/application.selector';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { AuthService } from '../../shared/modules/auth/auth.service';
 import { IUser } from '../../root/interfaces/user';
@@ -14,7 +15,6 @@ import { ApiService } from '../../shared/modules/api/api.service';
 import { IOrganization } from '../../root/interfaces/organization';
 import { selectOrganization } from '../../root/store/selectors/organization.selector';
 import { Role } from '../../root/enums/roles';
-import { selectCurrentApplication } from 'src/app/root/store/selectors/application.selector';
 
 @Component({
     selector: 'app-navbar',
@@ -33,12 +33,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     isOrgaProvider = false;
     showWelcome = true;
 
-    private b1 = false;
     private appSelected = false;
     private appView = false;
 
-    listClusters = false;
-    clusterSelected = false;
     events: string[] = [];
     opened = true;
 
@@ -115,16 +112,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
     updatePermissions(): void {
         this.isAdmin = this.userService.hasRole(Role.ADMIN);
-    }
-
-    switchScreen(app: boolean, list: boolean, cluster: boolean) {
-        this.appSelected = app;
-        this.listClusters = list;
-        this.clusterSelected = cluster;
-    }
-
-    resetDashboard() {
-        this.switchScreen(false, false, false);
     }
 
     onToolbarToggle() {
