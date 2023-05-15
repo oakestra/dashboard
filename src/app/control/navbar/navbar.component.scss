@@ -221,30 +221,29 @@ mat-card {
     }
 }
 
-.contentWelcome{
-  text-align: center;
+.contentWelcome {
+    text-align: center;
 }
 
-#content{
-  text-align: center;
+#content {
+    text-align: center;
 }
 
-.welcome{
+.welcome {
+    margin-top: 10vh;
 
-  margin-top: 10vh;
+    h1 {
+        color: #d3d3d3;
+        font-size: xxx-large;
+    }
 
-  h1{
-    color: #d3d3d3;
-    font-size: xxx-large;
-  }
+    h3 {
+        color: #d3d3d3;
+        font-size: xx-large;
+    }
 
-  h3{
-    color: #d3d3d3;
-    font-size: xx-large;
-  }
-
-  img{
-    width: 30%;
-    filter: grayscale(70%);
-  }
+    img {
+        width: 30%;
+        filter: grayscale(70%);
+    }
 }
