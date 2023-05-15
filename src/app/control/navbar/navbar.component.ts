@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { delay, filter, startWith, tap, withLatestFrom } from 'rxjs/operators';
-import { NavigationEnd, NavigationStart, Router, Scroll } from '@angular/router';
+import { delay, filter, tap } from 'rxjs/operators';
+import { Router, Scroll } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { appReducer, getUser } from 'src/app/root/store/index';
-import { combineLatest, Observable, zip } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { AuthService, Role } from '../../shared/modules/auth/auth.service';
 import { IUser } from '../../root/interfaces/user';
