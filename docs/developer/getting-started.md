@@ -1,4 +1,7 @@
-# Getting started
+# This documentation is no longer up to date
+## Look in the [wiki](www.oakestra.io/docs/)
+
+Getting started
 
 This document describes how to setup your development environment.
 
@@ -60,17 +63,6 @@ npm run build
 ```
 
 The code is compiled, compressed, i18n support is enabled and debug support removed. The dashboard binary can be found in the `dist` folder.
-
-### 2. docker folder: 
-
-To use the environment variables of a Docker container in your Angular application we use the library [angular-server-side-configuration](https://www.npmjs.com/package/angular-server-side-configuration). For any problems you can consult the readme of that repository.
-
-This folder contains the angular-environment folder, the entrypoint.sh file and a Nginx configuration file. 
-
-In the angular-environment folder is the code that needs to run every time you start your Docker container. 
-It contains a package.json file that has a dependency on angular-server-side-configuration and runs the main.js file.
-
-The entrypoint.sh script is used to install NodeJS and the angular-server-side-configuration library. After that, it runs the main.js script to set the environment variables and at the end, all NodeJS-related stuff is deleted and the Nginx server can be started with the defined settings in the configuration file. 
 
 ### 3. dockerfile 
 

@@ -77,10 +77,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "edgeIO-frontend:build:production"
+                            "browserTarget": "oakestra-dashboard:build:production"
                         },
                         "development": {
-                            "browserTarget": "edgeIO-frontend:build:development"
+                            "browserTarget": "oakestra-dashboard:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -109,23 +109,10 @@
                         "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
                     }
                 },
-                "ngsscbuild": {
-                    "builder": "angular-server-side-configuration:ngsscbuild",
-                    "options": {
-                        "additionalEnvironmentVariables": ["apiURL"],
-                        "browserTarget": "edgeIO-frontend:build",
-                        "ngsscEnvironmentFile": "src/environments/environment.prod.ts"
-                    },
-                    "configurations": {
-                        "production": {
-                            "browserTarget": "edgeIO-frontend:build:production"
-                        }
-                    }
-                }
             }
         }
     },
-    "defaultProject": "edgeIO-frontend",
+    "defaultProject": "oakestra-dashboard",
     "schematics": {
       "@schematics/angular:component": {
         "style": "scss"

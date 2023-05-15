@@ -9,4 +9,4 @@ services:
         restart: unless-stopped
         container_name: oaekstra-frontend-container
         environment:
-            - API_ADDRESS=192.168.1.189:10000 #ip of the system manager
+            - API_URL=${API_URL}  #ip of the system manager
