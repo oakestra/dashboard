@@ -26,7 +26,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     isAdmin = false;
     showWelcome = true;
 
-    private b1 = false;
     private appSelected = false;
     private appView = false;
 

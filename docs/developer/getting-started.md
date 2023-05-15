@@ -1,5 +1,5 @@
 # This documentation is no longer up to date
-## Look in the [wiki](www.oakestra.io/docs/)
+## Look in the [wiki](https://www.oakestra.io/docs/)
 
 Getting started
 
