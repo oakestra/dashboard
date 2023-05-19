@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "edgeIO-frontend": {
+        "oakestra-dashboard": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:application": {
@@ -88,7 +88,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "edgeIO-frontend:build"
+                        "browserTarget": "oakestra-dashboard:build"
                     }
                 },
                 "test": {

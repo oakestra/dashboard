@@ -6,7 +6,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "build:ngssc": "ng run edgeIO-frontend:ngsscbuild:production"
+    "build:ngssc": "ng run oakestra-dashboard:ngsscbuild:production"
   },
   "name": "edgeio",
   "version": "0.0.0",
