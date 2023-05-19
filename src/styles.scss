@@ -302,3 +302,7 @@ body.shepherd-active::after {
     background: ivory;
     border: 1px solid black;
 }
+
+.option .mdc-radio__outer-circle {
+  border-color: #000000 !important;
+}

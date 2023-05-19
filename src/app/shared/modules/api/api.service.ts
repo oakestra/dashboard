@@ -11,6 +11,7 @@ import { IUser, IUserRole } from '../../../root/interfaces/user';
 import { IApplication } from '../../../root/interfaces/application';
 import { IService } from '../../../root/interfaces/service';
 import { ICluster } from '../../../root/interfaces/cluster';
+import { ISettings } from '../../../root/interfaces/settings';
 
 @Injectable({
     providedIn: 'root',
@@ -156,6 +157,17 @@ export class ApiService extends RestService {
             oldPassword,
             newPassword,
         });
+    }
+
+    // /////////////////////////////////////////////////////////////////////////
+    // /////////////////// Settings Functions //////////////////////////////////
+
+    public setSettings(settings: ISettings) {
+        return this.doPUTRequest('settings', settings);
+    }
+
+    public getSettings(): Observable<ISettings> {
+        return this.doGETRequest('/settings');
     }
 
     // /////////////////////////////////////////////////////////////////////////
