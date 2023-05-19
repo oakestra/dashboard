@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "edgeIO-frontend": {
+        "oakestra-dashboard": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:application": {
@@ -77,10 +77,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "edgeIO-frontend:build:production"
+                            "browserTarget": "oakestra-dashboard:build:production"
                         },
                         "development": {
-                            "browserTarget": "edgeIO-frontend:build:development"
+                            "browserTarget": "oakestra-dashboard:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -88,7 +88,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "edgeIO-frontend:build"
+                        "browserTarget": "oakestra-dashboard:build"
                     }
                 },
                 "test": {
@@ -108,24 +108,11 @@
                     "options": {
                         "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
                     }
-                },
-                "ngsscbuild": {
-                    "builder": "angular-server-side-configuration:ngsscbuild",
-                    "options": {
-                        "additionalEnvironmentVariables": ["apiURL"],
-                        "browserTarget": "edgeIO-frontend:build",
-                        "ngsscEnvironmentFile": "src/environments/environment.prod.ts"
-                    },
-                    "configurations": {
-                        "production": {
-                            "browserTarget": "edgeIO-frontend:build:production"
-                        }
-                    }
                 }
             }
         }
     },
-    "defaultProject": "edgeIO-frontend",
+    "defaultProject": "oakestra-dashboard",
     "schematics": {
       "@schematics/angular:component": {
         "style": "scss"
