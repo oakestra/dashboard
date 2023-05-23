@@ -10,6 +10,7 @@ import { UsersComponent } from './users/users.component';
 import { UserEditComponent } from './users/user-edit/user-edit.component';
 import { InfrastructureComponent } from './infrastructure/infrastructure.component';
 import { OrganizationComponent } from './organization/organization.component';
+import { SettingsComponent } from './settings/settings.component';
 
 export const routes: Routes = [
     {
@@ -50,6 +51,12 @@ export const routes: Routes = [
             {
                 path: 'organization',
                 component: OrganizationComponent,
+                canActivate: [AuthGuardService],
+                
+            },
+            {   
+                path: 'settings',
+                component: SettingsComponent,
                 canActivate: [AuthGuardService],
             },
             {

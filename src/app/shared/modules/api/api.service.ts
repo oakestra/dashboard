@@ -14,6 +14,7 @@ import { ICluster } from '../../../root/interfaces/cluster';
 import { IOrganization } from '../../../root/interfaces/organization';
 import { Role } from '../../../root/enums/roles';
 import { SlaGeneratorService } from '../helper/sla-generator.service';
+import { ISettings } from '../../../root/interfaces/settings';
 
 @Injectable({
     providedIn: 'root',
@@ -136,7 +137,7 @@ export class ApiService extends RestService {
         });
     }
 
-    // /////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////
     // /////////////////// Organization Functions ///////////////////////////////
 
     addOrganization(org: IOrganization): Observable<string> {
@@ -154,6 +155,17 @@ export class ApiService extends RestService {
     getOrganization(): Observable<IOrganization[]> {
         this.doGETRequest('/organization/').subscribe((x) => console.log(x));
         return this.doGETRequest('/organization/');
+    }
+
+    // /////////////////////////////////////////////////////////////////////////
+    // /////////////////// Settings Functions //////////////////////////////////
+
+    public setSettings(settings: ISettings) {
+        return this.doPUTRequest('settings', settings);
+    }
+
+    public getSettings(): Observable<ISettings> {
+        return this.doGETRequest('/settings');
     }
 
     // /////////////////////////////////////////////////////////////////////////

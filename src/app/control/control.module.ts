@@ -66,6 +66,7 @@ import { EditOrganizationComponent } from './organization/edit-organization/edit
 import { ListOrganizationComponent } from './organization/list-organization/list-organization.component';
 import { AddMemberComponent } from './organization/dialogs/add-member/add-member.component';
 import { MemberItemComponent } from './organization/edit-organization/member-item/member-item.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
     declarations: [
@@ -104,6 +105,7 @@ import { MemberItemComponent } from './organization/edit-organization/member-ite
         ListOrganizationComponent,
         AddMemberComponent,
         MemberItemComponent,
+        SettingsComponent,
     ],
     imports: [
         CommonModule,

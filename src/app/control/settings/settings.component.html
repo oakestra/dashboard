@@ -1,0 +1,55 @@
+<div class="content-cards">
+    <mat-card class="serviceCard">
+        <mat-card-title>Settings</mat-card-title>
+        <mat-card-content>
+            <h2>Configure SMTP server:</h2>
+            <mat-radio-group class="radio-group" [(ngModel)]="selectedOption">
+                <mat-radio-button
+                    class="option"
+                    *ngFor="let o of options"
+                    [value]="o"
+                    [disabled]="o === ConfigurationType.OAKESTRA"
+                >
+                    {{ o }}
+                </mat-radio-button>
+            </mat-radio-group>
+            <div *ngIf="selectedOption === 'None'">
+                This will disable some functions:
+                <ul>
+                    <li>Users do not receive mail when they change their password</li>
+                    <li>New users do not receive a mail that an account was created for them</li>
+                    <li>
+                        Users can't reset their password in the usual way because they can't receive the mail, the admin
+                        has to reset the password.
+                    </li>
+                </ul>
+            </div>
+            <div *ngIf="selectedOption === ConfigurationType.CUSTOME">
+                <div [formGroup]="form" class="form">
+                    <mat-form-field>
+                        <mat-label>Server Address</mat-label>
+                        <input matInput formControlName="address" />
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Port</mat-label>
+                        <input matInput formControlName="port" />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Username</mat-label>
+                        <input matInput formControlName="username" />
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Password</mat-label>
+                        <input matInput formControlName="password" />
+                    </mat-form-field>
+
+                    <mat-checkbox formControlName="ssl">Use SSL</mat-checkbox>
+                </div>
+            </div>
+            <div *ngIf="selectedOption === 'Oakestra'">Your favorite season is: {{ selectedOption }}</div>
+            <button (click)="save()" mat-flat-button color="primary" type="submit">Save</button>
+        </mat-card-content>
+    </mat-card>
+</div>

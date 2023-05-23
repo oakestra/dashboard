@@ -8,7 +8,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { ApplicationEffects, appReducer, OrganizationEffects, ServiceEffects } from 'src/app/root/store/index';
+import { ApplicationEffects, appReducer, SettingsEffects } from 'src/app/root/store/index';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { SharedModule } from './shared/sheard.module';
@@ -30,7 +30,7 @@ import { UserEffects } from './root/store';
         MatIconModule,
         StoreDevtoolsModule,
         StoreModule.forRoot(appReducer.reducers, {}),
-        EffectsModule.forRoot([UserEffects, ApplicationEffects, ServiceEffects, OrganizationEffects]),
+        EffectsModule.forRoot([UserEffects, ApplicationEffects, SettingsEffects]),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
     ],
     providers: [
