@@ -2,309 +2,309 @@
 @import 'colors';
 
 .mdc-button__label {
-  color: white;
+    color: white;
 }
 
 .mat-mdc-form-field {
-  --mat-mdc-form-field-floating-label-scale: 0.75;
-  display: block !important;
-  flex-direction: column;
-  min-width: 0;
-  text-align: left;
+    --mat-mdc-form-field-floating-label-scale: 0.75;
+    display: block !important;
+    flex-direction: column;
+    min-width: 0;
+    text-align: left;
 }
 
 .mat-mdc-dialog-actions {
-  justify-content: end !important;
+    justify-content: end !important;
 }
 
 .full-width {
-  width: 100%;
+    width: 100%;
 }
 
 .alignRight {
-  text-align: right;
+    text-align: right;
 }
 
 .input {
-  padding-right: 8px;
+    padding-right: 8px;
 }
 
 .alignRight {
-  text-align: right;
+    text-align: right;
 }
 
 .mdc-button {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 .mat-dialog-actions {
-  justify-content: flex-end;
+    justify-content: flex-end;
 }
 
 .mdc-evolution-chip__text-label {
-  color: white !important;
+    color: white !important;
 }
 
 * {
-  font-family: CMUSansSerif, sans-serif;
+    font-family: CMUSansSerif, sans-serif;
 }
 
 /*////////////////////////////////////////////////////*/
 svg {
-  cursor: default;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  /*-o-user-select: none;*/
-  user-select: none;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    /*-o-user-select: none;*/
+    user-select: none;
 }
 
 svg:not(.active):not(.ctrl) {
-  cursor: crosshair;
+    cursor: crosshair;
 }
 
 path.link {
-  fill: none;
-  stroke: #888;
-  stroke-width: 5px;
-  cursor: default;
+    fill: none;
+    stroke: #888;
+    stroke-width: 5px;
+    cursor: default;
 }
 
 path.link.selected {
-  stroke: #000000;
-  stroke-dasharray: 10, 5;
-  /*z-index: 2;*/
+    stroke: #000000;
+    stroke-dasharray: 10, 5;
+    /*z-index: 2;*/
 }
 
 svg:not(.active):not(.ctrl) path.link {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 path.link.dragline {
-  pointer-events: none;
+    pointer-events: none;
 }
 
 path.link.hidden {
-  stroke-width: 0;
+    stroke-width: 0;
 }
 
 circle.node {
-  stroke-width: 0;
-  cursor: pointer;
-  fill: #fff;
+    stroke-width: 0;
+    cursor: pointer;
+    fill: #fff;
 }
 
 text {
-  font: 14px sans-serif;
-  pointer-events: none;
+    font: 14px sans-serif;
+    pointer-events: none;
 }
 
 text.id {
-  text-anchor: middle;
-  font-weight: bold;
+    text-anchor: middle;
+    font-weight: bold;
 }
 
 .error-snackbar {
-  background-color: #a31919;
+    background-color: #a31919;
 }
 
 .success-snackbar {
-  background-color: #28a513;
+    background-color: #28a513;
 }
 
 mat-card {
-  width: 100%;
-  font-size: 1rem;
-  margin-bottom: 10px;
-  display: inline-block;
-  padding-bottom: 0;
+    width: 100%;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding-bottom: 0;
 }
 
 mat-card-title {
-  background-color: #4a7083;
-  padding: 16px;
-  border-radius: 4px;
-  color: white;
+    background-color: #4a7083;
+    padding: 16px;
+    border-radius: 4px;
+    color: white;
 }
 
 mat-card p {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .mat-expansion-indicator::after {
-  color: white;
+    color: white;
 }
 
 .mdc-form-field {
-  display: inline-flex;
-  align-items: flex-end !important;
-  vertical-align: middle;
+    display: inline-flex;
+    align-items: flex-end !important;
+    vertical-align: middle;
 }
 
 .content-cards {
-  border-radius: 10px;
-  margin: 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+    border-radius: 10px;
+    margin: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 @media only screen and (min-width: 801px) {
-  .content-cards {
-    margin-left: 32px;
-  }
+    .content-cards {
+        margin-left: 32px;
+    }
 }
 
 .serviceCard {
-  height: 100%;
+    height: 100%;
 }
 
 .form {
-  min-width: 150px;
-  width: 100%;
+    min-width: 150px;
+    width: 100%;
 }
 
 .full-width {
-  width: 100%;
+    width: 100%;
 }
 
 .smallInput {
-  width: 10%;
-  padding: 10px;
+    width: 10%;
+    padding: 10px;
 }
 
 td {
-  padding-right: 8px;
+    padding-right: 8px;
 }
 
 .constraints {
-  padding-top: 10px;
+    padding-top: 10px;
 }
 
 .settingsButton {
-  float: right;
-  background-color: #4a7083 !important;
+    float: right;
+    background-color: #4a7083 !important;
 }
 
 @media only screen and (max-width: 1000px) {
-  .leftInput {
-    padding-right: 0;
-  }
+    .leftInput {
+        padding-right: 0;
+    }
 
-  .rightInput {
-    padding-left: 0;
-  }
+    .rightInput {
+        padding-left: 0;
+    }
 }
 
 .addButtonDiv {
-  display: inline-block;
-  vertical-align: middle;
-  padding-right: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 10px;
 }
 
 .cancel_buttons {
-  margin-left: 8px;
+    margin-left: 8px;
 }
 
 .file-input {
-  display: none;
+    display: none;
 }
 
 button:focus {
-  outline: 0;
+    outline: 0;
 }
 
 /*///////////////////////////////////////////////////*/
 /* Style for the User Tour*/
 
 body {
-  /*margin: 0;*/
-  /*display: grid;*/
-  /*font-family: 'Helvetica Neue';*/
-  /*grid-template-areas: inherit;*/
+    /*margin: 0;*/
+    /*display: grid;*/
+    /*font-family: 'Helvetica Neue';*/
+    /*grid-template-areas: inherit;*/
 }
 
 header,
 aside,
 main,
 section {
-  padding: 20px;
+    padding: 20px;
 }
 
 header {
-  background: #00c195;
+    background: #00c195;
 }
 
 aside {
-  background: #d3d3d3;
+    background: #d3d3d3;
 }
 
 section {
-  background: #fff;
-  border-radius: 10px;
-  min-height: 30%;
+    background: #fff;
+    border-radius: 10px;
+    min-height: 30%;
 }
 
 h1 {
-  margin: 0;
+    margin: 0;
 }
 
 nav {
-  justify-self: right;
+    justify-self: right;
 }
 
 nav ul li {
-  display: inline;
+    display: inline;
 }
 
 nav ul li a {
-  padding: 10px;
+    padding: 10px;
 }
 
 aside ul {
-  margin-top: 30px;
+    margin-top: 30px;
 }
 
 aside ul li a {
-  text-transform: uppercase;
-  font-size: 0.7em;
-  padding: 13px 0;
-  display: block;
-  color: #000;
+    text-transform: uppercase;
+    font-size: 0.7em;
+    padding: 13px 0;
+    display: block;
+    color: #000;
 }
 
 body.shepherd-active::after {
-  content: '';
-  display: block;
-  background-color: #000;
-  opacity: 0.4;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: -1000000;
+    content: '';
+    display: block;
+    background-color: #000;
+    opacity: 0.4;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1000000;
 }
 
 .arrow {
-  position: absolute;
-  width: 0.75em;
-  height: 0.75em;
-  overflow: hidden;
+    position: absolute;
+    width: 0.75em;
+    height: 0.75em;
+    overflow: hidden;
 }
 
 .arrow::before {
-  content: '';
-  position: absolute;
-  width: 0.75em;
-  height: 0.75em;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
-  background: ivory;
-  border: 1px solid black;
+    content: '';
+    position: absolute;
+    width: 0.75em;
+    height: 0.75em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background: ivory;
+    border: 1px solid black;
 }
 
 .option .mdc-radio__outer-circle {
-  border-color: #000000 !important;
+    border-color: #000000 !important;
 }
