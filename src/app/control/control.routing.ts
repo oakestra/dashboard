@@ -9,6 +9,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { UsersComponent } from './users/users.component';
 import { UserEditComponent } from './users/user-edit/user-edit.component';
 import { InfrastructureComponent } from './infrastructure/infrastructure.component';
+import { SettingsComponent } from './settings/settings.component';
 // import { ClusterComponent } from './cluster/cluster.component';
 
 export const routes: Routes = [
@@ -45,6 +46,11 @@ export const routes: Routes = [
             {
                 path: 'profile',
                 component: UserEditComponent,
+                canActivate: [AuthGuardService],
+            },
+            {
+                path: 'settings',
+                component: SettingsComponent,
                 canActivate: [AuthGuardService],
             },
             {

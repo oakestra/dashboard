@@ -20,9 +20,11 @@
 .full-width {
     width: 100%;
 }
+
 .alignRight {
     text-align: right;
 }
+
 .input {
     padding-right: 8px;
 }
@@ -301,4 +303,8 @@ body.shepherd-active::after {
     transform: translate(-50%, -50%) rotate(45deg);
     background: ivory;
     border: 1px solid black;
+}
+
+.option .mdc-radio__outer-circle {
+    border-color: #000000 !important;
 }

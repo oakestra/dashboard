@@ -26,6 +26,10 @@
             <mat-icon>people</mat-icon>
             User Management
         </button>
+        <button *ngIf="isAdmin" mat-menu-item routerLink="settings">
+            <mat-icon>settings</mat-icon>
+            Settings
+        </button>
         <button (click)="logout()" mat-menu-item>
             <mat-icon>logout</mat-icon>
             Logout

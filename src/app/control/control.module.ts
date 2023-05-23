@@ -61,6 +61,7 @@ import { RequirementsComponent } from './sla-form/components/requirements/requir
 import { AddressesComponent } from './sla-form/components/addresses/addresses.component';
 import { ArgumentsComponent } from './sla-form/components/arguments/arguments.component';
 import { InfrastructureComponent } from './infrastructure/infrastructure.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
     declarations: [
@@ -94,6 +95,7 @@ import { InfrastructureComponent } from './infrastructure/infrastructure.compone
         AddressesComponent,
         ArgumentsComponent,
         InfrastructureComponent,
+        SettingsComponent,
     ],
     imports: [
         CommonModule,
