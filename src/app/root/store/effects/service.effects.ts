@@ -22,6 +22,18 @@ export class ServiceEffects {
         ),
     );
 
+    getSingleService$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(serviceActions.getSingleService),
+            switchMap(({ serviceId }) =>
+                this.apiService.getServiceByID(serviceId).pipe(
+                    map((service) => serviceActions.getSingleServiceSuccess({ service })),
+                    catchError((error) => of(serviceActions.getSingleServiceError({ error: error.message }))),
+                ),
+            ),
+        ),
+    );
+
     postServices$ = createEffect(() =>
         this.actions$.pipe(
             ofType(serviceActions.postService),

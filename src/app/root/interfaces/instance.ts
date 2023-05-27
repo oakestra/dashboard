@@ -11,4 +11,5 @@ export interface IInstance {
     instance_list: string[];
     addresses: IAddresses;
     status_detail: string;
+    instance_number: number;
 }

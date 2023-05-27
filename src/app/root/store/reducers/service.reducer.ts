@@ -114,6 +114,31 @@ export const serviceReducer = createReducer(
         const error = action.error;
         return { ...state, loading, error };
     }),
+
+    // ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////  GET SINGLE SERVICE  //////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////////////
+
+    on(serviceActions.getSingleService, (state) => {
+        const loading = false;
+        return { ...state, loading };
+    }),
+
+    on(serviceActions.getSingleServiceSuccess, (state, action) => {
+        const servicesOfApp: IService[] = state.servicesOfApp.filter(
+            (s: IService) => s._id.$oid !== action.service._id.$oid,
+        );
+        servicesOfApp.push(action.service);
+        const loading = false;
+        return { ...state, servicesOfApp, loading };
+    }),
+
+    on(serviceActions.getSingleServiceError, (state, action) => {
+        const service = {} as IService;
+        const loading = false;
+        const error = action.error;
+        return { ...state, service, loading, error };
+    }),
 );
 
 export function reducer(state: State, action: Action) {

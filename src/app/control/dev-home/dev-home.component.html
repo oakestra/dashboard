@@ -46,16 +46,19 @@
                             </div>
                         </mat-expansion-panel-header>
 
-                        <div *ngIf="service.instance_list?.length === 0" class="noinstance">
+                        <div *ngIf="service.instance_list?.length === 0" class="noInstance">
                             No instances of this service.
                         </div>
 
                         <div *ngFor="let instance of service.instance_list; let i = index" class="w3-row instance">
                             <div class="w3-col s6 l5 m5">
-                                <p>Instance {{ i + 1 }}</p>
+                                <p>Instance {{ instance.instance_number }}</p>
                             </div>
 
-                            <div (click)="openStatusDialog(instance)" class="w3-col l5 m6 s5 statusField">
+                            <div
+                                (click)="openStatusDialog(service, instance.instance_number)"
+                                class="w3-col l5 m6 s5 statusField"
+                            >
                                 <button mat-icon-button type="button">
                                     <mat-icon [class]="instance.status">fiber_manual_record</mat-icon>
                                 </button>
@@ -100,7 +103,7 @@
         <!--            <mat-card-title>Cluster: {{ cluster_info.cluster_name }}</mat-card-title>-->
         <!--            <mat-card-subtitle>Cluster ID {{ cluster_info._id.$oid }}</mat-card-subtitle>-->
         <!--            <mat-card-actions>-->
-        <!--                <div *ngIf="!cluster_info.pairing_complete" class="noinstance">-->
+        <!--                <div *ngIf="!cluster_info.pairing_complete" class="noInstance">-->
         <!--                    <p>NOT YET ACTIVE</p>-->
         <!--                </div>-->
         <!--                <button (click)="deleteCluster(cluster_info)" mat-button><i class="bx bxs-trash"></i></button>-->

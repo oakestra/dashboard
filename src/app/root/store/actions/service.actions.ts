@@ -7,6 +7,14 @@ export const getServices = createAction('[Service] getServices', props<{ appId: 
 export const getServicesSuccess = createAction('[Service] getServicesSuccess', props<{ services: IService[] }>());
 export const getServicesError = createAction('[Service] getServicesError', props<{ error: string }>());
 
+// //////////// GET Single Services /////////////
+export const getSingleService = createAction('[Service] getSingleService', props<{ serviceId: string }>());
+export const getSingleServiceSuccess = createAction(
+    '[Service] getSingleServiceSuccess',
+    props<{ service: IService }>(),
+);
+export const getSingleServiceError = createAction('[Service] getSingleServiceError', props<{ error: string }>());
+
 // ////////////// POST ////////////////////
 export const postService = createAction('[Service] postService', props<{ service: ISla }>());
 export const postServiceSuccess = createAction(

@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import * as L from 'leaflet';
 import {
     ArcElement,
     BarController,
@@ -18,15 +20,21 @@ import {
 } from 'chart.js';
 import { IInstance } from '../../../root/interfaces/instance';
 
-declare function initMap(lng: number, lat: number, radius: number): void;
-
 @Component({
     selector: 'line-chart',
     templateUrl: './line-chart.component.html',
     styleUrls: ['./line-chart.component.scss'],
 })
-export class LineChartComponent implements OnInit {
-    @Input() instanceList: IInstance;
+export class LineChartComponent implements OnInit, AfterViewInit {
+    @Input() instanceList: Observable<IInstance>;
+
+    private cpuChart: Chart;
+    private memoryChart: Chart;
+
+    textLocation: string = null;
+    private latitude: number;
+    private longitude: number;
+    private radius: number;
 
     constructor() {
         Chart.register(
@@ -48,15 +56,69 @@ export class LineChartComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // Doughnut chart with only current value.
-        new Chart('myChartCPU', {
+        this.createCharts();
+        this.instanceList.subscribe((instance: IInstance) => {
+            this.setLocation(instance.cluster_location);
+            this.updateCharts(instance);
+        });
+    }
+
+    ngAfterViewInit() {
+        const map = L.map('map').setView([this.longitude, this.latitude], 12);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors',
+        }).addTo(map);
+
+        const circle = L.circle([this.longitude, this.latitude], {
+            color: 'blue',
+            fillColor: 'lightblue',
+            fillOpacity: 0.5,
+            radius: this.radius,
+        }).addTo(map);
+
+        circle.bindPopup('A Circle on the Map.');
+    }
+
+    private setLocation(locationString: string): void {
+        if (!locationString) {
+            this.textLocation = 'No location found';
+            return;
+        }
+        const regex =
+            /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?),\s*([-+]?(?:\d+)(?:\.\d+)?)$/;
+
+        if (regex.test(locationString)) {
+            const array = locationString.split(',');
+            this.longitude = parseFloat(array[1]);
+            this.latitude = parseFloat(array[2]);
+            this.radius = parseFloat(array[3]);
+        } else {
+            this.textLocation = locationString;
+        }
+    }
+
+    private updateCharts(instance: IInstance): void {
+        this.cpuChart.data.datasets.forEach((dataset) => {
+            dataset.data = [instance.cpu, 100 - instance.cpu];
+        });
+        this.cpuChart.update();
+
+        this.memoryChart.data.datasets.forEach((dataset) => {
+            dataset.data = [0, instance.memory]; // TODO Exchange to historic Data Array
+        });
+        this.memoryChart.update();
+    }
+
+    private createCharts(): void {
+        this.cpuChart = new Chart('myChartCPU', {
             type: 'doughnut',
             data: {
                 labels: ['used', 'free'],
                 datasets: [
                     {
                         label: 'usage [%]',
-                        data: [this.instanceList.cpu, 100 - this.instanceList.cpu],
+                        data: [0, 0], // only to initialize
                         backgroundColor: ['rgb(235,54,75, 0.8)', 'rgba(90,246,93,0.8)'],
                         hoverOffset: 4,
                     },
@@ -72,21 +134,20 @@ export class LineChartComponent implements OnInit {
             },
         });
 
-        // TODO Add historic data
-        new Chart('myChartMemory', {
+        this.memoryChart = new Chart('myChartMemory', {
             type: 'line',
             data: {
                 labels: [0, 1], // Could be a time stamp
                 datasets: [
                     {
                         label: 'Memory [bytes]',
-                        data: [this.instanceList.memory, this.instanceList.memory],
+                        data: [0, 0],
                         backgroundColor: 'rgb(36,90,238)',
                         borderColor: 'rgb(36,90,238)',
                         borderWidth: 1,
                         fill: {
                             target: 'origin',
-                            above: 'rgb(36,90,238, 0.5)', // Area will be red above the origin
+                            above: 'rgb(36,90,238, 0.5)',
                         },
                     },
                 ],
@@ -100,16 +161,5 @@ export class LineChartComponent implements OnInit {
                 },
             },
         });
-        /*
-        // TODO Update map with real values and display only a polygon
-        const locationSplit = this.instanceList.cluster_location.split(',', 3) ?? [];
-        if (locationSplit.length === 3) {
-            initMap(+locationSplit[1], +locationSplit[0], +locationSplit[2]);
-        } else {
-            initMap(0.0, 0.0, 19999999);
-        }
-        */
-
-        initMap(0.0, 0.0, 19999999);
     }
 }

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-// TODO Implement all missing stuff, are there Endpoints for the registration?
+/*
+TODO: Currently not needed. Discuss on Github if functionality is wanted. There are no Endpoints for the registration
+ */
 
 @Component({
     selector: 'app-register',
