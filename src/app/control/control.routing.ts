@@ -52,9 +52,8 @@ export const routes: Routes = [
                 path: 'organization',
                 component: OrganizationComponent,
                 canActivate: [AuthGuardService],
-                
             },
-            {   
+            {
                 path: 'settings',
                 component: SettingsComponent,
                 canActivate: [AuthGuardService],

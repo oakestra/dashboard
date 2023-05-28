@@ -49,7 +49,6 @@
     margin: 0 !important;
 }
 
-
 .full-width {
     width: 100%;
 }
@@ -348,19 +347,19 @@ body.shepherd-active::after {
 }
 
 .mat-mdc-radio-button {
-  .mdc-radio .mdc-radio__native-control:enabled:not(:checked) + .mdc-radio__background .mdc-radio__outer-circle {
-    border-color: #fff !important;
-  }
-
-  &.option {
     .mdc-radio .mdc-radio__native-control:enabled:not(:checked) + .mdc-radio__background .mdc-radio__outer-circle {
-      border-color: #000 !important;
+        border-color: #fff !important;
     }
-  }
 
-  &.radioButton {
-    .mdc-radio .mdc-radio__native-control:enabled:not(:checked) + .mdc-radio__background .mdc-radio__outer-circle {
-      border-color: #fff !important;
+    &.option {
+        .mdc-radio .mdc-radio__native-control:enabled:not(:checked) + .mdc-radio__background .mdc-radio__outer-circle {
+            border-color: #000 !important;
+        }
     }
-  }
+
+    &.radioButton {
+        .mdc-radio .mdc-radio__native-control:enabled:not(:checked) + .mdc-radio__background .mdc-radio__outer-circle {
+            border-color: #fff !important;
+        }
+    }
 }
