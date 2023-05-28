@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Add Member</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="w3-row">
+        <div class="w3-col l12 s12 m12">
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Search user</mat-label>
+                <input [(ngModel)]="searchText" matInput />
+            </mat-form-field>
+        </div>
+    </div>
+    <mat-section [formGroup]="selection">
+        <h4>Member</h4>
+        <mat-option class="userEntry" *ngFor="let u of user">
+            <mat-checkbox [formControlName]="u.name"> {{ u.name }}</mat-checkbox>
+        </mat-option>
+    </mat-section>
+    <p *ngIf="user.length === 0">There are no additional users that could be added</p>
+</mat-dialog-content>
+
+<mat-dialog-actions class="alignRight">
+    <button (click)="doAction()" color="primary" mat-flat-button>Add</button>
+    <button (click)="closeDialog()" color="accent" mat-flat-button>Cancel</button>
+</mat-dialog-actions>

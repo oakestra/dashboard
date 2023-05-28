@@ -11,7 +11,7 @@ import { IInstance } from '../../../root/interfaces/instance';
 export class DialogServiceStatusView {
     // assuming grafana is running on port 80
     tmp = environment.apiUrl.split(':');
-    grafanaLink = this.tmp[0] + ':' + this.tmp[1];
+    grafanaLink = `${this.tmp[0]}:${this.tmp[1]}`;
     instance: IInstance;
 
     constructor(

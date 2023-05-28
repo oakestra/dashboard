@@ -24,7 +24,7 @@ export class UserEffects {
             ofType(userActions.postUser),
             switchMap(({ user }) =>
                 this.apiService.registerUser(user).pipe(
-                    map(() => userActions.postUserSuccess({ user })),
+                    map((newUser) => userActions.postUserSuccess({ user: newUser })),
                     catchError((error) => of(userActions.postUserError({ error: error.message }))),
                 ),
             ),
@@ -58,8 +58,8 @@ export class UserEffects {
     getAllUser$ = createEffect(() =>
         this.actions$.pipe(
             ofType(userActions.getAllUser),
-            switchMap(() =>
-                this.apiService.getAllUser().pipe(
+            switchMap(({ organization_id }) =>
+                this.apiService.getAllUser(organization_id).pipe(
                     map((users) => userActions.getAllUserSuccess({ users })),
                     catchError((error) => of(userActions.getAllUserError({ error: error.message }))),
                 ),

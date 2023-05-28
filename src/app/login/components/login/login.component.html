@@ -1,46 +1,42 @@
-<mat-card class="login-form">
+<mat-card class="login-form" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
     <img alt="Oakestra Logo" mat-card-image src="../../../../assets/img/color-full.png" />
     <mat-card-content>
-        <mat-icon class="connectingInfo" matTooltip="Connecting to: {{ sm_ip }}">info</mat-icon>
+        <!--        <mat-icon class="connectingInfo" matTooltip="Connecting to: {{ sm_ip }}">info</mat-icon>-->
         <form [formGroup]="form" accept-charset="UTF-8" role="form">
-            <div>
-                <div>
-                    <input
-                        formControlName="username"
-                        class="form-control"
-                        id="username"
-                        name="username"
-                        placeholder="Username"
-                        type="text"
-                    />
-                </div>
-
-                <div class="form-group">
-                    <span (click)="forgotPassword()" class="pull-right text-primary link">Forgot password?</span>
-                    <div class="cols-sm-10">
-                        <span class="input-group-addon"><i aria-hidden="true" class="fa fa-lock fa-lg"></i></span>
-                        <input
-                            (keyup.enter)="submitLogin()"
-                            formControlName="password"
-                            class="form-control"
-                            id="password"
-                            name="password"
-                            placeholder="Password"
-                            type="password"
-                        />
-                    </div>
-                </div>
-
-                <hr />
-
-                <div class="centerButton">
-                    <button (click)="submitLogin()" color="primary" mat-flat-button>Sign in</button>
-                </div>
-                <div class="signUp">
-                    <label class="cols-sm-2 control-label" for="password">Don't have an account?&ensp;</label>
-                    <span (click)="registerForm()" class="pull-right text-primary link">Sign up now </span>
-                </div>
+            <div class="info">
+                <p><mat-checkbox (change)="tabChanged($event)"></mat-checkbox>Organization login</p>
+                <mat-icon matTooltip="{{ sm_ip }}">info</mat-icon>
             </div>
+
+            <mat-form-field *ngIf="useOrganization">
+                <mat-label>Organization</mat-label>
+                <input matInput formControlName="organization_name" placeholder="Organization" />
+                <mat-icon matPrefix>people</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Username</mat-label>
+                <input matInput formControlName="username" placeholder="Username" />
+                <mat-icon matPrefix>person</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input
+                    matInput
+                    type="password"
+                    formControlName="password"
+                    (keyup.enter)="submitLogin()"
+                    placeholder="Password"
+                />
+                <mat-icon matPrefix>password</mat-icon>
+            </mat-form-field>
+
+            <span (click)="forgotPassword()" class="pull-right text-primary link">Forgot password?</span>
         </form>
+        <hr />
+        <div class="centerButton">
+            <button [disabled]="form.invalid" (click)="submitLogin()" color="primary" mat-flat-button>Sign in</button>
+        </div>
     </mat-card-content>
 </mat-card>

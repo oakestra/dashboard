@@ -24,3 +24,6 @@ export const updateServiceError = createAction('[Service] updateServiceError', p
 export const deleteService = createAction('[Service] deleteService', props<{ service: IService }>());
 export const deleteServiceSuccess = createAction('[Service] deleteServiceSuccess', props<{ service: IService }>());
 export const deleteServiceError = createAction('[Service] deleteServiceError', props<{ error: string }>());
+
+// ////////////// RESET STATE ////////////////////
+export const resetService = createAction('[Service] resetService');

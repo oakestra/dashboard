@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { UserService } from '../../../shared/modules/auth/user.service';
 import { AuthService } from '../../../shared/modules/auth/auth.service';
 import { ApiService } from '../../../shared/modules/api/api.service';
@@ -17,6 +18,7 @@ import { NotificationType } from '../../../root/interfaces/notification';
 export class LoginComponent {
     sm_ip = environment.apiUrl;
     form: FormGroup;
+    useOrganization = false;
 
     constructor(
         private router: Router,
@@ -27,31 +29,34 @@ export class LoginComponent {
         private fb: FormBuilder,
     ) {
         this.form = fb.group({
+            organization_name: ['', [Validators.required]],
             username: ['', [Validators.required]],
             password: ['', [Validators.required]],
         });
+
+        this.form.get('organization_name').disable();
+    }
+
+    public tabChanged(event: MatCheckboxChange) {
+        this.useOrganization = event.checked;
+        if (this.useOrganization) {
+            this.form.get('organization_name').enable();
+        } else {
+            this.form.get('organization_name').disable();
+        }
     }
 
     public submitLogin() {
-        const username = this.form.get('username');
-        const password = this.form.get('password');
-        if (username?.valid && password?.valid) {
-            const loginRequest: ILoginRequest = {
-                username: username.value,
-                password: password.value,
-            };
+        const loginRequest: ILoginRequest = {
+            ...this.form.value,
+        };
 
-            this.userService.login(loginRequest).subscribe({
-                next: (userServiceResponse: boolean) => {
-                    if (userServiceResponse) {
-                        this.authService.getAuthorization().subscribe(() => void this.router.navigate(['/control']));
-                    }
-                },
-                error: (error) => this.notifyService.notify(NotificationType.error, error),
-            });
-        } else {
-            this.notifyService.notify(NotificationType.error, 'Please provide valid inputs for login.');
-        }
+        this.userService.login(loginRequest).subscribe({
+            next: () => {
+                void this.router.navigate(['/control']);
+            },
+            error: (error) => this.notifyService.notify(NotificationType.error, error),
+        });
     }
 
     public forgotPassword() {
@@ -63,9 +68,5 @@ export class LoginComponent {
         } else {
             this.notifyService.notify(NotificationType.error, 'Please provide a valid username');
         }
-    }
-
-    public registerForm() {
-        void this.router.navigate(['/register']).then();
     }
 }

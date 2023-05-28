@@ -90,3 +90,12 @@ mat-list-item .sub-menu a:hover {
 .mdc-radio__outer-circle {
     border-color: white !important;
 }
+
+.radio-group {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.radioButton {
+    margin: 5px 0;
+}

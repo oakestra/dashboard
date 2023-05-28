@@ -1,0 +1,15 @@
+<div class="content-cards">
+    <mat-card class="serviceCard">
+        <mat-card-title>Organization Management</mat-card-title>
+        <mat-card-content>
+            <app-list-organization *ngIf="edit" (selectedOrga)="editOrganization($event)"></app-list-organization>
+
+            <app-edit-organization
+                *ngIf="!edit"
+                (back)="toggleEdit()"
+                [organizations$]="organizations$"
+                [selected]="selected"
+            ></app-edit-organization>
+        </mat-card-content>
+    </mat-card>
+</div>

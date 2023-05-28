@@ -61,6 +61,11 @@ import { RequirementsComponent } from './sla-form/components/requirements/requir
 import { AddressesComponent } from './sla-form/components/addresses/addresses.component';
 import { ArgumentsComponent } from './sla-form/components/arguments/arguments.component';
 import { InfrastructureComponent } from './infrastructure/infrastructure.component';
+import { OrganizationComponent } from './organization/organization.component';
+import { EditOrganizationComponent } from './organization/edit-organization/edit-organization.component';
+import { ListOrganizationComponent } from './organization/list-organization/list-organization.component';
+import { AddMemberComponent } from './organization/dialogs/add-member/add-member.component';
+import { MemberItemComponent } from './organization/edit-organization/member-item/member-item.component';
 import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
@@ -95,6 +100,11 @@ import { SettingsComponent } from './settings/settings.component';
         AddressesComponent,
         ArgumentsComponent,
         InfrastructureComponent,
+        OrganizationComponent,
+        EditOrganizationComponent,
+        ListOrganizationComponent,
+        AddMemberComponent,
+        MemberItemComponent,
         SettingsComponent,
     ],
     imports: [

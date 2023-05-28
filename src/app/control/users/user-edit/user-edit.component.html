@@ -25,15 +25,11 @@
                                 *ngFor="let r of (user$ | async).roles"
                                 [ngStyle]="{
                                     'background-color':
-                                        r.name === 'Admin'
-                                            ? '#DE686B'
-                                            : r.name === 'Application_Provider'
-                                            ? '#3DA23C'
-                                            : '#ADA23C'
+                                        r === 'Admin' ? '#DE686B' : r === 'Application_Provider' ? '#3DA23C' : '#ADA23C'
                                 }"
                                 selected
                             >
-                                {{ r.name }}
+                                {{ r }}
                             </mat-chip>
                         </mat-chip-list>
                     </div>

@@ -1,0 +1,34 @@
+.createDiv {
+    padding-top: 10px;
+}
+
+.mat-column-symbol {
+    width: 32px;
+    text-align: center;
+}
+.member {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.member p {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.addOrganization {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.searchForm {
+    height: 48px;
+    width: 50vw;
+}
+
+table {
+    margin-top: 40px;
+}
