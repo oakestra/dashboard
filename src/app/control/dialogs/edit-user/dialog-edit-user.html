@@ -27,17 +27,15 @@
             </mat-form-field>
         </div>
 
+        <div *ngIf="action === DialogAction.ADD" class="w3-col l6 s12 m6 download-credentials">
+            <button (click)="downloadCredentials()" color="primary" mat-flat-button>Download Credentials</button>
+        </div>
+
         <div class="w3-col l12 s12 m12">
             <h3>Roles</h3>
-            <section class="example-section" formGroupName="roles">
-                <p>
-                    <mat-checkbox formControlName="ADMIN">Admin</mat-checkbox>
-                </p>
-                <p>
-                    <mat-checkbox formControlName="APPLICATION_PROVIDER">Application_Provider</mat-checkbox>
-                </p>
-                <p>
-                    <mat-checkbox formControlName="INFRASTRUCTURE_PROVIDER">Infrastructure_Provider</mat-checkbox>
+            <section class="example-section" [formGroup]="roleOptions">
+                <p *ngFor="let r of roles">
+                    <mat-checkbox [formControlName]="r">{{r}}</mat-checkbox>
                 </p>
             </section>
         </div>

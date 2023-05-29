@@ -1,5 +1,21 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
-@import 'colors';
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+}
 
 .mdc-button__label {
     color: white;
@@ -15,6 +31,22 @@
 
 .mat-mdc-dialog-actions {
     justify-content: end !important;
+}
+
+.mat-mdc-tab-body.mat-mdc-tab-body-active {
+    overflow: hidden !important;
+}
+
+.mat-mdc-tab-body-content {
+    overflow: hidden !important;
+}
+
+.mat-expansion-panel {
+    margin-bottom: 8px !important;
+}
+
+.mat-typography p {
+    margin: 0 !important;
 }
 
 .full-width {
@@ -43,6 +75,10 @@
 
 .mdc-evolution-chip__text-label {
     color: white !important;
+}
+
+.mat-mdc-standard-chip .mdc-evolution-chip__action--primary {
+    padding: 0 !important;
 }
 
 * {
@@ -125,6 +161,7 @@ mat-card-title {
     padding: 16px;
     border-radius: 4px;
     color: white;
+    text-align: initial;
 }
 
 mat-card p {
@@ -307,4 +344,22 @@ body.shepherd-active::after {
 
 .option .mdc-radio__outer-circle {
     border-color: #000000 !important;
+}
+
+.mat-mdc-radio-button {
+    .mdc-radio .mdc-radio__native-control:enabled:not(:checked) + .mdc-radio__background .mdc-radio__outer-circle {
+        border-color: #fff !important;
+    }
+
+    &.option {
+        .mdc-radio .mdc-radio__native-control:enabled:not(:checked) + .mdc-radio__background .mdc-radio__outer-circle {
+            border-color: #000 !important;
+        }
+    }
+
+    &.radioButton {
+        .mdc-radio .mdc-radio__native-control:enabled:not(:checked) + .mdc-radio__background .mdc-radio__outer-circle {
+            border-color: #fff !important;
+        }
+    }
 }

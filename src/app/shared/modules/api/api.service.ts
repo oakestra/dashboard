@@ -7,10 +7,13 @@ import { UserService } from '../auth/user.service';
 import { NotificationService } from '../notification/notification.service';
 import { environment } from '../../../../environments/environment';
 import { WINDOW } from '../helper/window.providers';
-import { IUser, IUserRole } from '../../../root/interfaces/user';
+import { IUser } from '../../../root/interfaces/user';
 import { IApplication } from '../../../root/interfaces/application';
 import { IService } from '../../../root/interfaces/service';
 import { ICluster } from '../../../root/interfaces/cluster';
+import { IOrganization } from '../../../root/interfaces/organization';
+import { Role } from '../../../root/enums/roles';
+import { SlaGeneratorService } from '../helper/sla-generator.service';
 import { ISettings } from '../../../root/interfaces/settings';
 
 @Injectable({
@@ -23,6 +26,7 @@ export class ApiService extends RestService {
         http: HttpClient,
         userService: UserService,
         notificationService: NotificationService,
+        private slaGenerator: SlaGeneratorService,
         @Inject(WINDOW) window: Window,
     ) {
         super(http, userService, notificationService, window);
@@ -32,23 +36,7 @@ export class ApiService extends RestService {
     // /////////////////// Application Functions ///////////////////////////////
 
     addApplication(app: IApplication) {
-        // TODO do this in the sla generation service
-        const test: any = [];
-        const sla = {
-            sla_version: 'v2.0',
-            customerID: 'Admin',
-            applications: [
-                {
-                    applicationID: app._id,
-                    application_name: app.application_name,
-                    application_namespace: app.application_namespace,
-                    application_desc: app.application_desc,
-                    microservices: test,
-                },
-            ],
-            args: ['string'],
-        };
-
+        const sla = this.slaGenerator.generateSLA(undefined, app, this.userService.getUser());
         return this.doPOSTRequest('/application/', sla);
     }
 
@@ -56,22 +44,8 @@ export class ApiService extends RestService {
         return this.doPUTRequest('/application/' + app._id.$oid, app);
     }
 
-    updateApplicationWithService(sla: any) {
-        console.log(sla);
-        const app = sla.applications[0];
-        console.log(app);
-        // return this.doPOSTRequest('/application/', app);
-        return this.doPOSTRequest('/service/', sla);
-        // return this.doPOSTRequest('/application/' + app.applicationID, app);
-    }
-
     deleteApplication(app: IApplication) {
         return this.doDELRequest('/application/' + app._id.$oid);
-    }
-
-    // TODO find a away to delete this
-    getAppById(appId: string): Observable<IApplication> {
-        return this.doGETRequest('/application/' + appId);
     }
 
     getApplicationsOfUser(userId: string): Observable<IApplication[]> {
@@ -82,7 +56,7 @@ export class ApiService extends RestService {
     // /////////////////// Cluster Functions ///////////////////////////////
 
     /* TODO Decide how to use the cluster and if we need them implement the functionality
-        and use the store for the cluster data
+        and implement the store for the cluster data
      */
 
     deleteCluster(clusterId: string) {
@@ -132,11 +106,11 @@ export class ApiService extends RestService {
     // /////////////////////////////////////////////////////////////////////////
     // ////////////////// User Functions ///////////////////////////////////////
 
-    public registerUser(user: IUser): Observable<any> {
+    public registerUser(user: IUser): Observable<IUser> {
         return this.doPOSTRequest('/auth/register', user);
     }
 
-    public updateUser(user: IUser) {
+    public updateUser(user: IUser): Observable<IUser> {
         return this.doPUTRequest('/user/' + user.name, user);
     }
 
@@ -148,8 +122,12 @@ export class ApiService extends RestService {
         return this.doGETRequest('/user/' + username);
     }
 
-    public getAllUser(): Observable<IUser[]> {
-        return this.doGETRequest('/users/');
+    public getAllUser(organization_id: string): Observable<IUser[]> {
+        if (organization_id !== '') {
+            return this.doGETRequest(`/users/${organization_id}`);
+        } else {
+            return this.doGETRequest('/users/');
+        }
     }
 
     changePassword(username: string, oldPassword: string, newPassword: string) {
@@ -157,6 +135,26 @@ export class ApiService extends RestService {
             oldPassword,
             newPassword,
         });
+    }
+
+    // //////////////////////////////////////////////////////////////////////////
+    // /////////////////// Organization Functions ///////////////////////////////
+
+    addOrganization(org: IOrganization): Observable<string> {
+        return this.doPOSTRequest('/organization/', org);
+    }
+
+    updateOrganization(app: IOrganization) {
+        return this.doPUTRequest('/organization/' + app._id.$oid, app);
+    }
+
+    deleteOrganization(app: IOrganization) {
+        return this.doDELRequest('/organization/' + app._id.$oid);
+    }
+
+    getOrganization(): Observable<IOrganization[]> {
+        this.doGETRequest('/organization/').subscribe((x) => console.log(x));
+        return this.doGETRequest('/organization/');
     }
 
     // /////////////////////////////////////////////////////////////////////////
@@ -173,26 +171,16 @@ export class ApiService extends RestService {
     // /////////////////////////////////////////////////////////////////////////
     // ////////////////// Functions  for Authorization /////////////////////////
 
-    public getAuthorization(username: string): Observable<{ roles: IUserRole[] }> {
+    public getAuthorization(username: string): Observable<{ roles: Role[] }> {
         return this.doGETRequest('/permission/' + username).pipe(
             map((authJSON: any) => {
-                const roles = Array<IUserRole>();
+                const roles = Array<Role>();
                 for (const r of authJSON.roles) {
                     roles.push(r);
                 }
                 return { roles };
             }),
         );
-    }
-
-    public getRoles() {
-        const roles: IUserRole[] = [
-            { name: 'Admin', description: 'This is the admin role' },
-            { name: 'Application_Provider', description: 'This is the app role' },
-            { name: 'Infrastructure_Provider', description: 'This is the infra role' },
-        ];
-
-        return roles;
     }
 
     // /////////////////////////////////////////////////////////////////////////

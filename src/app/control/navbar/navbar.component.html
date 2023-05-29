@@ -22,8 +22,12 @@
             <mat-icon>person</mat-icon>
             Profile
         </button>
-        <button *ngIf="isAdmin" mat-menu-item routerLink="users">
+        <button *ngIf="isAdmin" mat-menu-item routerLink="organization">
             <mat-icon>people</mat-icon>
+            Organization Management
+        </button>
+        <button *ngIf="isAdmin || isOrgaProvider" mat-menu-item routerLink="users">
+            <mat-icon>manage_accounts</mat-icon>
             User Management
         </button>
         <button *ngIf="isAdmin" mat-menu-item routerLink="settings">
@@ -48,8 +52,7 @@
             </div>
             <hr />
 
-            <!--          *ngIf="isAdmin || isDev"-->
-            <div class="nav-item" *ngIf="isAdmin">
+            <div class="nav-item">
                 <app-app-list [userID]="userID"></app-app-list>
             </div>
 
@@ -62,7 +65,7 @@
         </ul>
     </mat-sidenav>
 
-    <mat-sidenav-content id="content">
+    <mat-sidenav-content class="content-nothing-selected">
         <div *ngIf="showWelcome" class="welcome">
             <h1>Welcome to Oakestra!</h1>
             <img src="assets/img/color-min.png" />

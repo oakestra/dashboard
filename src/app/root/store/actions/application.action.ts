@@ -45,3 +45,6 @@ export const setCurrentApplication = createAction(
     '[Application] setCurrentApplication',
     props<{ application: IApplication }>(),
 );
+
+// ////////////// RESET STATE ////////////////////
+export const resetApplication = createAction('[Application] resetApplication');

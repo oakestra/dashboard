@@ -9,11 +9,13 @@ import { ApiService } from '../../shared/modules/api/api.service';
 import { DialogEditUserView } from '../dialogs/edit-user/dialogEditUser';
 import { NotificationService } from '../../shared/modules/notification/notification.service';
 import { DialogConfirmationView } from '../dialogs/confirmation/dialogConfirmation';
-import { IUser, IUserRole } from '../../root/interfaces/user';
+import { IUser } from '../../root/interfaces/user';
 import { DialogAction } from '../../root/enums/dialogAction';
 import { IDialogAttribute } from '../../root/interfaces/dialogAttribute';
 import { appReducer, deleteUser, getAllUser, postUser, updateUser } from '../../root/store';
 import { selectAllUser } from '../../root/store/selectors/user.selector';
+import { Role } from '../../root/enums/roles';
+import { UserService } from '../../shared/modules/auth/user.service';
 
 @Component({
     templateUrl: './users.component.html',
@@ -38,12 +40,16 @@ export class UsersComponent implements OnInit {
         private datePipe: DatePipe,
         private notifyService: NotificationService,
         private store: Store<appReducer.AppState>,
+        private userService: UserService,
     ) {}
 
     ngOnInit() {
-        this.dropdownList = this.api.getRoles().map((roles) => roles.name);
+        this.dropdownList = Object.keys(Role);
         this.loadData();
-        this.store.dispatch(getAllUser());
+        const organization_id = this.userService.getOrganization();
+        console.log(organization_id);
+        this.store.dispatch(getAllUser({ organization_id }));
+        this.users$.subscribe((x) => console.log(x));
     }
 
     loadData(): void {
@@ -104,7 +110,7 @@ export class UsersComponent implements OnInit {
             this.selectedItems.some(
                 (searchedRole: string) =>
                     (searchedRole === 'None' && user.roles.length === 0) ||
-                    user.roles.some((role: IUserRole) => role.name === searchedRole),
+                    user.roles.some((role) => role === searchedRole),
             )
         );
     }

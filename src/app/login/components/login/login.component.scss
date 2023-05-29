@@ -24,6 +24,10 @@
     margin-top: 8px;
 }
 
+.form-control {
+    margin-bottom: 16px;
+}
+
 .loginButton {
     display: flex;
     justify-content: center;
@@ -40,9 +44,15 @@
     float: right;
 }
 
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 @media only screen and (min-width: 801px) {
     .login-form {
-        width: 70%;
+        width: 60%;
     }
 }
 
@@ -50,4 +60,23 @@
     .login-form {
         width: 35%;
     }
+}
+
+.mat-mdc-tab-group {
+    display: contents;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+.mat-mdc-tab-body-content {
+    height: 100%;
+    overflow: hidden;
+}
+
+.mat-mdc-tab-body.mat-mdc-tab-body-active {
+    overflow: hidden !important;
+}
+
+hr {
+    border-top: 1px solid #fff;
 }

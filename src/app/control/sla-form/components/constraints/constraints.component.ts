@@ -42,7 +42,7 @@ export class ConstraintsComponent extends SubComponent {
     }
 
     updateLongLat(index: number): void {
-        this.constraints[index].location = '(' + this.longitude[index] + ',' + this.latitude[index] + ')';
+        this.constraints[index].location = `(${this.longitude[index]},${this.latitude[index]})`;
         console.log(this.constraints);
     }
 

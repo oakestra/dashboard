@@ -26,9 +26,11 @@
             <mat-form-field matTooltip="Type of virtualization chosen for the service">
                 <mat-label>Virtualization</mat-label>
                 <mat-select matNativeControl formControlName="virtualization" required>
+                    <!--                  TODO Do this with ngfor and get the data from the enum-->
                     <mat-option value="container">Container</mat-option>
                     <mat-option value="unikernel">Unikernel</mat-option>
                     <mat-option value="vm">Vm</mat-option>
+                    <mat-option value="docker">Docker</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>

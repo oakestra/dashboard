@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, pipe } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from '../api/api.service';
-import { IUserRole } from '../../../root/interfaces/user';
+import { Role } from '../../../root/enums/roles';
 import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {
-    roles: IUserRole[] | undefined;
+    roles: Role[];
 
     constructor(private userService: UserService, private api: ApiService) {
         this.roles = undefined;
     }
 
-    getAuthorization(): Observable<{ roles: IUserRole[] }> {
+    getAuthorization(): Observable<{ roles: Role[] }> {
         if (!this.roles) {
             return this.api.getAuthorization(this.userService.getUsername()).pipe(
-                map((auth: { roles: IUserRole[] }) => {
+                map((auth: { roles: Role[] }) => {
                     this.roles = auth.roles;
                     return auth;
                 }),
@@ -26,22 +26,7 @@ export class AuthService {
         }
     }
 
-    hasRole(role: Role) {
-        return this.getAuthorization().pipe(
-            map(
-                pipe((auth: { roles: IUserRole[] }) => {
-                    const found = auth.roles.find((r: IUserRole) => r.name === role);
-                    return found !== undefined;
-                }),
-            ),
-        );
-    }
-
     clear() {
         this.roles = undefined;
     }
-}
-
-export class Role {
-    static ADMIN = 'Admin';
 }

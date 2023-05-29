@@ -4,13 +4,17 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { delay, filter, tap } from 'rxjs/operators';
 import { Router, Scroll } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { appReducer, getUser } from 'src/app/root/store/index';
+import { appReducer, getOrganization, getUser } from 'src/app/root/store/index';
 import { Observable } from 'rxjs';
+import { selectCurrentApplication } from 'src/app/root/store/selectors/application.selector';
 import { UserService } from '../../shared/modules/auth/user.service';
-import { AuthService, Role } from '../../shared/modules/auth/auth.service';
+import { AuthService } from '../../shared/modules/auth/auth.service';
 import { IUser } from '../../root/interfaces/user';
 import { selectCurrentUser } from '../../root/store/selectors/user.selector';
-import { selectCurrentApplication } from '../../root/store/selectors/application.selector';
+import { ApiService } from '../../shared/modules/api/api.service';
+import { IOrganization } from '../../root/interfaces/organization';
+import { selectOrganization } from '../../root/store/selectors/organization.selector';
+import { Role } from '../../root/enums/roles';
 
 @Component({
     selector: 'app-navbar',
@@ -22,15 +26,16 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     sidenav!: MatSidenav;
 
     public user$: Observable<IUser> = this.store.pipe(select(selectCurrentUser));
+    public org$: Observable<IOrganization[]> = this.store.pipe(select(selectOrganization));
     userID = '';
+    // TODO Do not create a var for every role, do this different
     isAdmin = false;
+    isOrgaProvider = false;
     showWelcome = true;
 
     private appSelected = false;
     private appView = false;
 
-    listClusters = false;
-    clusterSelected = false;
     events: string[] = [];
     opened = true;
 
@@ -39,6 +44,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         public userService: UserService,
         private authService: AuthService,
         public store: Store<appReducer.AppState>,
+        public api: ApiService,
         private router: Router,
     ) {}
 
@@ -52,6 +58,12 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         });
 
         this.updatePermissions();
+        if (this.isAdmin) {
+            this.store.dispatch(getOrganization());
+            this.org$.subscribe((x) => console.log(x));
+        }
+
+        this.isOrgaProvider = this.userService.hasRole(Role.ORGANIZATION_ADMIN);
 
         // To show the welcome page if nothing is selected
         this.router.events
@@ -99,20 +111,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     }
 
     updatePermissions(): void {
-        this.authService.hasRole(Role.ADMIN).subscribe((isAdmin) => {
-            this.isAdmin = isAdmin;
-            this.isAdmin = true;
-        });
-    }
-
-    switchScreen(app: boolean, list: boolean, cluster: boolean) {
-        this.appSelected = app;
-        this.listClusters = list;
-        this.clusterSelected = cluster;
-    }
-
-    resetDashboard() {
-        this.switchScreen(false, false, false);
+        this.isAdmin = this.userService.hasRole(Role.ADMIN);
     }
 
     onToolbarToggle() {

@@ -38,6 +38,11 @@ export class CleanJsonService {
         }
 
         Object.keys(obj).forEach((key) => {
+            // allow also empty microservices
+            if (key === 'microservices') {
+                return;
+            }
+
             const value = obj[key];
 
             if (Array.isArray(value)) {

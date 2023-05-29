@@ -1,24 +1,17 @@
+import { Role } from '../enums/roles';
 import { IId } from './id';
 
 export interface IUser {
     _id: IId;
+    organization_id?: string;
     name: string;
     password: string;
     email: string;
     created_at: string;
-    roles: Array<IUserRole>;
+    roles: Array<Role>;
 }
 export interface ILoginRequest {
+    organization?: string;
     username: string;
     password: string;
-}
-
-export class IUserRole {
-    name: string;
-    description: string;
-
-    constructor() {
-        this.name = '';
-        this.description = '';
-    }
 }

@@ -4,10 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import jwt_decode from 'jwt-decode';
+import { select, Store } from '@ngrx/store';
 import { NotificationService } from '../notification/notification.service';
 import { environment } from '../../../../environments/environment';
-import { ILoginRequest } from '../../../root/interfaces/user';
+import { ILoginRequest, IUser } from '../../../root/interfaces/user';
 import { NotificationType } from '../../../root/interfaces/notification';
+import { Role } from '../../../root/enums/roles';
+import { appReducer, resetApplication, resetOrganization, resetService, resetUser } from '../../../root/store';
+import { selectCurrentUser } from '../../../root/store/selectors/user.selector';
 
 @Injectable({
     providedIn: 'root',
@@ -15,18 +19,34 @@ import { NotificationType } from '../../../root/interfaces/notification';
 export class UserService {
     loggedIn = false;
     apiUrl: string;
+    currentUser$: Observable<IUser> = this.store.pipe(select(selectCurrentUser));
+    currentUser: IUser;
 
     constructor(
         private route: ActivatedRoute,
         private http: HttpClient,
         private router: Router,
         private notifyService: NotificationService,
+        public store: Store<appReducer.AppState>,
     ) {
         this.apiUrl = environment.apiUrl;
+        this.currentUser$.subscribe((u) => (this.currentUser = u));
     }
 
     getUsername(): string {
         return this.getDecodedAccessToken(this.getAuthTokenRaw()).sub;
+    }
+
+    hasRole(role: Role) {
+        return this.getDecodedAccessToken(this.getAuthTokenRaw())?.roles?.includes(role);
+    }
+
+    getUser(): IUser {
+        return this.currentUser;
+    }
+
+    getOrganization(): string {
+        return this.getDecodedAccessToken(this.getAuthTokenRaw())?.organization ?? '';
     }
 
     login(request: ILoginRequest): Observable<boolean> {
@@ -56,8 +76,17 @@ export class UserService {
         localStorage.removeItem('api_token');
         localStorage.removeItem('api_refresh_token');
         sessionStorage.removeItem('id');
-        // TODO reset the store
+        this.resetAllStoreValues();
+
         void this.router.navigate(['/'], { replaceUrl: true });
+    }
+
+    /** deletes all values in the store */
+    private resetAllStoreValues() {
+        this.store.dispatch(resetApplication());
+        this.store.dispatch(resetOrganization());
+        this.store.dispatch(resetUser());
+        this.store.dispatch(resetService());
     }
 
     /** true if the user is logged in */

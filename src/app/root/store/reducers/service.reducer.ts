@@ -72,7 +72,7 @@ export const serviceReducer = createReducer(
     // ///////////////////////////////////////////////////////////////////////////
     // /////////////////////  UPDATE SERVICE  ////////////////////////////////////
     // ///////////////////////////////////////////////////////////////////////////
-    // TODO
+    // TODO check if everything works fine
 
     on(serviceActions.updateService, (state) => {
         const loading = true;
@@ -102,9 +102,7 @@ export const serviceReducer = createReducer(
     }),
 
     on(serviceActions.deleteServiceSuccess, (state, action) => {
-        // TODO
-        const service = action.service;
-        // const service = state.service.filter((s: IService) => s !== action.service);
+        const service = state.servicesOfApp.filter((s: IService) => s !== action.service);
         const loading = false;
         return { ...state, service, loading };
     }),
@@ -139,6 +137,8 @@ export const serviceReducer = createReducer(
         const error = action.error;
         return { ...state, service, loading, error };
     }),
+    // /////////////////////// RESET SERVICES ///////////////////////////////////////////
+    on(serviceActions.resetService, () => Object.assign({}, initialState)),
 );
 
 export function reducer(state: State, action: Action) {
