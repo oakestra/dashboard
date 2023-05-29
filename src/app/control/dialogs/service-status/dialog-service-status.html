@@ -1,16 +1,14 @@
-<h2 mat-dialog-title>Status: {{instance.status}}</h2>
+<h2 mat-dialog-title>Status: {{(instance | async).status}}</h2>
 <mat-dialog-content class="mat-typography">
     <div class="alert alert-info width70">
-        <p>{{instance.status_detail}}</p>
+        <p>{{(instance | async).status_detail}}</p>
     </div>
 
     <div>
-        <!--        <line-chart [instanceList]="instance"></line-chart>-->
-        <p><b>CPU:</b> {{instance.cpu}}</p>
-        <p><b>Memory:</b> {{instance.memory}}</p>
-        <p><b>Disk:</b> {{instance.disk}}</p>
-        <p><b>Cluster:</b> {{instance.cluster_id}}</p>
-        <p><b>Node IP:</b> {{instance.public_ip}}</p>
+        <line-chart [instanceList]="instance"></line-chart>
+        <p><b>Disk:</b> {{(instance | async).disk}}</p>
+        <p><b>Cluster:</b> {{(instance | async).cluster_id}}</p>
+        <p><b>Node IP:</b> {{(instance | async).public_ip}}</p>
         <a [href]="grafanaLink" rel="noopener noreferrer" target="_blank">View in Grafana</a>
     </div>
 </mat-dialog-content>
