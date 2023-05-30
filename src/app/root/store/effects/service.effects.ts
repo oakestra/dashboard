@@ -39,7 +39,7 @@ export class ServiceEffects {
             ofType(serviceActions.postService),
             switchMap(({ service }) =>
                 this.apiService.addService(service).pipe(
-                    map((serviceId: string) => serviceActions.postServiceSuccess({ service, serviceId })),
+                    map((serviceId) => serviceActions.postServiceSuccess({ service, serviceId })),
                     tap(() => this.router.navigate(['/control'])),
                     catchError((error) => {
                         this.notifyService.notify(NotificationType.error, 'File was not in the correct format');

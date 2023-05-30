@@ -24,23 +24,23 @@ export const serviceReducer = createReducer(
     // ///////////////////////////////////////////////////////////////////////////
 
     // TODO FIX gets called multiple times
+    on(serviceActions.getServices, (state) => {
+        const servicesOfApp = [] as IService[];
+        const loading = false;
+        return { ...state, servicesOfApp, loading };
+    }),
+
     on(serviceActions.getServicesSuccess, (state, action) => {
         const servicesOfApp = action.services;
         const loading = false;
         return { ...state, servicesOfApp, loading };
     }),
 
-    on(serviceActions.getServices, (state) => {
-        const service = {} as IService;
-        const loading = false;
-        return { ...state, service, loading };
-    }),
-
     on(serviceActions.getServicesError, (state, action) => {
-        const service = {} as IService;
+        const servicesOfApp = [] as IService[];
         const loading = false;
         const error = action.error;
-        return { ...state, service, loading, error };
+        return { ...state, servicesOfApp, loading, error };
     }),
 
     // ///////////////////////////////////////////////////////////////////////////
@@ -54,13 +54,18 @@ export const serviceReducer = createReducer(
 
     on(serviceActions.postServiceSuccess, (state, action) => {
         // Get the service form the sla.
+        const id = action.serviceId.job_id;
         const service = {
-            $oid: action.serviceId,
+            _id: { $oid: id },
             ...action.service.applications[0].microservices[0],
         };
-        service.microserviceID = action.serviceId;
+        service.microserviceID = id;
+        const servicesOfApp = [...state.servicesOfApp];
+        servicesOfApp.push(service);
+
+        console.log(servicesOfApp);
         const loading = false;
-        return { ...state, service, loading };
+        return { ...state, servicesOfApp, loading };
     }),
 
     on(serviceActions.postServiceError, (state, action) => {
@@ -72,7 +77,6 @@ export const serviceReducer = createReducer(
     // ///////////////////////////////////////////////////////////////////////////
     // /////////////////////  UPDATE SERVICE  ////////////////////////////////////
     // ///////////////////////////////////////////////////////////////////////////
-    // TODO check if everything works fine
 
     on(serviceActions.updateService, (state) => {
         const loading = true;
@@ -80,10 +84,10 @@ export const serviceReducer = createReducer(
     }),
 
     on(serviceActions.updateServiceSuccess, (state, action) => {
-        console.log(action);
-        const service = state.servicesOfApp;
+        const servicesOfApp = state.servicesOfApp.filter((s: IService) => s._id.$oid !== action.service._id.$oid);
+        servicesOfApp.push(action.service);
         const loading = false;
-        return { ...state, service, loading };
+        return { ...state, servicesOfApp, loading };
     }),
 
     on(serviceActions.updateServiceError, (state, action) => {
@@ -102,9 +106,9 @@ export const serviceReducer = createReducer(
     }),
 
     on(serviceActions.deleteServiceSuccess, (state, action) => {
-        const service = state.servicesOfApp.filter((s: IService) => s !== action.service);
+        const servicesOfApp = state.servicesOfApp.filter((s: IService) => s._id.$oid !== action.service._id.$oid);
         const loading = false;
-        return { ...state, service, loading };
+        return { ...state, servicesOfApp, loading };
     }),
 
     on(serviceActions.deleteServiceError, (state, action) => {
@@ -137,6 +141,7 @@ export const serviceReducer = createReducer(
         const error = action.error;
         return { ...state, service, loading, error };
     }),
+
     // /////////////////////// RESET SERVICES ///////////////////////////////////////////
     on(serviceActions.resetService, () => Object.assign({}, initialState)),
 );

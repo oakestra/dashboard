@@ -74,7 +74,8 @@ export class ApiService extends RestService {
     // /////////////////////////////////////////////////////////////////////////
     // /////////////////// Service Functions ///////////////////////////////////
 
-    addService(service: IService): Observable<string> {
+    // TODO: api returns currently {job_id: string} change that to normal string
+    addService(service: IService): Observable<any> {
         return this.doPOSTRequest('/service/', service);
     }
 

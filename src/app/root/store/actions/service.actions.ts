@@ -19,7 +19,7 @@ export const getSingleServiceError = createAction('[Service] getSingleServiceErr
 export const postService = createAction('[Service] postService', props<{ service: ISla }>());
 export const postServiceSuccess = createAction(
     '[Service] postServiceSuccess',
-    props<{ service: ISla; serviceId: string }>(),
+    props<{ service: ISla; serviceId: { job_id: string } }>(),
 );
 export const postServiceError = createAction('[Service] postServiceError', props<{ error: string }>());
 
