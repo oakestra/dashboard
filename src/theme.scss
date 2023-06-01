@@ -5,25 +5,25 @@
 // Define a dark theme
 $mat-theming-theme-dark: mat.define-dark-theme(
     (
-      color: (
-        primary: mat.define-palette(mat.$amber-palette),
-        accent: mat.define-palette(mat.$blue-grey-palette),
-        warn: mat.define-palette(mat.$amber-palette),
-      ),
-      // Only include `typography` and `density` in the default dark theme.
-      typography: mat.define-typography-config(),
-      density: 0,
+        color: (
+            primary: mat.define-palette(mat.$amber-palette),
+            accent: mat.define-palette(mat.$blue-grey-palette),
+            warn: mat.define-palette(mat.$amber-palette),
+        ),
+        // Only include `typography` and `density` in the default dark theme.
+        typography: mat.define-typography-config(),
+        density: 0,
     )
 );
 
 // Define a light theme
 $mat-theming-theme-light: mat.define-light-theme(
     (
-      color: (
-        primary: mat.define-palette(mat.$blue-grey-palette, 600),
-        accent: mat.define-palette(mat.$blue-grey-palette, 300),
-        warn: mat.define-palette(mat.$red-palette, 400),
-      ),
+        color: (
+            primary: mat.define-palette(mat.$blue-grey-palette, 600),
+            accent: mat.define-palette(mat.$blue-grey-palette, 300),
+            warn: mat.define-palette(mat.$red-palette, 400),
+        ),
     )
 );
 
@@ -32,16 +32,15 @@ $mat-theming-theme-light: mat.define-light-theme(
 $primary-background: #4a7083;
 $primary-background_sidenav: #3b474e;
 
-
 .theme-dark {
-  @include mat.all-component-themes($mat-theming-theme-dark);
-  $primary-background: #4a7083;
-  $primary-background_sidenav: #3b474e;
+    @include mat.all-component-themes($mat-theming-theme-dark);
+    $primary-background: #4a7083;
+    $primary-background_sidenav: #3b474e;
 }
 
 .theme-light {
-  // TODO Fix the rest of the CSS Bugs if you use this theme
-  @include mat.button-color($mat-theming-theme-light);
-  $primary-background: #4a7083;
-  $primary-background_sidenav: #3b474e;
+    // TODO Fix the rest of the CSS Bugs if you use this theme
+    @include mat.button-color($mat-theming-theme-light);
+    $primary-background: #4a7083;
+    $primary-background_sidenav: #3b474e;
 }
