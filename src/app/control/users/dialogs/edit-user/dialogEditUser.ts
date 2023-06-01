@@ -2,10 +2,10 @@ import { Component, Inject, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { IUser } from '../../../root/interfaces/user';
-import { DialogAction } from '../../../root/enums/dialogAction';
-import { Role } from '../../../root/enums/roles';
-import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
+import { IUser } from '../../../../root/interfaces/user';
+import { DialogAction } from '../../../../root/enums/dialogAction';
+import { Role } from '../../../../root/enums/roles';
+import { IDialogAttribute } from '../../../../root/interfaces/dialogAttribute';
 
 @Component({
     selector: 'dialog-content-example-dialog',

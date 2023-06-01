@@ -21,11 +21,11 @@ import {
 import { IInstance } from '../../../root/interfaces/instance';
 
 @Component({
-    selector: 'line-chart',
-    templateUrl: './line-chart.component.html',
-    styleUrls: ['./line-chart.component.scss'],
+    selector: 'app-chart',
+    templateUrl: './charts.component.html',
+    styleUrls: ['./charts.component.scss'],
 })
-export class LineChartComponent implements OnInit, AfterViewInit {
+export class ChartsComponent implements OnInit, AfterViewInit {
     @Input() instanceList: Observable<IInstance>;
 
     private cpuChart: Chart;

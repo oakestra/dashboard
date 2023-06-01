@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { ApiService } from '../../shared/modules/api/api.service';
-import { DialogServiceStatusView } from '../dialogs/service-status/dialogServiceStatus';
+import { DialogServiceStatusView } from './dialogs/service-status/dialogServiceStatus';
 import { IService } from '../../root/interfaces/service';
 import { IInstance } from '../../root/interfaces/instance';
 import { IApplication } from '../../root/interfaces/application';

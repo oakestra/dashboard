@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 // import * as L from 'leaflet';
 import { ICluster } from '../../root/interfaces/cluster';
-import { DialogConfirmationView } from '../dialogs/confirmation/dialogConfirmation';
+import { DialogConfirmationView } from '../../root/components/dialogs/confirmation/dialogConfirmation';
 import { NotificationService } from '../../shared/modules/notification/notification.service';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { UserService } from '../../shared/modules/auth/user.service';

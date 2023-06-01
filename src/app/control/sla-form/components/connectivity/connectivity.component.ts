@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 import { ICon_constraints, IConnectivity, IService } from '../../../../root/interfaces/service';
-import { DialogConnectionSettingsView } from '../../../dialogs/content-connection/dialog-connection-settings-view.component';
+import { DialogConnectionSettingsView } from '../dialogs/content-connection/dialog-connection-settings-view.component';
 import { SubComponent } from '../../../../root/classes/subComponent';
 import { selectCurrentServices } from '../../../../root/store/selectors/service.selector';
 import { appReducer } from '../../../../root/store';

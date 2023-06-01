@@ -8,9 +8,9 @@ import { ApiService } from '../../../shared/modules/api/api.service';
 import { UserService } from '../../../shared/modules/auth/user.service';
 import { AuthService } from '../../../shared/modules/auth/auth.service';
 import { ICluster } from '../../../root/interfaces/cluster';
-import { DialogAddClusterView } from '../../dialogs/add-cluster/dialogAddCluster';
+import { DialogAddClusterView } from '../dialogs/add-cluster/dialogAddCluster';
 import { DialogAction } from '../../../root/enums/dialogAction';
-import { DialogGenerateTokenView } from '../../dialogs/generate-token/dialogGenerateToken';
+import { DialogGenerateTokenView } from '../dialogs/generate-token/dialogGenerateToken';
 import { IId } from '../../../root/interfaces/id';
 import { NotificationType } from '../../../root/interfaces/notification';
 

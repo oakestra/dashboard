@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Role } from '../../../../root/enums/roles';
 import { IUser } from '../../../../root/interfaces/user';
-import { DialogConfirmationView } from '../../../dialogs/confirmation/dialogConfirmation';
+import { DialogConfirmationView } from '../../../../root/components/dialogs/confirmation/dialogConfirmation';
 
 @Component({
     selector: 'app-member-item',

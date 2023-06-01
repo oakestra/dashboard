@@ -8,11 +8,11 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
-import { ApiService } from '../../../shared/modules/api/api.service';
-import { NotificationService } from '../../../shared/modules/notification/notification.service';
-import { IUser } from '../../../root/interfaces/user';
-import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
-import { NotificationType } from '../../../root/interfaces/notification';
+import { ApiService } from '../../../../shared/modules/api/api.service';
+import { NotificationService } from '../../../../shared/modules/notification/notification.service';
+import { IUser } from '../../../../root/interfaces/user';
+import { IDialogAttribute } from '../../../../root/interfaces/dialogAttribute';
+import { NotificationType } from '../../../../root/interfaces/notification';
 
 @Component({
     selector: 'dialog-content-example-dialog',

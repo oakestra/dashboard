@@ -4,8 +4,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 // import 'leaflet-routing-machine';
 // import 'node_modules/leaflet-geosearch/dist/geosearch.css';
 import { FormControl } from '@angular/forms';
-import { NotificationService } from '../../../shared/modules/notification/notification.service';
-import { NotificationType } from '../../../root/interfaces/notification';
+import { NotificationService } from '../../../../shared/modules/notification/notification.service';
+import { NotificationType } from '../../../../root/interfaces/notification';
 
 @Component({
     selector: 'dialog-content-example-dialog',

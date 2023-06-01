@@ -4,19 +4,19 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { DialogChangePasswordView } from '../../dialogs/change-password/dialogChangePassword';
-import { UserService } from '../../../shared/modules/auth/user.service';
-import { IUser } from '../../../root/interfaces/user';
-import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
-import { appReducer, getUser, updateUser } from '../../../root/store';
-import { selectCurrentUser } from '../../../root/store/selectors/user.selector';
+import { DialogChangePasswordView } from './dialogs/change-password/dialogChangePassword';
+import { UserService } from '../../shared/modules/auth/user.service';
+import { IUser } from '../../root/interfaces/user';
+import { IDialogAttribute } from '../../root/interfaces/dialogAttribute';
+import { appReducer, getUser, updateUser } from '../../root/store';
+import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 
 @Component({
-    selector: 'app-user-edit',
-    templateUrl: './user-edit.component.html',
-    styleUrls: ['./user-edit.component.scss'],
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.scss'],
 })
-export class UserEditComponent implements OnInit {
+export class ProfileComponent implements OnInit {
     form: FormGroup;
     user: IUser;
 

@@ -7,7 +7,7 @@ import { HelpComponent } from './help/help.component';
 import { SlaFormComponent } from './sla-form/sla-form.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UsersComponent } from './users/users.component';
-import { UserEditComponent } from './users/user-edit/user-edit.component';
+import { ProfileComponent } from './profile/profile.component';
 import { InfrastructureComponent } from './infrastructure/infrastructure.component';
 import { OrganizationComponent } from './organization/organization.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -45,7 +45,7 @@ export const routes: Routes = [
             },
             {
                 path: 'profile',
-                component: UserEditComponent,
+                component: ProfileComponent,
                 canActivate: [AuthGuardService],
             },
             {

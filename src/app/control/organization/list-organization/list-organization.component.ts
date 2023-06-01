@@ -9,7 +9,7 @@ import { selectOrganization } from '../../../root/store/selectors/organization.s
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { NotificationService } from '../../../shared/modules/notification/notification.service';
 import { appReducer, deleteOrganization, postOrganization } from '../../../root/store';
-import { DialogConfirmationView } from '../../dialogs/confirmation/dialogConfirmation';
+import { DialogConfirmationView } from '../../../root/components/dialogs/confirmation/dialogConfirmation';
 
 @Component({
     selector: 'app-list-organization',

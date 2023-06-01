@@ -12,7 +12,7 @@ import {
     setCurrentApplication,
     updateApplication,
 } from 'src/app/root/store/index';
-import { DialogAddApplicationView } from '../../dialogs/add-appllication/dialogAddApplication';
+import { DialogAddApplicationView } from '../dialogs/add-appllication/dialogAddApplication';
 import { DialogAction } from '../../../root/enums/dialogAction';
 import { NotificationService } from '../../../shared/modules/notification/notification.service';
 import { IApplication } from '../../../root/interfaces/application';

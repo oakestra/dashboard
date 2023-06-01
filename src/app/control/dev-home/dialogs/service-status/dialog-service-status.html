@@ -5,7 +5,7 @@
     </div>
 
     <div>
-        <line-chart [instanceList]="instance"></line-chart>
+        <app-chart [instanceList]="instance"></app-chart>
         <p><b>Disk:</b> {{(instance | async).disk}}</p>
         <p><b>Cluster:</b> {{(instance | async).cluster_id}}</p>
         <p><b>Node IP:</b> {{(instance | async).public_ip}}</p>

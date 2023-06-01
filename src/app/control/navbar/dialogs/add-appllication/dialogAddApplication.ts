@@ -1,8 +1,8 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IApplication } from '../../../root/interfaces/application';
-import { DialogAction } from '../../../root/enums/dialogAction';
-import { IDialogAttribute } from '../../../root/interfaces/dialogAttribute';
+import { IApplication } from '../../../../root/interfaces/application';
+import { DialogAction } from '../../../../root/enums/dialogAction';
+import { IDialogAttribute } from '../../../../root/interfaces/dialogAttribute';
 
 @Component({
     selector: 'dialog-content-example-dialog',

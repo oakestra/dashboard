@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatRadioChange } from '@angular/material/radio';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DialogGraphConnectionView } from '../graph-content-connection/dialog-graph-connection-view.component';
+import { DialogGraphConnectionView } from '../../../../dev-home/dialogs/graph-content-connection/dialog-graph-connection-view.component';
 
 @Component({
     selector: 'dialog-content-example-dialog',

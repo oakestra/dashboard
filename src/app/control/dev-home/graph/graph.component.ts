@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ApiService } from '../../shared/modules/api/api.service';
+import { ApiService } from '../../../shared/modules/api/api.service';
 import { DialogGraphConnectionView } from '../dialogs/graph-content-connection/dialog-graph-connection-view.component';
-import { CleanJsonService } from '../../shared/util/clean-json.service';
+import { CleanJsonService } from '../../../shared/util/clean-json.service';
 
 declare function start(nodes: any, links: any): void;
 declare function deleteLink(): void;

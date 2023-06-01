@@ -31,19 +31,19 @@ import { MatLegacyChipsModule } from '@angular/material/legacy-chips';
 import * as fromService from '../root/store/reducers/service.reducer';
 import { ServiceEffects } from '../root/store';
 import { UsersComponent } from './users/users.component';
-import { DialogEditUserView } from './dialogs/edit-user/dialogEditUser';
-import { UserEditComponent } from './users/user-edit/user-edit.component';
-import { DialogChangePasswordView } from './dialogs/change-password/dialogChangePassword';
-import { DialogServiceStatusView } from './dialogs/service-status/dialogServiceStatus';
-import { LineChartComponent } from './charts/line-chart/line-chart.component';
+import { DialogEditUserView } from './users/dialogs/edit-user/dialogEditUser';
+import { ProfileComponent } from './profile/profile.component';
+import { DialogChangePasswordView } from './profile/dialogs/change-password/dialogChangePassword';
+import { DialogServiceStatusView } from './dev-home/dialogs/service-status/dialogServiceStatus';
+import { ChartsComponent } from './dev-home/charts/charts.component';
 import { HelpComponent } from './help/help.component';
-import { DialogConfirmationView } from './dialogs/confirmation/dialogConfirmation';
-import { DialogGenerateTokenView } from './dialogs/generate-token/dialogGenerateToken';
-import { GraphComponent } from './graph/graph.component';
-import { DialogAddClusterView } from './dialogs/add-cluster/dialogAddCluster';
-import { DialogAddApplicationView } from './dialogs/add-appllication/dialogAddApplication';
-import { DialogGraphConnectionView } from './dialogs/graph-content-connection/dialog-graph-connection-view.component';
-import { DialogConnectionSettingsView } from './dialogs/content-connection/dialog-connection-settings-view.component';
+import { DialogConfirmationView } from '../root/components/dialogs/confirmation/dialogConfirmation';
+import { DialogGenerateTokenView } from './navbar/dialogs/generate-token/dialogGenerateToken';
+import { GraphComponent } from './dev-home/graph/graph.component';
+import { DialogAddClusterView } from './navbar/dialogs/add-cluster/dialogAddCluster';
+import { DialogAddApplicationView } from './navbar/dialogs/add-appllication/dialogAddApplication';
+import { DialogGraphConnectionView } from './dev-home/dialogs/graph-content-connection/dialog-graph-connection-view.component';
+import { DialogConnectionSettingsView } from './sla-form/components/dialogs/content-connection/dialog-connection-settings-view.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { DevHomeComponent } from './dev-home/dev-home.component';
@@ -82,10 +82,10 @@ import { SettingsComponent } from './settings/settings.component';
         GraphComponent,
         UsersComponent,
         DialogEditUserView,
-        UserEditComponent,
+        ProfileComponent,
         DialogChangePasswordView,
         DialogServiceStatusView,
-        LineChartComponent,
+        ChartsComponent,
         HelpComponent,
         DialogConfirmationView,
         AppListComponent,
