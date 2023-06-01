@@ -67,6 +67,7 @@ import { ListOrganizationComponent } from './organization/list-organization/list
 import { AddMemberComponent } from './organization/dialogs/add-member/add-member.component';
 import { MemberItemComponent } from './organization/edit-organization/member-item/member-item.component';
 import { SettingsComponent } from './settings/settings.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
     declarations: [
@@ -138,6 +139,7 @@ import { SettingsComponent } from './settings/settings.component';
         StoreModule.forFeature(fromService.serviceFeatureKey, fromService.reducer),
         EffectsModule.forFeature([ServiceEffects]),
         MatLegacyChipsModule,
+        MatSlideToggleModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

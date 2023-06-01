@@ -50,7 +50,7 @@ text.id {
 
 .graph {
     background: lightgray;
-    border: 2px solid #3b474e;
+    border: 2px solid $primary-background_sidenav;
     border-radius: 5px;
 }
 
@@ -60,7 +60,7 @@ text.id {
 }
 
 graph-button {
-    background-color: #4a7083;
+    background-color: $primary-background;
     color: white;
 }
 

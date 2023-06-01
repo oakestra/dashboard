@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { DialogChangePasswordView } from './dialogs/change-password/dialogChangePassword';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { DOCUMENT } from '@angular/common';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { IUser } from '../../root/interfaces/user';
 import { IDialogAttribute } from '../../root/interfaces/dialogAttribute';
 import { appReducer, getUser, updateUser } from '../../root/store';
 import { selectCurrentUser } from '../../root/store/selectors/user.selector';
+import { DialogChangePasswordView } from './dialogs/change-password/dialogChangePassword';
 
 @Component({
     selector: 'app-profile',
@@ -28,6 +30,8 @@ export class ProfileComponent implements OnInit {
         private userService: UserService,
         private router: Router,
         private store: Store<appReducer.AppState>,
+        @Inject(DOCUMENT) private document: Document,
+        private renderer: Renderer2,
     ) {
         this.form = fb.group({
             email: ['', Validators.email],
@@ -56,5 +60,11 @@ export class ProfileComponent implements OnInit {
             content: user,
         };
         this.dialog.open(DialogChangePasswordView, { data });
+    }
+
+    onDarkModeSwitched({ checked }: MatSlideToggleChange) {
+        console.log(checked);
+        const hostClass = checked ? 'theme-dark' : 'theme-light';
+        this.renderer.setAttribute(this.document.body, 'class', hostClass);
     }
 }

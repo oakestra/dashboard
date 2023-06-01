@@ -1,14 +1,16 @@
+@import "src/theme.scss";
+
 mat-toolbar {
-    background: #4a7083;
     color: white;
     justify-content: space-between;
+    background-color: $primary-background;
 }
 
 mat-sidenav {
     margin: 16px;
     width: 250px;
     border-right: none;
-    background: #3b474e;
+    background: $primary-background-sidenav;
     color: white;
     border-radius: 10px;
     padding: 16px;
@@ -34,14 +36,14 @@ mat-sidenav-container {
 
 mat-card-title {
     /* background: #004a9f;*/
-    background-color: #4a7083;
+    background-color: $primary-background;
     padding: 16px;
     border-radius: 4px;
     color: white;
 }
 
 .mat-mdc-unelevated-button .mat-mdc-button-touch-target {
-    background-color: #3b474e;
+    background-color: $primary-background_sidenav;
 }
 
 mat-card p {
@@ -185,7 +187,7 @@ mat-card {
 .nav-item {
     margin-top: 30px;
     margin-bottom: 30px;
-    background-color: #3b474e;
+    background-color: $primary-background_sidenav;
 }
 
 /*
