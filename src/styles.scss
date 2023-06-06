@@ -1,5 +1,4 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
-@import 'src/theme.scss';
 
 ::-webkit-scrollbar {
     width: 5px;
@@ -158,7 +157,7 @@ mat-card {
 }
 
 mat-card-title {
-    background-color: $primary-background;
+    background-color: var(--primary-background);
     padding: 16px;
     border-radius: 4px;
     color: white;
@@ -221,7 +220,7 @@ td {
 
 .settingsButton {
     float: right;
-    background-color: $primary-background !important;
+    background-color: var(--primary-background) !important;
 }
 
 @media only screen and (max-width: 1000px) {

@@ -1,4 +1,3 @@
-@import 'src/theme.scss';
 
 :root {
 }
@@ -16,7 +15,7 @@
 
 .mat-mdc-fab.mat-accent,
 .mat-mdc-mini-fab.mat-accent {
-    --mdc-fab-container-color: $primary-background;
+    --mdc-fab-container-color: var(--primary-background);
     --mdc-fab-icon-color: #fff;
     --mat-mdc-fab-color: #fff;
 }

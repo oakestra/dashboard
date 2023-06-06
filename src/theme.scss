@@ -29,18 +29,21 @@ $mat-theming-theme-light: mat.define-light-theme(
 
 // Include the theme mixins
 
-$primary-background: #4a7083;
-$primary-background_sidenav: #3b474e;
+:root{
+  --primary-background: #4a7083;
+  --primary-background_sidenav: #3b474e;
+}
+
 
 .theme-dark {
     @include mat.all-component-themes($mat-theming-theme-dark);
-    $primary-background: #4a7083;
-    $primary-background_sidenav: #3b474e;
+    --primary-background: #4a7083;
+    --primary-background_sidenav: #3b474e;
 }
 
 .theme-light {
     // TODO Fix the rest of the CSS Bugs if you use this theme
     @include mat.button-color($mat-theming-theme-light);
-    $primary-background: #4a7083;
-    $primary-background_sidenav: #3b474e;
+    --primary-background: #4a7083;
+    --primary-background_sidenav: #3b474e;
 }

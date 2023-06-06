@@ -2,5 +2,5 @@
   window["env"] = window["env"] || {};
 
   // Environment variables
-  window["env"]["apiUrl"] = "https://api.system_manager";
+  window["env"]["apiIP"] = "system_manager_api_ip";
 })(this);
