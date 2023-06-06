@@ -29,11 +29,10 @@ $mat-theming-theme-light: mat.define-light-theme(
 
 // Include the theme mixins
 
-:root{
-  --primary-background: #4a7083;
-  --primary-background_sidenav: #3b474e;
+:root {
+    --primary-background: #4a7083;
+    --primary-background_sidenav: #3b474e;
 }
-
 
 .theme-dark {
     @include mat.all-component-themes($mat-theming-theme-dark);
