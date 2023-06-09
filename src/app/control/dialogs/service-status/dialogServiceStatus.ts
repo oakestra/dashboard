@@ -3,7 +3,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subscription, takeWhile, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from '../../../../environments/environment';
 import { AppState } from '../../../root/store/reducers/app.reducer';
 import { IService } from '../../../root/interfaces/service';
 import { selectCurrentServices } from '../../../root/store/selectors/service.selector';
@@ -15,10 +14,6 @@ import { getSingleService } from '../../../root/store';
     styles: ['.full-width{width: 100%}', '.alignRight{text-align: right}', 'h2{min-width: 70vw}'],
 })
 export class DialogServiceStatusView implements OnInit, OnDestroy {
-    // assuming grafana is running on port 80
-    tmp = environment.apiUrl.split(':');
-    grafanaLink = `${this.tmp[0]}:${this.tmp[1]}`;
-    // instance: Observable<IInstance>;
     instanceNumber: number;
     service: IService;
 
@@ -48,8 +43,7 @@ export class DialogServiceStatusView implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.refreshData();
-        // this.timerSubscription = timer(15000, 15000)
-        this.timerSubscription = timer(5000, 5000)
+        this.timerSubscription = timer(15000, 15000)
             .pipe(takeWhile(() => this.alive))
             .subscribe(() => this.refreshData());
 

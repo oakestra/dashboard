@@ -6,7 +6,7 @@ export interface IInstance {
     cluster_location: string;
     disk: string;
     cluster_id: string;
-    public_ip: string;
+    publicip: string;
     status: string;
     instance_list: string[];
     addresses: IAddresses;

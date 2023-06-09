@@ -90,9 +90,10 @@ export class LineChartComponent implements OnInit, AfterViewInit {
 
         if (regex.test(locationString)) {
             const array = locationString.split(',');
-            this.longitude = parseFloat(array[1]);
-            this.latitude = parseFloat(array[2]);
-            this.radius = parseFloat(array[3]);
+            this.longitude = parseFloat(array[0]);
+            this.latitude = parseFloat(array[1]);
+            this.radius = parseFloat(array[2]);
+            console.log(this.radius);
         } else {
             this.textLocation = locationString;
         }

@@ -8,8 +8,7 @@
         <line-chart [instanceList]="instance"></line-chart>
         <p><b>Disk:</b> {{(instance | async).disk}}</p>
         <p><b>Cluster:</b> {{(instance | async).cluster_id}}</p>
-        <p><b>Node IP:</b> {{(instance | async).public_ip}}</p>
-        <a [href]="grafanaLink" rel="noopener noreferrer" target="_blank">View in Grafana</a>
+        <p><b>Node IP:</b> {{(instance | async).publicip}}</p>
     </div>
 </mat-dialog-content>
 
