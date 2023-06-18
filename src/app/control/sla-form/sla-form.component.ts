@@ -89,11 +89,16 @@ export class SlaFormComponent implements OnInit {
         );
 
         const sla = this.slaGenerator.generateSLA(service, this.currentApplication, this.currentUser);
+
+        console.log(sla);
+        /*
         if (this.editingService) {
             this.updateService(sla);
         } else {
             this.addService(sla);
         }
+
+ */
     }
 
     updateService(sla: any) {

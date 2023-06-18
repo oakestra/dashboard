@@ -35,6 +35,8 @@ export class AddressesComponent extends SubComponent implements OnInit {
     }
 
     getData(): any {
+        // TODO return only addresses if they are filled out
+        return null;
         return {
             addresses: {
                 ...this.form.value,

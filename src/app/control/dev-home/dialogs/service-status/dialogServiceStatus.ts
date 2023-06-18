@@ -8,17 +8,22 @@ import { AppState } from '../../../../root/store/reducers/app.reducer';
 import { IService } from '../../../../root/interfaces/service';
 import { selectCurrentServices } from '../../../../root/store/selectors/service.selector';
 import { getSingleService } from '../../../../root/store';
+import { AppState } from '../../../root/store/reducers/app.reducer';
+import { IService } from '../../../root/interfaces/service';
+import { selectCurrentServices } from '../../../root/store/selectors/service.selector';
+import { getSingleService } from '../../../root/store';
 
 @Component({
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-service-status.html',
-    styles: ['.full-width{width: 100%}', '.alignRight{text-align: right}', 'h2{min-width: 70vw}'],
+    styles: [
+        '.full-width{width: 100%}',
+        '.alignRight{text-align: right}',
+        'h2{min-width: 70vw}',
+        '.information{padding-top: 10px}',
+    ],
 })
 export class DialogServiceStatusView implements OnInit, OnDestroy {
-    // assuming grafana is running on port 80
-    tmp = environment.apiUrl.split(':');
-    grafanaLink = `${this.tmp[0]}:${this.tmp[1]}`;
-    // instance: Observable<IInstance>;
     instanceNumber: number;
     service: IService;
 
@@ -48,8 +53,7 @@ export class DialogServiceStatusView implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.refreshData();
-        // this.timerSubscription = timer(15000, 15000)
-        this.timerSubscription = timer(5000, 5000)
+        this.timerSubscription = timer(15000, 15000)
             .pipe(takeWhile(() => this.alive))
             .subscribe(() => this.refreshData());
 
