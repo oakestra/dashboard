@@ -64,7 +64,7 @@ export class LineChartComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        const map = L.map('map').setView([this.longitude, this.latitude], 12);
+        const map = L.map('map').setView([this.longitude, this.latitude], 14);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors',
@@ -100,36 +100,50 @@ export class LineChartComponent implements OnInit, AfterViewInit {
     }
 
     private updateCharts(instance: IInstance): void {
+        let timeLables = instance.memory_history.map((data) => {
+            const d = new Date(data.timestamp.$date);
+            return d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+        });
+        timeLables = timeLables.slice(0, 10); // Show only 10 data points
+
+        const cpuData = instance.cpu_history.map((data) => Number.parseFloat(data.value));
         this.cpuChart.data.datasets.forEach((dataset) => {
-            dataset.data = [instance.cpu, 100 - instance.cpu];
+            dataset.data = cpuData;
         });
         this.cpuChart.update();
+        this.cpuChart.data.labels = timeLables;
 
+        const memoryData = instance.memory_history.map((data) => Number.parseFloat(data.value) / 1000000);
         this.memoryChart.data.datasets.forEach((dataset) => {
-            dataset.data = [0, instance.memory]; // TODO Exchange to historic Data Array
+            dataset.data = memoryData;
         });
+        this.memoryChart.data.labels = timeLables;
         this.memoryChart.update();
     }
 
     private createCharts(): void {
+        console.log('Create');
         this.cpuChart = new Chart('myChartCPU', {
-            type: 'doughnut',
+            type: 'line',
             data: {
-                labels: ['used', 'free'],
+                labels: [],
                 datasets: [
                     {
-                        label: 'usage [%]',
+                        label: 'CPU usage [%]',
                         data: [0, 0], // only to initialize
-                        backgroundColor: ['rgb(235,54,75, 0.8)', 'rgba(90,246,93,0.8)'],
-                        hoverOffset: 4,
+                        borderColor: 'rgba(90,246,93,0.8)',
+                        tension: 0.1,
                     },
                 ],
             },
             options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'CPU usage',
+                responsive: true,
+                scales: {
+                    x: {
+                        ticks: {
+                            autoSkip: true,
+                            maxTicksLimit: 5,
+                        },
                     },
                 },
             },
@@ -138,26 +152,25 @@ export class LineChartComponent implements OnInit, AfterViewInit {
         this.memoryChart = new Chart('myChartMemory', {
             type: 'line',
             data: {
-                labels: [0, 1], // Could be a time stamp
+                labels: [65, 59, 80, 81, 56, 55, 40],
                 datasets: [
                     {
-                        label: 'Memory [bytes]',
-                        data: [0, 0],
-                        backgroundColor: 'rgb(36,90,238)',
-                        borderColor: 'rgb(36,90,238)',
-                        borderWidth: 1,
-                        fill: {
-                            target: 'origin',
-                            above: 'rgb(36,90,238, 0.5)',
-                        },
+                        label: 'Memory usage [mB]',
+                        data: [0, 0], // set in the update function
+                        fill: true,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1,
                     },
                 ],
             },
             options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Memory usage',
+                responsive: true,
+                scales: {
+                    x: {
+                        ticks: {
+                            autoSkip: true,
+                            maxTicksLimit: 5,
+                        },
                     },
                 },
             },

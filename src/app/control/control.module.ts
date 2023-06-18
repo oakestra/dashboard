@@ -67,6 +67,9 @@ import { ListOrganizationComponent } from './organization/list-organization/list
 import { AddMemberComponent } from './organization/dialogs/add-member/add-member.component';
 import { MemberItemComponent } from './organization/edit-organization/member-item/member-item.component';
 import { SettingsComponent } from './settings/settings.component';
+import { LatencyConstraintsComponent } from './sla-form/components/constraints/components/long-lat-constraints/latency-constraints.component';
+import { GeoConstraintsComponent } from './sla-form/components/constraints/components/geo-constraints/geo-constraints.component';
+import { ClusterConstraintsComponent } from './sla-form/components/constraints/components/cluster-constraints/cluster-constraints.component';
 
 @NgModule({
     declarations: [
@@ -106,6 +109,9 @@ import { SettingsComponent } from './settings/settings.component';
         AddMemberComponent,
         MemberItemComponent,
         SettingsComponent,
+        LatencyConstraintsComponent,
+        GeoConstraintsComponent,
+        ClusterConstraintsComponent,
     ],
     imports: [
         CommonModule,

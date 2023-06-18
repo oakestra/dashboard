@@ -4,111 +4,42 @@
         <mat-icon>add</mat-icon>
     </button>
     <mat-menu #selectConstrains="matMenu" yPosition="above">
-        <button (click)="addConstrains('latency')" mat-menu-item type="button">Latency Constraints</button>
-        <button (click)="addConstrains('geo')" mat-menu-item type="button">Geo Constraints</button>
+        <button (click)="addConstrains(ConstraintType.LATENCY)" mat-menu-item type="button">Latency Constraints</button>
+        <button (click)="addConstrains(ConstraintType.GEO)" mat-menu-item type="button">Geo Constraints</button>
+        <button (click)="addConstrains(ConstraintType.DIRECT)" mat-menu-item type="button">Cluster Constraints</button>
     </mat-menu>
 </div>
 
-<!-- TODO Create inputs for the new attributes-->
-<div>
-    <div *ngFor="let cons of constraints; let i = index">
-        <div>
-            <div *ngIf="canViewLatConstrains[i]" class="constraints">
-                <div>
-                    <h5 class="addButtonDiv">Latency Constrains</h5>
-                    <button (click)="deleteConstrains(i)" mat-icon-button type="button">
+<form [formGroup]="constraintsForm">
+    <div *ngFor="let constraint of constraints; let i = index">
+        <div class="constraints">
+            <div>
+                <h5 class="addButtonDiv">
+                    <ng-container [ngSwitch]="constraint">
+                        <ng-container *ngSwitchCase="ConstraintType.LATENCY">Latency Constraints</ng-container>
+                        <ng-container *ngSwitchCase="ConstraintType.GEO">Geo Constraints</ng-container>
+                        <ng-container *ngSwitchCase="ConstraintType.DIRECT">Cluster Constraints</ng-container>
+                    </ng-container>
+                </h5>
+
+                <div class="addButtonDiv">
+                    <h5>{{ headlineHelper(constraint.type) }} constraint:</h5>
+                    <button (click)="deleteConstraint(i)" mat-icon-button type="button">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </div>
-                <div class="w3-row">
-                    <div class="w3-col l12 m12 s12 w3-row-padding">
-                        <mat-form-field>
-                            <mat-label>Area</mat-label>
-                            <mat-select
-                                matNativeControl
-                                matTooltip="Specifies the area in which the constraint is in effect"
-                                required
-                            >
-                                <!-- // TODO Add the real locations -->
-                                <mat-option value="munich1">Munich 1</mat-option>
-                                <mat-option value="munich2">Munich 2</mat-option>
-                                <mat-option value="frankfurt">Frankfurt</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="w3-col l4 m4 s6 w3-row-padding">
-                        <mat-form-field>
-                            <mat-label>Threshold</mat-label>
-                            <input matInput matTooltip="Maximum latency" type="number" value="0" />
-                            <p matSuffix>ms&#160;</p>
-                        </mat-form-field>
-                    </div>
-                    <div class="w3-col l4 m4 s6 w3-row-padding">
-                        <mat-form-field>
-                            <mat-label>Rigidness</mat-label>
-                            <input matInput max="1" min="0" step="0.01" type="number" value="0" />
-                            <p matSuffix>%&#160;</p>
-                        </mat-form-field>
-                    </div>
-                    <div class="w3-col l4 m4 s6 w3-row-padding">
-                        <mat-form-field>
-                            <mat-label>Convergence Time</mat-label>
-                            <input matInput type="number" value="300" />
-                            <p matSuffix>sec&#160;</p>
-                        </mat-form-field>
-                    </div>
-                </div>
             </div>
-
-            <div *ngIf="!canViewLatConstrains[i]" class="constraints">
-                <div>
-                    <h5 class="addButtonDiv">Geo Constrains</h5>
-                    <button (click)="deleteConstrains(i)" mat-icon-button type="button">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </div>
-
-                <div class="w3-row">
-                    <div class="w3-col l4 m4 s6 w3-row-padding">
-                        <mat-form-field>
-                            <mat-label>Longitude</mat-label>
-                            <input [(ngModel)]="longitude[i]" (change)="updateLongLat(i)" matInput type="number" />
-                        </mat-form-field>
-                    </div>
-
-                    <div class="w3-col l4 m4 s6 w3-row-padding">
-                        <mat-form-field>
-                            <mat-label>Latitude</mat-label>
-                            <input [(ngModel)]="latitude[i]" (change)="updateLongLat(i)" matInput type="number" />
-                        </mat-form-field>
-                    </div>
-                    <div class="w3-col w3-rest"></div>
-
-                    <div class="w3-col l4 m4 s12 w3-row-padding">
-                        <mat-form-field>
-                            <mat-label>Threshold</mat-label>
-                            <input matInput type="number" />
-                            <p matSuffix>km&#160;</p>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="w3-col l4 m4 s12 w3-row-padding">
-                        <mat-form-field>
-                            <mat-label>Rigidness</mat-label>
-                            <input matInput max="100" min="0" type="number" value="0" />
-                            <p matSuffix>%&#160;</p>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="w3-col l4 m4 s12 w3-row-padding">
-                        <mat-form-field>
-                            <mat-label>Convergence Time</mat-label>
-                            <input matInput type="number" value="300" />
-                            <p matSuffix>sec&#160;</p>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
+            <ng-container [ngSwitch]="constraint.type">
+                <ng-container *ngSwitchCase="ConstraintType.LATENCY">
+                    <app-latency-constraints></app-latency-constraints>
+                </ng-container>
+                <ng-container *ngSwitchCase="ConstraintType.GEO">
+                    <app-geo-constraints></app-geo-constraints>
+                </ng-container>
+                <ng-container *ngSwitchCase="ConstraintType.DIRECT">
+                    <app-cluster-constraints></app-cluster-constraints>
+                </ng-container>
+            </ng-container>
         </div>
     </div>
-</div>
+</form>

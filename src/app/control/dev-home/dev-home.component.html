@@ -57,7 +57,7 @@
 
                             <div
                                 (click)="openStatusDialog(service, instance.instance_number)"
-                                class="w3-col l5 m6 s5 statusField"
+                                class="w3-col l5 m6 s6 statusField"
                             >
                                 <button mat-icon-button type="button">
                                     <mat-icon [class]="instance.status">fiber_manual_record</mat-icon>
@@ -65,7 +65,7 @@
                                 <p class="statusText">{{ instance.status }}</p>
                             </div>
 
-                            <div class="w3-col s1 w3-right">
+                            <div class="w3-col l1 m1 s1 w3-right">
                                 <button (click)="deleteInstance(service, instance)" mat-icon-button type="button">
                                     <mat-icon>delete</mat-icon>
                                 </button>

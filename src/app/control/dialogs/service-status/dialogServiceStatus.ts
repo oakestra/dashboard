@@ -11,7 +11,12 @@ import { getSingleService } from '../../../root/store';
 @Component({
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-service-status.html',
-    styles: ['.full-width{width: 100%}', '.alignRight{text-align: right}', 'h2{min-width: 70vw}'],
+    styles: [
+        '.full-width{width: 100%}',
+        '.alignRight{text-align: right}',
+        'h2{min-width: 70vw}',
+        '.information{padding-top: 10px}',
+    ],
 })
 export class DialogServiceStatusView implements OnInit, OnDestroy {
     instanceNumber: number;

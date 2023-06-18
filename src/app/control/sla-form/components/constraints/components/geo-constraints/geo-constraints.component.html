@@ -1,0 +1,42 @@
+<form [formGroupName]="formGroupName">
+    <div class="w3-row">
+        <div class="w3-col l4 m4 s6 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Longitude</mat-label>
+                <input (change)="updateLongLat()" matInput type="number" />
+            </mat-form-field>
+        </div>
+
+        <div class="w3-col l4 m4 s6 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Latitude</mat-label>
+                <input (change)="updateLongLat()" matInput type="number" />
+            </mat-form-field>
+        </div>
+        <div class="w3-col w3-rest"></div>
+
+        <div class="w3-col l4 m4 s12 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Threshold</mat-label>
+                <input matInput formControlName="threshold" type="number" />
+                <p matSuffix>km&#160;</p>
+            </mat-form-field>
+        </div>
+
+        <div class="w3-col l4 m4 s12 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Rigidness</mat-label>
+                <input matInput formControlName="rigidness" max="100" min="0" type="number" value="0" />
+                <p matSuffix>%&#160;</p>
+            </mat-form-field>
+        </div>
+
+        <div class="w3-col l4 m4 s12 w3-row-padding">
+            <mat-form-field>
+                <mat-label>Convergence Time</mat-label>
+                <input matInput formControlName="convergence_time" type="number" value="300" />
+                <p matSuffix>sec&#160;</p>
+            </mat-form-field>
+        </div>
+    </div>
+</form>

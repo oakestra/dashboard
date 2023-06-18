@@ -1,6 +1,7 @@
 import { Virtualization } from '../enums/virtualization';
 import { IId } from './id';
 import { IInstance } from './instance';
+import { ConstraintType } from '../enums/constraint';
 
 export interface IService {
     _id?: IId;
@@ -29,7 +30,6 @@ export interface IService {
     args?: string[];
     environment?: string[];
     sla_violation_strategy?: string;
-    target_node?: string;
 }
 
 export interface IAddresses {
@@ -51,7 +51,7 @@ export interface ICon_constraints {
 }
 
 export interface IConstraints {
-    type: 'geo' | 'latency';
+    type: ConstraintType;
     area: string;
     cluster: string;
     node: string;

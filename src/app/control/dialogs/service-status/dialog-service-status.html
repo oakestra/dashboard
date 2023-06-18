@@ -1,14 +1,16 @@
 <h2 mat-dialog-title>Status: {{(instance | async).status}}</h2>
 <mat-dialog-content class="mat-typography">
-    <div class="alert alert-info width70">
+    <div *ngIf="(instance | async).status_detail" class="alert alert-info width70">
         <p>{{(instance | async).status_detail}}</p>
     </div>
 
     <div>
         <line-chart [instanceList]="instance"></line-chart>
-        <p><b>Disk:</b> {{(instance | async).disk}}</p>
-        <p><b>Cluster:</b> {{(instance | async).cluster_id}}</p>
-        <p><b>Node IP:</b> {{(instance | async).publicip}}</p>
+        <div class="information">
+            <p><b>Disk:</b> {{(instance | async).disk}}</p>
+            <p><b>Cluster:</b> {{(instance | async).cluster_id}}</p>
+            <p><b>Node IP:</b> {{(instance | async).publicip}}</p>
+        </div>
     </div>
 </mat-dialog-content>
 

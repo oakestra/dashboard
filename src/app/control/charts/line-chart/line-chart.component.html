@@ -10,8 +10,8 @@
         <canvas id="myChartMemory"></canvas>
     </div>
     <div class="w3-col l4 m4">
-        <h3>Location</h3>
         <div *ngIf="!textLocation" class="map" id="map"></div>
+        <h3 *ngIf="textLocation">Location</h3>
         <p *ngIf="textLocation">{{ textLocation }}</p>
     </div>
 </div>
