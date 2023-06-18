@@ -3,15 +3,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subscription, takeWhile, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from '../../../../../environments/environment';
-import { AppState } from '../../../../root/store/reducers/app.reducer';
 import { IService } from '../../../../root/interfaces/service';
 import { selectCurrentServices } from '../../../../root/store/selectors/service.selector';
+import { AppState } from '../../../../root/store/reducers/app.reducer';
 import { getSingleService } from '../../../../root/store';
-import { AppState } from '../../../root/store/reducers/app.reducer';
-import { IService } from '../../../root/interfaces/service';
-import { selectCurrentServices } from '../../../root/store/selectors/service.selector';
-import { getSingleService } from '../../../root/store';
 
 @Component({
     selector: 'dialog-content-example-dialog',
