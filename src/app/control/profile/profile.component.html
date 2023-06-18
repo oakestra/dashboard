@@ -35,7 +35,10 @@
                     </div>
 
                     <div class="darkModeToggle">
-                        <mat-slide-toggle (change)="onDarkModeSwitched($event)"></mat-slide-toggle>
+                        <mat-slide-toggle
+                            (change)="onDarkModeSwitched($event)"
+                            [checked]="isDarkMode"
+                        ></mat-slide-toggle>
                         <p>Dark Mode</p>
                     </div>
 

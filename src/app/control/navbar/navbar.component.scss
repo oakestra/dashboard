@@ -52,7 +52,7 @@ mat-card p {
     height: 100%;
 }
 
-.example-spacer {
+.spacer {
     flex: 1 1 auto;
 }
 
@@ -220,6 +220,10 @@ mat-card {
     mat-icon {
         color: white !important;
     }
+}
+
+.sidenav{
+  background-color: var(--primary-background_sidenav);
 }
 
 .welcome {

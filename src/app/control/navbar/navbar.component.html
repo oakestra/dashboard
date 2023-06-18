@@ -7,7 +7,7 @@
         </button>
     </div>
 
-    <span class="example-spacer"></span>
+    <span class="spacer"></span>
 
     <h4 *ngIf="user$ | async; let user">
         <small>{{ user.name }}&nbsp;&nbsp;</small>
@@ -42,7 +42,7 @@
 </mat-toolbar>
 
 <mat-sidenav-container>
-    <mat-sidenav class="mat-elevation-z8" mode="side" [(opened)]="opened">
+    <mat-sidenav class="mat-elevation-z8 sidenav" mode="side" [(opened)]="opened">
         <ul class="nav-links">
             <div class="nav-item">
                 <button class="navButton" mat-flat-button routerLink="/control">

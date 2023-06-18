@@ -21,6 +21,7 @@ import { DialogChangePasswordView } from './dialogs/change-password/dialogChange
 export class ProfileComponent implements OnInit {
     form: FormGroup;
     user: IUser;
+    isDarkMode;
 
     public user$: Observable<IUser> = this.store.pipe(select(selectCurrentUser));
 
@@ -36,6 +37,8 @@ export class ProfileComponent implements OnInit {
         this.form = fb.group({
             email: ['', Validators.email],
         });
+
+        this.isDarkMode = JSON.parse(localStorage.getItem('darkMode'));
     }
 
     ngOnInit(): void {
@@ -64,6 +67,7 @@ export class ProfileComponent implements OnInit {
 
     onDarkModeSwitched({ checked }: MatSlideToggleChange) {
         console.log(checked);
+        localStorage.setItem('darkMode', String(checked));
         const hostClass = checked ? 'theme-dark' : 'theme-light';
         this.renderer.setAttribute(this.document.body, 'class', hostClass);
     }
