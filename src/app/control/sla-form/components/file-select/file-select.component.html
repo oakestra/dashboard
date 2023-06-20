@@ -46,6 +46,11 @@
     </div>
 </div>
 
+<!--
+TODO: Not used for now.
+
+Current backend does also not support file upload
+
 <div>
     <h4 class="addButtonDiv">Files:</h4>
     <button (click)="addFileInput()" class="add-btn" mat-mini-fab type="button">
@@ -65,10 +70,6 @@
                     type="url"
                     [(ngModel)]="data.added_files[i]"
                 />
-                <!--              // TODO Fix file upload in the Backend-->
-                <!--                <button matSuffix (click)="fileUpload.click()" class="upload-btn" mat-icon-button type="button">-->
-                <!--                    <mat-icon>attach_file</mat-icon>-->
-                <!--                </button>-->
                 <button matSuffix (click)="deleteFiles(i)" class="upload-btn" mat-icon-button type="button">
                     <mat-icon>clear</mat-icon>
                 </button>
@@ -77,3 +78,5 @@
         <input #fileUpload (change)="onFileSelected($event, i, 'file')" accept="txt" class="file-input" type="file" />
     </div>
 </div>
+
+-->

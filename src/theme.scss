@@ -6,7 +6,7 @@
 $mat-theming-theme-dark: mat.define-dark-theme(
     (
         color: (
-            primary: mat.define-palette(mat.$amber-palette),
+            primary: mat.define-palette(mat.$lime-palette, 800),
             accent: mat.define-palette(mat.$blue-grey-palette),
             warn: mat.define-palette(mat.$amber-palette),
         ),
@@ -34,14 +34,15 @@ $mat-theming-theme-light: mat.define-light-theme(
     --primary-background_sidenav: #3b474e;
 }
 
+// TODO Fix the CSS Bugs if you use a other theme
+
 .theme-dark {
     @include mat.all-component-themes($mat-theming-theme-dark);
-    --primary-background: #4a7083;
-    --primary-background_sidenav: #3b474e;
+    --primary-background: #212121;
+    --primary-background_sidenav: #212121;
 }
 
 .theme-light {
-    // TODO Fix the rest of the CSS Bugs if you use this theme
     @include mat.button-color($mat-theming-theme-light);
     --primary-background: #4a7083;
     --primary-background_sidenav: #3b474e;

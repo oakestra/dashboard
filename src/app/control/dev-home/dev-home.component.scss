@@ -95,6 +95,10 @@ mat-card p {
     display: inline-flex;
 }
 
+.serviceStatus {
+  pointer-events: none;
+}
+
 .mat-expansion-panel {
     margin-bottom: 10px;
     padding: 16px;

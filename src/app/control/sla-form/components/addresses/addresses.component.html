@@ -1,15 +1,26 @@
 <div class="w3-row">
     <div class="w3-row-padding">
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title
-                    >Addresses
-                    <mat-icon
-                        matTooltip="Optional - If the specified IP addresses are unoccupied, the service will be provided at these addresses."
-                    >
-                        info
-                    </mat-icon>
-                </mat-panel-title>
+        <mat-expansion-panel
+            class="panel"
+            (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false"
+            hideToggle="true"
+        >
+            <mat-expansion-panel-header class="expansion-header">
+                <div class="header">
+                    <mat-panel-title
+                        >Addresses
+                        <mat-icon
+                            matTooltip="Optional - If the specified IP addresses are unoccupied, the service will be provided at these addresses."
+                        >
+                            info
+                        </mat-icon>
+                    </mat-panel-title>
+                    <mat-panel-description class="toggle">
+                        <mat-icon *ngIf="!panelOpenState">add</mat-icon>
+                        <mat-icon *ngIf="panelOpenState">remove</mat-icon>
+                    </mat-panel-description>
+                </div>
             </mat-expansion-panel-header>
             <div [formGroup]="form">
                 <div class="w3-row">

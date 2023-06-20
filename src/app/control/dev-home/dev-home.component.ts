@@ -11,6 +11,7 @@ import { selectCurrentApplication } from '../../root/store/selectors/application
 import { appReducer, deleteService } from '../../root/store';
 import { selectCurrentServices } from '../../root/store/selectors/service.selector';
 import { ConfigDownloadService } from '../../shared/modules/helper/config-download.service';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'dev-home',
@@ -58,7 +59,8 @@ export class DevHomeComponent implements OnInit {
     }
 
     deployAllServices() {
-        // TODO implement functionality
-        console.log('Not implemented');
+        this.services$.subscribe((services) => {
+            services.forEach((s) => this.deployService(s));
+        });
     }
 }

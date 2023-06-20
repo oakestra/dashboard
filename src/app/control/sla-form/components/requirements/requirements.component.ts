@@ -39,7 +39,6 @@ export class RequirementsComponent extends SubComponent implements OnInit {
             bandwidth_out: [this.service?.bandwidth_out ?? 0],
             storage: [this.service?.storage ?? 0],
             port: [this.service?.port ?? ''],
-            sla_violation_strategy: [this.service?.sla_violation_strategy ?? ''],
         });
 
         this.form.patchValue(this.requirements);

@@ -29,11 +29,11 @@ import { ConnectivityComponent } from './components/connectivity/connectivity.co
 export class SlaFormComponent implements OnInit {
     @ViewChild('serviceInfo') serviceInfo: ServiceInfoComponent;
     @ViewChild('requirements') requirements: RequirementsComponent;
-    @ViewChild('fileSelect') fileSelect: FileSelectComponent;
     @ViewChild('addresses') addresses: AddressesComponent;
     @ViewChild('arguments') arguments: ArgumentsComponent;
     @ViewChild('constraints') constraints: ConstraintsComponent;
     @ViewChild('connectivity') connectivity: ConnectivityComponent;
+    @ViewChild('fileSelect') fileSelect: FileSelectComponent;
 
     public serviceId: string;
 
@@ -91,14 +91,11 @@ export class SlaFormComponent implements OnInit {
         const sla = this.slaGenerator.generateSLA(service, this.currentApplication, this.currentUser);
 
         console.log(sla);
-        /*
         if (this.editingService) {
             this.updateService(sla);
         } else {
             this.addService(sla);
         }
-
- */
     }
 
     updateService(sla: any) {

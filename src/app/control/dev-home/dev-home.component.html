@@ -14,7 +14,7 @@
                                 (click)="$event.stopPropagation()"
                             >
                                 <div *ngIf="service.status" class="statusField">
-                                    <button mat-icon-button type="button">
+                                    <button mat-icon-button type="button" class="serviceStatus">
                                         <mat-icon [class]="service.status">fiber_manual_record</mat-icon>
                                     </button>
                                     <p class="statusText">{{ service.status }}</p>
@@ -59,7 +59,7 @@
                                 (click)="openStatusDialog(service, instance.instance_number)"
                                 class="w3-col l5 m6 s6 statusField"
                             >
-                                <button mat-icon-button type="button">
+                                <button mat-icon-button type="button" class="serviceStatus">
                                     <mat-icon [class]="instance.status">fiber_manual_record</mat-icon>
                                 </button>
                                 <p class="statusText">{{ instance.status }}</p>
