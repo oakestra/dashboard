@@ -2,10 +2,12 @@ name: Angular Build and Docker Image
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
-      - 'alpha-v*.*.*'
-      - 'demo-tag'
+    branches:
+      - develop
+    # tags:
+    #  - 'v*.*.*'
+    #  - 'alpha-v*.*.*'
+    #  - 'demo-tag'
 
 env:
   # Use docker.io for Docker Hub if empty
