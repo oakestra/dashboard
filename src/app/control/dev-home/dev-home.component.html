@@ -46,7 +46,7 @@
                             </div>
                         </mat-expansion-panel-header>
 
-                        <div *ngIf="service.instance_list?.length === 0" class="noInstance">
+                        <div *ngIf="service.instance_list?.length === 0 || !service.instance_list" class="noInstance">
                             No instances of this service.
                         </div>
 
