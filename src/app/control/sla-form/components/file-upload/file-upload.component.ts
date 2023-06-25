@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SubComponent } from '../../../../root/classes/subComponent';
 import { IService } from '../../../../root/interfaces/service';
 
@@ -8,6 +8,7 @@ import { IService } from '../../../../root/interfaces/service';
     styleUrls: ['./file-upload.component.scss'],
 })
 export class FileUploadComponent extends SubComponent {
+    @Output() upload = new EventEmitter<IService[]>();
     @Input() service: IService;
     file: File | undefined;
     filename = 'Select File to Upload';
@@ -23,10 +24,8 @@ export class FileUploadComponent extends SubComponent {
             const fileReader = new FileReader();
             fileReader.onload = () => {
                 const sla = JSON.parse((fileReader.result ?? '').toString());
-                sla._id = null;
-                if (sla.job_name) {
-                    delete sla.job_name;
-                }
+                console.log(sla);
+                this.upload.emit(sla.microservices as IService[]);
             };
             fileReader.readAsText(this.file);
         }

@@ -23,7 +23,7 @@
             </mat-tab>
 
             <mat-tab label="SLA">
-                <form-file-upload></form-file-upload>
+                <form-file-upload (upload)="slaFromFile($event)"></form-file-upload>
             </mat-tab>
         </mat-tab-group>
     </mat-card>

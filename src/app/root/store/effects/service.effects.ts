@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import * as serviceActions from '../actions/service.actions';
@@ -37,7 +37,7 @@ export class ServiceEffects {
     postServices$ = createEffect(() =>
         this.actions$.pipe(
             ofType(serviceActions.postService),
-            switchMap(({ service }) =>
+            mergeMap(({ service }) =>
                 this.apiService.addService(service).pipe(
                     map((serviceId) => serviceActions.postServiceSuccess({ service, serviceId })),
                     tap(() => this.router.navigate(['/control'])),

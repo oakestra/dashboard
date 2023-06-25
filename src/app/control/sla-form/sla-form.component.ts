@@ -99,6 +99,14 @@ export class SlaFormComponent implements OnInit {
         }
     }
 
+    slaFromFile(microservices: IService[]) {
+        microservices.map((service) => {
+            console.log(service);
+            const sla = this.slaGenerator.generateSLA(service, this.currentApplication, this.currentUser);
+            this.addService(sla);
+        });
+    }
+
     updateService(sla: any) {
         this.api.updateService(sla, this.serviceId).subscribe({
             next: () => {
