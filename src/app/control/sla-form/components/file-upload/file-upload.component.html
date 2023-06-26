@@ -1,6 +1,10 @@
 <div>
     <div (click)="fileUpload.click()" class="content">
         {{ filename }}
+        <div class="sample-code">
+            <p>The file must be formatted as follows:</p>
+            <pre>{{ sampleService | json }}</pre>
+        </div>
     </div>
 
     <div class="file-upload-div">
@@ -16,6 +20,6 @@
         >
             Upload Config
         </button>
-        <p>The file should contain only the microservice object</p>
+        <p>The file should contain only the microservice array</p>
     </div>
 </div>

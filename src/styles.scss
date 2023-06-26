@@ -159,7 +159,7 @@ mat-card {
 mat-card-title {
     background-color: var(--primary-background);
     padding: 16px;
-    border-radius: 4px;
+    border-radius: 5px 5px 0 0;
     color: white;
     text-align: initial;
 }

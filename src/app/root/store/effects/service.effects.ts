@@ -64,7 +64,7 @@ export class ServiceEffects {
 
     updateServices$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(serviceActions.deleteService),
+            ofType(serviceActions.updateService),
             switchMap(({ service }) =>
                 this.apiService.updateService(service, service._id.$oid).pipe(
                     map((service) => serviceActions.updateServiceSuccess({ service })),

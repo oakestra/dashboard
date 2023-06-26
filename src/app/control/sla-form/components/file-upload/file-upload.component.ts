@@ -13,6 +13,10 @@ export class FileUploadComponent extends SubComponent {
     file: File | undefined;
     filename = 'Select File to Upload';
 
+    sampleService: any = {
+        microservices: [{ microservice_name: 'name', microservice_namespace: 'namespace', '...': '...' }],
+    };
+
     loadFile(event: any) {
         this.file = event.target.files[0] as File;
         console.log(this.file);

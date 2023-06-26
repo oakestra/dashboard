@@ -2,10 +2,23 @@
     height: 50vh;
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     font-size: 2rem;
     color: lightgray;
     padding-top: 20px;
+
+  .sample-code {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+
+    pre {
+      font-size: 1rem;
+      color: lightgray;
+    }
+  }
 }
 
 .file-upload-div {
