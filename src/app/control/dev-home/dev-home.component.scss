@@ -47,30 +47,6 @@ mat-card p {
     }
 }
 
-.REGISTERED {
-    color: green;
-}
-
-.CLUSTER_SCHEDULED {
-    color: green;
-}
-
-.REQUESTED {
-    color: yellow;
-}
-
-.NODE_SCHEDULED {
-    color: green;
-}
-
-.RUNNING {
-    color: green;
-}
-
-.FAILED {
-    color: red;
-}
-
 .w3-col {
     line-height: 40px;
 }
@@ -102,7 +78,6 @@ mat-card p {
 .mat-expansion-panel {
     margin-bottom: 10px;
     padding: 16px;
-    /*pointer-events: none;*/
 }
 
 .mat-expansion-panel-header {

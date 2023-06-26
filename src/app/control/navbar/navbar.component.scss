@@ -33,7 +33,6 @@ mat-sidenav-container {
 }
 
 mat-card-title {
-    /* background: #004a9f;*/
     background-color: var(--primary-background);
     padding: 16px;
     border-radius: 4px;
@@ -187,11 +186,6 @@ mat-card {
     margin-bottom: 30px;
     background-color: var(--primary-background_sidenav);
 }
-
-/*
-/deep/ .application-panel .mat-expansion-indicator::after {
-    color: white !important;
-}*/
 
 /* width */
 ::-webkit-scrollbar {
