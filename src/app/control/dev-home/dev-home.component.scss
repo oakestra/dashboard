@@ -69,10 +69,20 @@ mat-card p {
     cursor: pointer;
     align-items: end;
     display: inline-flex;
+
+  .spinner {
+    align-items: center;
+  }
 }
 
 .serviceStatus {
   pointer-events: none;
+  color: black;
+
+  .NODE_SCHEDULED, .RUNNING {
+    color: green;
+  }
+
 }
 
 .mat-expansion-panel {

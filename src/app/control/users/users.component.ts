@@ -6,7 +6,6 @@ import { DatePipe } from '@angular/common';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../shared/modules/api/api.service';
-import { DialogEditUserView } from './dialogs/edit-user/dialogEditUser';
 import { NotificationService } from '../../shared/modules/notification/notification.service';
 import { DialogConfirmationView } from '../../root/components/dialogs/confirmation/dialogConfirmation';
 import { IUser } from '../../root/interfaces/user';
@@ -16,6 +15,7 @@ import { appReducer, deleteUser, getAllUser, postUser, updateUser } from '../../
 import { selectAllUser } from '../../root/store/selectors/user.selector';
 import { Role } from '../../root/enums/roles';
 import { UserService } from '../../shared/modules/auth/user.service';
+import { DialogEditUserView } from './dialogs/edit-user/dialogEditUser';
 
 @Component({
     templateUrl: './users.component.html',
@@ -70,32 +70,25 @@ export class UsersComponent implements OnInit {
                     this.selectedItems.push(found);
                 });
             }
-            this.doFilter();
+            this.doFilter('');
         });
     }
-
-    search(): void {
-        const queryParams: { searchText: string; searchRoles: string[] } = { searchText: '', searchRoles: [] };
-        if (this.searchText && this.searchText.length > 0) {
-            queryParams.searchText = this.searchText;
-        }
-
-        this.selectedItems = this.dropdown.value;
-        if (this.selectedItems) {
-            this.selectedItems.forEach((role: string) => {
-                queryParams.searchRoles.push(role);
-            });
-        }
-        void this.router.navigate(['control', 'users'], { queryParams, queryParamsHandling: 'merge' }).then();
+    /*
+    search(event: any) {
+        this.searchedMember = this.member.filter(
+            (m) => m.name.toLowerCase().indexOf(event?.toLowerCase() ?? '') !== -1,
+        );
     }
-
-    doFilter(): void {
+*/
+    doFilter($event: any): void {
+        this.searchText = $event;
         this.users$.subscribe((u) => {
             this.searchedUsers = u.filter((user) => this.nameFilter(user) && this.roleFilter(user));
         });
     }
 
     nameFilter(user: IUser): boolean {
+        console.log(this.searchText);
         return (
             !this.searchText ||
             this.searchText.length === 0 ||
@@ -117,7 +110,7 @@ export class UsersComponent implements OnInit {
 
     deleteUser(user: IUser): void {
         this.store.dispatch(deleteUser({ user }));
-        this.doFilter();
+        this.doFilter(this.searchText);
     }
 
     openDeleteDialog(obj: IUser) {
@@ -159,5 +152,10 @@ export class UsersComponent implements OnInit {
                 this.store.dispatch(updateUser({ user: result.data }));
             }
         });
+    }
+
+    resetSearch() {
+        this.searchText = '';
+        this.doFilter('');
     }
 }

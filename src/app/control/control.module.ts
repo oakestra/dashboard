@@ -71,6 +71,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LatencyConstraintsComponent } from './sla-form/components/constraints/components/long-lat-constraints/latency-constraints.component';
 import { GeoConstraintsComponent } from './sla-form/components/constraints/components/geo-constraints/geo-constraints.component';
 import { ClusterConstraintsComponent } from './sla-form/components/constraints/components/cluster-constraints/cluster-constraints.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
     declarations: [
@@ -146,6 +147,7 @@ import { ClusterConstraintsComponent } from './sla-form/components/constraints/c
         EffectsModule.forFeature([ServiceEffects]),
         MatLegacyChipsModule,
         MatSlideToggleModule,
+        MatProgressSpinnerModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

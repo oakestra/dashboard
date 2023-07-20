@@ -221,6 +221,11 @@ mat-card {
 }
 
 .welcome {
+
+    -ms-user-select: None;
+    -moz-user-select: None;
+    -webkit-user-select: None;
+    user-select: None;
     margin-top: 10vh;
     text-align: center;
 

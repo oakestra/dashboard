@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { forkJoin, Observable, take, tap } from 'rxjs';
+import { Observable, take, tap } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { IService } from '../../root/interfaces/service';
@@ -21,6 +21,7 @@ export class DevHomeComponent implements OnInit {
     public currentApp$: Observable<IApplication> = this.store.pipe(select(selectCurrentApplication));
     public services$: Observable<IService[]> = this.store.pipe(select(selectCurrentServices));
     appId = '';
+    isLoading = false;
 
     constructor(private api: ApiService, public dialog: MatDialog, private store: Store<appReducer.AppState>) {}
 
@@ -33,17 +34,23 @@ export class DevHomeComponent implements OnInit {
         this.store.dispatch(deleteService({ service }));
     }
 
+    // TODO Do this with the redux store.
     deleteInstance(service: IService, instance: IInstance) {
         this.api.deleteInstance(service, instance).subscribe();
+        this.store.dispatch(getServices({ appId: this.appId }));
     }
 
     deployService(service: IService) {
+        this.isLoading = true;
         this.api
             .deployService(service)
             .pipe(
                 tap(() => {
                     if (this.appId !== '') {
-                        this.store.dispatch(getServices({ appId: this.appId }));
+                        setTimeout(() => {
+                            this.isLoading = false;
+                            this.store.dispatch(getServices({ appId: this.appId }));
+                        }, 5000); // delay to wait until the backend has deployed the service
                     }
                 }),
             )
@@ -70,10 +77,8 @@ export class DevHomeComponent implements OnInit {
 
     deployAllServices() {
         this.services$.pipe(take(1)).subscribe((services) => {
-            const deployObservables = services.map((s) => this.api.deployService(s));
-            forkJoin(deployObservables).subscribe(() => {
-                console.log('Alle Subscriptions sind abgeschlossen.');
-                this.store.dispatch(getServices({ appId: this.appId })); // Aktion dispatchen
+            services.forEach((service) => {
+                this.deployService(service);
             });
         });
     }

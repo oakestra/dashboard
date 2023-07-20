@@ -47,9 +47,12 @@ export class ConstraintsComponent extends SubComponent {
         return this.constraintsType[index] === type;
     }
 
+    // TODO test this very good, or find a better solution
     deleteConstraint(index: number) {
         this.constraints.splice(index, 1);
         this.constraintsType.splice(index, 1);
+        const controlName = Object.keys(this.constraintsForm.getRawValue())[index];
+        this.constraintsForm.removeControl(controlName);
     }
 
     headlineHelper(type: ConstraintType) {
@@ -57,7 +60,7 @@ export class ConstraintsComponent extends SubComponent {
         return typeName.charAt(0).toUpperCase() + typeName.slice(1);
     }
 
-    private getContraintsName(name: string): string {
+    private getConstraintsName(name: string): string {
         if (name.startsWith('direct') || name.startsWith('geo') || name.startsWith('latency')) {
             return name.split('_')[0];
         }
@@ -71,7 +74,7 @@ export class ConstraintsComponent extends SubComponent {
         for (const k in constrains) {
             console.log(k);
             console.log(constrains[k]);
-            const name = this.getContraintsName(k);
+            const name = this.getConstraintsName(k);
             if (name) {
                 result.push({
                     type: name,

@@ -13,11 +13,16 @@
                                 class="w3-col s5 w3-right statusField"
                                 (click)="$event.stopPropagation()"
                             >
-                                <div *ngIf="service.status" class="statusField">
-                                    <button mat-icon-button type="button" class="serviceStatus">
-                                        <mat-icon [class]="service.status">fiber_manual_record</mat-icon>
-                                    </button>
-                                    <p class="statusText">{{ service.status }}</p>
+                                <div class="statusField">
+                                    <div *ngIf="service.status && !isLoading" class="statusField">
+                                        <button mat-icon-button type="button" class="serviceStatus">
+                                            <mat-icon [class]="service.status">fiber_manual_record</mat-icon>
+                                        </button>
+                                        <p class="statusText">{{ service.status }}</p>
+                                    </div>
+                                    <div *ngIf="isLoading" class="spinner">
+                                        <mat-spinner [diameter]="30"></mat-spinner>
+                                    </div>
                                 </div>
                             </mat-panel-description>
 

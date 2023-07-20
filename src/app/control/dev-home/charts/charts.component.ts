@@ -15,10 +15,11 @@ import {
     LineController,
     LineElement,
     PointElement,
+    TimeScale,
     Title,
     Tooltip,
 } from 'chart.js';
-import { IInstance } from '../../../root/interfaces/instance';
+import { IHistoricalData, IInstance } from '../../../root/interfaces/instance';
 
 @Component({
     selector: 'app-chart',
@@ -52,13 +53,14 @@ export class ChartsComponent implements OnInit, AfterViewInit {
             LinearScale,
             DoughnutController,
             ArcElement,
+            TimeScale,
         );
     }
 
     ngOnInit(): void {
         this.createCharts();
         this.instanceList.subscribe((instance: IInstance) => {
-            this.setLocation(instance.cluster_location);
+            this.setLocation(instance.cluster_location ?? '');
             this.updateCharts(instance);
         });
     }
@@ -100,18 +102,35 @@ export class ChartsComponent implements OnInit, AfterViewInit {
     }
 
     private updateCharts(instance: IInstance): void {
-        let timeLables = instance.memory_history.map((data) => {
-            const d = new Date(data.timestamp.$date);
-            return d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+        let timeLables = instance.memory_history.map((data: IHistoricalData) => {
+            const d = new Date(data.timestamp);
+            return `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}:${d
+                .getSeconds()
+                .toString()
+                .padStart(2, '0')}`;
         });
-        timeLables = timeLables.slice(0, 10); // Show only 10 data points
+
+        if (timeLables.length === 100) {
+            const reducedList: any[] = [];
+            for (let i = 0; i < 10; i++) {
+                reducedList.push(timeLables[i * 10]);
+            }
+            timeLables = reducedList;
+        } else {
+            const index = timeLables.length - 1;
+            timeLables = timeLables.slice(index - 10, index);
+        }
+
+        // timeLables = timeLables.slice(90, 100); // Show only 10 data points
+        // timeLables = [timeLables[0], timeLables[50], timeLables[99]];
+        console.log(timeLables);
 
         const cpuData = instance.cpu_history.map((data) => Number.parseFloat(data.value));
         this.cpuChart.data.datasets.forEach((dataset) => {
             dataset.data = cpuData;
         });
-        this.cpuChart.update();
         this.cpuChart.data.labels = timeLables;
+        this.cpuChart.update();
 
         const memoryData = instance.memory_history.map((data) => Number.parseFloat(data.value) / 1000000);
         this.memoryChart.data.datasets.forEach((dataset) => {
@@ -131,18 +150,26 @@ export class ChartsComponent implements OnInit, AfterViewInit {
                     {
                         label: 'CPU usage [%]',
                         data: [0, 0], // only to initialize
+                        fill: true,
                         borderColor: 'rgba(90,246,93,0.8)',
                         tension: 0.1,
                     },
                 ],
             },
             options: {
-                responsive: true,
+                plugins: {
+                    filler: {
+                        propagate: false,
+                    },
+                },
+                interaction: {
+                    intersect: false,
+                },
                 scales: {
                     x: {
                         ticks: {
                             autoSkip: true,
-                            maxTicksLimit: 5,
+                            maxTicksLimit: 3,
                         },
                     },
                 },
@@ -152,7 +179,7 @@ export class ChartsComponent implements OnInit, AfterViewInit {
         this.memoryChart = new Chart('myChartMemory', {
             type: 'line',
             data: {
-                labels: [65, 59, 80, 81, 56, 55, 40],
+                labels: [],
                 datasets: [
                     {
                         label: 'Memory usage [mB]',
@@ -164,12 +191,19 @@ export class ChartsComponent implements OnInit, AfterViewInit {
                 ],
             },
             options: {
-                responsive: true,
+                plugins: {
+                    filler: {
+                        propagate: false,
+                    },
+                },
+                interaction: {
+                    intersect: false,
+                },
                 scales: {
                     x: {
                         ticks: {
                             autoSkip: true,
-                            maxTicksLimit: 5,
+                            maxTicksLimit: 3,
                         },
                     },
                 },

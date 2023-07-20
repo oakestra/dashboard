@@ -20,7 +20,7 @@ export class SettingsComponent implements OnInit {
     constructor(private fb: FormBuilder, private store: Store<appReducer.AppState>) {}
 
     ngOnInit(): void {
-        this.store.dispatch(getSettings());
+        // this.store.dispatch(getSettings());
 
         this.store
             .select(selectSettings)

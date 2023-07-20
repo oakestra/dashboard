@@ -13,11 +13,13 @@ export class ConfigDownloadService {
         };
 
         const config = {
-            ...service,
+            microservices: [
+                {
+                    ...this.cleanService(service),
+                },
+            ],
         };
-
-        delete config._id;
-        delete config.microserviceID;
+        console.log(service);
 
         const fileName = service.microservice_name + '.json';
         if (!setting.element.dynamicDownload) {
@@ -29,5 +31,43 @@ export class ConfigDownloadService {
         element.setAttribute('download', fileName);
         const event = new MouseEvent('click');
         element.dispatchEvent(event);
+    }
+
+    // Delete service data that are only relevant for a running service.
+    private static cleanService(service: IService): IService {
+        const s: IService = {
+            microservice_name: service.microservice_name ?? null,
+            microservice_namespace: service.microservice_namespace ?? null,
+            virtualization: service.virtualization ?? null,
+            description: service.description ?? null,
+            cmd: service.cmd ?? null,
+            memory: service.memory ?? null,
+            vcpus: service.vcpus ?? null,
+            vgpus: service.vgpus ?? null,
+            vtpus: service.vtpus ?? null,
+            bandwidth_in: service.bandwidth_in ?? null,
+            bandwidth_out: service.bandwidth_out ?? null,
+            storage: service.storage ?? null,
+            code: service.code ?? null,
+            state: service.state ?? null,
+            port: service.port ?? null,
+            addresses: service.addresses ?? null,
+            added_files: service.added_files ?? null,
+            constraints: service.constraints ?? null,
+            status: service.status ?? null,
+            connectivity: service.connectivity ?? null,
+            args: service.args ?? null,
+            environment: service.environment ?? null,
+        };
+
+        const filteredObj: { [key: string]: any } = {};
+
+        for (const [key, value] of Object.entries(s)) {
+            if (value !== null) {
+                filteredObj[key] = value;
+            }
+        }
+
+        return filteredObj;
     }
 }

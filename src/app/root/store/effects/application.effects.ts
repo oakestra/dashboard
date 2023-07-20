@@ -37,6 +37,7 @@ export class ApplicationEffects {
             ofType(applicationActions.postApplication),
             switchMap(({ application }) =>
                 this.apiService.addApplication(application).pipe(
+                    // TODO Get the app form the api and store it with the id
                     map(() => applicationActions.postApplicationSuccess({ application })),
                     catchError((error) => of(applicationActions.postApplicationError({ error: error.message }))),
                 ),

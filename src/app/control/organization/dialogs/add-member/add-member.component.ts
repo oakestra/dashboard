@@ -17,6 +17,7 @@ export class AddMemberComponent implements OnInit {
     DialogAction = DialogAction;
     searchText = '';
     user: IUser[];
+    userFiltered: IUser[] = [];
     selection: any;
 
     public user$: Observable<IUser[]> = this.store.pipe(select(selectAllUser));
@@ -43,6 +44,8 @@ export class AddMemberComponent implements OnInit {
                         return obj;
                     }, {}),
             );
+
+            this.search('');
         });
     }
 
@@ -54,5 +57,15 @@ export class AddMemberComponent implements OnInit {
 
     closeDialog() {
         this.dialogRef.close({ event: DialogAction.CANCEL });
+    }
+
+    resetSearch() {
+        this.searchText = '';
+        this.search('');
+    }
+
+    search(event: any) {
+        console.log(event);
+        this.userFiltered = this.user.filter((u) => u.name.toLowerCase().indexOf(event?.toLowerCase() ?? '') !== -1);
     }
 }

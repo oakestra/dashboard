@@ -18,5 +18,5 @@ export interface IInstance {
 
 export interface IHistoricalData {
     value: string;
-    timestamp: { $date: Date };
+    timestamp: Date;
 }

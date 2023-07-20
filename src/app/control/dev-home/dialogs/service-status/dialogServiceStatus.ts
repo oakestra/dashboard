@@ -16,6 +16,7 @@ import { getSingleService } from '../../../../root/store';
         '.alignRight{text-align: right}',
         'h2{min-width: 70vw}',
         '.information{padding-top: 10px}',
+        'status-dialog{min-width: 80vw}',
     ],
 })
 export class DialogServiceStatusView implements OnInit, OnDestroy {

@@ -11,9 +11,12 @@
 
             <div class="w3-row user-search">
                 <div class="w3-col l4 m5">
-                    <mat-form-field appearance="fill" class="input-field">
+                    <mat-form-field appearance="fill" class="input-field searchForm">
                         <mat-label>Search by username</mat-label>
-                        <input [(ngModel)]="searchText" matInput type="text" />
+                        <input (ngModelChange)="doFilter($event)" matInput [(ngModel)]="searchText" type="text" />
+                        <button *ngIf="searchText" matSuffix mat-icon-button (click)="resetSearch()">
+                            <mat-icon>close</mat-icon>
+                        </button>
                     </mat-form-field>
                 </div>
 
@@ -34,13 +37,6 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-
-                <div class="w3-col l2 m7">
-                    <button (click)="search()" color="primary" mat-flat-button>
-                        <mat-icon>search</mat-icon>
-                        Search
-                    </button>
-                </div>
             </div>
             <table [dataSource]="searchedUsers" class="mat-elevation-z8 search" mat-table>
                 <ng-container matColumnDef="name">
@@ -59,10 +55,10 @@
                         <mat-chip-list aria-label="roles">
                             <mat-chip
                                 *ngFor="let e of element.roles"
-                                [ngStyle]="{
-                                    'background-color':
-                                        e === 'Admin' ? '#DE686B' : e === 'Application_Provider' ? '#3DA23C' : '#ADA23C'
-                                }"
+                                [class.admin-chip]="e === 'Admin'"
+                                [class.provider-chip]="e === 'Application_Provider'"
+                                [class.organization-chip]="e === 'Organization_Admin'"
+                                [class.infra-chip]="e === 'Infrastructure_Provider'"
                                 selected
                             >
                                 {{ e }}
