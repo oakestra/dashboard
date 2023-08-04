@@ -2,18 +2,15 @@ name: Angular Build and Docker Image
 
 on:
   push:
-    branches:
-      - develop
-    # tags:
-    #  - 'v*.*.*'
-    #  - 'alpha-v*.*.*'
-    #  - 'demo-tag'
+     tags:
+      - 'v*.*.*'
+      - 'alpha-v*.*.*'
 
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}/Active-Sidecar-Queue-Dummy-App
+  IMAGE_NAME: ${{ github.repository }}/dashboard
 
 jobs:
   build:
@@ -29,16 +26,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
+      - name: Install Angular CLI
         run: npm install
 
-      - name: Build Angular app
-        run: npm run build --prod
+      - name: Build Angular Project
+        run: ng build --prod
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: dist
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
@@ -60,7 +57,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.IMAGE_TOKEN_14_3_2023 }}
+          password: ${{ secrets.IMAGE_TOKEN }}
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
@@ -85,7 +82,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
