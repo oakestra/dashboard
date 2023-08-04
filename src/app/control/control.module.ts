@@ -50,6 +50,7 @@ import { ServiceDashboardComponent } from './service-dashboard/service-dashboard
 import { SlaFormComponent } from './sla-form/sla-form.component';
 import { routes } from './control.routing';
 import { ClusterComponent } from './cluster/cluster.component';
+import { ClusterMapComponent } from './cluster/clustermap/clustermap.component';
 import { ConnectivityComponent } from './sla-form/components/connectivity/connectivity.component';
 import { ConstraintsComponent } from './sla-form/components/constraints/constraints.component';
 import { FileSelectComponent } from './sla-form/components/file-select/file-select.component';
@@ -74,6 +75,7 @@ import { ServiceItemComponent } from './service-dashboard/components/service-ite
 import { InstanceDetailComponent } from './service-dashboard/components/instance-detail/instance-detail.component';
 import { ChartCpuLineComponent } from './service-dashboard/components/instance-detail/chart-cpu-line.component';
 import { ChartMemoryLineComponent } from './service-dashboard/components/instance-detail/chart-memory-line.component';
+import { NbProgressBarModule } from '@nebular/theme';
 
 @NgModule({
     declarations: [
@@ -94,6 +96,7 @@ import { ChartMemoryLineComponent } from './service-dashboard/components/instanc
         HelpComponent,
         DialogConfirmationView,
         ClusterComponent,
+        ClusterMapComponent,
         ConnectivityComponent,
         ConstraintsComponent,
         FileSelectComponent,
@@ -113,6 +116,7 @@ import { ChartMemoryLineComponent } from './service-dashboard/components/instanc
         GeoConstraintsComponent,
         ClusterConstraintsComponent,
         ClusterComponent,
+        ClusterMapComponent,
         ApplicationsComponent,
         FaqComponent,
         ServiceItemComponent,
@@ -121,6 +125,7 @@ import { ChartMemoryLineComponent } from './service-dashboard/components/instanc
         ChartMemoryLineComponent,
     ],
     imports: [
+        NbProgressBarModule,
         CommonModule,
         RouterModule.forChild(routes),
         FormsModule,

@@ -55,10 +55,6 @@ export class ApiService extends RestService {
     // /////////////////////////////////////////////////////////////////////////
     // /////////////////// Cluster Functions ///////////////////////////////
 
-    /* TODO Decide how to use the cluster and if we need them implement the functionality
-        and implement the store for the cluster data
-     */
-
     getActiveClusters(): Observable<ICluster[]>  {
         return this.doGETRequest('/clusters/active');
     }

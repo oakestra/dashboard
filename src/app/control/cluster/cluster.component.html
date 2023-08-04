@@ -1,25 +1,52 @@
 <div class="container">
-    Clusters:
+    <h1>Available Oakestra Clusters</h1>
     <div class="row">
-        <div *ngFor="let cluster of clusters$ | async" class="col-sm-4">
+        <div *ngFor="let cluster of clusters$ | async" class="col-sm-6">
             <nb-card id="my_card">
                 <nb-card-header>
                     {{ cluster.cluster_name }}
                 </nb-card-header>
                 <nb-card-body *ngIf="cluster._id">
-                    Cluster ID {{ cluster._id }}
-                    supported virtualizations: {{ cluster.virtualization }}
-                    <div class="map-container">
-                        <div class="map-frame">
-                            <div id="card_map"></div>
-                            <p>
-                                The cluster is located in: [{{ cluster.cluster_location }},
-                                {{ cluster.cluster_location }}]
-                            </p>
+                    <b>ID</b> {{ cluster._id }}
+                    <div *ngIf="cluster.active" >  <b>Status:</b> 🟢 Active 
+
+                    <nb-progress-bar
+                        [value]="cluster.aggregated_cpu_percent"
+                        [status]="cluster.aggregated_cpu_percent > 80 ? 'danger' : (cluster.aggregated_cpu_percent > 50 ? 'warning' : 'success')"
+                        [showValue]="true"
+                        [showValueType]="'percent'"
+                        [max]="100"
+                        [min]="0"
+                        [size]="'medium'"
+                        [shape]="'round'"
+                        [showValuePosition]="'inside'"
+                        [showValueColor]="'white'"
+                        [style.display]="'inline'"
+                    ></nb-progress-bar>
+                    </div>
+                    <div *ngIf="!cluster.active" >  <b>Status:</b> 🔴 Offline </div>
+
+                    <div>  <b>Nodes:</b> {{ cluster.active_nodes }} </div>
+                    <div>  <b>Memory Available:</b> {{ convertMemoryToGB(cluster.memory_in_mb) }}GB </div>
+                    <div>  <b>Total Cpu Cores:</b> {{ cluster.total_cpu_cores }} </div>
+                    <div>  <b>Total GPUs Available:</b> {{ cluster.total_gpu_cores }} </div>
+                    <div *ngIf="cluster.virtualization?.length > 0" >  <b>Supported virtualizations:</b> {{ cluster.virtualization }} </div>
+                    <br>
+                    <div class="map-card" id="map-card">
+                        <div *ngIf="cluster.cluster_location"> 
+                            <app-cluster-map
+                                [location]=cluster.cluster_location 
+                                [mapId]=cluster._id.toString()
+                            ></app-cluster-map>
                         </div>
                     </div>
                 </nb-card-body>
             </nb-card>
         </div>
+        <div *ngIf="(clusters$ | async)?.length === 0" class="col-sm-6">
+
+            <h2> No clusters available in your infrastructure. </h2>
+            <h3> Please contact your administrator to add a cluster or follow these <a href="https://www.oakestra.io/docs/getting-started/welcome-to-oakestra-docs/">wiki steps</a>. </h3>
+
     </div>
 </div>
