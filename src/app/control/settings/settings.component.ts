@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
-import { appReducer, getSettings, setSettings } from '../../root/store';
+import { appReducer, setSettings } from '../../root/store';
 import { selectSettings } from '../../root/store/selectors/settings.selector';
 import { ConfigurationType, ISettings } from '../../root/interfaces/settings';
 
