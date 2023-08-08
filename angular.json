@@ -32,11 +32,8 @@
                             }
                         ],
                         "styles": [
-                            "src/styles.scss",
-                            "src/theme.scss",
-                            "node_modules/shepherd.js/dist/css/shepherd.css",
-                            "node_modules/leaflet/dist/leaflet.css",
-                            "node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css"
+                            "node_modules/@nebular/theme/styles/prebuilt/default.css",
+                            "src/app/@theme/styles/styles.scss"
                         ],
                         "scripts": ["src/assets/js/graph.js", "src/assets/js/map.js"]
                     },
@@ -99,7 +96,9 @@
                         "tsConfig": "tsconfig.spec.json",
                         "karmaConfig": "karma.conf.js",
                         "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": ["src/styles.css"],
+                        "styles": ["src/styles.css",
+                          "src/app/@theme/styles/styles.scss"
+                        ],
                         "scripts": []
                     }
                 },

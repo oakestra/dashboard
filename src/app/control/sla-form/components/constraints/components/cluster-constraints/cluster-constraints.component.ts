@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
-import * as uuid from 'uuid';
+// import * as uuid from 'uuid';
 import { ApiService } from '../../../../../../shared/modules/api/api.service';
 
 @Component({
@@ -16,7 +16,8 @@ export class ClusterConstraintsComponent implements OnInit {
     clusterOptions: string[] = [];
 
     constructor(private fb: FormBuilder, private parent: FormGroupDirective, private apiService: ApiService) {
-        this.formGroupName = 'direct_' + uuid.v4();
+        this.formGroupName = 'direct_';
+        // this.formGroupName = 'direct_' + uuid.v4(); // TODO
     }
 
     ngOnInit(): void {

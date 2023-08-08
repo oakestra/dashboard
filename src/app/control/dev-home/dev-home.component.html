@@ -1,3 +1,46 @@
+<p>Dev</p>
+
+<nb-card size="small">
+    <nb-card-body>
+        <nb-form-field>
+            <nb-icon nbSuffix icon="at-outline" pack="eva"></nb-icon>
+            <input type="text" nbInput placeholder="Test" />
+        </nb-form-field>
+    </nb-card-body>
+</nb-card>
+
+<ul class="sub-menu">
+    <div id="applicationTitle">
+        <mat-expansion-panel class="application-panel" [expanded]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="panel-title"> My Applications </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div *ngFor="let app of apps$ | async" class="items">
+                <mat-radio-group
+                    class="radio-group"
+                    (change)="handleChange()"
+                    [(ngModel)]="activeAppId"
+                    routerLink="/control"
+                >
+                    <mat-radio-button [value]="app._id" class="radioButton">
+                        <span class="sidenav-text">{{ app.application_name }}</span>
+                    </mat-radio-button>
+                </mat-radio-group>
+
+                <button (click)="openDialogApp(DialogAction.UPDATE, app)" class="sidenav-text" mat-icon-button>
+                    <mat-icon>settings</mat-icon>
+                </button>
+            </div>
+        </mat-expansion-panel>
+    </div>
+    <mat-list class="inline-list">
+        <button class="navButton" mat-flat-button (click)="openDialogApp(DialogAction.ADD, undefined)">
+            Add Application
+            <mat-icon>add_circle</mat-icon>
+        </button>
+    </mat-list>
+</ul>
+
 <div class="content-cards">
     <mat-card class="serviceCard" id="content">
         <div *ngIf="currentApp$ | async">

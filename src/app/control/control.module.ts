@@ -28,8 +28,25 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { MatLegacyChipsModule } from '@angular/material/legacy-chips';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {
+    NbButtonModule,
+    NbCardModule,
+    NbDialogModule,
+    NbFormFieldModule,
+    NbIconModule,
+    NbInputModule,
+    NbLayoutModule,
+    NbListModule,
+    NbMenuModule,
+    NbSidebarModule,
+    NbThemeModule,
+} from '@nebular/theme';
 import * as fromService from '../root/store/reducers/service.reducer';
 import { ServiceEffects } from '../root/store';
+import { DialogConfirmationView } from '../root/components/dialogs/confirmation/dialogConfirmation';
+import { ThemeModule } from '../@theme/theme.module';
 import { UsersComponent } from './users/users.component';
 import { DialogEditUserView } from './users/dialogs/edit-user/dialogEditUser';
 import { ProfileComponent } from './profile/profile.component';
@@ -37,7 +54,6 @@ import { DialogChangePasswordView } from './profile/dialogs/change-password/dial
 import { DialogServiceStatusView } from './dev-home/dialogs/service-status/dialogServiceStatus';
 import { ChartsComponent } from './dev-home/charts/charts.component';
 import { HelpComponent } from './help/help.component';
-import { DialogConfirmationView } from '../root/components/dialogs/confirmation/dialogConfirmation';
 import { DialogGenerateTokenView } from './navbar/dialogs/generate-token/dialogGenerateToken';
 import { GraphComponent } from './dev-home/graph/graph.component';
 import { DialogAddClusterView } from './navbar/dialogs/add-cluster/dialogAddCluster';
@@ -67,11 +83,10 @@ import { ListOrganizationComponent } from './organization/list-organization/list
 import { AddMemberComponent } from './organization/dialogs/add-member/add-member.component';
 import { MemberItemComponent } from './organization/edit-organization/member-item/member-item.component';
 import { SettingsComponent } from './settings/settings.component';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LatencyConstraintsComponent } from './sla-form/components/constraints/components/long-lat-constraints/latency-constraints.component';
 import { GeoConstraintsComponent } from './sla-form/components/constraints/components/geo-constraints/geo-constraints.component';
 import { ClusterConstraintsComponent } from './sla-form/components/constraints/components/cluster-constraints/cluster-constraints.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ApplicationsComponent } from './applications/applications.component';
 
 @NgModule({
     declarations: [
@@ -114,6 +129,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         LatencyConstraintsComponent,
         GeoConstraintsComponent,
         ClusterConstraintsComponent,
+        ApplicationsComponent,
     ],
     imports: [
         CommonModule,
@@ -148,6 +164,18 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatLegacyChipsModule,
         MatSlideToggleModule,
         MatProgressSpinnerModule,
+        NbCardModule,
+        NbButtonModule,
+        NbDialogModule.forRoot(),
+        NbMenuModule,
+        NbLayoutModule,
+        NbSidebarModule,
+        ThemeModule,
+        NbListModule,
+        NbInputModule,
+        NbIconModule,
+        NbFormFieldModule,
+        NbThemeModule.forRoot({ name: 'dark' }),
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

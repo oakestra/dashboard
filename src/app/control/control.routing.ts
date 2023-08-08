@@ -11,6 +11,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { InfrastructureComponent } from './infrastructure/infrastructure.component';
 import { OrganizationComponent } from './organization/organization.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ApplicationsComponent } from './applications/applications.component';
 
 export const routes: Routes = [
     {
@@ -19,6 +20,12 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
+                component: ApplicationsComponent,
+                pathMatch: 'full',
+                canActivate: [AuthGuardService],
+            },
+            {
+                path: 'services',
                 component: DevHomeComponent,
                 pathMatch: 'full',
                 canActivate: [AuthGuardService],

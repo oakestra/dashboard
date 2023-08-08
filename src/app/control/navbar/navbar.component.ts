@@ -15,6 +15,7 @@ import { ApiService } from '../../shared/modules/api/api.service';
 import { IOrganization } from '../../root/interfaces/organization';
 import { selectOrganization } from '../../root/store/selectors/organization.selector';
 import { Role } from '../../root/enums/roles';
+import { MENU_ITEMS } from '../control-menu';
 
 @Component({
     selector: 'app-navbar',
@@ -22,6 +23,8 @@ import { Role } from '../../root/enums/roles';
     styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, AfterViewInit {
+    menuItems = MENU_ITEMS;
+
     @ViewChild(MatSidenav)
     sidenav!: MatSidenav;
 

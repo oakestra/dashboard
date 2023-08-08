@@ -1,3 +1,22 @@
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  ::ng-deep router-outlet + * {
+    display: block;
+    animation: fade 1s;
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  }
+}
+
 .login-form {
     width: 80%;
     height: fit-content;
@@ -7,6 +26,11 @@
     left: 0;
     right: 0;
     margin: auto;
+    padding: 20px;
+}
+
+nb-form-field{
+  padding: 10px 0 10px 0;
 }
 
 .connectingInfo {
@@ -42,6 +66,10 @@
 .link {
     cursor: pointer;
     float: right;
+}
+
+nb-card-body.example-items-col {
+  align-items: stretch;
 }
 
 .info {
