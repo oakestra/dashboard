@@ -19,7 +19,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     {
         title: 'User Management',
         icon: 'home-outline',
-        link: '/control/help',
+        link: '/control/users',
     },
     {
         title: 'Organisations',

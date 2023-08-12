@@ -71,7 +71,9 @@ export class LoginComponent {
     }
 
     public forgotPassword() {
+        // TODO
         const username = this.form.get('username');
+        console.log('SEND MAIL');
         if (username?.valid) {
             this.api.resetPassword(username.value).subscribe(() => {
                 this.notifyService.notify(NotificationType.success, 'An email with a reset password link was sent');

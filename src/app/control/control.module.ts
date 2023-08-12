@@ -40,7 +40,9 @@ import {
     NbLayoutModule,
     NbListModule,
     NbMenuModule,
+    NbSelectModule,
     NbSidebarModule,
+    NbTagModule,
     NbThemeModule,
 } from '@nebular/theme';
 import * as fromService from '../root/store/reducers/service.reducer';
@@ -176,6 +178,9 @@ import { ApplicationsComponent } from './applications/applications.component';
         NbIconModule,
         NbFormFieldModule,
         NbThemeModule.forRoot({ name: 'dark' }),
+        NbSelectModule,
+        NbTagModule,
+        NbDialogModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
