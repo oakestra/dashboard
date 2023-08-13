@@ -33,6 +33,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {
     NbButtonModule,
     NbCardModule,
+    NbCheckboxModule,
     NbDialogModule,
     NbFormFieldModule,
     NbIconModule,
@@ -181,6 +182,7 @@ import { ApplicationsComponent } from './applications/applications.component';
         NbSelectModule,
         NbTagModule,
         NbDialogModule,
+        NbCheckboxModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

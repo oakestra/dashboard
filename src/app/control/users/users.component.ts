@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -16,6 +15,7 @@ import { selectAllUser } from '../../root/store/selectors/user.selector';
 import { Role } from '../../root/enums/roles';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { DialogEditUserView } from './dialogs/edit-user/dialogEditUser';
+import { NbDialogService } from '@nebular/theme';
 
 @Component({
     templateUrl: './users.component.html',
@@ -36,7 +36,7 @@ export class UsersComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private api: ApiService,
-        private dialog: MatDialog,
+        private dialog: NbDialogService,
         private datePipe: DatePipe,
         private notifyService: NotificationService,
         private store: Store<appReducer.AppState>,
@@ -118,9 +118,10 @@ export class UsersComponent implements OnInit {
             text: 'Delete user: ' + obj.name,
             type: 'user',
         };
-        const dialogRef = this.dialog.open(DialogConfirmationView, { data });
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result.event === true) {
+
+        const dialogRef = this.dialog.open(DialogConfirmationView, { context: data });
+        dialogRef.onClose.subscribe((result) => {
+            if (result === true) {
                 this.deleteUser(obj);
             }
         });
@@ -143,9 +144,10 @@ export class UsersComponent implements OnInit {
             content: user,
             action,
         };
-        const dialogRef = this.dialog.open(DialogEditUserView, { data });
+        console.log(data);
+        const dialogRef = this.dialog.open(DialogEditUserView, { context: { data } });
 
-        dialogRef.afterClosed().subscribe((result) => {
+        dialogRef.onClose.subscribe((result) => {
             if (result.event === DialogAction.ADD) {
                 this.store.dispatch(postUser({ user: result.data }));
             } else if (result.event === DialogAction.UPDATE) {

@@ -67,8 +67,8 @@
                 <ng-container matColumnDef="symbol">
                     <th *matHeaderCellDef mat-header-cell class="alignCenter"></th>
                     <td *matCellDef="let element" mat-cell class="alignRight">
-                        <button (click)="openDialog(DialogAction.UPDATE, element)" mat-icon-button>
-                            <span><nb-icon icon="settings" pack="eva"> </nb-icon></span>
+                        <button (click)="openDialog(DialogAction.UPDATE, element)" nbButton ghost>
+                            <nb-icon icon="settings" pack="eva"> </nb-icon>
                         </button>
                         <button (click)="openDeleteDialog(element)" nbButton ghost>
                             <nb-icon icon="trash" pack="eva"> </nb-icon>

@@ -1,15 +1,11 @@
+nb-tag{
+  border: none;
+}
+
 @media only screen and (max-width: 450px) {
     .registeredRow {
         display: none;
     }
-}
-
-.mat-header-cell {
-    text-align: center;
-}
-
-.mat-icon-button {
-    line-height: 0;
 }
 
 .alignRight {
