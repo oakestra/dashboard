@@ -1,49 +1,52 @@
-<h4>General information:</h4>
-<form [formGroup]="form">
-    <div class="w3-row">
-        <!--        <div class="w3-col l6 s12">-->
-        <!--            <mat-form-field appearance="fill">-->
-        <!--                <mat-label>Application ID</mat-label>-->
-        <!--                <input [value]="applicationId" disabled matInput />-->
-        <!--            </mat-form-field>-->
-        <!--        </div>-->
+<nb-card>
+    <nb-card-header> General information: </nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="form">
+            <div class="w3-row">
+                <div class="w3-col l6 s12 w3-row-padding">
+                    <nb-form-field>
+                        <input
+                            nbInput
+                            formControlName="microservice_namespace"
+                            placeholder="Service Namespace"
+                            required
+                            fullWidth
+                        />
+                    </nb-form-field>
+                </div>
 
-        <div class="w3-col l6 s12 w3-row-padding">
-            <mat-form-field>
-                <mat-label>Service Namespace</mat-label>
-                <input matInput formControlName="microservice_namespace" required />
-            </mat-form-field>
-        </div>
+                <div class="w3-col l6 s12 w3-row-padding">
+                    <nb-form-field>
+                        <input
+                            nbInput
+                            fullWidth
+                            formControlName="microservice_name"
+                            placeholder="Service Name"
+                            required
+                        />
+                    </nb-form-field>
+                </div>
 
-        <div class="w3-col l6 s12 w3-row-padding">
-            <mat-form-field>
-                <mat-label>Service Name</mat-label>
-                <input matInput formControlName="microservice_name" required />
-            </mat-form-field>
-        </div>
+                <div class="w3-col l6 s12 w3-row-padding">
+                    <nb-select formControlName="virtualization" fullWidth placeholder="Virtualization" required>
+                        <nb-option value="container">Container</nb-option>
+                        <nb-option value="unikernel">Unikernel</nb-option>
+                        <nb-option value="vm">Vm</nb-option>
+                    </nb-select>
+                </div>
 
-        <div class="w3-col l6 s12 w3-row-padding">
-            <mat-form-field matTooltip="Type of virtualization chosen for the service">
-                <mat-label>Virtualization</mat-label>
-                <mat-select matNativeControl formControlName="virtualization" required>
-                    <!--                  TODO Do this with ngfor and get the data from the enum-->
-                    <mat-option value="container">Container</mat-option>
-                    <mat-option value="unikernel">Unikernel</mat-option>
-                    <mat-option value="vm">Vm</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-
-        <div class="w3-col l12 s12 w3-row-padding">
-            <mat-form-field>
-                <mat-label>Description</mat-label>
-                <textarea
-                    cols="3"
-                    formControlName="description"
-                    matInput
-                    placeholder="Description of the service"
-                ></textarea>
-            </mat-form-field>
-        </div>
-    </div>
-</form>
+                <div class="w3-col l12 s12 w3-row-padding">
+                    <nb-form-field>
+                        <textarea
+                            cols="3"
+                            fullWidth
+                            nbInput
+                            formControlName="description"
+                            placeholder="Description of the service"
+                        ></textarea>
+                    </nb-form-field>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+</nb-card>

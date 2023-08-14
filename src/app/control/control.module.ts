@@ -31,9 +31,11 @@ import { MatLegacyChipsModule } from '@angular/material/legacy-chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {
+    NbAccordionModule,
     NbButtonModule,
     NbCardModule,
     NbCheckboxModule,
+    NbContextMenuModule,
     NbDialogModule,
     NbFormFieldModule,
     NbIconModule,
@@ -41,10 +43,13 @@ import {
     NbLayoutModule,
     NbListModule,
     NbMenuModule,
+    NbRadioModule,
     NbSelectModule,
     NbSidebarModule,
+    NbTabsetModule,
     NbTagModule,
     NbThemeModule,
+    NbTooltipModule,
 } from '@nebular/theme';
 import * as fromService from '../root/store/reducers/service.reducer';
 import { ServiceEffects } from '../root/store';
@@ -183,6 +188,11 @@ import { ApplicationsComponent } from './applications/applications.component';
         NbTagModule,
         NbDialogModule,
         NbCheckboxModule,
+        NbTabsetModule,
+        NbTooltipModule,
+        NbAccordionModule,
+        NbContextMenuModule,
+        NbRadioModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

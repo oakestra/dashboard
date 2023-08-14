@@ -1,16 +1,17 @@
-<div>
+<nb-card>
     <div class="w3-col l12 m12 s12 w3-row-padding">
-        <mat-form-field class="fileForm">
-            <mat-label>Code</mat-label>
+        <nb-form-field class="fileForm">
             <input
-                matInput
-                matTooltip="Define an image for the service"
-                placeholder="docker.io/library/nginx:latest"
+                nbInput
+                nbTooltip="Define an image for the service"
+                placeholder="Code"
+                value="docker.io/library/nginx:latest"
                 required
                 type="url"
                 [(ngModel)]="data.code"
+                fullWidth
             />
-        </mat-form-field>
+        </nb-form-field>
 
         <!--  TODO Currently not supported, what happens in the backend with the file-->
 
@@ -37,7 +38,7 @@
                 [(ngModel)]="data.state"
             />
         </mat-form-field>
-
+  -->
     <!--      TODO Same here as before, not supported from the backend -->
     <!--    <div class="file-upload">-->
     <!--        <button (click)="fileUploadState.click()" class="add-btn" mat-mini-fab type="button">-->
@@ -47,9 +48,8 @@
     <!--        <input #fileUploadState class="file-input" type="file" />-->
     <!--    </div>-->
     <!-- </div> -->
-</div>
 
-<!--
+    <!--
 TODO: Not used for now.
 
 Current backend does also not support file upload
@@ -83,3 +83,4 @@ Current backend does also not support file upload
 </div>
 
 -->
+</nb-card>

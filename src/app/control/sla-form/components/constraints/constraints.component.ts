@@ -19,6 +19,7 @@ export class ConstraintsComponent extends SubComponent {
     // TODO Only for the demo, fix this later.
     node: string[] = [];
     cluster: string[] = [];
+    items = [{ title: 'Profile' }, { title: 'Log out' }];
 
     constructor(private apiService: ApiService, private formBuilder: FormBuilder) {
         super();

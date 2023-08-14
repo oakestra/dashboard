@@ -1,7 +1,3 @@
-.mat-mdc-form-field {
-    --mat-mdc-form-field-floating-label-scale: 0.75;
-    display: block !important;
-    flex-direction: column;
-    min-width: 0;
-    text-align: left;
+nb-form-field, nb-select{
+  padding: 10px 0 10px 0;
 }
