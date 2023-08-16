@@ -44,6 +44,7 @@
     "leaflet-geosearch": "^3.7.0",
     "leaflet-routing-machine": "^3.2.12",
     "leaflet-search": "^3.0.5",
+    "ngx-cookie-service": "^15.0.0",
     "npm-check-updates": "^16.4.3",
     "rxjs": "^7.5.7",
     "shepherd.js": "^11.0.0",

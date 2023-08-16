@@ -45,7 +45,7 @@ import { CoreModule } from './@core/core.module';
         StoreModule.forRoot(appReducer.reducers, {}),
         EffectsModule.forRoot([UserEffects, ApplicationEffects, SettingsEffects, OrganizationEffects]),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
-        NbThemeModule.forRoot({ name: 'dark' }),
+        NbThemeModule.forRoot(),
         NbEvaIconsModule,
         NbSidebarModule.forRoot(),
         NbMenuModule.forRoot(),

@@ -1,22 +1,20 @@
 <form [formGroupName]="formGroupName">
     <div class="w3-row">
         <div class="w3-col l6 m6 s6 w3-row-padding">
-            <mat-form-field>
-                <mat-label>Cluster</mat-label>
-                <mat-select
-                    matNativeControl
+            <nb-form-field>
+                <nb-select
+                    placeholder="Cluster"
                     formControlName="cluster"
-                    matTooltip="Specifies the cluster in which the constraint is in effect"
+                    nbTooltip="Specifies the cluster in which the constraint is in effect"
                 >
                     <mat-option *ngFor="let option of clusterOptions" [value]="option">{{ option }}</mat-option>
-                </mat-select>
-            </mat-form-field>
+                </nb-select>
+            </nb-form-field>
         </div>
         <div class="w3-col l6 m6 s6 w3-row-padding">
-            <mat-form-field>
-                <mat-label>Node</mat-label>
-                <input matInput formControlName="node" matTooltip="Node" />
-            </mat-form-field>
+            <nb-form-field>
+                <input placeholder="Node" nbInput formControlName="node" nbTooltip="Node" />
+            </nb-form-field>
         </div>
     </div>
 </form>

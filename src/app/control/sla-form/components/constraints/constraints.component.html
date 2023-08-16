@@ -1,15 +1,9 @@
 <div class="addButtonDiv">
     <h4 class="addButtonDiv">Constraints:</h4>
 
-    <button nbButton [nbContextMenu]="items"><nb-icon icon="plus"></nb-icon></button>
-    <button [matMenuTriggerFor]="selectConstrains" class="add-btn" mat-mini-fab type="button">
+    <button nbButton ghost size="large" [nbContextMenu]="items" nbContextMenuTag="constraints-menu">
         <nb-icon icon="plus"></nb-icon>
     </button>
-    <mat-menu #selectConstrains="matMenu" yPosition="above">
-        <button (click)="addConstrains(ConstraintType.LATENCY)" mat-menu-item type="button">Latency Constraints</button>
-        <button (click)="addConstrains(ConstraintType.GEO)" mat-menu-item type="button">Geo Constraints</button>
-        <button (click)="addConstrains(ConstraintType.DIRECT)" mat-menu-item type="button">Cluster Constraints</button>
-    </mat-menu>
 </div>
 
 <form [formGroup]="constraintsForm">

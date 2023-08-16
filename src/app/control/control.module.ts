@@ -95,6 +95,7 @@ import { LatencyConstraintsComponent } from './sla-form/components/constraints/c
 import { GeoConstraintsComponent } from './sla-form/components/constraints/components/geo-constraints/geo-constraints.component';
 import { ClusterConstraintsComponent } from './sla-form/components/constraints/components/cluster-constraints/cluster-constraints.component';
 import { ApplicationsComponent } from './applications/applications.component';
+import { FaqComponent } from './faq/faq.component';
 
 @NgModule({
     declarations: [
@@ -138,6 +139,7 @@ import { ApplicationsComponent } from './applications/applications.component';
         GeoConstraintsComponent,
         ClusterConstraintsComponent,
         ApplicationsComponent,
+        FaqComponent,
     ],
     imports: [
         CommonModule,
@@ -183,7 +185,7 @@ import { ApplicationsComponent } from './applications/applications.component';
         NbInputModule,
         NbIconModule,
         NbFormFieldModule,
-        NbThemeModule.forRoot({ name: 'dark' }),
+        // NbThemeModule.forRoot(),
         NbSelectModule,
         NbTagModule,
         NbDialogModule,

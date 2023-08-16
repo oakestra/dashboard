@@ -43,7 +43,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     {
         title: 'FAQ',
         icon: 'question-mark-circle',
-        link: '/control/help',
+        link: '/control/faq',
     },
     {
         title: 'Contact',

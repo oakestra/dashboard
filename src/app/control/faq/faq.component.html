@@ -1,0 +1,11 @@
+<nb-card>
+    <nb-card-header> FAQ </nb-card-header>
+    <nb-card-body>
+        <nb-accordion>
+            <nb-accordion-item *ngFor="let item of items">
+                <nb-accordion-item-header>{{ item.question }}</nb-accordion-item-header>
+                <nb-accordion-item-body>{{ item.answer }}</nb-accordion-item-body>
+            </nb-accordion-item>
+        </nb-accordion>
+    </nb-card-body>
+</nb-card>

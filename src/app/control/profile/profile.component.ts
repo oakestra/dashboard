@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { DOCUMENT } from '@angular/common';
 import { NbDialogService, NbThemeService } from '@nebular/theme';
+import { CookieService } from 'ngx-cookie-service';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { IUser } from '../../root/interfaces/user';
 import { IDialogAttribute } from '../../root/interfaces/dialogAttribute';
@@ -20,7 +21,6 @@ import { DialogChangePasswordView } from './dialogs/change-password/dialogChange
 export class ProfileComponent implements OnInit {
     form: FormGroup;
     user: IUser;
-    isDarkMode;
     currentTheme = 'default';
 
     themes = [
@@ -53,12 +53,11 @@ export class ProfileComponent implements OnInit {
         @Inject(DOCUMENT) private document: Document,
         private renderer: Renderer2,
         private themeService: NbThemeService,
+        private cookieService: CookieService,
     ) {
         this.form = fb.group({
             email: ['', Validators.email],
         });
-
-        this.isDarkMode = JSON.parse(localStorage.getItem('darkMode'));
     }
 
     ngOnInit(): void {
@@ -88,6 +87,8 @@ export class ProfileComponent implements OnInit {
 
     changeTheme(themeName: string) {
         this.themeService.changeTheme(themeName);
+        const data = { theme: themeName };
+        this.cookieService.set('themeCookie', JSON.stringify(data));
     }
 
     public getRoleBackgroundColor(role: string): string {

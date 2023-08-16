@@ -12,6 +12,7 @@ import { InfrastructureComponent } from './infrastructure/infrastructure.compone
 import { OrganizationComponent } from './organization/organization.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ApplicationsComponent } from './applications/applications.component';
+import { FaqComponent } from './faq/faq.component';
 
 export const routes: Routes = [
     {
@@ -63,6 +64,11 @@ export const routes: Routes = [
             {
                 path: 'settings',
                 component: SettingsComponent,
+                canActivate: [AuthGuardService],
+            },
+            {
+                path: 'faq',
+                component: FaqComponent,
                 canActivate: [AuthGuardService],
             },
             {
