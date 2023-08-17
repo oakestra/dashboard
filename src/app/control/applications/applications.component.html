@@ -1,54 +1,23 @@
-<h1>Applications</h1>
-
-<div class="row">
-    <div class="col-xxxl-3 col-md-6">
-        <ngx-status-card title="Test"> </ngx-status-card>
-    </div>
-</div>
-
-<div class="lists row">
-    <div class="col-md-12 col-lg-12 col-xxxl-12">
-        <nb-card class="list-card">
-            <nb-card-header>Applications</nb-card-header>
-            <nb-card-body>
-                <nb-list>
-                    <nb-list-item> A </nb-list-item>
-                    <nb-list-item> B </nb-list-item>
-                    <nb-list-item> C </nb-list-item>
-                </nb-list>
-            </nb-card-body>
-        </nb-card>
-    </div>
-</div>
-
-<ul class="sub-menu">
-    <div id="applicationTitle">
-        <mat-expansion-panel class="application-panel" [expanded]="true">
-            <mat-expansion-panel-header>
-                <mat-panel-title class="panel-title"> My Applications </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div *ngFor="let app of apps$ | async" class="items">
-                <mat-radio-group
-                    class="radio-group"
-                    (change)="handleChange()"
-                    [(ngModel)]="activeAppId"
-                    routerLink="/control"
-                >
-                    <mat-radio-button [value]="app._id" class="radioButton">
-                        <span class="sidenav-text">{{ app.application_name }}</span>
-                    </mat-radio-button>
-                </mat-radio-group>
-
-                <button (click)="openDialogApp(DialogAction.UPDATE, app)" class="sidenav-text" mat-icon-button>
-                    <mat-icon>settings</mat-icon>
-                </button>
-            </div>
-        </mat-expansion-panel>
-    </div>
-    <mat-list class="inline-list">
-        <button class="navButton" mat-flat-button (click)="openDialogApp(DialogAction.ADD, undefined)">
-            Add Application
-            <mat-icon>add_circle</mat-icon>
-        </button>
-    </mat-list>
-</ul>
+<nb-card>
+    <nb-card-header>
+        <div class="app-header">
+            <h1>Applications</h1>
+            <button nbButton ghost (click)="openDialogApp(DialogAction.ADD, undefined)">
+                Add Application
+                <nb-icon icon="plus"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <nb-list>
+            <nb-list-item *ngFor="let app of apps$ | async">
+                <div class="app-card">
+                    <p>{{ app.application_name }}</p>
+                    <button (click)="openDialogApp(DialogAction.UPDATE, app)" nbButton ghost>
+                        <nb-icon icon="settings"></nb-icon>
+                    </button>
+                </div>
+            </nb-list-item>
+        </nb-list>
+    </nb-card-body>
+</nb-card>

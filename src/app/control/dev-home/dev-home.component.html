@@ -1,65 +1,31 @@
-<p>Dev</p>
-
-<nb-card size="small">
-    <nb-card-body>
-        <nb-form-field>
-            <nb-icon nbSuffix icon="at-outline" pack="eva"></nb-icon>
-            <input type="text" nbInput placeholder="Test" />
-        </nb-form-field>
-    </nb-card-body>
+<nb-card>
+    <nb-card-header>
+        <div class="service-header">
+            <h1>Services</h1>
+            <nb-select [(selected)]="selectedItem" (selectedChange)="setCurrentApplication()">
+                <nb-option *ngFor="let app of apps$ | async" [value]="app">
+                    {{ app.application_name }}
+                </nb-option>
+            </nb-select>
+        </div>
+    </nb-card-header>
 </nb-card>
-
-<ul class="sub-menu">
-    <div id="applicationTitle">
-        <mat-expansion-panel class="application-panel" [expanded]="true">
-            <mat-expansion-panel-header>
-                <mat-panel-title class="panel-title"> My Applications </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div *ngFor="let app of apps$ | async" class="items">
-                <mat-radio-group
-                    class="radio-group"
-                    (change)="handleChange()"
-                    [(ngModel)]="activeAppId"
-                    routerLink="/control"
-                >
-                    <mat-radio-button [value]="app._id" class="radioButton">
-                        <span class="sidenav-text">{{ app.application_name }}</span>
-                    </mat-radio-button>
-                </mat-radio-group>
-
-                <button (click)="openDialogApp(DialogAction.UPDATE, app)" class="sidenav-text" mat-icon-button>
-                    <mat-icon>settings</mat-icon>
-                </button>
-            </div>
-        </mat-expansion-panel>
-    </div>
-    <mat-list class="inline-list">
-        <button class="navButton" mat-flat-button (click)="openDialogApp(DialogAction.ADD, undefined)">
-            Add Application
-            <mat-icon>add_circle</mat-icon>
-        </button>
-    </mat-list>
-</ul>
-
-<div class="content-cards">
-    <mat-card class="serviceCard" id="content">
+<nb-card>
+    <nb-card-header> Service List </nb-card-header>
+    <nb-card-body>
         <div *ngIf="currentApp$ | async">
-            <mat-card-title>Application: {{ (currentApp$ | async).application_name }}</mat-card-title>
             <div *ngIf="(services$ | async).length > 0" class="servicesList">
-                <mat-accordion *ngFor="let service of services$ | async" multi class="service">
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header class="disable_ripple">
-                            <mat-panel-title class="w3-col s4 l5 m4">
+                <nb-accordion *ngFor="let service of services$ | async" multi class="service">
+                    <nb-accordion-item>
+                        <nb-accordion-item-header class="disable_ripple">
+                            <p class="w3-col s4 l5 m5">
                                 {{ service.microservice_name }}
-                            </mat-panel-title>
-                            <mat-panel-description
-                                class="w3-col s5 w3-right statusField"
-                                (click)="$event.stopPropagation()"
-                            >
+                            </p>
+                            <div class="w3-col s4 l6 m6 w3-right statusField" (click)="$event.stopPropagation()">
                                 <div class="statusField">
                                     <div *ngIf="service.status && !isLoading" class="statusField">
-                                        <button mat-icon-button type="button" class="serviceStatus">
-                                            <mat-icon [class]="service.status">fiber_manual_record</mat-icon>
+                                        <button ghost nbButton type="button" class="serviceStatus">
+                                            <nb-icon icon="radio-button-off-outline" [class]="service.status"></nb-icon>
                                         </button>
                                         <p class="statusText">{{ service.status }}</p>
                                     </div>
@@ -67,9 +33,9 @@
                                         <mat-spinner [diameter]="30"></mat-spinner>
                                     </div>
                                 </div>
-                            </mat-panel-description>
+                            </div>
 
-                            <div class="w3-col s1 w3-right" (click)="$event.stopPropagation()">
+                            <div class="w3-col s1 l1 m1 w3-right" (click)="$event.stopPropagation()">
                                 <button [matMenuTriggerFor]="settings" mat-icon-button type="button">
                                     <mat-icon>more_vert</mat-icon>
                                 </button>
@@ -92,70 +58,67 @@
                                     </button>
                                 </mat-menu>
                             </div>
-                        </mat-expansion-panel-header>
-
-                        <div *ngIf="service.instance_list?.length === 0 || !service.instance_list" class="noInstance">
-                            No instances of this service.
-                        </div>
-
-                        <div *ngFor="let instance of service.instance_list; let i = index" class="w3-row instance">
-                            <div class="w3-col s6 l5 m5">
-                                <p>Instance {{ instance.instance_number }}</p>
-                            </div>
-
+                        </nb-accordion-item-header>
+                        <nb-accordion-item-body>
                             <div
-                                (click)="openStatusDialog(service, instance.instance_number)"
-                                class="w3-col l5 m6 s6 statusField"
+                                *ngIf="service.instance_list?.length === 0 || !service.instance_list"
+                                class="noInstance"
                             >
-                                <button mat-icon-button type="button" class="serviceStatus">
-                                    <mat-icon [class]="instance.status">fiber_manual_record</mat-icon>
-                                </button>
-                                <p class="statusText">{{ instance.status }}</p>
+                                No instances of this service.
                             </div>
 
-                            <div class="w3-col l1 m1 s1 w3-right">
-                                <button (click)="deleteInstance(service, instance)" mat-icon-button type="button">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </div>
-                        </div>
-                    </mat-expansion-panel>
-                </mat-accordion>
+                            <div *ngFor="let instance of service.instance_list; let i = index" class="w3-row instance">
+                                <div class="w3-col s6 l5 m5">
+                                    <p>Instance {{ instance.instance_number }}</p>
+                                </div>
 
-                <mat-card-actions class="alignEnd">
-                    <button id="createService" mat-flat-button routerLink="/control/deploy" color="primary">
-                        <mat-icon>add_circle</mat-icon>
+                                <div
+                                    (click)="openStatusDialog(service, instance.instance_number)"
+                                    class="w3-col l5 m6 s6 statusField"
+                                >
+                                    <button mat-icon-button type="button" class="serviceStatus">
+                                        <mat-icon [class]="instance.status">fiber_manual_record</mat-icon>
+                                    </button>
+                                    <p class="statusText">{{ instance.status }}</p>
+                                </div>
+
+                                <div class="w3-col l1 m1 s1 w3-right">
+                                    <button (click)="deleteInstance(service, instance)" mat-icon-button type="button">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </nb-accordion-item-body>
+                    </nb-accordion-item>
+                </nb-accordion>
+
+                <br />
+                <div>
+                    <button id="createService" nbButton routerLink="/control/deploy" color="primary">
+                        <nb-icon icon="plus"></nb-icon>
                         Create New Service
                     </button>
-                    <button (click)="deployAllServices()" mat-flat-button type="button" color="primary">
-                        <mat-icon>send</mat-icon>
+                    <button (click)="deployAllServices()" nbButton type="button" color="primary">
+                        <nb-icon icon="paper-plane-outline"></nb-icon>
                         Deploy All
                     </button>
-                </mat-card-actions>
-                <!-- TODO Not used for now needs a refactoring -->
-                <!--                <graph (updated)="deleteServiceWithGraph($event)" [services]="services$ | async"></graph>-->
+                </div>
             </div>
-            <div *ngIf="(services$ | async).length === 0" class="content mat-elevation-z8">
+            <div *ngIf="(services$ | async).length === 0" class="content">
                 <p>No Service in this application.</p>
                 <br />
                 <div class="alignEnd">
-                    <button id="createServiceEmpty" mat-flat-button routerLink="/control/deploy" color="primary">
-                        <mat-icon>add_circle</mat-icon>
+                    <button id="createServiceEmpty" nbButton routerLink="/control/deploy" color="primary">
+                        <nb-icon icon="plus"></nb-icon>
                         Create new service
                     </button>
                 </div>
             </div>
         </div>
+    </nb-card-body>
+</nb-card>
 
-        <!--        <div *ngIf="!is_app">-->
-        <!--            <mat-card-title>Cluster: {{ cluster_info.cluster_name }}</mat-card-title>-->
-        <!--            <mat-card-subtitle>Cluster ID {{ cluster_info._id.$oid }}</mat-card-subtitle>-->
-        <!--            <mat-card-actions>-->
-        <!--                <div *ngIf="!cluster_info.pairing_complete" class="noInstance">-->
-        <!--                    <p>NOT YET ACTIVE</p>-->
-        <!--                </div>-->
-        <!--                <button (click)="deleteCluster(cluster_info)" mat-button><i class="bx bxs-trash"></i></button>-->
-        <!--            </mat-card-actions>-->
-        <!--        </div>-->
-    </mat-card>
-</div>
+<!--<nb-card>-->
+<!--TODO Refactor this graph-->
+<!--    <graph (updated)="deleteServiceWithGraph($event)" [services]="services$ | async"></graph>-->
+<!--</nb-card>-->

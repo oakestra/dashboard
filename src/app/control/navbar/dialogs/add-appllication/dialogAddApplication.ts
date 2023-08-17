@@ -1,5 +1,6 @@
-import { Component, Inject, Optional } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NB_DIALOG_CONFIG, NbDialogRef } from '@nebular/theme';
 import { IApplication } from '../../../../root/interfaces/application';
 import { DialogAction } from '../../../../root/enums/dialogAction';
 import { IDialogAttribute } from '../../../../root/interfaces/dialogAttribute';
@@ -9,19 +10,19 @@ import { IDialogAttribute } from '../../../../root/interfaces/dialogAttribute';
     templateUrl: 'dialog-add-application.html',
     styleUrls: ['./dialog-add-application.scss'],
 })
-export class DialogAddApplicationView {
+export class DialogAddApplicationView implements OnInit {
     DialogAction = DialogAction;
     action: DialogAction;
     app: IApplication;
     title = 'Add Application';
     buttonText = 'Add';
+    @Input() data: IDialogAttribute;
 
-    constructor(
-        public dialogRef: MatDialogRef<DialogAddApplicationView>,
-        @Optional() @Inject(MAT_DIALOG_DATA) public data: IDialogAttribute,
-    ) {
-        this.action = data.action;
-        this.app = { ...data.content } as IApplication;
+    constructor(public dialogRef: NbDialogRef<DialogAddApplicationView>) {}
+
+    ngOnInit(): void {
+        this.action = this.data.action;
+        this.app = { ...this.data.content } as IApplication;
         if (this.action === DialogAction.UPDATE) {
             this.title = 'Modify Application';
             this.buttonText = 'Update';

@@ -1,4 +1,4 @@
-<button (click)="multipleFunctions()" class="graph-button" mat-button>
+<button (click)="multipleFunctions()" class="graph-button" nbButton>
     {{ showConButton }}
     <mat-icon>scatter_plot</mat-icon>
 </button>
@@ -16,25 +16,25 @@
             <button
                 (click)="openDialog(start.innerText, target.innerText, 'new')"
                 id="configureLink"
-                mat-flat-button
+                nbButton
                 color="primary"
             ></button>
         </div>
 
         <div *ngIf="type.innerText.startsWith('Link'); else nodeButtons">
-            <button (click)="openDialog(start.innerText, target.innerText, 'edit')" color="primary" mat-flat-button>
-                <mat-icon>settings</mat-icon>
+            <button (click)="openDialog(start.innerText, target.innerText, 'edit')" color="primary" nbButton>
+                <nb-icon icon="settings-outline"></nb-icon>
                 Configure Connection
             </button>
         </div>
 
         <ng-template #nodeButtons>
-            <button color="primary" id="editElement" mat-flat-button routerLink="deploy/{{ nodeID.innerText }}">
-                <mat-icon>settings</mat-icon>
+            <button color="primary" id="editElement" nbButton routerLink="deploy/{{ nodeID.innerText }}">
+                <nb-icon icon="settings-outline"></nb-icon>
                 Configure Service
             </button>
-            <button (click)="delete(nodeID.innerText)" mat-button>
-                <mat-icon>delete</mat-icon>
+            <button (click)="delete(nodeID.innerText)" nbButton>
+                <nb-icon icon="trash-2"></nb-icon>
             </button>
         </ng-template>
     </div>

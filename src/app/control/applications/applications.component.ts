@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { MatDialog } from '@angular/material/dialog';
+import { NbDialogService } from '@nebular/theme';
 import { IId } from '../../root/interfaces/id';
 import { IApplication } from '../../root/interfaces/application';
 import { selectApplications } from '../../root/store/selectors/application.selector';
@@ -22,6 +22,7 @@ import {
 import { IDialogAttribute } from '../../root/interfaces/dialogAttribute';
 import { DialogAddApplicationView } from '../navbar/dialogs/add-appllication/dialogAddApplication';
 import { DialogAction } from '../../root/enums/dialogAction';
+import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 
 @Component({
     selector: 'app-applications',
@@ -36,7 +37,7 @@ export class ApplicationsComponent {
 
     constructor(
         private observer: BreakpointObserver,
-        public dialog: MatDialog,
+        public dialog: NbDialogService,
         private api: ApiService,
         public userService: UserService,
         private router: Router,
@@ -46,8 +47,13 @@ export class ApplicationsComponent {
     ) {}
 
     ngOnInit(): void {
-        this.store.dispatch(getApplication({ id: this.userID }));
+        this.store.select(selectCurrentUser).subscribe((u) => {
+            this.userID = u._id.$oid;
+            this.store.dispatch(getApplication({ id: this.userID }));
+        });
+
         this.apps$.subscribe((apps) => {
+            console.log(apps);
             const active = apps.filter((a) => a._id.$oid === sessionStorage.getItem('id'))[0];
             if (active) {
                 this.store.dispatch(setCurrentApplication({ application: active }));
@@ -71,9 +77,9 @@ export class ApplicationsComponent {
             action,
         };
 
-        const dialogRef = this.dialog.open(DialogAddApplicationView, { data });
+        const dialogRef = this.dialog.open(DialogAddApplicationView, { context: { data } });
 
-        dialogRef.afterClosed().subscribe((result) => {
+        dialogRef.onClose.subscribe((result) => {
             if (result.event === DialogAction.ADD) {
                 this.store.dispatch(postApplication({ application: result.data }));
             } else if (result.event === DialogAction.UPDATE) {

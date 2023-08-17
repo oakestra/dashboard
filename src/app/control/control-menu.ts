@@ -10,7 +10,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     {
         title: 'Service Dashboard',
         icon: 'activity',
-        link: '/control/help',
+        link: '/control/services',
     },
     {
         title: 'Infrastructure Dashboard',

@@ -1,14 +1,8 @@
 <nb-card>
-    <nb-card-header> Settings </nb-card-header>
+    <nb-card-header><h2>Configure SMTP server</h2></nb-card-header>
     <nb-card-body>
-        <h2>Configure SMTP server:</h2>
         <nb-radio-group class="radio-group" [(ngModel)]="selectedOption">
-            <nb-radio
-                class="option"
-                *ngFor="let o of options"
-                [value]="o"
-                [disabled]="o === ConfigurationType.OAKESTRA"
-            >
+            <nb-radio class="option" *ngFor="let o of options" [value]="o" [disabled]="true">
                 {{ o }}
             </nb-radio>
         </nb-radio-group>
@@ -43,7 +37,7 @@
                 <nb-checkbox class="checkbox" formControlName="ssl">Use SSL</nb-checkbox>
             </div>
         </div>
-        <div *ngIf="selectedOption === 'Oakestra'">Your favorite season is: {{ selectedOption }}</div>
-        <button (click)="save()" nbButton color="primary" type="submit">Save</button>
+        <div *ngIf="selectedOption === ConfigurationType.OAKESTRA"></div>
+        <button (click)="save()" class="button" nbButton color="primary" type="submit">Save</button>
     </nb-card-body>
 </nb-card>

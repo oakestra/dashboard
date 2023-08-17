@@ -42,6 +42,8 @@ export class DevHomeComponent implements OnInit {
     appId = '';
     isLoading = false;
 
+    selectedItem: IApplication;
+
     constructor(
         private router: Router,
         private api: ApiService,
@@ -50,7 +52,6 @@ export class DevHomeComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.store.dispatch(getApplication({ id: this.userID }));
         this.apps$.subscribe((apps) => {
             const active = apps.filter((a) => a._id.$oid === sessionStorage.getItem('id'))[0];
             if (active) {
@@ -61,6 +62,11 @@ export class DevHomeComponent implements OnInit {
 
         console.log('In Service Overview');
         this.currentApp$.pipe(tap((app) => (this.appId = app?._id?.$oid || ''))).subscribe();
+    }
+
+    setCurrentApplication() {
+        console.log('Change');
+        this.store.dispatch(setCurrentApplication({ application: this.selectedItem }));
     }
 
     deleteService(service: IService) {
