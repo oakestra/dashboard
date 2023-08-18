@@ -2,8 +2,8 @@
     <nb-card-header><h2>Configure SMTP server</h2></nb-card-header>
     <nb-card-body>
         <nb-radio-group class="radio-group" [(ngModel)]="selectedOption">
-            <nb-radio class="option" *ngFor="let o of options" [value]="o" [disabled]="true">
-                {{ o }}
+            <nb-radio *ngFor="let option of options" [disabled]="option.disabled" [value]="option.value">
+                {{ option.label }}
             </nb-radio>
         </nb-radio-group>
         <div *ngIf="selectedOption === 'None'">

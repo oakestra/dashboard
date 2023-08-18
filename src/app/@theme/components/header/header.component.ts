@@ -5,6 +5,8 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { LayoutService } from '../../../@core/utils';
 import { UserData } from '../../../@core/data/users';
+import { UserService } from '../../../shared/modules/auth/user.service';
+import { IUser } from '../../../root/interfaces/user';
 
 @Component({
     selector: 'ngx-header',
@@ -15,28 +17,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private destroy$: Subject<void> = new Subject<void>();
     userPictureOnly = false;
     user: any;
-
-    themes = [
-        {
-            value: 'default',
-            name: 'Light',
-        },
-        {
-            value: 'dark',
-            name: 'Dark',
-        },
-        {
-            value: 'cosmic',
-            name: 'Cosmic',
-        },
-        {
-            value: 'corporate',
-            name: 'Corporate',
-        },
-    ];
-
-    currentTheme = 'default';
-
     userMenu = [
         { title: 'Profile', icon: 'person', link: '/control/profile' },
         { title: 'Log out', icon: 'log-out' },
@@ -46,18 +26,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private sidebarService: NbSidebarService,
         private menuService: NbMenuService,
         private themeService: NbThemeService,
-        private userService: UserData,
+        private userService: UserService,
         private layoutService: LayoutService,
         private breakpointService: NbMediaBreakpointsService,
     ) {}
 
     ngOnInit() {
-        this.currentTheme = this.themeService.currentTheme;
-
-        this.userService
-            .getUsers()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((users: any) => (this.user = users.nick));
+        this.userService.currentUser$.pipe(takeUntil(this.destroy$)).subscribe((user: IUser) => (this.user = user));
 
         const { xl } = this.breakpointService.getBreakpointsMap();
         this.themeService
@@ -67,23 +42,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 takeUntil(this.destroy$),
             )
             .subscribe((isLessThanXl: boolean) => (this.userPictureOnly = isLessThanXl));
-
-        this.themeService
-            .onThemeChange()
-            .pipe(
-                map(({ name }) => name),
-                takeUntil(this.destroy$),
-            )
-            .subscribe((themeName) => (this.currentTheme = themeName));
     }
 
     ngOnDestroy() {
         this.destroy$.next();
         this.destroy$.complete();
-    }
-
-    changeTheme(themeName: string) {
-        this.themeService.changeTheme(themeName);
     }
 
     toggleSidebar(): boolean {

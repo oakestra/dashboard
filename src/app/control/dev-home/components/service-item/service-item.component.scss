@@ -1,0 +1,34 @@
+.service{
+  margin-bottom: 20px;
+
+  nb-accordion-item-header{
+    padding: 0;
+  }
+
+  .service-name, p{
+    margin: 0 0 0 15px;
+  }
+
+  .actions{
+    padding-right: 90px;
+  }
+}
+
+.statusField {
+  cursor: pointer;
+  align-items: center;
+  display: inline-flex;
+
+  .spinner {
+    align-items: center;
+  }
+}
+
+.noInstance {
+    text-align: center;
+    font-size: large;
+}
+
+.instance-buttons{
+  display: flex;
+}

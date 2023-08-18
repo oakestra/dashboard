@@ -33,7 +33,8 @@
                         ],
                         "styles": [
                             "node_modules/@nebular/theme/styles/prebuilt/default.css",
-                            "src/app/@theme/styles/styles.scss"
+                            "src/app/@theme/styles/styles.scss",
+                            "src/styles.scss"
                         ],
                         "scripts": ["src/assets/js/graph.js", "src/assets/js/map.js"]
                     },

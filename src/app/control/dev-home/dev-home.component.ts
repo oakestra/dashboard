@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, take, tap } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
+import { NbMenuService } from '@nebular/theme';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { IService } from '../../root/interfaces/service';
 import { IInstance } from '../../root/interfaces/instance';
@@ -11,7 +12,6 @@ import { selectApplications, selectCurrentApplication } from '../../root/store/s
 import {
     appReducer,
     deleteApplication,
-    deleteService,
     getApplication,
     getServices,
     postApplication,
@@ -42,6 +42,13 @@ export class DevHomeComponent implements OnInit {
     appId = '';
     isLoading = false;
 
+    menuItems = [
+        { title: 'Edit', icon: 'edit-2-outline' },
+        { title: 'Delete', icon: 'trash-2' },
+        { title: 'Deploy', icon: 'paper-plane-outline' },
+        { title: 'Download Config', icon: 'download-outline' },
+    ];
+
     selectedItem: IApplication;
 
     constructor(
@@ -49,6 +56,7 @@ export class DevHomeComponent implements OnInit {
         private api: ApiService,
         public dialog: MatDialog,
         private store: Store<appReducer.AppState>,
+        private nbMenuService: NbMenuService,
     ) {}
 
     ngOnInit(): void {
@@ -70,7 +78,9 @@ export class DevHomeComponent implements OnInit {
     }
 
     deleteService(service: IService) {
-        this.store.dispatch(deleteService({ service }));
+        console.log('Delete');
+        console.log(service);
+        // this.store.dispatch(deleteService({ service }));
     }
 
     // TODO Do this with the redux store.

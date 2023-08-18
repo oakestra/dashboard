@@ -96,6 +96,7 @@ import { GeoConstraintsComponent } from './sla-form/components/constraints/compo
 import { ClusterConstraintsComponent } from './sla-form/components/constraints/components/cluster-constraints/cluster-constraints.component';
 import { ApplicationsComponent } from './applications/applications.component';
 import { FaqComponent } from './faq/faq.component';
+import { ServiceItemComponent } from './dev-home/components/service-item/service-item.component';
 
 @NgModule({
     declarations: [
@@ -140,6 +141,7 @@ import { FaqComponent } from './faq/faq.component';
         ClusterConstraintsComponent,
         ApplicationsComponent,
         FaqComponent,
+        ServiceItemComponent,
     ],
     imports: [
         CommonModule,

@@ -14,8 +14,13 @@ import { ConfigurationType, ISettings } from '../../root/interfaces/settings';
 export class SettingsComponent implements OnInit {
     protected readonly ConfigurationType = ConfigurationType;
     selectedOption: ConfigurationType;
-    options: ConfigurationType[] = [ConfigurationType.NONE, ConfigurationType.CUSTOME, ConfigurationType.OAKESTRA];
     form: FormGroup;
+
+    options = [
+        { value: ConfigurationType.NONE, label: ConfigurationType.NONE, disabled: false },
+        { value: ConfigurationType.CUSTOME, label: ConfigurationType.CUSTOME, disabled: false },
+        { value: ConfigurationType.OAKESTRA, label: ConfigurationType.OAKESTRA, disabled: true },
+    ];
 
     constructor(private fb: FormBuilder, private store: Store<appReducer.AppState>) {}
 

@@ -2,15 +2,8 @@
     <nb-card class="serviceCard">
         <nb-card-header> User Management </nb-card-header>
         <nb-card-body>
-            <div class="createDiv">
-                <button (click)="openDialog(DialogAction.ADD)" nbButton size="small" status="basic">
-                    <mat-icon>add_circle_outline</mat-icon>
-                    Create New User
-                </button>
-            </div>
-
             <div class="w3-row user-search">
-                <div class="w3-col l4 m5">
+                <div class="w3-col l4 m4">
                     <nb-form-field>
                         <input
                             type="text"
@@ -25,7 +18,7 @@
                     </nb-form-field>
                 </div>
 
-                <div class="w3-col l4 m5">
+                <div class="w3-col l4 m4">
                     <nb-card-body>
                         <nb-select [formControl]="dropdown" fullWidth multiple placeholder="Multiple Select">
                             <nb-option *ngFor="let dropdown of dropdownList" [value]="dropdown">
@@ -33,6 +26,13 @@
                             </nb-option>
                         </nb-select>
                     </nb-card-body>
+                </div>
+
+                <div class="w3-col l4 m4 createDiv">
+                    <button (click)="openDialog(DialogAction.ADD)" nbButton size="small" status="basic">
+                        <mat-icon>add_circle_outline</mat-icon>
+                        Create New User
+                    </button>
                 </div>
             </div>
             <table [dataSource]="searchedUsers" mat-table>

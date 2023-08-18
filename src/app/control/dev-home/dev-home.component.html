@@ -10,88 +10,17 @@
         </div>
     </nb-card-header>
 </nb-card>
+
 <nb-card>
     <nb-card-header> Service List </nb-card-header>
     <nb-card-body>
         <div *ngIf="currentApp$ | async">
             <div *ngIf="(services$ | async).length > 0" class="servicesList">
-                <nb-accordion *ngFor="let service of services$ | async" multi class="service">
-                    <nb-accordion-item>
-                        <nb-accordion-item-header class="disable_ripple">
-                            <p class="w3-col s4 l5 m5">
-                                {{ service.microservice_name }}
-                            </p>
-                            <div class="w3-col s4 l6 m6 w3-right statusField" (click)="$event.stopPropagation()">
-                                <div class="statusField">
-                                    <div *ngIf="service.status && !isLoading" class="statusField">
-                                        <button ghost nbButton type="button" class="serviceStatus">
-                                            <nb-icon icon="radio-button-off-outline" [class]="service.status"></nb-icon>
-                                        </button>
-                                        <p class="statusText">{{ service.status }}</p>
-                                    </div>
-                                    <div *ngIf="isLoading" class="spinner">
-                                        <mat-spinner [diameter]="30"></mat-spinner>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="w3-col s1 l1 m1 w3-right" (click)="$event.stopPropagation()">
-                                <button [matMenuTriggerFor]="settings" mat-icon-button type="button">
-                                    <mat-icon>more_vert</mat-icon>
-                                </button>
-                                <mat-menu #settings="matMenu">
-                                    <button [routerLink]="['deploy', service._id?.$oid]" mat-menu-item>
-                                        <mat-icon>edit</mat-icon>
-                                        Edit
-                                    </button>
-                                    <button (click)="deleteService(service)" mat-menu-item>
-                                        <mat-icon>delete</mat-icon>
-                                        Delete
-                                    </button>
-                                    <button (click)="deployService(service)" mat-menu-item>
-                                        <mat-icon>send</mat-icon>
-                                        Deploy
-                                    </button>
-                                    <button (click)="downloadConfig(service)" mat-menu-item>
-                                        <mat-icon>file_download</mat-icon>
-                                        Download Config
-                                    </button>
-                                </mat-menu>
-                            </div>
-                        </nb-accordion-item-header>
-                        <nb-accordion-item-body>
-                            <div
-                                *ngIf="service.instance_list?.length === 0 || !service.instance_list"
-                                class="noInstance"
-                            >
-                                No instances of this service.
-                            </div>
-
-                            <div *ngFor="let instance of service.instance_list; let i = index" class="w3-row instance">
-                                <div class="w3-col s6 l5 m5">
-                                    <p>Instance {{ instance.instance_number }}</p>
-                                </div>
-
-                                <div
-                                    (click)="openStatusDialog(service, instance.instance_number)"
-                                    class="w3-col l5 m6 s6 statusField"
-                                >
-                                    <button mat-icon-button type="button" class="serviceStatus">
-                                        <mat-icon [class]="instance.status">fiber_manual_record</mat-icon>
-                                    </button>
-                                    <p class="statusText">{{ instance.status }}</p>
-                                </div>
-
-                                <div class="w3-col l1 m1 s1 w3-right">
-                                    <button (click)="deleteInstance(service, instance)" mat-icon-button type="button">
-                                        <mat-icon>delete</mat-icon>
-                                    </button>
-                                </div>
-                            </div>
-                        </nb-accordion-item-body>
-                    </nb-accordion-item>
-                </nb-accordion>
-
+                <app-service-item
+                    *ngFor="let service of services$ | async"
+                    [service]="service"
+                    [appId]="appId"
+                ></app-service-item>
                 <br />
                 <div>
                     <button id="createService" nbButton routerLink="/control/deploy" color="primary">

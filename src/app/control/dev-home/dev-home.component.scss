@@ -74,15 +74,7 @@ button {
 //    }
 //}
 //
-.statusField {
-    cursor: pointer;
-    align-items: end;
-    display: inline-flex;
 
-  .spinner {
-    align-items: center;
-  }
-}
 //
 //.serviceStatus {
 //  pointer-events: none;
@@ -176,6 +168,6 @@ button {
 //    justify-content: space-between;
 //}
 //
-//.servicesList {
-//    padding: 10px;
-//}
+.servicesList {
+    padding: 10px;
+}
