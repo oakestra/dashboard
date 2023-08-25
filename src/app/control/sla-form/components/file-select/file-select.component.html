@@ -1,28 +1,26 @@
 <nb-card>
-    <div class="w3-col l12 m12 s12 w3-row-padding">
-        <nb-form-field class="fileForm">
-            <input
-                nbInput
-                nbTooltip="Define an image for the service"
-                placeholder="Code"
-                value="docker.io/library/nginx:latest"
-                required
-                type="url"
-                [(ngModel)]="data.code"
-                fullWidth
-            />
-        </nb-form-field>
+    <nb-form-field class="fileForm">
+        <input
+            nbInput
+            nbTooltip="Define an image for the service"
+            placeholder="Code"
+            value="docker.io/library/nginx:latest"
+            required
+            type="url"
+            [(ngModel)]="data.code"
+            fullWidth
+        />
+    </nb-form-field>
 
-        <!--  TODO Currently not supported, what happens in the backend with the file-->
+    <!--  TODO Currently not supported, what happens in the backend with the file-->
 
-        <!--    <div class="file-upload">-->
-        <!--        <button (click)="fileUploadCode.click()" class="add-btn" mat-mini-fab type="button">-->
-        <!--            <mat-icon>attach_file</mat-icon>-->
-        <!--        </button>-->
-        <!--        <input #fileUploadCode (change)="onFileSelected($event, 0, 'code')" class="file-input" type="file" />-->
-        <!--        <input #fileUploadCode class="file-input" type="file" />-->
-        <!--    </div>-->
-    </div>
+    <!--    <div class="file-upload">-->
+    <!--        <button (click)="fileUploadCode.click()" class="add-btn" mat-mini-fab type="button">-->
+    <!--            <mat-icon>attach_file</mat-icon>-->
+    <!--        </button>-->
+    <!--        <input #fileUploadCode (change)="onFileSelected($event, 0, 'code')" class="file-input" type="file" />-->
+    <!--        <input #fileUploadCode class="file-input" type="file" />-->
+    <!--    </div>-->
 
     <!--
   TODO Not used for now

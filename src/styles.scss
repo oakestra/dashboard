@@ -10,8 +10,13 @@ h3{
   font-size: 18px;
 }
 
+nb-form-field, nb-select{
+  padding: 10px 0 10px 0;
+}
 
-
+button{
+  margin-right: 10px;
+}
 
 //@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 //

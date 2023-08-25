@@ -9,7 +9,6 @@ import { IService } from '../../../../root/interfaces/service';
 import { ApiService } from '../../../../shared/modules/api/api.service';
 import { appReducer, deleteService, getServices } from '../../../../root/store';
 import { IInstance } from '../../../../root/interfaces/instance';
-import { DialogServiceStatusView } from '../../dialogs/service-status/dialogServiceStatus';
 import { ConfigDownloadService } from '../../../../shared/modules/helper/config-download.service';
 
 @Component({
@@ -76,6 +75,12 @@ export class ServiceItemComponent implements OnInit {
         this.store.dispatch(getServices({ appId: this.appId }));
     }
 
+    routeToInstanceDetail(instance: IInstance) {
+        console.log('Go to instance Detail');
+        console.log(instance);
+        void this.router.navigate(['control/services', this.service._id?.$oid, instance.instance_number]);
+    }
+
     deployService(service: IService) {
         this.isLoading = true;
         this.api
@@ -91,15 +96,6 @@ export class ServiceItemComponent implements OnInit {
                 }),
             )
             .subscribe();
-    }
-
-    openStatusDialog(service: IService, instanceNumber: number) {
-        const dialogRef = this.dialog.open(DialogServiceStatusView, {
-            data: { service, instanceNumber },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log(result);
-        });
     }
 
     downloadConfig(service: IService) {

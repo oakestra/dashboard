@@ -1,70 +1,68 @@
 <nb-card>
-    <div class="w3-row-padding">
-        <nb-accordion>
-            <nb-accordion-item>
-                <nb-accordion-item-header class="expansion-header">
-                    Addresses
-                    <nb-icon
-                        icon="info"
-                        nbTooltip="Optional - If the specified IP addresses are unoccupied, the service will be provided at these addresses."
-                        pack="eva"
-                    ></nb-icon>
-                </nb-accordion-item-header>
-                <nb-accordion-item-body>
-                    <form [formGroup]="form">
-                        <div class="w3-row">
-                            <div class="w3-col l5 m5 s12 w3-row-padding">
-                                <nb-form-field>
-                                    <input
-                                        placeholder="RR-IP"
-                                        nbInput
-                                        formControlName="rr_ip"
-                                        nbTooltip="Optional - IP chosen for round-robin addressation (10.30.30.30)"
-                                        type="text"
-                                    />
-                                </nb-form-field>
-                            </div>
-
-                            <div class="w3-col l5 m5 s12 w3-row-padding">
-                                <nb-form-field>
-                                    <input
-                                        nbInput
-                                        nbTooltip="Optional - The orchestrator may choose the closest IP to the given one"
-                                        type="text"
-                                        formControlName="closest_ip"
-                                        placeholder="Closest_ip"
-                                    />
-                                </nb-form-field>
-                            </div>
+    <nb-accordion>
+        <nb-accordion-item>
+            <nb-accordion-item-header class="expansion-header">
+                Addresses
+                <nb-icon
+                    icon="info"
+                    nbTooltip="Optional - If the specified IP addresses are unoccupied, the service will be provided at these addresses."
+                    pack="eva"
+                ></nb-icon>
+            </nb-accordion-item-header>
+            <nb-accordion-item-body>
+                <form [formGroup]="form">
+                    <div class="w3-row">
+                        <div class="w3-col l5 m5 s12 w3-row-padding">
+                            <nb-form-field>
+                                <input
+                                    placeholder="RR-IP"
+                                    nbInput
+                                    formControlName="rr_ip"
+                                    nbTooltip="Optional - IP chosen for round-robin addressation (10.30.30.30)"
+                                    type="text"
+                                />
+                            </nb-form-field>
                         </div>
-                    </form>
-                    <br />
 
-                    <!--  // TODO Support instances array-->
-                    <div *ngFor="let inst of instances; index as i; trackBy: trackByIdx" class="full-width instance">
-                        <p>Instances:</p>
-                        <div class="w3-row">
-                            <div class="w3-col l3 m3 s12 w3-row-padding">
-                                <nb-form-field>
-                                    <input nbInput placeholder="From" type="text" [(ngModel)]="instances[i].from" />
-                                </nb-form-field>
-                            </div>
-
-                            <div class="w3-col l3 m3 s12 w3-row-padding">
-                                <nb-form-field>
-                                    <input nbInput placeholder="To" type="text" [(ngModel)]="instances[i].to" />
-                                </nb-form-field>
-                            </div>
-
-                            <div class="w3-col l3 m3 s12 w3-row-padding">
-                                <nb-form-field>
-                                    <input nbInput placeholder="Start" type="text" [(ngModel)]="instances[i].start" />
-                                </nb-form-field>
-                            </div>
+                        <div class="w3-col l5 m5 s12 w3-row-padding">
+                            <nb-form-field>
+                                <input
+                                    nbInput
+                                    nbTooltip="Optional - The orchestrator may choose the closest IP to the given one"
+                                    type="text"
+                                    formControlName="closest_ip"
+                                    placeholder="Closest_ip"
+                                />
+                            </nb-form-field>
                         </div>
                     </div>
-                </nb-accordion-item-body>
-            </nb-accordion-item>
-        </nb-accordion>
-    </div>
+                </form>
+                <br />
+
+                <!--  // TODO Support instances array-->
+                <div *ngFor="let inst of instances; index as i; trackBy: trackByIdx" class="full-width instance">
+                    <p>Instances:</p>
+                    <div class="w3-row">
+                        <div class="w3-col l3 m3 s12 w3-row-padding">
+                            <nb-form-field>
+                                <input nbInput placeholder="From" type="text" [(ngModel)]="instances[i].from" />
+                            </nb-form-field>
+                        </div>
+
+                        <div class="w3-col l3 m3 s12 w3-row-padding">
+                            <nb-form-field>
+                                <input nbInput placeholder="To" type="text" [(ngModel)]="instances[i].to" />
+                            </nb-form-field>
+                        </div>
+
+                        <div class="w3-col l3 m3 s12 w3-row-padding">
+                            <nb-form-field>
+                                <input nbInput placeholder="Start" type="text" [(ngModel)]="instances[i].start" />
+                            </nb-form-field>
+                        </div>
+                    </div>
+                </div>
+            </nb-accordion-item-body>
+        </nb-accordion-item>
+    </nb-accordion>
 </nb-card>

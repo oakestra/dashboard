@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 // import * as L from 'leaflet';
+import { NbDialogService } from '@nebular/theme';
 import { ICluster } from '../../root/interfaces/cluster';
 import { DialogConfirmationView } from '../../root/components/dialogs/confirmation/dialogConfirmation';
 import { NotificationService } from '../../shared/modules/notification/notification.service';
@@ -31,7 +31,7 @@ export class ClusterComponent implements OnInit {
 
     constructor(
         private observer: BreakpointObserver,
-        public dialog: MatDialog,
+        public dialog: NbDialogService,
         private api: ApiService,
         public userService: UserService,
         private router: Router,
@@ -62,8 +62,8 @@ export class ClusterComponent implements OnInit {
             text: 'Delete cluster: ' + cluster.cluster_name,
             type: 'cluster',
         };
-        const dialogRef = this.dialog.open(DialogConfirmationView, { data });
-        dialogRef.afterClosed().subscribe((result) => {
+        const dialogRef = this.dialog.open(DialogConfirmationView, { context: { data } });
+        dialogRef.onClose.subscribe((result) => {
             if (result.event === true) {
                 this.api.deleteCluster(cluster._id.$oid).subscribe({
                     next: () => {

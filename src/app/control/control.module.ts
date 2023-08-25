@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
@@ -24,7 +24,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatListModule } from '@angular/material/list';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { MatLegacyChipsModule } from '@angular/material/legacy-chips';
@@ -48,7 +47,6 @@ import {
     NbSidebarModule,
     NbTabsetModule,
     NbTagModule,
-    NbThemeModule,
     NbTooltipModule,
 } from '@nebular/theme';
 import * as fromService from '../root/store/reducers/service.reducer';
@@ -59,8 +57,6 @@ import { UsersComponent } from './users/users.component';
 import { DialogEditUserView } from './users/dialogs/edit-user/dialogEditUser';
 import { ProfileComponent } from './profile/profile.component';
 import { DialogChangePasswordView } from './profile/dialogs/change-password/dialogChangePassword';
-import { DialogServiceStatusView } from './dev-home/dialogs/service-status/dialogServiceStatus';
-import { ChartsComponent } from './dev-home/charts/charts.component';
 import { HelpComponent } from './help/help.component';
 import { DialogGenerateTokenView } from './navbar/dialogs/generate-token/dialogGenerateToken';
 import { GraphComponent } from './dev-home/graph/graph.component';
@@ -70,7 +66,7 @@ import { DialogGraphConnectionView } from './dev-home/dialogs/graph-content-conn
 import { DialogConnectionSettingsView } from './sla-form/components/dialogs/content-connection/dialog-connection-settings-view.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { DevHomeComponent } from './dev-home/dev-home.component';
+import { ServiceDashboardComponent } from './dev-home/service-dashboard.component';
 import { SlaFormComponent } from './sla-form/sla-form.component';
 import { routes } from './control.routing';
 import { AppListComponent } from './navbar/app-list/app-list.component';
@@ -94,14 +90,17 @@ import { SettingsComponent } from './settings/settings.component';
 import { LatencyConstraintsComponent } from './sla-form/components/constraints/components/long-lat-constraints/latency-constraints.component';
 import { GeoConstraintsComponent } from './sla-form/components/constraints/components/geo-constraints/geo-constraints.component';
 import { ClusterConstraintsComponent } from './sla-form/components/constraints/components/cluster-constraints/cluster-constraints.component';
-import { ApplicationsComponent } from './applications/applications.component';
+import { ApplicationsComponent } from './application-dashboard/applications.component';
 import { FaqComponent } from './faq/faq.component';
 import { ServiceItemComponent } from './dev-home/components/service-item/service-item.component';
+import { InstanceDetailComponent } from './dev-home/components/instance-detail/instance-detail.component';
+import { ChartCpuLineComponent } from './dev-home/components/instance-detail/chart-cpu-line.component';
+import { ChartMemoryLineComponent } from './dev-home/components/instance-detail/chart-memory-line.component';
 
 @NgModule({
     declarations: [
         SlaFormComponent,
-        DevHomeComponent,
+        ServiceDashboardComponent,
         NotFoundComponent,
         NavbarComponent,
         DialogConnectionSettingsView,
@@ -114,8 +113,6 @@ import { ServiceItemComponent } from './dev-home/components/service-item/service
         DialogEditUserView,
         ProfileComponent,
         DialogChangePasswordView,
-        DialogServiceStatusView,
-        ChartsComponent,
         HelpComponent,
         DialogConfirmationView,
         AppListComponent,
@@ -142,6 +139,9 @@ import { ServiceItemComponent } from './dev-home/components/service-item/service
         ApplicationsComponent,
         FaqComponent,
         ServiceItemComponent,
+        InstanceDetailComponent,
+        ChartCpuLineComponent,
+        ChartMemoryLineComponent,
     ],
     imports: [
         CommonModule,
@@ -187,7 +187,6 @@ import { ServiceItemComponent } from './dev-home/components/service-item/service
         NbInputModule,
         NbIconModule,
         NbFormFieldModule,
-        // NbThemeModule.forRoot(),
         NbSelectModule,
         NbTagModule,
         NbDialogModule,

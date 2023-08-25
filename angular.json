@@ -34,7 +34,8 @@
                         "styles": [
                             "node_modules/@nebular/theme/styles/prebuilt/default.css",
                             "src/app/@theme/styles/styles.scss",
-                            "src/styles.scss"
+                            "src/styles.scss",
+                            "node_modules/leaflet/dist/leaflet.css"
                         ],
                         "scripts": ["src/assets/js/graph.js", "src/assets/js/map.js"]
                     },

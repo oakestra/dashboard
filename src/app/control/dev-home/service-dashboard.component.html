@@ -2,11 +2,14 @@
     <nb-card-header>
         <div class="service-header">
             <h1>Services</h1>
-            <nb-select [(selected)]="selectedItem" (selectedChange)="setCurrentApplication()">
-                <nb-option *ngFor="let app of apps$ | async" [value]="app">
-                    {{ app.application_name }}
-                </nb-option>
-            </nb-select>
+            <div class="app-select">
+                <h2>Application: &nbsp;</h2>
+                <nb-select [(selected)]="selectedItem" (selectedChange)="setCurrentApplication()">
+                    <nb-option *ngFor="let app of apps$ | async" [value]="app">
+                        {{ app.application_name }}
+                    </nb-option>
+                </nb-select>
+            </div>
         </div>
     </nb-card-header>
 </nb-card>

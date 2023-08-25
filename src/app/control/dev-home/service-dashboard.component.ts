@@ -9,29 +9,17 @@ import { IService } from '../../root/interfaces/service';
 import { IInstance } from '../../root/interfaces/instance';
 import { IApplication } from '../../root/interfaces/application';
 import { selectApplications, selectCurrentApplication } from '../../root/store/selectors/application.selector';
-import {
-    appReducer,
-    deleteApplication,
-    getApplication,
-    getServices,
-    postApplication,
-    setCurrentApplication,
-    updateApplication,
-} from '../../root/store';
+import { appReducer, getServices, setCurrentApplication } from '../../root/store';
 import { selectCurrentServices } from '../../root/store/selectors/service.selector';
-import { ConfigDownloadService } from '../../shared/modules/helper/config-download.service';
 import { IId } from '../../root/interfaces/id';
 import { DialogAction } from '../../root/enums/dialogAction';
-import { IDialogAttribute } from '../../root/interfaces/dialogAttribute';
-import { DialogAddApplicationView } from '../navbar/dialogs/add-appllication/dialogAddApplication';
-import { DialogServiceStatusView } from './dialogs/service-status/dialogServiceStatus';
 
 @Component({
     selector: 'dev-home',
-    templateUrl: './dev-home.component.html',
-    styleUrls: ['./dev-home.component.scss'],
+    templateUrl: './service-dashboard.component.html',
+    styleUrls: ['./service-dashboard.component.scss'],
 })
-export class DevHomeComponent implements OnInit {
+export class ServiceDashboardComponent implements OnInit {
     DialogAction = DialogAction;
     @Input() userID: string;
     activeAppId: IId;
@@ -106,24 +94,6 @@ export class DevHomeComponent implements OnInit {
             .subscribe();
     }
 
-    deleteServiceWithGraph(id: string) {
-        const service: IService = { _id: { $oid: id } };
-        this.deleteService(service);
-    }
-
-    openStatusDialog(service: IService, instanceNumber: number) {
-        const dialogRef = this.dialog.open(DialogServiceStatusView, {
-            data: { service, instanceNumber },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log(result);
-        });
-    }
-
-    downloadConfig(service: IService) {
-        ConfigDownloadService.download(service);
-    }
-
     deployAllServices() {
         this.services$.pipe(take(1)).subscribe((services) => {
             services.forEach((service) => {
@@ -131,63 +101,6 @@ export class DevHomeComponent implements OnInit {
             });
         });
     }
-
-    openDialogApp(action: DialogAction, app: IApplication | undefined) {
-        if (action === DialogAction.ADD) {
-            app = {
-                _id: { $oid: '' },
-                application_name: '',
-                application_namespace: '',
-                application_desc: '',
-            };
-        }
-
-        const data: IDialogAttribute = {
-            content: app,
-            action,
-        };
-
-        const dialogRef = this.dialog.open(DialogAddApplicationView, { data });
-
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result.event === DialogAction.ADD) {
-                this.store.dispatch(postApplication({ application: result.data }));
-            } else if (result.event === DialogAction.UPDATE) {
-                this.store.dispatch(updateApplication({ application: result.data }));
-            } else if (result.event === DialogAction.DELETE) {
-                this.store.dispatch(deleteApplication({ application: result.data }));
-                // this.deleteApplication(result.data);
-            }
-            // TODO remove this and get the id form the api response
-            this.store.dispatch(getApplication({ id: this.userID }));
-        });
-    }
-    /*
-  deleteApplication(app: IApplication): void {
-      // TODO Check what happens with the services in a application if you delete the application
-      /*
-      this.api.getServicesOfApplication(app._id.$oid).subscribe((services: IService[]) => {
-          for (const j of services) {
-              this.api.deleteService(j);
-          }
-      });
-
-      this.api.deleteApplication(app).subscribe({
-          next: () => {
-              this.notifyService.notify(
-                  NotificationType.success,
-                  'Application "' + app.application_name + '" deleted successfully!',
-              );
-              // this.loadDataApplication();
-          },
-          error: () => {
-              this.notifyService.notify(
-                  NotificationType.error,
-                  'Error: Deleting application "' + app.application_name + '" failed!',
-              );
-          },
-      });
-  }*/
 
     handleChange() {
         sessionStorage.setItem('id', this.activeAppId.$oid);

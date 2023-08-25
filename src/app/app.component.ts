@@ -16,11 +16,10 @@ export class AppComponent implements AfterViewInit {
         if (cookieValue) {
             const data = JSON.parse(cookieValue);
             if (themeOptions.includes(data.theme)) {
-                console.log('Data read from cookie:', data.theme);
                 this.themeService.changeTheme('dark');
             }
         } else {
-            console.log('Cookie not found.');
+            this.themeService.changeTheme('default');
         }
     }
 }

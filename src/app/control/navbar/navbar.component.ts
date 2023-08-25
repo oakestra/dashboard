@@ -22,7 +22,7 @@ import { MENU_ITEMS } from '../control-menu';
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit, AfterViewInit {
+export class NavbarComponent implements OnInit {
     menuItems = MENU_ITEMS;
 
     @ViewChild(MatSidenav)
@@ -94,22 +94,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
             .subscribe(() => {
                 this.appSelected = true;
                 this.showWelcome = this.appView;
-            });
-    }
-
-    // For the responsive sidenav
-    ngAfterViewInit() {
-        this.observer
-            .observe(['(max-width: 800px)'])
-            .pipe(delay(1))
-            .subscribe((res) => {
-                if (res.matches) {
-                    this.sidenav.mode = 'over';
-                    void this.sidenav.close();
-                } else {
-                    this.sidenav.mode = 'side';
-                    void this.sidenav.open();
-                }
             });
     }
 

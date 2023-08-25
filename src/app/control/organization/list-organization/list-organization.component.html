@@ -25,17 +25,24 @@
     <ng-container matColumnDef="roles">
         <th *matHeaderCellDef mat-header-cell>Member</th>
         <td *matCellDef="let element" mat-cell>
-            <div nbTooltipPlacement="start" nbTooltip="View members" class="member" (click)="editOrganization(element)">
+            <button
+                nbTooltipPlacement="start"
+                nbButton
+                ghost
+                nbTooltip="View members"
+                class="member"
+                (click)="editOrganization(element)"
+            >
                 {{ element.member.length }}
                 <nb-icon nbSuffix icon="person"></nb-icon>
-            </div>
+            </button>
         </td>
     </ng-container>
 
     <ng-container matColumnDef="symbol">
         <th *matHeaderCellDef mat-header-cell class="alignCenter"></th>
         <td *matCellDef="let element" mat-cell class="alignRight">
-            <button (click)="openDeleteDialog(element)" mat-icon-button>
+            <button (click)="openDeleteDialog(element)" nbButton ghost>
                 <nb-icon icon="trash-2"></nb-icon>
             </button>
         </td>

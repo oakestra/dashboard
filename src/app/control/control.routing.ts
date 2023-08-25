@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { AuthGuardService } from '../shared/modules/auth/auth-guard.service';
 import { RoleRouterGuard } from '../shared/modules/auth/role-guard.service';
 import { NavbarComponent } from './navbar/navbar.component';
-import { DevHomeComponent } from './dev-home/dev-home.component';
+import { ServiceDashboardComponent } from './dev-home/service-dashboard.component';
 import { HelpComponent } from './help/help.component';
 import { SlaFormComponent } from './sla-form/sla-form.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -11,8 +11,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { InfrastructureComponent } from './infrastructure/infrastructure.component';
 import { OrganizationComponent } from './organization/organization.component';
 import { SettingsComponent } from './settings/settings.component';
-import { ApplicationsComponent } from './applications/applications.component';
+import { ApplicationsComponent } from './application-dashboard/applications.component';
 import { FaqComponent } from './faq/faq.component';
+import { InstanceDetailComponent } from './dev-home/components/instance-detail/instance-detail.component';
 
 export const routes: Routes = [
     {
@@ -27,7 +28,13 @@ export const routes: Routes = [
             },
             {
                 path: 'services',
-                component: DevHomeComponent,
+                component: ServiceDashboardComponent,
+                pathMatch: 'full',
+                canActivate: [AuthGuardService],
+            },
+            {
+                path: 'services/:service-id/:instance-id',
+                component: InstanceDetailComponent,
                 pathMatch: 'full',
                 canActivate: [AuthGuardService],
             },

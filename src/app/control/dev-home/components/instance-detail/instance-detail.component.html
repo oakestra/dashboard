@@ -1,0 +1,55 @@
+<nb-card>
+    <nb-card-header>
+        <h1>Instance Details</h1>
+    </nb-card-header>
+</nb-card>
+
+<div class="row">
+    <div class="col-lg-4">
+        <nb-card>
+            <nb-card-header>
+                <h2>Details</h2>
+            </nb-card-header>
+            <nb-card-body class="map">
+                <div class="information">
+                    <p><b>Status:</b> {{ (instance | async).status }}</p>
+                    <p><b>Disk:</b> {{ (instance | async).disk }}</p>
+                    <p><b>Cluster:</b> {{ (instance | async).cluster_id }}</p>
+                    <p><b>Node IP:</b> {{ (instance | async).publicip }}</p>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+
+    <div class="col-lg-8">
+        <nb-card>
+            <nb-card-header>
+                <h2>Location</h2>
+            </nb-card-header>
+            <nb-card-body class="map-card">
+                <div *ngIf="textLocation" class="map" id="map"></div>
+                <!--                <h3>Location</h3>-->
+                <!--                <p *ngIf="!textLocation">{{ textLocation }}</p>-->
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <nb-card>
+            <nb-card-header><h2>CPU</h2></nb-card-header>
+            <nb-card-body>
+                <chart-cpu-line [instance$]="instance"></chart-cpu-line>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="col-lg-6">
+        <nb-card>
+            <nb-card-header><h2>Memory</h2></nb-card-header>
+            <nb-card-body>
+                <chart-memory-line [instance$]="instance"></chart-memory-line>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

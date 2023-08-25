@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatRadioChange } from '@angular/material/radio';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { NbDialogRef } from '@nebular/theme';
 import { DialogGraphConnectionView } from '../../../../dev-home/dialogs/graph-content-connection/dialog-graph-connection-view.component';
 
 @Component({
@@ -13,11 +13,12 @@ import { DialogGraphConnectionView } from '../../../../dev-home/dialogs/graph-co
     ],
 })
 export class DialogConnectionSettingsView {
-    constructor(public dialogRef: MatDialogRef<DialogGraphConnectionView>, @Inject(MAT_DIALOG_DATA) public data: any) {}
-
+    @Input() data: any;
     canViewLatConstrains = true;
 
-    onRadioChange(event: MatRadioChange) {
+    constructor(public dialogRef: NbDialogRef<DialogGraphConnectionView>) {}
+
+    onRadioChange(event: any) {
         this.canViewLatConstrains = event.value === 1;
     }
 

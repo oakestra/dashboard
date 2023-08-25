@@ -14,7 +14,7 @@
     flex-direction: column;
     font-size: 1.5rem;
 
-    pre {
+    pre, p{
       font-size: 1rem;
       color: lightgray;
     }
@@ -23,4 +23,12 @@
 
 .file-upload-div {
     text-align: center;
+
+  .file-upload {
+    display: none;
+  }
+
+  button {
+    margin-bottom: 10px;
+  }
 }
