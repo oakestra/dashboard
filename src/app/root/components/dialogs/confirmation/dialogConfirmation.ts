@@ -1,5 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Input, OnInit } from '@angular/core';
 import { DialogGraphConnectionView } from '../../../../control/dev-home/dialogs/graph-content-connection/dialog-graph-connection-view.component';
 import { NbDialogRef } from '@nebular/theme';
 

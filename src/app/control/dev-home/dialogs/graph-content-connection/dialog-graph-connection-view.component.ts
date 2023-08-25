@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Input } from '@angular/core';
+import { NbDialogRef } from '@nebular/theme';
 
 @Component({
     selector: 'dialog-graph-example-dialog',
@@ -8,16 +8,16 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
         '.full-width{width: 100%}',
         '.alignRight{text-align: right}',
         '.alignCenter{text-align: center}',
-        '::ng-deep .blackRadio .mat-radio-outer-circle{border-color: black}',
         '.input{padding-right: 8px}',
         'radioDiv{padding-bottom: 32px; margin: 20px 0 20px 0}',
         'content{display: flex; padding-top: 20px}',
     ],
 })
 export class DialogGraphConnectionView {
+    @Input() data: any;
     canViewLatConstrains = true;
 
-    constructor(public dialogRef: MatDialogRef<DialogGraphConnectionView>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+    constructor(public dialogRef: NbDialogRef<DialogGraphConnectionView>) {}
 
     onRadioChange(event: any) {
         this.canViewLatConstrains = event.value === 1;

@@ -1,8 +1,8 @@
-import { Component, Inject, OnInit, Optional } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { FormBuilder } from '@angular/forms';
+import { NbDialogRef } from '@nebular/theme';
 import { DialogAction } from '../../../../root/enums/dialogAction';
 import { appReducer, getAllUser } from '../../../../root/store';
 import { IUser } from '../../../../root/interfaces/user';
@@ -14,6 +14,7 @@ import { selectAllUser } from '../../../../root/store/selectors/user.selector';
     styleUrls: ['./add-member.component.scss'],
 })
 export class AddMemberComponent implements OnInit {
+    @Input() data: any;
     DialogAction = DialogAction;
     searchText = '';
     user: IUser[];
@@ -23,8 +24,7 @@ export class AddMemberComponent implements OnInit {
     public user$: Observable<IUser[]> = this.store.pipe(select(selectAllUser));
 
     constructor(
-        public dialogRef: MatDialogRef<AddMemberComponent>,
-        @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+        public dialogRef: NbDialogRef<AddMemberComponent>,
         private store: Store<appReducer.AppState>,
         private fb: FormBuilder,
     ) {}

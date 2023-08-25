@@ -77,17 +77,14 @@
                 <div class="map-container">
                     <div class="map-frame">
                         <div id="map"></div>
-                        <!--                    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css" />-->
                     </div>
                 </div>
             </nb-form-field>
         </div>
     </nb-card-body>
     <nb-card-footer>
-        <button (click)="doAction()" color="primary" mat-flat-button>{{local_data.action}}</button>
-        <button (click)="deleteCluster()" color="warn" *ngIf="action ==='Update'" mat-flat-button>Delete</button>
-        <button (click)="closeDialog()" color="accent" mat-button mat-flat-button>Cancel</button>
+        <button (click)="doAction()" status="primary" nbButton>{{local_data.action}}</button>
+        <button (click)="deleteCluster()" status="warning" *ngIf="action ==='Update'" nbButton>Delete</button>
+        <button (click)="closeDialog()" status="accent" nbButton>Cancel</button>
     </nb-card-footer>
 </nb-card>
-
-<!--<script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>-->

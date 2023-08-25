@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { NbMenuService } from '@nebular/theme';
+import { NbDialogService, NbMenuService } from '@nebular/theme';
 import { tap } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { IService } from '../../../../root/interfaces/service';
@@ -32,7 +31,7 @@ export class ServiceItemComponent implements OnInit {
     constructor(
         private router: Router,
         private api: ApiService,
-        public dialog: MatDialog,
+        public dialog: NbDialogService,
         private store: Store<appReducer.AppState>,
         private nbMenuService: NbMenuService,
     ) {}

@@ -20,9 +20,9 @@ import {
     updateApplication,
 } from '../../root/store';
 import { IDialogAttribute } from '../../root/interfaces/dialogAttribute';
-import { DialogAddApplicationView } from '../navbar/dialogs/add-appllication/dialogAddApplication';
 import { DialogAction } from '../../root/enums/dialogAction';
 import { selectCurrentUser } from '../../root/store/selectors/user.selector';
+import { DialogAddApplicationView } from './dialogs/add-appllication/dialogAddApplication';
 
 @Component({
     selector: 'app-applications',

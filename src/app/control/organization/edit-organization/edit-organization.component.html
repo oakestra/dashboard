@@ -1,8 +1,8 @@
-<nb-layout>
+<nb-layout class="layout">
     <nb-sidebar>
         <div class="sidenav-buttons">
-            <button nbButton ghost (click)="back.emit()" color="primary">
-                <nb-icon nbSuffix icon="arrow-back"></nb-icon>
+            <button nbButton ghost (click)="back.emit()">
+                <nb-icon nbSuffix icon="arrow-circle-left-outline"></nb-icon>
                 Back
             </button>
         </div>
@@ -27,6 +27,7 @@
             <nb-tab class="tab" tabTitle="General">
                 <div class="tab">
                     <nb-form-field class="input-field searchForm">
+                        <p>Organization Name:</p>
                         <input
                             placeholder="Organization Name"
                             (change)="save()"
@@ -41,9 +42,14 @@
                 <div class="tab">
                     <div class="w3-row addOrganization">
                         <div class="w3-col l7 m8">
-                            <nb-form-field appearance="fill" class="input-field searchForm">
-                                <mat-label>Search by username</mat-label>
-                                <input (ngModelChange)="search($event)" matInput [(ngModel)]="searchText" type="text" />
+                            <nb-form-field class="input-field searchForm">
+                                <input
+                                    placeholder="Search by username"
+                                    (ngModelChange)="search($event)"
+                                    nbInput
+                                    [(ngModel)]="searchText"
+                                    type="text"
+                                />
                                 <button *ngIf="searchText" nbSuffix (click)="resetSearch()">
                                     <nb-icon icon="close-outline"></nb-icon>
                                 </button>
@@ -51,8 +57,8 @@
                         </div>
 
                         <div class="w3-col l5 m4 w3-right-align">
-                            <button (click)="addMember()" mat-flat-button color="primary">
-                                <mat-icon>add_circle_outline</mat-icon>
+                            <button (click)="addMember()" nbButton status="primary">
+                                <nb-icon icon="plus"></nb-icon>
                                 Add member
                             </button>
                         </div>

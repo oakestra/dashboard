@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { NbDialogService } from '@nebular/theme';
 import { Role } from '../../../../root/enums/roles';
 import { IUser } from '../../../../root/interfaces/user';
 import { DialogConfirmationView } from '../../../../root/components/dialogs/confirmation/dialogConfirmation';
@@ -8,7 +8,7 @@ import { DialogConfirmationView } from '../../../../root/components/dialogs/conf
 @Component({
     selector: 'app-member-item',
     templateUrl: './member-item.component.html',
-    styleUrls: ['./member-item.component.css'],
+    styleUrls: ['./member-item.component.scss'],
 })
 export class MemberItemComponent implements OnInit {
     @Input() searchedMember: IUser[];
@@ -18,7 +18,7 @@ export class MemberItemComponent implements OnInit {
     editItem: boolean[];
     roles: FormControl[] = [];
 
-    constructor(private dialog: MatDialog) {}
+    constructor(private dialog: NbDialogService) {}
 
     ngOnInit(): void {
         this.editItem = this.searchedMember?.map(() => false);
@@ -33,8 +33,8 @@ export class MemberItemComponent implements OnInit {
             type: 'member',
         };
 
-        const dialogRef = this.dialog.open(DialogConfirmationView, { data });
-        dialogRef.afterClosed().subscribe((result) => {
+        const dialogRef = this.dialog.open(DialogConfirmationView, { context: { data } });
+        dialogRef.onClose.subscribe((result) => {
             if (result.event === true) {
                 this.removeEvent.emit(member);
             }

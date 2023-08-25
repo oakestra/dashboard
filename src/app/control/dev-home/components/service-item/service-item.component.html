@@ -34,8 +34,10 @@
                     </div>
 
                     <div class="w3-col l7 m7 s7 statusField">
-                        <button mat-icon-button type="button" class="serviceStatus">
-                            <mat-icon [class]="instance.status">fiber_manual_record</mat-icon>
+                        <button nbButton ghost type="button" class="serviceStatus">
+                            <nb-icon icon="radio-button-off-outline" [class]="instance.status"
+                                >fiber_manual_record</nb-icon
+                            >
                         </button>
                         <p class="statusText">{{ instance.status }}</p>
                     </div>

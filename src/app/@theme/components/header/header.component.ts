@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
-import { map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { LayoutService } from '../../../@core/utils';
-import { UserData } from '../../../@core/data/users';
 import { UserService } from '../../../shared/modules/auth/user.service';
 import { IUser } from '../../../root/interfaces/user';
+import { AuthService } from '../../../shared/modules/auth/auth.service';
 
 @Component({
     selector: 'ngx-header',
@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private userService: UserService,
         private layoutService: LayoutService,
         private breakpointService: NbMediaBreakpointsService,
+        private authService: AuthService,
     ) {}
 
     ngOnInit() {
@@ -42,6 +43,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 takeUntil(this.destroy$),
             )
             .subscribe((isLessThanXl: boolean) => (this.userPictureOnly = isLessThanXl));
+
+        this.menuService
+            .onItemClick()
+            .pipe(
+                filter(({ tag }) => tag === 'userMenu'),
+                map(({ item: { title } }) => title),
+            )
+            .subscribe((title) => {
+                switch (title) {
+                    case 'Log out':
+                        this.authService.clear();
+                        this.userService.logout();
+                        break;
+                }
+            });
     }
 
     ngOnDestroy() {

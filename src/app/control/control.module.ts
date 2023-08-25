@@ -40,7 +40,7 @@ import { HelpComponent } from './help/help.component';
 import { DialogGenerateTokenView } from './navbar/dialogs/generate-token/dialogGenerateToken';
 import { GraphComponent } from './dev-home/graph/graph.component';
 import { DialogAddClusterView } from './navbar/dialogs/add-cluster/dialogAddCluster';
-import { DialogAddApplicationView } from './navbar/dialogs/add-appllication/dialogAddApplication';
+import { DialogAddApplicationView } from './application-dashboard/dialogs/add-appllication/dialogAddApplication';
 import { DialogGraphConnectionView } from './dev-home/dialogs/graph-content-connection/dialog-graph-connection-view.component';
 import { DialogConnectionSettingsView } from './sla-form/components/dialogs/content-connection/dialog-connection-settings-view.component';
 import { NavbarComponent } from './navbar/navbar.component';

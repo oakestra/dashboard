@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { DialogGraphConnectionView } from '../dialogs/graph-content-connection/dialog-graph-connection-view.component';
 import { CleanJsonService } from '../../../shared/util/clean-json.service';
+import { NbDialogService } from '@nebular/theme';
 
 declare function start(nodes: any, links: any): void;
 declare function deleteLink(): void;
@@ -23,7 +23,7 @@ export class GraphComponent implements OnChanges {
     @Input()
     services: any;
 
-    constructor(public dialog: MatDialog, public api: ApiService) {}
+    constructor(public dialog: NbDialogService, public api: ApiService) {}
 
     ngOnChanges() {
         this.showConnections = false;
@@ -52,8 +52,8 @@ export class GraphComponent implements OnChanges {
                 convergence_time: conn.convergence_time,
             };
         }
-        const dialogRef = this.dialog.open(DialogGraphConnectionView, { data });
-        dialogRef.afterClosed().subscribe((result) => {
+        const dialogRef = this.dialog.open(DialogGraphConnectionView, { context: { data } });
+        dialogRef.onClose.subscribe((result) => {
             if (result.event === 'Save') {
                 void this.saveGraphConstrains(result.data);
             } else if (result.event === 'Cancel' && mode === 'new') {

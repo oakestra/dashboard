@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { MatDialog } from '@angular/material/dialog';
+import { NbDialogService } from '@nebular/theme';
 import { IOrganization, RoleEntry } from '../../../root/interfaces/organization';
 import { appReducer, getAllUser, getOrganization, updateOrganization } from '../../../root/store';
 import { AddMemberComponent } from '../dialogs/add-member/add-member.component';
@@ -26,7 +26,7 @@ export class EditOrganizationComponent implements OnInit {
     user$: Observable<IUser[]> = this.store.pipe(select(selectAllUser));
     user: IUser[];
 
-    constructor(private store: Store<appReducer.AppState>, public dialog: MatDialog) {}
+    constructor(private store: Store<appReducer.AppState>, public dialog: NbDialogService) {}
 
     ngOnInit(): void {
         this.store.dispatch(getAllUser({ organization_id: '' }));
@@ -67,9 +67,9 @@ export class EditOrganizationComponent implements OnInit {
     }
 
     addMember() {
-        const dialogRef = this.dialog.open(AddMemberComponent, { data: { currentMember: this.member } });
+        const dialogRef = this.dialog.open(AddMemberComponent, { context: { data: { currentMember: this.member } } });
 
-        dialogRef.afterClosed().subscribe((result) => {
+        dialogRef.onClose.subscribe((result) => {
             const member = [...this.selected.member];
             if (result.event === DialogAction.ADD) {
                 const user = result.data;

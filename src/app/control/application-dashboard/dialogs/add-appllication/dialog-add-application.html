@@ -35,9 +35,11 @@
             </nb-form-field>
         </div>
     </nb-card-body>
-    <nb-card-footer>
-        <button (click)="doAction()" nbButton>{{buttonText}}</button>
-        <button (click)="deleteApplication()" *ngIf="action === DialogAction.UPDATE" nbButton>Delete</button>
-        <button (click)="closeDialog()" nbButton>Cancel</button>
+    <nb-card-footer class="dialog-footer">
+        <button status="primary" (click)="doAction()" nbButton>{{buttonText}}</button>
+        <button status="warning" (click)="deleteApplication()" *ngIf="action === DialogAction.UPDATE" nbButton>
+            Delete
+        </button>
+        <button status="basic" (click)="closeDialog()" nbButton>Cancel</button>
     </nb-card-footer>
 </nb-card>

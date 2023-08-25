@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NONE_TYPE } from '@angular/compiler';
 import { NotificationService } from '../../../shared/modules/notification/notification.service';
@@ -13,6 +12,7 @@ import { DialogAction } from '../../../root/enums/dialogAction';
 import { DialogGenerateTokenView } from '../dialogs/generate-token/dialogGenerateToken';
 import { IId } from '../../../root/interfaces/id';
 import { NotificationType } from '../../../root/interfaces/notification';
+import { NbDialogService } from '@nebular/theme';
 
 @Component({
     selector: 'app-cluster-list',
@@ -38,7 +38,7 @@ export class ClusterListComponent {
 
     constructor(
         private observer: BreakpointObserver,
-        public dialog: MatDialog,
+        public dialog: NbDialogService,
         private api: ApiService,
         public userService: UserService,
         private router: Router,
@@ -75,10 +75,10 @@ export class ClusterListComponent {
         }
         obj.action = action;
         const dialogRef = this.dialog.open(DialogAddClusterView, {
-            data: obj,
+            context: { data: obj },
         });
 
-        dialogRef.afterClosed().subscribe((result) => {
+        dialogRef.onClose.subscribe((result) => {
             // TODO define data for Cluster
             if (result.event === DialogAction.ADD) {
                 // this.addCluster(result.data)
@@ -94,11 +94,11 @@ export class ClusterListComponent {
                                 cluster_name: result.data.cluster_name ?? '',
                             };
                             const dialogKey = this.dialog.open(DialogGenerateTokenView, {
-                                data: my_data,
-                                height: '40%',
-                                width: '50%',
+                                context: {
+                                    ...my_data,
+                                },
                             });
-                            dialogKey.afterClosed().subscribe(() => this.showClusters());
+                            dialogKey.onClose.subscribe(() => this.showClusters());
                         }
                     },
                     error: (error) => this.notifyService.notify(NotificationType.error, error),
