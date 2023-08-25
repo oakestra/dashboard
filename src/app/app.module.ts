@@ -11,6 +11,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ApplicationEffects, appReducer, OrganizationEffects, SettingsEffects } from 'src/app/root/store/index';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {
+    NbCardModule,
     NbDatepickerModule,
     NbDialogModule,
     NbMenuModule,
@@ -55,6 +56,7 @@ import { CoreModule } from './@core/core.module';
         NbToastrModule.forRoot(),
         CoreModule.forRoot(),
         ThemeModule.forRoot(),
+        NbCardModule,
     ],
     providers: [
         // should be empty as we import all global services through "SharedModule.forRoot()"

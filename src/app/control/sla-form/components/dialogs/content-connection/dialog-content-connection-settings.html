@@ -39,7 +39,7 @@
         </div>
     </nb-card-body>
     <nb-card-footer>
-        <button [mat-dialog-close]="data" status="primary" nbButton>Save</button>
+        <button (click)="save(data)" status="primary" nbButton>Save</button>
         <button (click)="cancel()" status="accent" nbButton>Cancel</button>
     </nb-card-footer>
 </nb-card>

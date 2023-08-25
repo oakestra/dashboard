@@ -1,6 +1,5 @@
-import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { NB_DIALOG_CONFIG, NbDialogRef } from '@nebular/theme';
+import { Component, Input, OnInit } from '@angular/core';
+import { NbDialogRef } from '@nebular/theme';
 import { IApplication } from '../../../../root/interfaces/application';
 import { DialogAction } from '../../../../root/enums/dialogAction';
 import { IDialogAttribute } from '../../../../root/interfaces/dialogAttribute';

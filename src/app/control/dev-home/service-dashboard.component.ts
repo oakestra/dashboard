@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Observable, take, tap } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { NbMenuService } from '@nebular/theme';
+import { NbDialogService, NbMenuService } from '@nebular/theme';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { IService } from '../../root/interfaces/service';
 import { IInstance } from '../../root/interfaces/instance';
@@ -42,7 +41,7 @@ export class ServiceDashboardComponent implements OnInit {
     constructor(
         private router: Router,
         private api: ApiService,
-        public dialog: MatDialog,
+        public dialog: NbDialogService,
         private store: Store<appReducer.AppState>,
         private nbMenuService: NbMenuService,
     ) {}

@@ -25,4 +25,8 @@ export class DialogConnectionSettingsView {
     cancel() {
         this.dialogRef.close({ event: 'Cancel' });
     }
+
+    save(data: any) {
+        this.dialogRef.close({ event: 'save', data });
+    }
 }

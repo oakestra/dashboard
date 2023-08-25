@@ -90,21 +90,6 @@ nb-card-body.example-items-col {
     }
 }
 
-.mat-mdc-tab-group {
-    display: contents;
-    flex-direction: column;
-    max-width: 100%;
-}
-
-.mat-mdc-tab-body-content {
-    height: 100%;
-    overflow: hidden;
-}
-
-.mat-mdc-tab-body.mat-mdc-tab-body-active {
-    overflow: hidden !important;
-}
-
 hr {
     border-top: 1px solid #fff;
 }

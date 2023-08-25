@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
+import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { delay, filter, tap } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { Router, Scroll } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { appReducer, getOrganization, getUser } from 'src/app/root/store/index';
@@ -24,9 +23,6 @@ import { MENU_ITEMS } from '../control-menu';
 })
 export class NavbarComponent implements OnInit {
     menuItems = MENU_ITEMS;
-
-    @ViewChild(MatSidenav)
-    sidenav!: MatSidenav;
 
     public user$: Observable<IUser> = this.store.pipe(select(selectCurrentUser));
     public org$: Observable<IOrganization[]> = this.store.pipe(select(selectOrganization));

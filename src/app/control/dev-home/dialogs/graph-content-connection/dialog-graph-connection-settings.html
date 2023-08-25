@@ -1,70 +1,77 @@
 <!--<TODO Currently not used, refactor with graph view></TODO>-->
-<h2 mat-dialog-title>Connection settings</h2>
-<mat-dialog-content class="mat-typography">
-    <div class="full-width w3-row content">
-        <div class="w3-col s12 l5 w3-left">
-            <mat-form-field appearance="fill" class="full-width">
-                <mat-label>Start ID</mat-label>
-                <input [value]="data.start_serviceID" disabled matInput />
-            </mat-form-field>
-        </div>
-
-        <div class="w3-col s12 l2 alignCenter">
-            <button (click)="switchStartAndTarget()" mat-icon-button>
-                <mat-icon>swap_horiz</mat-icon>
-            </button>
-        </div>
-
-        <div class="w3-col s12 l5 w3-right">
-            <mat-form-field appearance="fill" class="full-width">
-                <mat-label>Target ID</mat-label>
-                <input [value]="data.target_serviceID" disabled matInput />
-            </mat-form-field>
-        </div>
-    </div>
-
-    <div class="radioDiv">
-        <mat-radio-group [(ngModel)]="data.type" required>
-            <div class="w3-col l6 m6 alignCenter">
-                <mat-radio-button (change)="onRadioChange($event)" class="blackRadio" id="dialog-radio" value="latency">
-                    latency
-                </mat-radio-button>
+<nb-card>
+    <nb-card-header>
+        <h2>Connection settings</h2>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="full-width w3-row content">
+            <div class="w3-col s12 l5 w3-left">
+                <nb-form-field class="full-width">
+                    <input placeholder="Start ID" [value]="data.start_serviceID" disabled nbInput />
+                </nb-form-field>
             </div>
-            <div class="w3-col l6 m6 alignCenter">
-                <mat-radio-button (change)="onRadioChange($event)" class="blackRadio" value="geo">geo</mat-radio-button>
+
+            <div class="w3-col s12 l2 alignCenter">
+                <button (click)="switchStartAndTarget()" nbButton>
+                    <nb-icon icon="flip-2-fill"></nb-icon>
+                </button>
             </div>
-        </mat-radio-group>
-    </div>
 
-    <div class="full-width w3-row">
-        <div class="w3-col s12 m4 l4 input">
-            <mat-form-field class="full-width">
-                <mat-label>Threshold</mat-label>
-                <input [(ngModel)]="data.threshold" matInput type="number" />
-                <p matSuffix>ms</p>
-            </mat-form-field>
+            <div class="w3-col s12 l5 w3-right">
+                <nb-form-field class="full-width">
+                    <input [value]="data.target_serviceID" placeholder="Target ID" disabled nbInput />
+                </nb-form-field>
+            </div>
         </div>
 
-        <div class="w3-col s12 m4 l4 input">
-            <mat-form-field class="full-width">
-                <mat-label>Rigidness</mat-label>
-                <input [(ngModel)]="data.rigidness" matInput max="100" min="0" type="number" />
-                <p matSuffix>%</p>
-            </mat-form-field>
+        <div class="radioDiv">
+            <nb-radio-group [(ngModel)]="data.type" required>
+                <div class="w3-col l6 m6 alignCenter">
+                    <nb-radio (change)="onRadioChange($event)" class="blackRadio" id="dialog-radio" value="latency">
+                        latency
+                    </nb-radio>
+                </div>
+                <div class="w3-col l6 m6 alignCenter">
+                    <nb-radio- (change)="onRadioChange($event)" class="blackRadio" value="geo">geo</nb-radio->
+                </div>
+            </nb-radio-group>
         </div>
 
-        <div class="w3-col s12 m4 l4">
-            <mat-form-field class="full-width">
-                <mat-label>Convergence Time</mat-label>
-                <input [(ngModel)]="data.convergence_time" matInput type="number" />
-                <p matSuffix>sec</p>
-            </mat-form-field>
-        </div>
-    </div>
-</mat-dialog-content>
+        <div class="full-width w3-row">
+            <div class="w3-col s12 m4 l4 input">
+                <nb-form-field class="full-width">
+                    <input placeholder="Threshold" [(ngModel)]="data.threshold" nbInput type="number" />
+                    <label nbSuffix>ms</label>
+                </nb-form-field>
+            </div>
 
-<mat-dialog-actions>
-    <button (click)="save()" [mat-dialog-close]="data" color="primary" mat-button mat-flat-button>Save</button>
-    <button (click)="delete()" color="warn" mat-button mat-flat-button>Delete</button>
-    <button (click)="cancel()" color="accent" mat-button>Cancel</button>
-</mat-dialog-actions>
+            <div class="w3-col s12 m4 l4 input">
+                <nb-form-field class="full-width">
+                    <input
+                        placeholder="Rigidness"
+                        [(ngModel)]="data.rigidness"
+                        nbInput
+                        max="100"
+                        min="0"
+                        type="number"
+                    />
+                    <lable nbSuffix>%</lable>
+                </nb-form-field>
+            </div>
+
+            <div class="w3-col s12 m4 l4">
+                <nb-form-field class="full-width">
+                    <input placeholder="Convergence Time" [(ngModel)]="data.convergence_time" nbInput type="number" />
+                    <span nbSuffix>sec</span>
+                </nb-form-field>
+            </div>
+        </div>
+    </nb-card-body>
+
+    <nb-card-footer>
+        <button (click)="save()" status="primary" nbButton>Save</button>
+        <button (click)="delete()" status="warn" nbButton>Delete</button>
+        <button (click)="cancel()" status="accent" nbButton>Cancel</button>
+    </nb-card-footer>
+    <nb-card> </nb-card
+></nb-card>
