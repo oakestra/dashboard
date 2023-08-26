@@ -1,9 +1,7 @@
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { DOCUMENT } from '@angular/common';
 import { NbDialogService, NbThemeService } from '@nebular/theme';
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from '../../shared/modules/auth/user.service';
@@ -48,10 +46,7 @@ export class ProfileComponent implements OnInit {
         private fb: FormBuilder,
         public dialog: NbDialogService,
         private userService: UserService,
-        private router: Router,
         private store: Store<appReducer.AppState>,
-        @Inject(DOCUMENT) private document: Document,
-        private renderer: Renderer2,
         private themeService: NbThemeService,
         private cookieService: CookieService,
     ) {
@@ -106,26 +101,3 @@ export class ProfileComponent implements OnInit {
         }
     }
 }
-
-/*
-  ngOnInit() {
-    const { xl } = this.breakpointService.getBreakpointsMap();
-    this.themeService
-      .onMediaQueryChange()
-      .pipe(
-        map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
-        takeUntil(this.destroy$),
-      )
-      .subscribe((isLessThanXl: boolean) => (this.userPictureOnly = isLessThanXl));
-
-    this.themeService
-      .onThemeChange()
-      .pipe(
-        map(({ name }) => name),
-        takeUntil(this.destroy$),
-      )
-      .subscribe((themeName) => (this.currentTheme = themeName));
-  }
-
-
- */

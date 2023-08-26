@@ -13,15 +13,11 @@ declare function deleteLink(): void;
     styleUrls: ['./graph.component.scss'],
 })
 export class GraphComponent implements OnChanges {
+    @Output() updated = new EventEmitter<string>();
+    @Input() services: any;
     showConnections = false;
     nodes: any[] = [];
     links: any[] = [];
-
-    @Output()
-    updated = new EventEmitter<string>();
-
-    @Input()
-    services: any;
 
     constructor(public dialog: NbDialogService, public api: ApiService) {}
 

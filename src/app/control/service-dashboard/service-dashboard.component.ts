@@ -72,18 +72,6 @@ export class ServiceDashboardComponent implements OnInit {
         this.store.dispatch(setCurrentApplication({ application: this.selectedItem }));
     }
 
-    deleteService(service: IService) {
-        console.log('Delete');
-        console.log(service);
-        // this.store.dispatch(deleteService({ service }));
-    }
-
-    // TODO Do this with the redux store.
-    deleteInstance(service: IService, instance: IInstance) {
-        this.api.deleteInstance(service, instance).subscribe();
-        this.store.dispatch(getServices({ appId: this.appId }));
-    }
-
     deployService(service: IService) {
         this.isLoading = true;
         this.api
@@ -106,15 +94,6 @@ export class ServiceDashboardComponent implements OnInit {
             services.forEach((service) => {
                 this.deployService(service);
             });
-        });
-    }
-
-    handleChange() {
-        sessionStorage.setItem('id', this.activeAppId.$oid);
-        this.apps$.subscribe((app) => {
-            const application = app.filter((app) => app._id.$oid === this.activeAppId.$oid)[0];
-            this.store.dispatch(setCurrentApplication({ application }));
-            void this.router.navigate(['/control']).then();
         });
     }
 }

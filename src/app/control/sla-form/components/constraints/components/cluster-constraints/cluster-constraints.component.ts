@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
-// import * as uuid from 'uuid';
 import { ApiService } from '../../../../../../shared/modules/api/api.service';
 
 @Component({

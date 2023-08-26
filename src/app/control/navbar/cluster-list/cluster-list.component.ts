@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import { NONE_TYPE } from '@angular/compiler';
+import { NbDialogService } from '@nebular/theme';
 import { NotificationService } from '../../../shared/modules/notification/notification.service';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { UserService } from '../../../shared/modules/auth/user.service';
@@ -12,7 +13,6 @@ import { DialogAction } from '../../../root/enums/dialogAction';
 import { DialogGenerateTokenView } from '../dialogs/generate-token/dialogGenerateToken';
 import { IId } from '../../../root/interfaces/id';
 import { NotificationType } from '../../../root/interfaces/notification';
-import { NbDialogService } from '@nebular/theme';
 
 @Component({
     selector: 'app-cluster-list',

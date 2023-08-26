@@ -30,7 +30,7 @@ export class ChartCpuLineComponent implements OnDestroy, OnInit {
             const chartjs: any = config.variables.chartjs;
 
             this.data = {
-                labels: ['as', '23', 'as'],
+                labels: ['a', 'b', 'c'], // Is updated once the data is loaded
                 datasets: [
                     {
                         data: [3, 3, 2],

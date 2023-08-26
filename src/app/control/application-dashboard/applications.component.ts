@@ -2,12 +2,10 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { NbDialogService } from '@nebular/theme';
 import { IId } from '../../root/interfaces/id';
 import { IApplication } from '../../root/interfaces/application';
 import { selectApplications } from '../../root/store/selectors/application.selector';
-import { ApiService } from '../../shared/modules/api/api.service';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { AuthService } from '../../shared/modules/auth/auth.service';
 import { NotificationService } from '../../shared/modules/notification/notification.service';
@@ -30,15 +28,14 @@ import { DialogAddApplicationView } from './dialogs/add-appllication/dialogAddAp
     styleUrls: ['./applications.component.scss'],
 })
 export class ApplicationsComponent {
-    DialogAction = DialogAction;
     @Input() userID: string;
+    DialogAction = DialogAction;
     activeAppId: IId;
+
     public apps$: Observable<IApplication[]> = this.store.pipe(select(selectApplications));
 
     constructor(
-        private observer: BreakpointObserver,
         public dialog: NbDialogService,
-        private api: ApiService,
         public userService: UserService,
         private router: Router,
         private authService: AuthService,
@@ -86,45 +83,9 @@ export class ApplicationsComponent {
                 this.store.dispatch(updateApplication({ application: result.data }));
             } else if (result.event === DialogAction.DELETE) {
                 this.store.dispatch(deleteApplication({ application: result.data }));
-                // this.deleteApplication(result.data);
             }
             // TODO remove this and get the id form the api response
             this.store.dispatch(getApplication({ id: this.userID }));
-        });
-    }
-    /*
-  deleteApplication(app: IApplication): void {
-      // TODO Check what happens with the services in a application if you delete the application
-      /*
-      this.api.getServicesOfApplication(app._id.$oid).subscribe((services: IService[]) => {
-          for (const j of services) {
-              this.api.deleteService(j);
-          }
-      });
-
-      this.api.deleteApplication(app).subscribe({
-          next: () => {
-              this.notifyService.notify(
-                  NotificationType.success,
-                  'Application "' + app.application_name + '" deleted successfully!',
-              );
-              // this.loadDataApplication();
-          },
-          error: () => {
-              this.notifyService.notify(
-                  NotificationType.error,
-                  'Error: Deleting application "' + app.application_name + '" failed!',
-              );
-          },
-      });
-  }*/
-
-    handleChange() {
-        sessionStorage.setItem('id', this.activeAppId.$oid);
-        this.apps$.subscribe((app) => {
-            const application = app.filter((app) => app._id.$oid === this.activeAppId.$oid)[0];
-            this.store.dispatch(setCurrentApplication({ application }));
-            void this.router.navigate(['/control']).then();
         });
     }
 }

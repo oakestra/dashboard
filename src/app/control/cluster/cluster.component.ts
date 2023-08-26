@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
-// import * as L from 'leaflet';
 import { NbDialogService } from '@nebular/theme';
 import { ICluster } from '../../root/interfaces/cluster';
 import { DialogConfirmationView } from '../../root/components/dialogs/confirmation/dialogConfirmation';
@@ -20,15 +19,6 @@ import { NotificationType } from '../../root/interfaces/notification';
 export class ClusterComponent implements OnInit {
     clusters: ICluster[]; // Make this as input form parent class
 
-    /*
-    private map: any;
-
-    // FMI Garching coordinates
-    private lat = 48.262707753772624;
-    private lon = 11.668009155278707;
-
-   */
-
     constructor(
         private observer: BreakpointObserver,
         public dialog: NbDialogService,
@@ -39,23 +29,7 @@ export class ClusterComponent implements OnInit {
         private notifyService: NotificationService,
     ) {}
 
-    ngOnInit(): void {
-        // this.initMap();
-    }
-    /*
-    private initMap(): void {
-        this.map = L.map('card_map', {
-            center: [this.lat, this.lon],
-            attributionControl: false,
-            zoom: 14,
-        });
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 13,
-        }).addTo(this.map);
-    }
-
- */
+    ngOnInit(): void {}
 
     deleteCluster(cluster: ICluster) {
         const data = {

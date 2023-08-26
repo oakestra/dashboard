@@ -10,12 +10,12 @@ import { IDialogAttribute } from '../../../../root/interfaces/dialogAttribute';
     styleUrls: ['./dialog-add-application.scss'],
 })
 export class DialogAddApplicationView implements OnInit {
+    @Input() data: IDialogAttribute;
     DialogAction = DialogAction;
     action: DialogAction;
     app: IApplication;
     title = 'Add Application';
     buttonText = 'Add';
-    @Input() data: IDialogAttribute;
 
     constructor(public dialogRef: NbDialogRef<DialogAddApplicationView>) {}
 

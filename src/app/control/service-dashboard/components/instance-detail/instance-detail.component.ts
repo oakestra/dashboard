@@ -14,6 +14,7 @@ import { appReducer, getSingleService } from '../../../../root/store';
     styleUrls: ['./instance-detail.component.scss'],
 })
 export class InstanceDetailComponent implements OnInit, AfterViewInit {
+    @ViewChild('map', { static: false }) mapContainer: ElementRef;
     serviceId: string;
     instanceId: string;
 
@@ -23,13 +24,10 @@ export class InstanceDetailComponent implements OnInit, AfterViewInit {
     private radius = 9;
 
     services$: Observable<IService[]> = this.store.pipe(select(selectCurrentServices));
-
     service: IService;
-    // instance: IInstance;
 
     private alive = true;
     private timerSubscription: Subscription;
-    @ViewChild('map', { static: false }) mapContainer: ElementRef;
 
     instance = this.store.select(selectCurrentServices).pipe(
         map((services: IService[]) => {
@@ -55,9 +53,6 @@ export class InstanceDetailComponent implements OnInit, AfterViewInit {
             next: (services: IService[]) => {
                 const s = services.filter((s: IService) => s._id?.$oid === this.serviceId);
                 this.service = s.length === 0 ? null : s[0];
-                // this.instance = this.service.instance_list.find(
-                //     (i) => i.instance_number.toString() === this.instanceId,
-                // );
             },
         });
         console.log(this.instance);

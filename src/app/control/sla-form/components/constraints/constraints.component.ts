@@ -18,7 +18,6 @@ export class ConstraintsComponent extends SubComponent implements OnInit {
     constraints: IConstraints[] = [];
     constraintsType: string[] = [];
 
-    // TODO Only for the demo, fix this later.
     node: string[] = [];
     cluster: string[] = [];
     items = [{ title: 'Latency Constraints' }, { title: 'Geo Constraints' }, { title: 'Cluster Constraints' }];

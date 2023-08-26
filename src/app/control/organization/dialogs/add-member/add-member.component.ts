@@ -65,7 +65,6 @@ export class AddMemberComponent implements OnInit {
     }
 
     search(event: any) {
-        console.log(event);
         this.userFiltered = this.user.filter((u) => u.name.toLowerCase().indexOf(event?.toLowerCase() ?? '') !== -1);
     }
 }
