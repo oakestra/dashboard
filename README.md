@@ -1,9 +1,10 @@
-# Oakestra-Frontend
+# Oakestra-Dashboard
 
-You can find a detailed description [here](docs/README.md)
+You can find a detailed description [here](https://www.oakestra.io/docs/)        
 
-This is the fist implementation of a frontend for the Oakestra framework.
-The Oakestra frontend sends API calls to the System-Manager and displays the results.
+The Dashboard is a sophisticated web-based user interface for the Oakestra system. It is designed to provide 
+users with a comprehensive set of tools to deploy applications to a Oakestra cluster, 
+effectively manage cluster resources, and troubleshoot any issues that may arise.
 
 ## Development server
 
@@ -23,3 +24,4 @@ Export system manager url: `export SYSTEM_MANAGER=<ip or url without port>`
 Run `docker-compose up --build` to start the Website with docker compose.
 
 This starts the website on the port 8888 which then accesses the Oakestra System Manager on the configured IP address.
+
