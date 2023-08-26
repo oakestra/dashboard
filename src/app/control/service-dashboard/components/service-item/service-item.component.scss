@@ -1,27 +1,28 @@
-.service{
-  margin-bottom: 20px;
+.service {
+    margin-bottom: 20px;
 
-  nb-accordion-item-header{
-    padding: 0;
-  }
+    nb-accordion-item-header {
+        padding: 0;
+    }
 
-  .service-name, p{
-    margin: 0 0 0 15px;
-  }
+    .service-name,
+    p {
+        margin: 0 0 0 15px;
+    }
 
-  .actions{
-    padding-right: 90px;
-  }
+    .actions {
+        padding-right: 90px;
+    }
 }
 
 .statusField {
-  cursor: pointer;
-  align-items: center;
-  display: inline-flex;
-
-  .spinner {
+    cursor: pointer;
     align-items: center;
-  }
+    display: inline-flex;
+
+    .spinner {
+        align-items: center;
+    }
 }
 
 .noInstance {
@@ -30,6 +31,6 @@
     font-size: large;
 }
 
-.instance-buttons{
-  display: flex;
+.instance-buttons {
+    display: flex;
 }
