@@ -20,7 +20,7 @@ import { NotificationType } from '../../../root/interfaces/notification';
     styleUrls: ['./cluster-list.component.scss'],
 })
 
-// TODO Check if is works and refactor it
+// TODO Check if is works and refactor it, currently not used
 export class ClusterListComponent {
     clusters: ICluster[];
     events: string[] = [];
@@ -79,7 +79,6 @@ export class ClusterListComponent {
         });
 
         dialogRef.onClose.subscribe((result) => {
-            // TODO define data for Cluster
             if (result.event === DialogAction.ADD) {
                 // this.addCluster(result.data)
                 this.userService.addCluster(result.data).subscribe({
@@ -87,7 +86,6 @@ export class ClusterListComponent {
                         this.notifyService.notify(NotificationType.success, 'Cluster added successfully!');
                         this.redirectTo('/control');
                         if (userServiceResponse !== NONE_TYPE) {
-                            // TODO: We need to pass the system_manager_URL as well
                             const my_data = {
                                 pairing_key: userServiceResponse.pairing_key,
                                 username: this.username,

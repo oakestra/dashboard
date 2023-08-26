@@ -85,7 +85,7 @@ export class EditOrganizationComponent implements OnInit {
                     member,
                 };
                 this.selected = organization;
-                // TODO avoid two dispatch
+                // TODO avoid two dispatch and update the organization in the first dispatch (with the answer of the api)
                 this.store.dispatch(updateOrganization({ organization }));
                 this.store.dispatch(getOrganization());
                 this.search('');

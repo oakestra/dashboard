@@ -71,7 +71,7 @@ export class LoginComponent {
     }
 
     public forgotPassword() {
-        // TODO
+        // TODO Implement send mail functionality
         const username = this.form.get('username');
         console.log('SEND MAIL');
         if (username?.valid) {

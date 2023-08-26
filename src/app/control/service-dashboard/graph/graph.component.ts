@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { NbDialogService } from '@nebular/theme';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { DialogGraphConnectionView } from '../dialogs/graph-content-connection/dialog-graph-connection-view.component';
 import { CleanJsonService } from '../../../shared/util/clean-json.service';
-import { NbDialogService } from '@nebular/theme';
 
 declare function start(nodes: any, links: any): void;
 declare function deleteLink(): void;
@@ -198,7 +198,7 @@ export class GraphComponent implements OnChanges {
         const linksNew = [];
         const l = this.links;
         const n = this.nodes;
-        // TODO Write that better
+        // TODO Dont use triple loop
         for (let x = 0; x < l.length; x++) {
             for (let i = 0; i < n.length; i++) {
                 for (let j = 0; j < n.length; j++) {
