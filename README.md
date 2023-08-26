@@ -25,3 +25,10 @@ Run `docker-compose up --build` to start the Website with docker compose.
 
 This starts the website on the port 8888 which then accesses the Oakestra System Manager on the configured IP address.
 
+## NGX Theme
+
+This Dashboard was developed with the help of the [ngx-admin template](https://github.com/akveo/ngx-admin).
+
+Besides the other components, there is also a @core and a @theme folder, which contains important 
+components and services needed for the NXG theme. In general, however, no components of the 
+Oakestra Dashboard are contained here.
