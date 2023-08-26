@@ -81,6 +81,7 @@ export class ServiceItemComponent implements OnInit {
     }
 
     deployService(service: IService) {
+        console.log('Deploy');
         this.isLoading = true;
         this.api
             .deployService(service)
@@ -88,6 +89,7 @@ export class ServiceItemComponent implements OnInit {
                 tap(() => {
                     if (this.appId !== '') {
                         setTimeout(() => {
+                            console.log('Fertig');
                             this.isLoading = false;
                             this.store.dispatch(getServices({ appId: this.appId }));
                         }, 5000); // delay to wait until the backend has deployed the service

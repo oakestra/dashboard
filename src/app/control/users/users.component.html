@@ -11,6 +11,7 @@
                             fullWidth
                             nbInput
                             placeholder="Search by username"
+                            (ngModelChange)="doFilter($event)"
                         />
                         <button *ngIf="searchText" nbSuffix nbButton ghost (click)="resetSearch()">
                             <nb-icon icon="close" pack="eva"> </nb-icon>
@@ -20,7 +21,13 @@
 
                 <div class="w3-col l4 m4">
                     <nb-card-body>
-                        <nb-select [formControl]="dropdown" fullWidth multiple placeholder="Multiple Select">
+                        <nb-select
+                            (selectedChange)="doFilter(searchText)"
+                            [formControl]="dropdown"
+                            fullWidth
+                            multiple
+                            placeholder="Multiple Select"
+                        >
                             <nb-option *ngFor="let dropdown of dropdownList" [value]="dropdown">
                                 {{ dropdown }}
                             </nb-option>

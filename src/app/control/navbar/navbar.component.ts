@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { appReducer, getOrganization, getUser } from 'src/app/root/store/index';
+import { appReducer, getApplication, getOrganization, getUser } from 'src/app/root/store/index';
 import { NbMenuItem } from '@nebular/theme';
+import { tap } from 'rxjs';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { Role } from '../../root/enums/roles';
+import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 
 @Component({
     selector: 'app-navbar',

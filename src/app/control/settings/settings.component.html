@@ -2,7 +2,7 @@
     <nb-card-header><h2>Configure SMTP server</h2></nb-card-header>
     <nb-card-body>
         <nb-radio-group class="radio-group" [(ngModel)]="selectedOption">
-            <nb-radio *ngFor="let option of options" [disabled]="option.disabled" [value]="option.value">
+            <nb-radio *ngFor="let option of options" [value]="option.value" [disabled]="option.disabled">
                 {{ option.label }}
             </nb-radio>
         </nb-radio-group>
@@ -17,7 +17,7 @@
                 </li>
             </ul>
         </div>
-        <div *ngIf="selectedOption === ConfigurationType.CUSTOME">
+        <div *ngIf="selectedOption === ConfigurationType.CUSTOM">
             <div [formGroup]="form" class="form">
                 <nb-form-field>
                     <input placeholder="Server Address" nbInput formControlName="address" />

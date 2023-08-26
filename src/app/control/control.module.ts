@@ -38,14 +38,14 @@ import { ProfileComponent } from './profile/profile.component';
 import { DialogChangePasswordView } from './profile/dialogs/change-password/dialogChangePassword';
 import { HelpComponent } from './help/help.component';
 import { DialogGenerateTokenView } from './navbar/dialogs/generate-token/dialogGenerateToken';
-import { GraphComponent } from './dev-home/graph/graph.component';
+import { GraphComponent } from './service-dashboard/graph/graph.component';
 import { DialogAddClusterView } from './navbar/dialogs/add-cluster/dialogAddCluster';
 import { DialogAddApplicationView } from './application-dashboard/dialogs/add-appllication/dialogAddApplication';
-import { DialogGraphConnectionView } from './dev-home/dialogs/graph-content-connection/dialog-graph-connection-view.component';
+import { DialogGraphConnectionView } from './service-dashboard/dialogs/graph-content-connection/dialog-graph-connection-view.component';
 import { DialogConnectionSettingsView } from './sla-form/components/dialogs/content-connection/dialog-connection-settings-view.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { ServiceDashboardComponent } from './dev-home/service-dashboard.component';
+import { ServiceDashboardComponent } from './service-dashboard/service-dashboard.component';
 import { SlaFormComponent } from './sla-form/sla-form.component';
 import { routes } from './control.routing';
 import { ClusterListComponent } from './navbar/cluster-list/cluster-list.component';
@@ -70,10 +70,10 @@ import { GeoConstraintsComponent } from './sla-form/components/constraints/compo
 import { ClusterConstraintsComponent } from './sla-form/components/constraints/components/cluster-constraints/cluster-constraints.component';
 import { ApplicationsComponent } from './application-dashboard/applications.component';
 import { FaqComponent } from './faq/faq.component';
-import { ServiceItemComponent } from './dev-home/components/service-item/service-item.component';
-import { InstanceDetailComponent } from './dev-home/components/instance-detail/instance-detail.component';
-import { ChartCpuLineComponent } from './dev-home/components/instance-detail/chart-cpu-line.component';
-import { ChartMemoryLineComponent } from './dev-home/components/instance-detail/chart-memory-line.component';
+import { ServiceItemComponent } from './service-dashboard/components/service-item/service-item.component';
+import { InstanceDetailComponent } from './service-dashboard/components/instance-detail/instance-detail.component';
+import { ChartCpuLineComponent } from './service-dashboard/components/instance-detail/chart-cpu-line.component';
+import { ChartMemoryLineComponent } from './service-dashboard/components/instance-detail/chart-memory-line.component';
 
 @NgModule({
     declarations: [

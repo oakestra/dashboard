@@ -112,7 +112,7 @@ export class SlaFormComponent implements OnInit {
             next: () => {
                 // TODO This is not the correct way, update the store properly
                 this.store.dispatch(updateServiceSuccess(sla));
-                void this.router.navigate(['/control']).then();
+                void this.router.navigate(['/control/services']).then();
             },
             error: (err) => {
                 console.log(err);

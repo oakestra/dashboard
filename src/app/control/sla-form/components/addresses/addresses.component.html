@@ -12,9 +12,11 @@
             <nb-accordion-item-body>
                 <form [formGroup]="form">
                     <div class="w3-row">
-                        <div class="w3-col l5 m5 s12 w3-row-padding">
+                        <div class="w3-col l6 m6 s12 w3-row-padding">
                             <nb-form-field>
+                                <label class="label">RR-IP</label>
                                 <input
+                                    fullWidth
                                     placeholder="RR-IP"
                                     nbInput
                                     formControlName="rr_ip"
@@ -24,9 +26,11 @@
                             </nb-form-field>
                         </div>
 
-                        <div class="w3-col l5 m5 s12 w3-row-padding">
+                        <div class="w3-col l6 m6 s12 w3-row-padding">
                             <nb-form-field>
+                                <label class="label">Closest IP</label>
                                 <input
+                                    fullWidth
                                     nbInput
                                     nbTooltip="Optional - The orchestrator may choose the closest IP to the given one"
                                     type="text"
@@ -43,21 +47,36 @@
                 <div *ngFor="let inst of instances; index as i; trackBy: trackByIdx" class="full-width instance">
                     <p>Instances:</p>
                     <div class="w3-row">
-                        <div class="w3-col l3 m3 s12 w3-row-padding">
+                        <div class="w3-col l4 m4 s12 w3-row-padding">
                             <nb-form-field>
-                                <input nbInput placeholder="From" type="text" [(ngModel)]="instances[i].from" />
+                                <label class="label">From</label>
+                                <input
+                                    fullWidth
+                                    nbInput
+                                    placeholder="From"
+                                    type="text"
+                                    [(ngModel)]="instances[i].from"
+                                />
                             </nb-form-field>
                         </div>
 
-                        <div class="w3-col l3 m3 s12 w3-row-padding">
+                        <div class="w3-col l4 m4 s12 w3-row-padding">
                             <nb-form-field>
-                                <input nbInput placeholder="To" type="text" [(ngModel)]="instances[i].to" />
+                                <label class="label">To</label>
+                                <input fullWidth nbInput placeholder="To" type="text" [(ngModel)]="instances[i].to" />
                             </nb-form-field>
                         </div>
 
-                        <div class="w3-col l3 m3 s12 w3-row-padding">
+                        <div class="w3-col l4 m4 s12 w3-row-padding">
                             <nb-form-field>
-                                <input nbInput placeholder="Start" type="text" [(ngModel)]="instances[i].start" />
+                                <label class="label">Start</label>
+                                <input
+                                    fullWidth
+                                    nbInput
+                                    placeholder="Start"
+                                    type="text"
+                                    [(ngModel)]="instances[i].start"
+                                />
                             </nb-form-field>
                         </div>
                     </div>

@@ -14,7 +14,7 @@ export class MemberItemComponent implements OnInit {
     @Input() searchedMember: IUser[];
     @Output() removeEvent = new EventEmitter<IUser>();
     @Output() updateRoles = new EventEmitter<IUser>();
-    rolesList = Object.values(Role);
+    rolesList = Object.values(Role).filter((r) => r !== Role.ADMIN);
     editItem: boolean[];
     roles: FormControl[] = [];
 

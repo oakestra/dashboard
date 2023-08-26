@@ -18,7 +18,7 @@ export class SettingsComponent implements OnInit {
 
     options = [
         { value: ConfigurationType.NONE, label: ConfigurationType.NONE, disabled: false },
-        { value: ConfigurationType.CUSTOME, label: ConfigurationType.CUSTOME, disabled: false },
+        { value: ConfigurationType.CUSTOM, label: ConfigurationType.CUSTOM, disabled: false },
         { value: ConfigurationType.OAKESTRA, label: ConfigurationType.OAKESTRA, disabled: true },
     ];
 
@@ -50,7 +50,7 @@ export class SettingsComponent implements OnInit {
             type: this.selectedOption,
         };
 
-        if (this.selectedOption === ConfigurationType.CUSTOME) {
+        if (this.selectedOption === ConfigurationType.CUSTOM) {
             settings = { ...settings, ...this.form.getRawValue() };
         }
 

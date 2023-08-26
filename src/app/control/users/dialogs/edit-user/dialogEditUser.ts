@@ -12,8 +12,8 @@ import { IDialogAttribute } from '../../../../root/interfaces/dialogAttribute';
     templateUrl: 'dialog-edit-user.html',
     styles: [
         '.download-credentials{display:flex; flex-direction: row-reverse; padding-right: 8px}',
-        'nb-form-field{padding: 10px 0 10px 0}',
-        'button {margin: 0 5px 0 5px}',
+        'nb-form-field {padding: 10px 0 10px 0}',
+        'button {margin: 10px 0 0 10px}',
     ],
 })
 export class DialogEditUserView implements OnInit {

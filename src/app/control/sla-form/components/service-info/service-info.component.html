@@ -5,6 +5,7 @@
             <div class="w3-row">
                 <div class="w3-col l6 s12 w3-row-padding">
                     <nb-form-field>
+                        <label class="label">Service Namespace</label>
                         <input
                             nbInput
                             formControlName="microservice_namespace"
@@ -17,6 +18,7 @@
 
                 <div class="w3-col l6 s12 w3-row-padding">
                     <nb-form-field>
+                        <label class="label">Service Name</label>
                         <input
                             nbInput
                             fullWidth
@@ -28,6 +30,7 @@
                 </div>
 
                 <div class="w3-col l6 s12 w3-row-padding">
+                    <label class="label">Virtualization</label>
                     <nb-select formControlName="virtualization" fullWidth placeholder="Virtualization" required>
                         <nb-option value="container">Container</nb-option>
                         <nb-option value="unikernel">Unikernel</nb-option>
@@ -37,6 +40,7 @@
 
                 <div class="w3-col l12 s12 w3-row-padding">
                     <nb-form-field>
+                        <label class="label">Description</label>
                         <textarea
                             cols="3"
                             fullWidth

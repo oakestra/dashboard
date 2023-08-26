@@ -2,18 +2,20 @@
     <div class="w3-row">
         <div class="w3-col l6 m6 s6 w3-row-padding">
             <nb-form-field>
+                <label class="label">Cluster</label>
                 <nb-select
                     fullWidth
                     placeholder="Cluster"
                     formControlName="cluster"
                     nbTooltip="Specifies the cluster in which the constraint is in effect"
                 >
-                    <mat-option *ngFor="let option of clusterOptions" [value]="option">{{ option }}</mat-option>
+                    <nb-option *ngFor="let option of clusterOptions" [value]="option">{{ option }}</nb-option>
                 </nb-select>
             </nb-form-field>
         </div>
         <div class="w3-col l6 m6 s6 w3-row-padding">
             <nb-form-field>
+                <label class="label">Node</label>
                 <input fullWidth placeholder="Node" nbInput formControlName="node" nbTooltip="Node" />
             </nb-form-field>
         </div>

@@ -18,9 +18,9 @@ export class InstanceDetailComponent implements OnInit, AfterViewInit {
     instanceId: string;
 
     textLocation: string = null;
-    private latitude: number = 48.1624064;
-    private longitude: number = 11.5977288;
-    private radius: number = 9;
+    private latitude = 48.1624064;
+    private longitude = 11.5977288;
+    private radius = 9;
 
     services$: Observable<IService[]> = this.store.pipe(select(selectCurrentServices));
 
@@ -68,8 +68,8 @@ export class InstanceDetailComponent implements OnInit, AfterViewInit {
             .subscribe(() => this.refreshData());
 
         this.instance.subscribe((i) => {
-            //this.setLocation(i.cluster_location ?? '48.1624064,11.5977288,12');
-            this.setLocation('48.1624064,11.5977288,12');
+            const location = i.cluster_location.length > 0 ? i.cluster_location : '48.1624064,11.5977288,12';
+            this.setLocation(location);
             console.log(i);
         });
     }

@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { NbDialogService } from '@nebular/theme';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { NotificationService } from '../../shared/modules/notification/notification.service';
 import { DialogConfirmationView } from '../../root/components/dialogs/confirmation/dialogConfirmation';
@@ -15,7 +16,6 @@ import { selectAllUser } from '../../root/store/selectors/user.selector';
 import { Role } from '../../root/enums/roles';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { DialogEditUserView } from './dialogs/edit-user/dialogEditUser';
-import { NbDialogService } from '@nebular/theme';
 
 @Component({
     templateUrl: './users.component.html',
@@ -44,10 +44,9 @@ export class UsersComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.dropdownList = Object.keys(Role);
+        this.dropdownList = Object.values(Role);
         this.loadData();
         const organization_id = this.userService.getOrganization();
-        console.log(organization_id);
         this.store.dispatch(getAllUser({ organization_id }));
         this.users$.subscribe((x) => console.log(x));
     }
@@ -73,18 +72,17 @@ export class UsersComponent implements OnInit {
             this.doFilter('');
         });
     }
-    /*
-    search(event: any) {
-        this.searchedMember = this.member.filter(
-            (m) => m.name.toLowerCase().indexOf(event?.toLowerCase() ?? '') !== -1,
-        );
-    }
-*/
+
     doFilter($event: any): void {
+        console.log('Filter');
         this.searchText = $event;
         this.users$.subscribe((u) => {
             this.searchedUsers = u.filter((user) => this.nameFilter(user) && this.roleFilter(user));
+            console.log(this.searchedUsers);
         });
+
+        this.selectedItems = this.dropdown.value;
+        console.log(this.selectedItems);
     }
 
     nameFilter(user: IUser): boolean {
@@ -120,8 +118,8 @@ export class UsersComponent implements OnInit {
         };
 
         const dialogRef = this.dialog.open(DialogConfirmationView, { context: data });
-        dialogRef.onClose.subscribe((result) => {
-            if (result === true) {
+        dialogRef.onClose.subscribe(({ event }) => {
+            if (event === true) {
                 this.deleteUser(obj);
             }
         });

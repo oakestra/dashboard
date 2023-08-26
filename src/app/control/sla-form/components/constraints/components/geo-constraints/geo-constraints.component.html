@@ -2,12 +2,14 @@
     <div class="w3-row">
         <div class="w3-col l4 m4 s6 w3-row-padding">
             <nb-form-field>
+                <label class="label">Longitude</label>
                 <input placeholder="Longitude" (change)="updateLongLat()" nbInput type="number" />
             </nb-form-field>
         </div>
 
         <div class="w3-col l4 m4 s6 w3-row-padding">
             <nb-form-field>
+                <label class="label">Latitude</label>
                 <input placeholder="Latitude" (change)="updateLongLat()" nbInput type="number" />
             </nb-form-field>
         </div>
@@ -15,6 +17,7 @@
 
         <div class="w3-col l4 m4 s12 w3-row-padding">
             <nb-form-field>
+                <label class="label">Threshold</label>
                 <input nbInput placeholder="Threshold" formControlName="threshold" type="number" />
                 <span nbSuffix>km&#160;</span>
             </nb-form-field>
@@ -22,6 +25,7 @@
 
         <div class="w3-col l4 m4 s12 w3-row-padding">
             <nb-form-field>
+                <label class="label">Rigidness</label>
                 <input
                     nbInput
                     placeholder="Rigidness"
@@ -37,6 +41,7 @@
 
         <div class="w3-col l4 m4 s12 w3-row-padding">
             <nb-form-field>
+                <label class="label">Convergence Time</label>
                 <input
                     nbInput
                     placeholder="Convergence Time"

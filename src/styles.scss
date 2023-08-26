@@ -12,6 +12,10 @@ h3{
 
 nb-form-field, nb-select{
   padding: 10px 0 10px 0;
+
+  .nb-form-field-addon {
+    align-items: flex-end;
+  }
 }
 
 button{

@@ -3,15 +3,17 @@ import { Observable, take, tap } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { NbDialogService, NbMenuService } from '@nebular/theme';
+import { filter } from 'rxjs/operators';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { IService } from '../../root/interfaces/service';
 import { IInstance } from '../../root/interfaces/instance';
 import { IApplication } from '../../root/interfaces/application';
 import { selectApplications, selectCurrentApplication } from '../../root/store/selectors/application.selector';
-import { appReducer, getServices, setCurrentApplication } from '../../root/store';
+import { appReducer, getApplication, getServices, setCurrentApplication } from '../../root/store';
 import { selectCurrentServices } from '../../root/store/selectors/service.selector';
 import { IId } from '../../root/interfaces/id';
 import { DialogAction } from '../../root/enums/dialogAction';
+import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 
 @Component({
     selector: 'dev-home',
@@ -19,11 +21,10 @@ import { DialogAction } from '../../root/enums/dialogAction';
     styleUrls: ['./service-dashboard.component.scss'],
 })
 export class ServiceDashboardComponent implements OnInit {
-    DialogAction = DialogAction;
     @Input() userID: string;
+    DialogAction = DialogAction;
     activeAppId: IId;
     public apps$: Observable<IApplication[]> = this.store.pipe(select(selectApplications));
-
     public currentApp$: Observable<IApplication> = this.store.pipe(select(selectCurrentApplication));
     public services$: Observable<IService[]> = this.store.pipe(select(selectCurrentServices));
     appId = '';
@@ -47,20 +48,27 @@ export class ServiceDashboardComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.apps$.subscribe((apps) => {
-            const active = apps.filter((a) => a._id.$oid === sessionStorage.getItem('id'))[0];
-            if (active) {
-                this.store.dispatch(setCurrentApplication({ application: active }));
-                this.activeAppId = active._id;
-            }
-        });
+        this.store
+            .select(selectCurrentUser)
+            .pipe(
+                filter((u) => !!u),
+                tap((u) => this.store.dispatch(getApplication({ id: u._id.$oid }))),
+            )
+            .subscribe();
 
-        console.log('In Service Overview');
-        this.currentApp$.pipe(tap((app) => (this.appId = app?._id?.$oid || ''))).subscribe();
+        this.store
+            .select(selectApplications)
+            .pipe(
+                filter((app) => app.length > 0),
+                tap((app) => {
+                    this.store.dispatch(setCurrentApplication({ application: app[0] }));
+                    this.selectedItem = app[0];
+                }),
+            )
+            .subscribe();
     }
 
     setCurrentApplication() {
-        console.log('Change');
         this.store.dispatch(setCurrentApplication({ application: this.selectedItem }));
     }
 

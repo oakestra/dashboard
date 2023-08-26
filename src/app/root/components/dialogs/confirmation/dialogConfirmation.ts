@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DialogGraphConnectionView } from '../../../../control/dev-home/dialogs/graph-content-connection/dialog-graph-connection-view.component';
+import { DialogGraphConnectionView } from '../../../../control/service-dashboard/dialogs/graph-content-connection/dialog-graph-connection-view.component';
 import { NbDialogRef } from '@nebular/theme';
 
 interface ConformationText {

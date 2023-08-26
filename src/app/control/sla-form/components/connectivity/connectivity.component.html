@@ -10,6 +10,7 @@
         <div class="w3-row">
             <div class="w3-col l6 m6 s6 w3-row-padding">
                 <nb-form-field>
+                    <label class="label">Target Service</label>
                     <nb-select fullWidth placeholder="target_microservice_id {{ conn.target_microservice_id }}">
                         <nb-option *ngFor="let s of dropdownServices" [value]="s._id.$oid">
                             {{ s.microservice_name }}
