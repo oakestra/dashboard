@@ -10,9 +10,15 @@
     padding: 20px;
 }
 
-nb-form-field {
-    padding: 10px 0 10px 0;
+::ng-deep nb-form-field,
+nb-select {
+  padding: 10px 0 10px 0;
+
+  .nb-form-field-addon {
+    align-items: center !important;
+  }
 }
+
 
 .connectingInfo {
     float: right;
@@ -61,7 +67,7 @@ nb-card-body.example-items-col {
 
 @media only screen and (min-width: 801px) {
     .login-form {
-        width: 60%;
+        width: 40%;
     }
 }
 
