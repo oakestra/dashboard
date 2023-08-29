@@ -8,6 +8,8 @@ effectively manage cluster resources, and troubleshoot any issues that may arise
 
 ## Development server
 
+First download the files and then run `npm i` to install all necessary packages
+
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
@@ -20,7 +22,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Run
 
-Export system manager url: `export SYSTEM_MANAGER=<ip or url without port>`
+Export system manager url: `echo "API_ADDRESS=<IP_of_the_system_manager_api>:10000" > .env`
 Run `docker-compose up --build` to start the Website with docker compose.
 
 This starts the website on the port 8888 which then accesses the Oakestra System Manager on the configured IP address.
