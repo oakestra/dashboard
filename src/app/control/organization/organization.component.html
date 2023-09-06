@@ -1,5 +1,7 @@
 <nb-card class="serviceCard">
-    <nb-card-header> Organization Management </nb-card-header>
+    <nb-card-header>
+        <h1>Organization Management</h1>
+    </nb-card-header>
     <nb-card-body>
         <app-list-organization *ngIf="edit" (selectedOrga)="editOrganization($event)"></app-list-organization>
 

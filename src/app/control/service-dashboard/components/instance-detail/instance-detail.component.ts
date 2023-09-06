@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription, takeWhile, timer } from 'rxjs';
@@ -13,7 +13,7 @@ import { appReducer, getSingleService } from '../../../../root/store';
     templateUrl: './instance-detail.component.html',
     styleUrls: ['./instance-detail.component.scss'],
 })
-export class InstanceDetailComponent implements OnInit, AfterViewInit {
+export class InstanceDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('map', { static: false }) mapContainer: ElementRef;
     serviceId: string;
     instanceId: string;

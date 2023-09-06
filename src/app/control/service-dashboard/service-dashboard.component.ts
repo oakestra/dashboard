@@ -6,7 +6,6 @@ import { NbDialogService, NbMenuService } from '@nebular/theme';
 import { filter } from 'rxjs/operators';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { IService } from '../../root/interfaces/service';
-import { IInstance } from '../../root/interfaces/instance';
 import { IApplication } from '../../root/interfaces/application';
 import { selectApplications, selectCurrentApplication } from '../../root/store/selectors/application.selector';
 import { appReducer, getApplication, getServices, setCurrentApplication } from '../../root/store';

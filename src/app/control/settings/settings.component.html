@@ -1,5 +1,7 @@
 <nb-card>
-    <nb-card-header><h2>Configure SMTP server</h2></nb-card-header>
+    <nb-card-header>
+        <h1>Configure SMTP server</h1>
+    </nb-card-header>
     <nb-card-body>
         <nb-radio-group class="radio-group" [(ngModel)]="selectedOption">
             <nb-radio *ngFor="let option of options" [value]="option.value" [disabled]="option.disabled">

@@ -1,5 +1,7 @@
 <nb-card>
-    <nb-card-header> User Management</nb-card-header>
+    <nb-card-header>
+        <h1>Profile Management</h1>
+    </nb-card-header>
     <nb-card-body>
         <form (ngSubmit)="onSubmit()" *ngIf="user$ | async" [formGroup]="form">
             <nb-form-field>
