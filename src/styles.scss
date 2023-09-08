@@ -1,9 +1,22 @@
+@font-face {
+  font-family: 'Urbanist';
+  src: url('./assets/fonts/ttf/Urbanist-Regular.ttf') format('ttf'),
+  url('./assets/fonts/ttf/Urbanist-Regular.ttf') format('ttf');
+  font-weight: 400;
+}
+
+* {
+  font-family:'Urbanist', sans-serif !important;
+  font-weight: 400;
+  font-size: 14px;
+}
+
 h1 {
-    font-size: 24px;
+    font-size: 28px;
 }
 
 h2 {
-    font-size: 20px;
+    font-size: 22px;
 }
 
 h3 {
