@@ -13,12 +13,12 @@
         width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
 
         .logo {
-          display: flex;
-          align-items: center;
+            display: flex;
+            align-items: center;
         }
 
-        img{
-          width: 60px;
+        img {
+            width: 60px;
         }
     }
 
