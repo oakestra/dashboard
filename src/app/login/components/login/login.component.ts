@@ -18,7 +18,7 @@ export class LoginComponent {
     sm_ip = environment.apiUrl;
     form: FormGroup;
     useOrganization = false;
-    showPassword = true;
+    showPassword = false;
 
     constructor(
         private router: Router,

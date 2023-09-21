@@ -1,76 +1,77 @@
-<nb-layout class="layout">
-    <nb-sidebar>
-        <div class="sidenav-buttons">
-            <button nbButton ghost (click)="back.emit()">
-                <nb-icon nbSuffix icon="arrow-circle-left-outline"></nb-icon>
-                Back
-            </button>
-        </div>
-        <div class="organization-list">
-            <div
-                class="organization-entry"
-                [class.selected]="o._id === selected?._id"
-                *ngFor="let o of organizations$ | async"
-            >
-                <button nbButton ghost (click)="changeSelected(o)" class="organization-button" type="button">
-                    <nb-icon icon="radio-button-off"></nb-icon>
-                    {{ o.name }}
+<div class="orga-layout">
+    <nb-layout class="nbLayout">
+        <nb-layout-column>
+            <div class="sidenav-buttons">
+                <button nbButton ghost (click)="back.emit()">
+                    <nb-icon nbSuffix icon="arrow-circle-left-outline"></nb-icon>
+                    Back
                 </button>
             </div>
-        </div>
-    </nb-sidebar>
-    <nb-layout-column>
-        <div>
-            <h2>Current Organization: {{ selected?.name }}</h2>
-        </div>
-        <nb-tabset fullWidth>
-            <nb-tab class="tab" tabTitle="General">
-                <div class="tab">
-                    <nb-form-field class="input-field searchForm">
-                        <p>Organization Name:</p>
-                        <input
-                            placeholder="Organization Name"
-                            (change)="save()"
-                            nbInput
-                            type="text"
-                            [(ngModel)]="name"
-                        />
-                    </nb-form-field>
-                </div>
-            </nb-tab>
-            <nb-tab tabTitle="Manage Members ({{ selected?.member.length }})">
-                <div class="tab">
-                    <div class="w3-row addOrganization">
-                        <div class="w3-col l7 m8">
-                            <nb-form-field class="input-field searchForm">
-                                <input
-                                    placeholder="Search by username"
-                                    (ngModelChange)="search($event)"
-                                    nbInput
-                                    [(ngModel)]="searchText"
-                                    type="text"
-                                />
-                                <button *ngIf="searchText" nbSuffix (click)="resetSearch()">
-                                    <nb-icon icon="close-outline"></nb-icon>
-                                </button>
-                            </nb-form-field>
-                        </div>
-
-                        <div class="w3-col l5 m4 w3-right-align">
-                            <button (click)="addMember()" nbButton status="primary">
-                                <nb-icon icon="plus"></nb-icon>
-                                Add member
-                            </button>
-                        </div>
+            <div class="organization-list">
+                <nb-radio-group
+                    (ngModelChange)="changeSelected($event)"
+                    [(ngModel)]="selected"
+                    *ngFor="let o of organizations$ | async"
+                >
+                    <nb-radio [value]="o">
+                        {{ o.name }}
+                    </nb-radio>
+                </nb-radio-group>
+            </div>
+        </nb-layout-column>
+        <nb-layout-column>
+            <div>
+                <h2>Current Organization: {{ selected?.name }}</h2>
+            </div>
+            <nb-tabset fullWidth>
+                <nb-tab class="tab" tabTitle="General">
+                    <div class="tab">
+                        <nb-form-field class="input-field searchForm">
+                            <p>Organization Name:</p>
+                            <input
+                                placeholder="Organization Name"
+                                (change)="save()"
+                                nbInput
+                                type="text"
+                                [(ngModel)]="name"
+                            />
+                        </nb-form-field>
                     </div>
-                    <app-member-item
-                        *ngIf="user.length !== 0"
-                        [searchedMember]="searchedMember"
-                        (removeEvent)="remove($event)"
-                        (updateRoles)="updateOrganization($event)"
-                    ></app-member-item>
-                </div>
-            </nb-tab>
-        </nb-tabset>
-    </nb-layout-column>
-</nb-layout>
+                </nb-tab>
+                <nb-tab tabTitle="Manage Members ({{ selected?.member.length }})">
+                    <div class="tab">
+                        <div class="w3-row addOrganization">
+                            <div class="w3-col l7 m8">
+                                <nb-form-field class="input-field searchForm">
+                                    <input
+                                        placeholder="Search by username"
+                                        (ngModelChange)="search($event)"
+                                        nbInput
+                                        [(ngModel)]="searchText"
+                                        type="text"
+                                    />
+                                    <button *ngIf="searchText" nbSuffix (click)="resetSearch()">
+                                        <nb-icon icon="close-outline"></nb-icon>
+                                    </button>
+                                </nb-form-field>
+                            </div>
+
+                            <div class="w3-col l5 m4 w3-right-align">
+                                <button (click)="addMember()" nbButton status="primary">
+                                    <nb-icon icon="plus"></nb-icon>
+                                    Add member
+                                </button>
+                            </div>
+                        </div>
+                        <app-member-item
+                            *ngIf="user.length !== 0"
+                            [searchedMember]="searchedMember"
+                            (removeEvent)="remove($event)"
+                            (updateRoles)="updateOrganization($event)"
+                        ></app-member-item>
+                    </div>
+                </nb-tab>
+            </nb-tabset>
+        </nb-layout-column>
+    </nb-layout>
+</div>

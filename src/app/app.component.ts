@@ -19,7 +19,7 @@ export class AppComponent implements AfterViewInit {
                 this.themeService.changeTheme('dark');
             }
         } else {
-            this.themeService.changeTheme('default');
+            this.themeService.changeTheme('dark');
         }
     }
 }

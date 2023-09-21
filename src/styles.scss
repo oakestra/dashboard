@@ -40,3 +40,13 @@ button {
     display: flex;
     justify-content: flex-end;
 }
+
+.orga-layout {
+    nb-layout .layout {
+        min-height: 10vh !important;
+    }
+
+  .scrollable-container{
+    height: 100% !important;
+  }
+}
