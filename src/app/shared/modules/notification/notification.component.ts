@@ -6,9 +6,9 @@ import { NotificationService } from './notification.service';
     selector: 'app-notification',
     template: `
         <div class="center">
-            <mat-icon *ngIf="type === Type.error">error</mat-icon>
-            <mat-icon *ngIf="type === Type.information">info</mat-icon>
-            <mat-icon *ngIf="type === Type.success">check_circle</mat-icon>
+            <mat-icon class="notification-icon" *ngIf="type === Type.error">error</mat-icon>
+            <mat-icon class="notification-icon" *ngIf="type === Type.information">info</mat-icon>
+            <mat-icon class="notification-icon" *ngIf="type === Type.success">check_circle</mat-icon>
             <p class="addButtonDiv">{{ massage }}</p>
         </div>
     `,
@@ -22,6 +22,10 @@ import { NotificationService } from './notification.service';
                 display: inline-block;
                 vertical-align: middle;
                 text-align: center;
+            }
+
+            .notification-icon {
+                margin-right: 7px;
             }
         `,
     ],
