@@ -39,7 +39,10 @@ export class ServiceEffects {
             ofType(serviceActions.postService),
             mergeMap(({ service }) =>
                 this.apiService.addService(service).pipe(
-                    map((serviceId) => serviceActions.postServiceSuccess({ service, serviceId })),
+                    map((serviceId) => {
+                        this.notifyService.notify(NotificationType.success, 'Service created successfully!');
+                        return serviceActions.postServiceSuccess({ service, serviceId });
+                    }),
                     tap(() => this.router.navigate(['/control'])),
                     catchError((error) => {
                         this.notifyService.notify(NotificationType.error, 'File was not in the correct format');
@@ -55,8 +58,17 @@ export class ServiceEffects {
             ofType(serviceActions.deleteService),
             switchMap(({ service }) =>
                 this.apiService.deleteService(service).pipe(
-                    map(() => serviceActions.deleteServiceSuccess({ service })),
-                    catchError((error) => of(serviceActions.deleteServiceError({ error: error.message }))),
+                    map(() => {
+                        this.notifyService.notify(
+                            NotificationType.success,
+                            `Service ${service.microservice_name} deleted successfully!`,
+                        );
+                        return serviceActions.deleteServiceSuccess({ service });
+                    }),
+                    catchError((error) => {
+                        this.notifyService.notify(NotificationType.error, 'Service deletion failed');
+                        return of(serviceActions.deleteServiceError({ error: error.message }));
+                    }),
                 ),
             ),
         ),
@@ -67,8 +79,17 @@ export class ServiceEffects {
             ofType(serviceActions.updateService),
             switchMap(({ service }) =>
                 this.apiService.updateService(service, service._id.$oid).pipe(
-                    map((service) => serviceActions.updateServiceSuccess({ service })),
-                    catchError((error) => of(serviceActions.updateServiceError({ error: error.message }))),
+                    map((service) => {
+                        this.notifyService.notify(
+                            NotificationType.success,
+                            `Service ${service.microservice_name} modified successfully!`,
+                        );
+                        return serviceActions.updateServiceSuccess({ service });
+                    }),
+                    catchError((error) => {
+                        this.notifyService.notify(NotificationType.error, 'Service modification failed');
+                        return of(serviceActions.updateServiceError({ error: error.message }));
+                    }),
                 ),
             ),
         ),

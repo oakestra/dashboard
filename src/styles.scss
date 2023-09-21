@@ -141,11 +141,11 @@ text.id {
 }
 
 .error-snackbar {
-    background-color: #a31919;
+    --mdc-snackbar-container-color: #a31919;
 }
 
 .success-snackbar {
-    background-color: #28a513;
+    --mdc-snackbar-container-color: #28a513;
 }
 
 mat-card {

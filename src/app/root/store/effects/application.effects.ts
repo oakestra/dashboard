@@ -5,6 +5,8 @@ import { of } from 'rxjs';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import * as applicationActions from '../actions/application.action';
 import * as serviceActions from '../actions/service.actions';
+import { NotificationType } from '../../interfaces/notification';
+import { NotificationService } from '../../../shared/modules/notification/notification.service';
 
 @Injectable()
 export class ApplicationEffects {
@@ -25,8 +27,17 @@ export class ApplicationEffects {
             ofType(applicationActions.deleteApplication),
             switchMap(({ application }) =>
                 this.apiService.deleteApplication(application).pipe(
-                    map(() => applicationActions.deleteApplicationSuccess({ application })),
-                    catchError((error) => of(applicationActions.deleteApplicationError({ error: error.message }))),
+                    map(() => {
+                        this.notifyService.notify(
+                            NotificationType.success,
+                            `Application ${application.application_name} deleted successfully!`,
+                        );
+                        return applicationActions.deleteApplicationSuccess({ application });
+                    }),
+                    catchError((error) => {
+                        this.notifyService.notify(NotificationType.error, 'Application deletion failed');
+                        return of(applicationActions.deleteApplicationError({ error: error.message }));
+                    }),
                 ),
             ),
         ),
@@ -38,8 +49,17 @@ export class ApplicationEffects {
             switchMap(({ application }) =>
                 this.apiService.addApplication(application).pipe(
                     // TODO Get the app form the api and store it with the id
-                    map(() => applicationActions.postApplicationSuccess({ application })),
-                    catchError((error) => of(applicationActions.postApplicationError({ error: error.message }))),
+                    map(() => {
+                        this.notifyService.notify(
+                            NotificationType.success,
+                            `Application ${application.application_name} created successfully!`,
+                        );
+                        return applicationActions.postApplicationSuccess({ application });
+                    }),
+                    catchError((error) => {
+                        this.notifyService.notify(NotificationType.error, 'Application creation failed');
+                        return of(applicationActions.postApplicationError({ error: error.message }));
+                    }),
                 ),
             ),
         ),
@@ -50,8 +70,17 @@ export class ApplicationEffects {
             ofType(applicationActions.updateApplication),
             switchMap(({ application }) =>
                 this.apiService.updateApplication(application).pipe(
-                    map(() => applicationActions.updateApplicationSuccess({ application })),
-                    catchError((error) => of(applicationActions.updateApplicationError({ error: error.message }))),
+                    map(() => {
+                        this.notifyService.notify(
+                            NotificationType.success,
+                            `Application ${application.application_name} modified successfully!`,
+                        );
+                        return applicationActions.updateApplicationSuccess({ application });
+                    }),
+                    catchError((error) => {
+                        this.notifyService.notify(NotificationType.error, 'Application modification failed');
+                        return of(applicationActions.updateApplicationError({ error: error.message }));
+                    }),
                 ),
             ),
         ),
@@ -69,5 +98,9 @@ export class ApplicationEffects {
         ),
     );
 
-    constructor(private actions$: Actions, private apiService: ApiService) {}
+    constructor(
+        private actions$: Actions,
+        private apiService: ApiService,
+        private notifyService: NotificationService,
+    ) {}
 }
