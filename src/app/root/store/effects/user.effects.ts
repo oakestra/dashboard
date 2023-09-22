@@ -4,6 +4,8 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import * as userActions from '../actions/user.actions';
 import { ApiService } from '../../../shared/modules/api/api.service';
+import { NotificationType } from '../../interfaces/notification';
+import { NotificationService } from '../../../shared/modules/notification/notification.service';
 
 @Injectable()
 export class UserEffects {
@@ -24,8 +26,14 @@ export class UserEffects {
             ofType(userActions.postUser),
             switchMap(({ user }) =>
                 this.apiService.registerUser(user).pipe(
-                    map((newUser) => userActions.postUserSuccess({ user: newUser })),
-                    catchError((error) => of(userActions.postUserError({ error: error.message }))),
+                    map((newUser) => {
+                        this.notifyService.notify(NotificationType.success, `User ${user.name} created successfully!`);
+                        return userActions.postUserSuccess({ user: newUser });
+                    }),
+                    catchError((error) => {
+                        this.notifyService.notify(NotificationType.error, 'User creation failed');
+                        return of(userActions.postUserError({ error: error.message }));
+                    }),
                 ),
             ),
         ),
@@ -36,8 +44,14 @@ export class UserEffects {
             ofType(userActions.updateUser),
             switchMap(({ user }) =>
                 this.apiService.updateUser(user).pipe(
-                    map(() => userActions.updateUserSuccess({ user })),
-                    catchError((error) => of(userActions.updateUserError({ error: error.message }))),
+                    map(() => {
+                        this.notifyService.notify(NotificationType.success, `User ${user.name} modified successfully!`);
+                        return userActions.updateUserSuccess({ user });
+                    }),
+                    catchError((error) => {
+                        this.notifyService.notify(NotificationType.error, 'User modification failed');
+                        return of(userActions.updateUserError({ error: error.message }));
+                    }),
                 ),
             ),
         ),
@@ -48,8 +62,14 @@ export class UserEffects {
             ofType(userActions.deleteUser),
             switchMap(({ user }) =>
                 this.apiService.deleteUser(user).pipe(
-                    map(() => userActions.deleteUserSuccess({ user })),
-                    catchError((error) => of(userActions.deleteUserError({ error: error.message }))),
+                    map(() => {
+                        this.notifyService.notify(NotificationType.success, `User ${user.name} deleted successfully!`);
+                        return userActions.deleteUserSuccess({ user });
+                    }),
+                    catchError((error) => {
+                        this.notifyService.notify(NotificationType.error, 'User deletion failed');
+                        return of(userActions.deleteUserError({ error: error.message }));
+                    }),
                 ),
             ),
         ),
@@ -67,5 +87,9 @@ export class UserEffects {
         ),
     );
 
-    constructor(private actions$: Actions, private apiService: ApiService) {}
+    constructor(
+        private actions$: Actions,
+        private apiService: ApiService,
+        private notifyService: NotificationService,
+    ) {}
 }
