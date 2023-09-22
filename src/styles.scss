@@ -46,22 +46,22 @@ button {
         min-height: 10vh !important;
     }
 
-  .scrollable-container{
-    height: 100% !important;
-  }
+    .scrollable-container{
+        height: 100% !important;
+    }
 }
 
 .mat-mdc-snack-bar-container {
-  &.error-snackbar {
-    --mdc-snackbar-container-color: #a31919 !important;
-  }
+    &.error-snackbar {
+        --mdc-snackbar-container-color: #a31919 !important;
+    }
 
-  &.success-snackbar {
-    --mdc-snackbar-container-color: #03b413 !important;
-  }
+    &.success-snackbar {
+        --mdc-snackbar-container-color: #03b413 !important;
+    }
 
-  &.warn-snackbar {
-    --mdc-snackbar-container-color: #a28206 !important;
-  }
+    &.warn-snackbar {
+        --mdc-snackbar-container-color: #a28206 !important;
+    }
 }
 
