@@ -7,21 +7,30 @@ import { NotificationService } from './notification.service';
     template: `
         <div class="center">
             <nb-icon class="notification-icon" *ngIf="type === Type.error" icon="alert-circle-outline"></nb-icon>
-            <nb-icon class="notification-icon" *ngIf="type === Type.information" icon="alert-triangle-outline"></nb-icon>
-            <nb-icon class="notification-icon" *ngIf="type === Type.success" icon="checkmark-circle-2-outline"></nb-icon>
-            <p class="addButtonDiv">{{ massage }}</p>
+            <nb-icon
+                class="notification-icon"
+                *ngIf="type === Type.information"
+                icon="alert-triangle-outline"
+            ></nb-icon>
+            <nb-icon
+                class="notification-icon"
+                *ngIf="type === Type.success"
+                icon="checkmark-circle-2-outline"
+            ></nb-icon>
+            <p class="notification-text">{{ massage }}</p>
         </div>
     `,
     styles: [
         `
             .center {
                 text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
-            .addButtonDiv {
-                display: inline-block;
-                vertical-align: middle;
-                text-align: center;
+            .notification-text {
+                margin: 0;
             }
 
             .notification-icon {
