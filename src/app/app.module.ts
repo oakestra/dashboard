@@ -27,7 +27,6 @@ import { routes } from './app.routes';
 import { AppComponent } from './app.component';
 import { UserEffects } from './root/store';
 import { ThemeModule } from './@theme/theme.module';
-import { CoreModule } from './@core/core.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -54,7 +53,6 @@ import { CoreModule } from './@core/core.module';
         NbDialogModule.forRoot(),
         NbWindowModule.forRoot(),
         NbToastrModule.forRoot(),
-        CoreModule.forRoot(),
         ThemeModule.forRoot(),
         NbCardModule,
     ],

@@ -1,9 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
-
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { LayoutService } from '../../../@core/utils';
 import { UserService } from '../../../shared/modules/auth/user.service';
 import { IUser } from '../../../root/interfaces/user';
 import { AuthService } from '../../../shared/modules/auth/auth.service';
@@ -27,7 +25,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private menuService: NbMenuService,
         private themeService: NbThemeService,
         private userService: UserService,
-        private layoutService: LayoutService,
         private breakpointService: NbMediaBreakpointsService,
         private authService: AuthService,
     ) {}
@@ -67,8 +64,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     toggleSidebar(): boolean {
         this.sidebarService.toggle(true, 'menu-sidebar');
-        this.layoutService.changeLayoutSize();
-
         return false;
     }
 
