@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
-import * as uuid from 'uuid';
+// import * as uuid from 'uuid';
 
 @Component({
     selector: 'app-geo-constraints',
@@ -16,7 +16,8 @@ export class GeoConstraintsComponent implements OnInit {
     formGroupName: string;
 
     constructor(private fb: FormBuilder, private parent: FormGroupDirective) {
-        this.formGroupName = 'geo_' + uuid.v4();
+        this.formGroupName = 'geo_';
+        // this.formGroupName = 'geo_' + uuid.v4(); // TODO
     }
 
     ngOnInit(): void {

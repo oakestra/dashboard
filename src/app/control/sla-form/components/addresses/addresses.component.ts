@@ -12,7 +12,6 @@ export class AddressesComponent extends SubComponent implements OnInit {
     @Input() service: IService;
     form: FormGroup;
     instances: IInstanceAddress[] = [];
-    panelOpenState = false;
 
     constructor(private fb: FormBuilder) {
         super();

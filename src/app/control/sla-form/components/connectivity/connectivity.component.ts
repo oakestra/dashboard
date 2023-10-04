@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
+import { NbDialogService } from '@nebular/theme';
 import { ICon_constraints, IConnectivity, IService } from '../../../../root/interfaces/service';
 import { DialogConnectionSettingsView } from '../dialogs/content-connection/dialog-connection-settings-view.component';
 import { SubComponent } from '../../../../root/classes/subComponent';
@@ -20,7 +20,7 @@ export class ConnectivityComponent extends SubComponent implements OnInit {
     services$: Observable<IService[]> = this.store.pipe(select(selectCurrentServices));
     dropdownServices: IService[];
 
-    constructor(public dialog: MatDialog, private store: Store<appReducer.AppState>) {
+    constructor(public dialog: NbDialogService, private store: Store<appReducer.AppState>) {
         super();
     }
 
@@ -50,9 +50,11 @@ export class ConnectivityComponent extends SubComponent implements OnInit {
     }
 
     openDialog(index: number) {
-        const dialogRef = this.dialog.open(DialogConnectionSettingsView, { data: this.connectivity[index] });
+        const dialogRef = this.dialog.open(DialogConnectionSettingsView, {
+            context: { data: this.connectivity[index] },
+        });
 
-        dialogRef.afterClosed().subscribe((result) => {
+        dialogRef.onClose.subscribe((result) => {
             console.log(result);
             this.saveDialogData(result, index);
         });

@@ -1,8 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import { NbIconModule } from '@nebular/theme';
 import { UserService } from './modules/auth/user.service';
 import { AuthService } from './modules/auth/auth.service';
 import { AuthGuardService } from './modules/auth/auth-guard.service';
@@ -13,7 +12,7 @@ import { RoleRouterGuard } from './modules/auth/role-guard.service';
 import { WINDOW_PROVIDERS } from './modules/helper/window.providers';
 
 @NgModule({
-    imports: [MatIconModule, CommonModule, MatButtonModule],
+    imports: [CommonModule, NbIconModule],
     exports: [],
     providers: [UserService, AuthService, AuthGuardService, DatePipe, RoleRouterGuard, WINDOW_PROVIDERS],
     declarations: [NotificationComponent],

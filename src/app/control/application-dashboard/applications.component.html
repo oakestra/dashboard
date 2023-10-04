@@ -1,0 +1,23 @@
+<nb-card>
+    <nb-card-header>
+        <div class="app-header">
+            <h1>Applications</h1>
+            <button nbButton (click)="openDialogApp(DialogAction.ADD, undefined)">
+                <nb-icon icon="plus"></nb-icon>
+                Add Application
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <nb-list>
+            <nb-list-item *ngFor="let app of apps$ | async">
+                <div class="app-card">
+                    <p>{{ app.application_name }}</p>
+                    <button (click)="openDialogApp(DialogAction.UPDATE, app)" nbButton ghost>
+                        <nb-icon icon="settings"></nb-icon>
+                    </button>
+                </div>
+            </nb-list-item>
+        </nb-list>
+    </nb-card-body>
+</nb-card>

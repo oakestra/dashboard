@@ -1,64 +1,70 @@
-<div>
-    <h4 class="addButtonDiv">Environment:</h4>
-    <button (click)="addEnvironment()" class="add-btn" mat-mini-fab type="button">
-        <mat-icon>add</mat-icon>
-    </button>
-</div>
-
-<div class="w3-row">
-    <div *ngFor="let env of environment; index as i; trackBy: trackByIdx">
-        <div class="w3-col l4 m6 s12 w3-row-padding">
-            <mat-form-field>
-                <mat-label>Environment</mat-label>
-                <input [(ngModel)]="environment[i]" matInput type="text" />
-
-                <button matSuffix (click)="deleteEnvironment(i)" mat-icon-button type="button">
-                    <mat-icon>clear</mat-icon>
-                </button>
-            </mat-form-field>
+<nb-card>
+    <nb-card-header>Additional Arguments</nb-card-header>
+    <nb-card-body>
+        <div class="addButtonDiv">
+            <h4>Environment:</h4>
+            <button (click)="addEnvironment()" nbButton ghost size="large">
+                <nb-icon icon="plus"></nb-icon>
+            </button>
         </div>
-    </div>
-</div>
 
-<div>
-    <h4 class="addButtonDiv">Cmd:</h4>
-    <button (click)="addCmd()" class="add-btn" mat-mini-fab type="button">
-        <mat-icon>add</mat-icon>
-    </button>
-</div>
-
-<div class="w3-row">
-    <div *ngFor="let cmd of cmdArray; index as i; trackBy: trackByIdx">
-        <div class="w3-col l4 m6 s12 w3-row-padding">
-            <mat-form-field>
-                <mat-label>Cmd</mat-label>
-                <input [(ngModel)]="cmdArray[i]" matInput type="text" />
-                <button matSuffix (click)="deleteCmd(i)" mat-icon-button type="button">
-                    <mat-icon>clear</mat-icon>
-                </button>
-            </mat-form-field>
+        <div class="w3-row">
+            <div *ngFor="let env of environment; index as i; trackBy: trackByIdx">
+                <div class="w3-col l4 m6 s12 w3-row-padding">
+                    <nb-form-field>
+                        <input [(ngModel)]="environment[i]" nbInput placeholder="Environment" type="text" />
+                        <button nbSuffix (click)="deleteEnvironment(i)" nbButton ghost size="large">
+                            <nb-icon icon="trash-2"></nb-icon>
+                        </button>
+                    </nb-form-field>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-<div>
-    <h4 class="addButtonDiv">Arguments:</h4>
-    <button (click)="addArgument()" class="add-btn" mat-mini-fab type="button">
-        <mat-icon>add</mat-icon>
-    </button>
-</div>
-
-<div class="w3-row">
-    <div *ngFor="let args of argsArray; index as i; trackBy: trackByIdx">
-        <div class="w3-col l4 m6 s12 w3-row-padding">
-            <mat-form-field>
-                <mat-label>Args - Key Value</mat-label>
-                <input [(ngModel)]="argsArray[i]" class="addButtonDiv" matInput type="text" />
-
-                <button matSuffix (click)="deleteArgument(i)" mat-icon-button type="button">
-                    <mat-icon>clear</mat-icon>
-                </button>
-            </mat-form-field>
+        <div class="addButtonDiv">
+            <h4>Cmd:</h4>
+            <button (click)="addCmd()" nbButton ghost size="large">
+                <nb-icon icon="plus"></nb-icon>
+            </button>
         </div>
-    </div>
-</div>
+
+        <div class="w3-row">
+            <div *ngFor="let cmd of cmdArray; index as i; trackBy: trackByIdx">
+                <div class="w3-col l4 m6 s12 w3-row-padding">
+                    <nb-form-field>
+                        <input [(ngModel)]="cmdArray[i]" nbInput placeholder="Cmd" type="text" />
+                        <button nbSuffix (click)="deleteCmd(i)" nbButton ghost size="large">
+                            <nb-icon icon="trash-2"></nb-icon>
+                        </button>
+                    </nb-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="addButtonDiv">
+            <h4>Arguments:</h4>
+            <button (click)="addArgument()" nbButton ghost size="large">
+                <nb-icon icon="plus"></nb-icon>
+            </button>
+        </div>
+
+        <div class="w3-row">
+            <div *ngFor="let args of argsArray; index as i; trackBy: trackByIdx">
+                <div class="w3-col l4 m6 s12 w3-row-padding">
+                    <nb-form-field>
+                        <input
+                            [(ngModel)]="argsArray[i]"
+                            placeholder="Args - Key Value"
+                            class="addButtonDiv"
+                            nbInput
+                            type="text"
+                        />
+                        <button nbSuffix (click)="deleteArgument(i)" nbButton ghost size="large">
+                            <nb-icon icon="trash-2"></nb-icon>
+                        </button>
+                    </nb-form-field>
+                </div>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

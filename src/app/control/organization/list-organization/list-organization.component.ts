@@ -2,8 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
+import { NbDialogService } from '@nebular/theme';
 import { IOrganization } from '../../../root/interfaces/organization';
 import { selectOrganization } from '../../../root/store/selectors/organization.selector';
 import { ApiService } from '../../../shared/modules/api/api.service';
@@ -28,7 +28,7 @@ export class ListOrganizationComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private api: ApiService,
-        private dialog: MatDialog,
+        private dialog: NbDialogService,
         private datePipe: DatePipe,
         private notifyService: NotificationService,
         private store: Store<appReducer.AppState>,
@@ -72,8 +72,8 @@ export class ListOrganizationComponent implements OnInit {
             text: 'Delete organization: ' + organization.name,
             type: 'organization',
         };
-        const dialogRef = this.dialog.open(DialogConfirmationView, { data });
-        dialogRef.afterClosed().subscribe((result) => {
+        const dialogRef = this.dialog.open(DialogConfirmationView, { context: { data } });
+        dialogRef.onClose.subscribe((result) => {
             console.log(result);
             if (result.event === true) {
                 this.store.dispatch(deleteOrganization({ organization }));

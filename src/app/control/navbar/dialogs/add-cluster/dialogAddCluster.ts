@@ -1,9 +1,6 @@
-import { Component, Inject, OnInit, Optional } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-// import * as L from 'leaflet';
-// import 'leaflet-routing-machine';
-// import 'node_modules/leaflet-geosearch/dist/geosearch.css';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { NbDialogRef } from '@nebular/theme';
 import { NotificationService } from '../../../../shared/modules/notification/notification.service';
 import { NotificationType } from '../../../../root/interfaces/notification';
 
@@ -15,6 +12,7 @@ import { NotificationType } from '../../../../root/interfaces/notification';
 
 // TODO Check if this code works and improve it (.ts .html file)
 export class DialogAddClusterView implements OnInit {
+    @Input() data: any;
     action: string;
     local_data: any;
     title = 'Add Cluster';
@@ -26,12 +24,8 @@ export class DialogAddClusterView implements OnInit {
     marker: any;
     circlemarker: any;
 
-    constructor(
-        public dialogRef: MatDialogRef<DialogAddClusterView>,
-        @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
-        private notifyService: NotificationService,
-    ) {
-        this.local_data = { ...data };
+    constructor(public dialogRef: NbDialogRef<DialogAddClusterView>, private notifyService: NotificationService) {
+        this.local_data = { ...this.data };
         this.action = this.local_data.action;
 
         if (this.action === 'Add') {

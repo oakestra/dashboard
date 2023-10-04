@@ -1,12 +1,17 @@
 <div class="addOrganization">
-    <mat-form-field appearance="fill" class="input-field searchForm">
-        <mat-label>Search organization</mat-label>
-        <input (ngModelChange)="search($event)" [(ngModel)]="searchText" matInput type="text" />
-        <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+    <nb-form-field appearance="fill" class="input-field searchForm">
+        <input
+            placeholder="Search organization"
+            (ngModelChange)="search($event)"
+            [(ngModel)]="searchText"
+            nbInput
+            type="text"
+        />
+        <nb-icon nbSuffix icon="search" pack="eva"></nb-icon>
+    </nb-form-field>
 
-    <button (click)="newOrganization()" mat-flat-button color="primary">
-        <mat-icon>add_circle_outline</mat-icon>
+    <button (click)="newOrganization()" nbButton color="primary">
+        <nb-icon nbSuffix icon="plus-circle-outline" pack="eva"></nb-icon>
         Create Organization
     </button>
 </div>
@@ -20,23 +25,25 @@
     <ng-container matColumnDef="roles">
         <th *matHeaderCellDef mat-header-cell>Member</th>
         <td *matCellDef="let element" mat-cell>
-            <div
-                matTooltip="View members"
-                matTooltipPosition="before"
+            <button
+                nbTooltipPlacement="start"
+                nbButton
+                ghost
+                nbTooltip="View members"
                 class="member"
                 (click)="editOrganization(element)"
             >
-                <p>{{ element.member.length }}</p>
-                <mat-icon>person</mat-icon>
-            </div>
+                {{ element.member.length }}
+                <nb-icon nbSuffix icon="person"></nb-icon>
+            </button>
         </td>
     </ng-container>
 
     <ng-container matColumnDef="symbol">
         <th *matHeaderCellDef mat-header-cell class="alignCenter"></th>
         <td *matCellDef="let element" mat-cell class="alignRight">
-            <button (click)="openDeleteDialog(element)" mat-icon-button>
-                <span><mat-icon>delete</mat-icon></span>
+            <button (click)="openDeleteDialog(element)" nbButton ghost>
+                <nb-icon icon="trash-2"></nb-icon>
             </button>
         </td>
     </ng-container>

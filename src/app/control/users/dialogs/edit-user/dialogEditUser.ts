@@ -1,7 +1,7 @@
-import { Component, Inject, Optional } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { NbDialogRef } from '@nebular/theme';
 import { IUser } from '../../../../root/interfaces/user';
 import { DialogAction } from '../../../../root/enums/dialogAction';
 import { Role } from '../../../../root/enums/roles';
@@ -10,9 +10,13 @@ import { IDialogAttribute } from '../../../../root/interfaces/dialogAttribute';
 @Component({
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-edit-user.html',
-    styles: ['.download-credentials{display:flex; flex-direction: row-reverse; padding-right: 8px}'],
+    styles: [
+        '.download-credentials{display:flex; flex-direction: row-reverse; padding-right: 8px}',
+        'nb-form-field {padding: 10px 0 10px 0}',
+        'button {margin: 10px 0 0 10px}',
+    ],
 })
-export class DialogEditUserView {
+export class DialogEditUserView implements OnInit {
     DialogAction = DialogAction;
     roles = Object.values(Role);
     action: DialogAction;
@@ -22,14 +26,19 @@ export class DialogEditUserView {
     buttonText = '';
     roleOptions: FormGroup;
 
+    @Input() data: IDialogAttribute;
+    @Input() test: any;
+
     constructor(
-        public dialogRef: MatDialogRef<DialogEditUserView>,
+        public dialogRef: NbDialogRef<DialogEditUserView>,
         private fb: FormBuilder,
         private datePipe: DatePipe,
-        @Optional() @Inject(MAT_DIALOG_DATA) public data: IDialogAttribute,
-    ) {
-        this.user = data.content as IUser;
-        this.action = data.action;
+    ) {}
+
+    ngOnInit(): void {
+        console.log(this.data);
+        this.user = this.data.content as IUser;
+        this.action = this.data.action;
         this.title = 'Editing user...';
 
         this.roleOptions = this.fb.group(
@@ -40,7 +49,7 @@ export class DialogEditUserView {
         );
 
         if (this.data.action === DialogAction.UPDATE) {
-            this.form = fb.group({
+            this.form = this.fb.group({
                 name: [this.user.name],
                 email: [this.user.email],
                 password: [this.user.password],
@@ -53,7 +62,7 @@ export class DialogEditUserView {
             this.buttonText = 'Create';
             this.title = 'Create new user...';
 
-            this.form = fb.group({
+            this.form = this.fb.group({
                 name: ['', UserValidators.containsWhitespace],
                 email: [''],
                 password: [''],

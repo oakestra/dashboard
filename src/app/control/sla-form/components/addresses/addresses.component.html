@@ -1,82 +1,87 @@
-<div class="w3-row">
-    <div class="w3-row-padding">
-        <mat-expansion-panel
-            class="panel"
-            (opened)="panelOpenState = true"
-            (closed)="panelOpenState = false"
-            hideToggle="true"
-        >
-            <mat-expansion-panel-header class="expansion-header">
-                <div class="header">
-                    <mat-panel-title
-                        >Addresses
-                        <mat-icon
-                            matTooltip="Optional - If the specified IP addresses are unoccupied, the service will be provided at these addresses."
-                        >
-                            info
-                        </mat-icon>
-                    </mat-panel-title>
-                    <mat-panel-description class="toggle">
-                        <mat-icon *ngIf="!panelOpenState">add</mat-icon>
-                        <mat-icon *ngIf="panelOpenState">remove</mat-icon>
-                    </mat-panel-description>
+<nb-card>
+    <nb-accordion>
+        <nb-accordion-item>
+            <nb-accordion-item-header class="expansion-header">
+                Addresses
+                <nb-icon
+                    icon="info"
+                    nbTooltip="Optional - If the specified IP addresses are unoccupied, the service will be provided at these addresses."
+                    pack="eva"
+                ></nb-icon>
+            </nb-accordion-item-header>
+            <nb-accordion-item-body>
+                <form [formGroup]="form">
+                    <div class="w3-row">
+                        <div class="w3-col l6 m6 s12 w3-row-padding">
+                            <nb-form-field>
+                                <label class="label">RR-IP</label>
+                                <input
+                                    fullWidth
+                                    placeholder="RR-IP"
+                                    nbInput
+                                    formControlName="rr_ip"
+                                    nbTooltip="Optional - IP chosen for round-robin addressation (10.30.30.30)"
+                                    type="text"
+                                />
+                            </nb-form-field>
+                        </div>
+
+                        <div class="w3-col l6 m6 s12 w3-row-padding">
+                            <nb-form-field>
+                                <label class="label">Closest IP</label>
+                                <input
+                                    fullWidth
+                                    nbInput
+                                    nbTooltip="Optional - The orchestrator may choose the closest IP to the given one"
+                                    type="text"
+                                    formControlName="closest_ip"
+                                    placeholder="Closest_ip"
+                                />
+                            </nb-form-field>
+                        </div>
+                    </div>
+                </form>
+                <br />
+
+                <!--  // TODO Support instances array-->
+                <div *ngFor="let inst of instances; index as i; trackBy: trackByIdx" class="full-width instance">
+                    <p>Instances:</p>
+                    <div class="w3-row">
+                        <div class="w3-col l4 m4 s12 w3-row-padding">
+                            <nb-form-field>
+                                <label class="label">From</label>
+                                <input
+                                    fullWidth
+                                    nbInput
+                                    placeholder="From"
+                                    type="text"
+                                    [(ngModel)]="instances[i].from"
+                                />
+                            </nb-form-field>
+                        </div>
+
+                        <div class="w3-col l4 m4 s12 w3-row-padding">
+                            <nb-form-field>
+                                <label class="label">To</label>
+                                <input fullWidth nbInput placeholder="To" type="text" [(ngModel)]="instances[i].to" />
+                            </nb-form-field>
+                        </div>
+
+                        <div class="w3-col l4 m4 s12 w3-row-padding">
+                            <nb-form-field>
+                                <label class="label">Start</label>
+                                <input
+                                    fullWidth
+                                    nbInput
+                                    placeholder="Start"
+                                    type="text"
+                                    [(ngModel)]="instances[i].start"
+                                />
+                            </nb-form-field>
+                        </div>
+                    </div>
                 </div>
-            </mat-expansion-panel-header>
-            <div [formGroup]="form">
-                <div class="w3-row">
-                    <div class="w3-col l5 m5 s12 w3-row-padding">
-                        <mat-form-field>
-                            <mat-label>RR-IP</mat-label>
-                            <input
-                                matInput
-                                formControlName="rr_ip"
-                                matTooltip="Optional - IP chosen for round-robin addressation (10.30.30.30)"
-                                type="text"
-                            />
-                        </mat-form-field>
-                    </div>
-
-                    <div class="w3-col l5 m5 s12 w3-row-padding">
-                        <mat-form-field>
-                            <mat-label>Closest_ip</mat-label>
-                            <input
-                                matInput
-                                matTooltip="Optional - The orchestrator may choose the closest IP to the given one"
-                                type="text"
-                                formControlName="closest_ip"
-                            />
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-
-            <!--  // TODO Support instances array-->
-            <div *ngFor="let inst of instances; index as i; trackBy: trackByIdx" class="full-width instance">
-                <h5>Instances:</h5>
-                <div class="w3-row">
-                    <div class="w3-col l3 m3 s12 w3-row-padding">
-                        <mat-form-field>
-                            <mat-label>From</mat-label>
-                            <input matInput type="text" [(ngModel)]="instances[i].from" />
-                        </mat-form-field>
-                    </div>
-
-                    <div class="w3-col l3 m3 s12 w3-row-padding">
-                        <mat-form-field>
-                            <mat-label>To</mat-label>
-                            <input matInput type="text" [(ngModel)]="instances[i].to" />
-                        </mat-form-field>
-                    </div>
-
-                    <div class="w3-col l3 m3 s12 w3-row-padding">
-                        <mat-form-field>
-                            <mat-label>Start</mat-label>
-                            <input matInput type="text" [(ngModel)]="instances[i].start" />
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-        </mat-expansion-panel>
-    </div>
-</div>
-<br />
+            </nb-accordion-item-body>
+        </nb-accordion-item>
+    </nb-accordion>
+</nb-card>
