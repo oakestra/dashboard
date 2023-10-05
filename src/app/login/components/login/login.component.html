@@ -1,53 +1,42 @@
-<nb-layout>
-    <nb-layout-column>
-        <nb-card class="login-form">
-            <img alt="Oakestra Logo" src="../../../../assets/img/color-full.png" />
-            <form [formGroup]="form" accept-charset="UTF-8" role="form">
-                <div class="info">
-                    <nb-checkbox (checkedChange)="tabChanged($event)" status="basic">Organization login</nb-checkbox>
-                    <nb-icon nbSuffix icon="info" nbTooltip="{{ sm_ip }}" pack="eva"></nb-icon>
-                </div>
-
-                <nb-form-field *ngIf="useOrganization">
-                    <input
-                        type="text"
-                        fullWidth
-                        nbInput
-                        formControlName="organization_name"
-                        placeholder="Organization"
-                    />
-                    <nb-icon nbSuffix icon="people" pack="eva"></nb-icon>
-                </nb-form-field>
-
-                <nb-form-field>
-                    <input type="text" fullWidth nbInput formControlName="username" placeholder="Username" />
-                    <nb-icon nbSuffix icon="person-outline" pack="eva"></nb-icon>
-                </nb-form-field>
-
-                <nb-form-field>
-                    <input
-                        placeholder="Password"
-                        fullWidth
-                        formControlName="password"
-                        [type]="getInputType()"
-                        nbInput
-                    />
-                    <button nbSuffix nbButton ghost (click)="toggleShowPassword()">
-                        <nb-icon
-                            [icon]="showPassword ? 'eye-outline' : 'eye-off-2-outline'"
-                            pack="eva"
-                            [attr.aria-label]="showPassword ? 'hide password' : 'show password'"
-                        >
-                        </nb-icon>
-                    </button>
-                </nb-form-field>
-                <span (click)="forgotPassword()" class="pull-right text-primary link">Forgot password?</span>
-            </form>
-            <div class="centerButton">
-                <button [disabled]="form.invalid" (click)="submitLogin()" nbButton outline status="primary">
-                    Sign in
-                </button>
+<mat-card class="login-form" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    <img alt="Oakestra Logo" mat-card-image src="../../../../assets/img/color-full.png" />
+    <mat-card-content>
+        <!--        <mat-icon class="connectingInfo" matTooltip="Connecting to: {{ sm_ip }}">info</mat-icon>-->
+        <form [formGroup]="form" accept-charset="UTF-8" role="form">
+            <div class="info">
+                <p><mat-checkbox (change)="tabChanged($event)"></mat-checkbox>Organization login</p>
+                <mat-icon matTooltip="{{ sm_ip }}">info</mat-icon>
             </div>
-        </nb-card>
-    </nb-layout-column>
-</nb-layout>
+
+            <mat-form-field *ngIf="useOrganization">
+                <mat-label>Organization</mat-label>
+                <input matInput formControlName="organization_name" placeholder="Organization" />
+                <mat-icon matPrefix>people</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Username</mat-label>
+                <input matInput formControlName="username" placeholder="Username" />
+                <mat-icon matPrefix>person</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input
+                    matInput
+                    type="password"
+                    formControlName="password"
+                    (keyup.enter)="submitLogin()"
+                    placeholder="Password"
+                />
+                <mat-icon matPrefix>password</mat-icon>
+            </mat-form-field>
+
+            <span (click)="forgotPassword()" class="pull-right text-primary link">Forgot password?</span>
+        </form>
+        <hr />
+        <div class="centerButton">
+            <button [disabled]="form.invalid" (click)="submitLogin()" color="primary" mat-flat-button>Sign in</button>
+        </div>
+    </mat-card-content>
+</mat-card>

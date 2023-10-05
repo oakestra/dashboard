@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NbDialogRef } from '@nebular/theme';
-import { DialogGraphConnectionView } from '../../../../control/service-dashboard/dialogs/graph-content-connection/dialog-graph-connection-view.component';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DialogGraphConnectionView } from '../../../../control/dev-home/dialogs/graph-content-connection/dialog-graph-connection-view.component';
 
 interface ConformationText {
     text: string;
@@ -11,16 +11,16 @@ interface ConformationText {
     selector: 'dialog-conformation-dialog',
     templateUrl: 'dialog-confirmation.html',
 })
-export class DialogConfirmationView implements OnInit {
-    @Input() data: ConformationText;
+export class DialogConfirmationView {
     text = '';
     type = '';
 
-    constructor(public dialogRef: NbDialogRef<DialogGraphConnectionView>) {}
-
-    ngOnInit(): void {
-        this.text = this.data.text;
-        this.type = this.data.type;
+    constructor(
+        public dialogRef: MatDialogRef<DialogGraphConnectionView>,
+        @Inject(MAT_DIALOG_DATA) public data: ConformationText,
+    ) {
+        this.text = data.text;
+        this.type = data.type;
     }
 
     confirm() {

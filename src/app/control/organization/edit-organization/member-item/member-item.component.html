@@ -1,26 +1,26 @@
 <div class="member-list">
     <div *ngFor="let m of searchedMember; let index = index" class="w3-row member-item">
         <div class="w3-col l3 m3 member-item-person">
-            <nb-icon>account_circle</nb-icon>
+            <mat-icon>account_circle</mat-icon>
             <p>&#160;{{ m.name }}</p>
         </div>
         <div class="w3-col l6 m6 roleSelect">
             <p *ngIf="!editItem[index]">{{ m.roles }}</p>
-            <nb-form-field *ngIf="editItem[index]" class="roleSelectField">
-                <nb-select [formControl]="roles[index]" multiple>
-                    <nb-option *ngFor="let role of rolesList" [value]="role">{{ role }}</nb-option>
-                </nb-select>
-            </nb-form-field>
+            <mat-form-field *ngIf="editItem[index]" class="roleSelectField">
+                <mat-select [formControl]="roles[index]" multiple>
+                    <mat-option *ngFor="let role of rolesList" [value]="role">{{ role }}</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
         <div class="w3-col l3 m3 editButtons">
-            <button (click)="saveRoles(index)" *ngIf="editItem[index]" nbButton ghost>
-                <nb-icon icon="save-outline"></nb-icon>
+            <button (click)="saveRoles(index)" *ngIf="editItem[index]" mat-icon-button>
+                <mat-icon>save</mat-icon>
             </button>
-            <button (click)="toggleEdit(index)" *ngIf="!editItem[index]" nbButton ghost>
-                <nb-icon icon="settings-2-outline"></nb-icon>
+            <button (click)="toggleEdit(index)" *ngIf="!editItem[index]" mat-icon-button>
+                <mat-icon>edit</mat-icon>
             </button>
-            <button (click)="removeMember(m)" nbButton ghost>
-                <nb-icon icon="close-square-outline"></nb-icon>
+            <button (click)="removeMember(m)" mat-icon-button>
+                <mat-icon>highlight_off</mat-icon>
             </button>
         </div>
     </div>

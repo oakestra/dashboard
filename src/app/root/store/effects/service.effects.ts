@@ -43,7 +43,7 @@ export class ServiceEffects {
                         this.notifyService.notify(NotificationType.success, 'Service created successfully!');
                         return serviceActions.postServiceSuccess({ service, serviceId });
                     }),
-                    tap(() => this.router.navigate(['/control/services'])),
+                    tap(() => this.router.navigate(['/control'])),
                     catchError((error) => {
                         this.notifyService.notify(NotificationType.error, 'File was not in the correct format');
                         return of(serviceActions.postServiceError({ error: error.message }));

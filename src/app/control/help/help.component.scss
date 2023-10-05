@@ -1,3 +1,9 @@
 .content-cards {
     margin: 20px 20px 20px 40px;
 }
+
+@media only screen and (max-width: 801px) {
+    #startTour {
+        display: none;
+    }
+}

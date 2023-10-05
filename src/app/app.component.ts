@@ -1,25 +1,16 @@
-import { AfterViewInit, Component } from '@angular/core';
-import { NbThemeService } from '@nebular/theme';
-import { CookieService } from 'ngx-cookie-service';
+import { Component, Inject, Renderer2 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
     selector: 'app-root',
     template: ' <div class="content light"><router-outlet></router-outlet></div>',
-    styles: ['.content{ width: 100vw;  height: 100vh;}'],
+    styles: ['.content{background-color: #3b474e;  width: 100vw;  height: 100vh;}'],
 })
-export class AppComponent implements AfterViewInit {
-    constructor(private themeService: NbThemeService, private cookieService: CookieService) {}
-
-    ngAfterViewInit() {
-        const cookieValue = this.cookieService.get('themeCookie');
-        const themeOptions = ['default', 'dark', 'cosmic', 'corporate'];
-        if (cookieValue) {
-            const data = JSON.parse(cookieValue);
-            if (themeOptions.includes(data.theme)) {
-                this.themeService.changeTheme('dark');
-            }
-        } else {
-            this.themeService.changeTheme('dark');
-        }
+export class AppComponent {
+    constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2) {
+        const darkMode = localStorage.getItem('darkMode');
+        const isDarkMode = darkMode ? JSON.parse(darkMode) : false;
+        const hostClass = isDarkMode ? 'theme-dark' : 'theme-light';
+        this.renderer.setAttribute(this.document.body, 'class', hostClass);
     }
 }

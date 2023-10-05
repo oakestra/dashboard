@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
-import { NbDialogRef } from '@nebular/theme';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
@@ -10,15 +10,14 @@ import { environment } from '../../../../../environments/environment';
 })
 // TODO Fix this component - what should it do?-->
 export class DialogGenerateTokenView {
-    @Input() data: any;
     key = new FormControl();
     cluster_name = '';
     username = '';
 
-    constructor(public dialogRef: NbDialogRef<DialogGenerateTokenView>) {
-        this.key.setValue(this.data.pairing_key);
-        this.cluster_name = this.data.cluster_name;
-        this.username = this.data.username;
+    constructor(public dialogRef: MatDialogRef<DialogGenerateTokenView>, @Inject(MAT_DIALOG_DATA) public data: any) {
+        this.key.setValue(data.pairing_key);
+        this.cluster_name = data.cluster_name;
+        this.username = data.username;
     }
 
     copyPairingKey(key: any) {

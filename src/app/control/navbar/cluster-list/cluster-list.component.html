@@ -1,62 +1,60 @@
-<nb-list>
+<mat-list-item>
     <div class="icon-link">
         <a>
-            <nb-icon icon="grid-outline"></nb-icon>
+            <mat-icon>grid_view</mat-icon>
             <span class="link_name"> <a (click)="showClusters()">Clusters</a></span>
         </a>
     </div>
 
     <ul class="sub-menu">
-        <nb-list-item>
-            <nb-accordion>
-                <nb-accordion-item-header>
-                    <h1 class="panel-title">Registered</h1>
-                </nb-accordion-item-header>
-                <nb-accordion-item-body>
-                    <div *ngFor="let cluster of clusters" class="items">
-                        <div *ngIf="!cluster.pairing_complete">
-                            <nb-radio-group
-                                (change)="handleChangeCluster(cluster)"
-                                [(ngModel)]="activeAppId"
-                                routerLink="/control"
-                            >
-                                <nb-radio [value]="cluster._id" class="menu-button">
-                                    <span class="sidenav-text">{{ cluster.cluster_name }}</span>
-                                </nb-radio>
-                            </nb-radio-group>
-                        </div>
+        <mat-list-item>
+            <mat-expansion-panel class="application-panel">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="panel-title"> Registered </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div *ngFor="let cluster of clusters" class="items">
+                    <div *ngIf="!cluster.pairing_complete">
+                        <mat-radio-group
+                            (change)="handleChangeCluster(cluster)"
+                            [(ngModel)]="activeAppId"
+                            routerLink="/control"
+                        >
+                            <mat-radio-button [value]="cluster._id" class="menu-button">
+                                <span class="sidenav-text">{{ cluster.cluster_name }}</span>
+                            </mat-radio-button>
+                        </mat-radio-group>
                     </div>
-                </nb-accordion-item-body>
-            </nb-accordion>
+                </div>
+            </mat-expansion-panel>
             <br />
-            <nb-accordion>
-                <nb-accordion-item-header>
-                    <h1 class="panel-title">Active</h1>
-                </nb-accordion-item-header>
-                <nb-accordion-item-body>
-                    <div *ngFor="let cluster of clusters" class="items">
-                        <div *ngIf="cluster.pairing_complete">
-                            <nb-radio-group
-                                (change)="handleChangeCluster(cluster)"
-                                [(ngModel)]="activeAppId"
-                                routerLink="/control"
-                            >
-                                <nb-radio [value]="cluster._id" class="menu-button">
-                                    <span class="sidenav-text">{{ cluster.cluster_name }}</span>
-                                </nb-radio>
-                            </nb-radio-group>
-                        </div>
+            <mat-expansion-panel class="application-panel">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="panel-title"> Active </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div *ngFor="let cluster of clusters" class="items">
+                    <div *ngIf="cluster.pairing_complete">
+                        <mat-radio-group
+                            (change)="handleChangeCluster(cluster)"
+                            [(ngModel)]="activeAppId"
+                            routerLink="/control"
+                        >
+                            <mat-radio-button [value]="cluster._id" class="menu-button">
+                                <span class="sidenav-text">{{ cluster.cluster_name }}</span>
+                            </mat-radio-button>
+                        </mat-radio-group>
                     </div>
-                </nb-accordion-item-body>
-            </nb-accordion>
-        </nb-list-item>
-        <nb-list class="inline-list">
-            <nb-list-item>
+                </div>
+            </mat-expansion-panel>
+        </mat-list-item>
+        <mat-list class="inline-list">
+            <mat-list-item>
                 <span class="sidenav-text">Add</span>
-                <button (click)="openDialogCl('Add', {})" class="menu-button sidenav-text" nbButton ghost>
-                    <nb-icon icon="plus"></nb-icon>
+                <button (click)="openDialogCl('Add', {})" class="menu-button sidenav-text" mat-icon-button>
+                    <mat-icon>add</mat-icon>
                 </button>
-            </nb-list-item>
-        </nb-list>
+            </mat-list-item>
+        </mat-list>
     </ul>
-</nb-list>
+</mat-list-item>

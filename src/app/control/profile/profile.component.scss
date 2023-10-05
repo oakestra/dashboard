@@ -1,15 +1,16 @@
 .alignCenter {
     text-align: center;
-    button {
-        margin: 0 5px 0 5px;
-    }
 }
 
-nb-form-field,
-nb-select {
-    padding: 10px 0 10px 0;
+.form {
+    padding-top: 20px;
 }
 
-nb-tag {
-    border: none;
+.input-field {
+    width: 60%;
+}
+
+.darkModeToggle {
+    margin: 30px 0 0 0;
+    display: flex;
 }

@@ -1,58 +1,42 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import {
-    NbButtonModule,
-    NbCardModule,
-    NbCheckboxModule,
-    NbDialogModule,
-    NbFormFieldModule,
-    NbIconModule,
-    NbInputModule,
-    NbLayoutModule,
-    NbListModule,
-    NbMenuModule,
-    NbSidebarModule,
-    NbThemeModule,
-    NbTooltipModule,
-} from '@nebular/theme';
-import { HttpClientModule } from '@angular/common/http';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { ThemeModule } from '../@theme/theme.module';
-import * as fromService from '../root/store/reducers/service.reducer';
-import { ServiceEffects } from '../root/store';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { LoginComponent } from './components/login/login.component';
 import { routes } from './login.routing';
 
 @NgModule({
     imports: [
-        CommonModule,
         RouterModule.forChild(routes),
         FormsModule,
+        MatCardModule,
+        MatButtonModule,
+        MatIconModule,
         ReactiveFormsModule,
-        HttpClientModule,
-        StoreModule.forFeature(fromService.serviceFeatureKey, fromService.reducer),
-        EffectsModule.forFeature([ServiceEffects]),
-        NbCardModule,
-        NbButtonModule,
-        NbDialogModule.forRoot(),
-        NbMenuModule,
-        NbLayoutModule,
-        NbSidebarModule,
-        ThemeModule,
-        NbListModule,
-        NbInputModule,
-        NbIconModule,
-        NbFormFieldModule,
-        NbTooltipModule,
-        NbCheckboxModule,
-        NbThemeModule.forRoot({ name: 'dark' }),
+        CommonModule,
+        MatTooltipModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule,
+        MatTabsModule,
+        MatSlideToggleModule,
+        MatSelectModule,
+        MatCheckboxModule,
     ],
+    providers: [],
     declarations: [LoginComponent, ResetPasswordComponent],
     exports: [RouterModule],
-    // bootstrap: [AppComponent],
 })
 export class LoginModule {}

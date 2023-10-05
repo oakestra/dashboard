@@ -1,11 +1,15 @@
-nb-tag {
-    border: none;
-}
-
 @media only screen and (max-width: 450px) {
     .registeredRow {
         display: none;
     }
+}
+
+.mat-header-cell {
+    text-align: center;
+}
+
+.mat-icon-button {
+    line-height: 0;
 }
 
 .alignRight {
@@ -26,27 +30,26 @@ nb-tag {
 }
 
 .user-search {
-    padding: 20px 0 20px 0;
-    display: flex;
-    align-items: center;
+    padding-top: 30px;
 }
 
 .createDiv {
+    padding-top: 10px;
     text-align: end;
 }
 
 .admin-chip {
-    background-color: #de686b !important;
+  background-color: #DE686B !important;
 }
 
 .provider-chip {
-    background-color: #3da23c !important;
+  background-color: #3DA23C !important;
 }
 
 .organization-chip {
-    background-color: #ada23c !important;
+  background-color: #ADA23C !important;
 }
 
 .infra-chip {
-    background-color: #2199a8 !important;
+  background-color: #2199a8 !important;
 }

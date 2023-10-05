@@ -21,8 +21,6 @@ export class NotificationService {
             this.panelClass = ['error-snackbar'];
         } else if (type === NotificationType.success) {
             this.panelClass = ['success-snackbar'];
-        } else {
-            this.panelClass = ['warn-snackbar'];
         }
 
         this.snackBar.openFromComponent(NotificationComponent, {

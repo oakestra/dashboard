@@ -1,31 +1,33 @@
-<nb-form-field class="fileForm">
-    <label class="label">Code</label>
-    <input
-        nbInput
-        nbTooltip="Define an image for the service"
-        placeholder="Code"
-        value="docker.io/library/nginx:latest"
-        required
-        type="url"
-        [(ngModel)]="data.code"
-        fullWidth
-    />
-</nb-form-field>
+<div>
+    <div class="w3-col l12 m12 s12 w3-row-padding">
+        <mat-form-field class="fileForm">
+            <mat-label>Code</mat-label>
+            <input
+                matInput
+                matTooltip="Define an image for the service"
+                placeholder="docker.io/library/nginx:latest"
+                required
+                type="url"
+                [(ngModel)]="data.code"
+            />
+        </mat-form-field>
 
-<!--  TODO Currently not supported, what happens in the backend with the file-->
+        <!--  TODO Currently not supported, what happens in the backend with the file-->
 
-<!--    <div class="file-upload">-->
-<!--        <button (click)="fileUploadCode.click()" class="add-btn" type="button">-->
-<!--        </button>-->
-<!--        <input #fileUploadCode (change)="onFileSelected($event, 0, 'code')" class="file-input" type="file" />-->
-<!--        <input #fileUploadCode class="file-input" type="file" />-->
-<!--    </div>-->
+        <!--    <div class="file-upload">-->
+        <!--        <button (click)="fileUploadCode.click()" class="add-btn" mat-mini-fab type="button">-->
+        <!--            <mat-icon>attach_file</mat-icon>-->
+        <!--        </button>-->
+        <!--        <input #fileUploadCode (change)="onFileSelected($event, 0, 'code')" class="file-input" type="file" />-->
+        <!--        <input #fileUploadCode class="file-input" type="file" />-->
+        <!--    </div>-->
+    </div>
 
-<!--
+    <!--
   TODO Not used for now
 
     <div class="w3-col l6 m6 s12 w3-row-padding">
-        <nb-form-field class="fileForm">
+        <mat-form-field class="fileForm">
             <mat-label>State</mat-label>
             <input
                 matInput
@@ -34,17 +36,18 @@
                 type="url"
                 [(ngModel)]="data.state"
             />
-        </nb-form-field>
-  -->
-<!--      TODO Same here as before, not supported from the backend -->
-<!--    <div class="file-upload">-->
-<!--        <button (click)="fileUploadState.click()" class="add-btn" mat-mini-fab type="button">-->
-<!--            <mat-icon>attach_file</mat-icon>-->
-<!--        </button>-->
-<!--        <input #fileUploadState (change)="onFileSelected($event, 1, 'state')" class="file-input" type="file" />-->
-<!--        <input #fileUploadState class="file-input" type="file" />-->
-<!--    </div>-->
-<!-- </div> -->
+        </mat-form-field>
+
+    <!--      TODO Same here as before, not supported from the backend -->
+    <!--    <div class="file-upload">-->
+    <!--        <button (click)="fileUploadState.click()" class="add-btn" mat-mini-fab type="button">-->
+    <!--            <mat-icon>attach_file</mat-icon>-->
+    <!--        </button>-->
+    <!--        <input #fileUploadState (change)="onFileSelected($event, 1, 'state')" class="file-input" type="file" />-->
+    <!--        <input #fileUploadState class="file-input" type="file" />-->
+    <!--    </div>-->
+    <!-- </div> -->
+</div>
 
 <!--
 TODO: Not used for now.
@@ -80,4 +83,3 @@ Current backend does also not support file upload
 </div>
 
 -->
-<br />

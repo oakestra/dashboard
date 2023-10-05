@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NONE_TYPE } from '@angular/compiler';
-import { NbDialogService } from '@nebular/theme';
 import { NotificationService } from '../../../shared/modules/notification/notification.service';
 import { ApiService } from '../../../shared/modules/api/api.service';
 import { UserService } from '../../../shared/modules/auth/user.service';
@@ -20,7 +20,7 @@ import { NotificationType } from '../../../root/interfaces/notification';
     styleUrls: ['./cluster-list.component.scss'],
 })
 
-// TODO Check if is works and refactor it, currently not used
+// TODO Check if is works and refactor it
 export class ClusterListComponent {
     clusters: ICluster[];
     events: string[] = [];
@@ -38,7 +38,7 @@ export class ClusterListComponent {
 
     constructor(
         private observer: BreakpointObserver,
-        public dialog: NbDialogService,
+        public dialog: MatDialog,
         private api: ApiService,
         public userService: UserService,
         private router: Router,
@@ -75,10 +75,11 @@ export class ClusterListComponent {
         }
         obj.action = action;
         const dialogRef = this.dialog.open(DialogAddClusterView, {
-            context: { data: obj },
+            data: obj,
         });
 
-        dialogRef.onClose.subscribe((result) => {
+        dialogRef.afterClosed().subscribe((result) => {
+            // TODO define data for Cluster
             if (result.event === DialogAction.ADD) {
                 // this.addCluster(result.data)
                 this.userService.addCluster(result.data).subscribe({
@@ -86,17 +87,18 @@ export class ClusterListComponent {
                         this.notifyService.notify(NotificationType.success, 'Cluster added successfully!');
                         this.redirectTo('/control');
                         if (userServiceResponse !== NONE_TYPE) {
+                            // TODO: We need to pass the system_manager_URL as well
                             const my_data = {
                                 pairing_key: userServiceResponse.pairing_key,
                                 username: this.username,
                                 cluster_name: result.data.cluster_name ?? '',
                             };
                             const dialogKey = this.dialog.open(DialogGenerateTokenView, {
-                                context: {
-                                    ...my_data,
-                                },
+                                data: my_data,
+                                height: '40%',
+                                width: '50%',
                             });
-                            dialogKey.onClose.subscribe(() => this.showClusters());
+                            dialogKey.afterClosed().subscribe(() => this.showClusters());
                         }
                     },
                     error: (error) => this.notifyService.notify(NotificationType.error, error),

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { UserService } from '../../../shared/modules/auth/user.service';
 import { AuthService } from '../../../shared/modules/auth/auth.service';
 import { ApiService } from '../../../shared/modules/api/api.service';
@@ -18,7 +19,6 @@ export class LoginComponent {
     sm_ip = environment.apiUrl;
     form: FormGroup;
     useOrganization = false;
-    showPassword = false;
 
     constructor(
         private router: Router,
@@ -37,19 +37,8 @@ export class LoginComponent {
         this.form.get('organization_name').disable();
     }
 
-    getInputType() {
-        if (this.showPassword) {
-            return 'text';
-        }
-        return 'password';
-    }
-
-    toggleShowPassword() {
-        this.showPassword = !this.showPassword;
-    }
-
-    public tabChanged(checked: boolean) {
-        this.useOrganization = checked;
+    public tabChanged(event: MatCheckboxChange) {
+        this.useOrganization = event.checked;
         if (this.useOrganization) {
             this.form.get('organization_name').enable();
         } else {
@@ -71,9 +60,7 @@ export class LoginComponent {
     }
 
     public forgotPassword() {
-        // TODO Implement send mail functionality
         const username = this.form.get('username');
-        console.log('SEND MAIL');
         if (username?.valid) {
             this.api.resetPassword(username.value).subscribe(() => {
                 this.notifyService.notify(NotificationType.success, 'An email with a reset password link was sent');

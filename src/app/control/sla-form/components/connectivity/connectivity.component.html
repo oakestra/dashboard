@@ -1,7 +1,7 @@
 <div class="addButtonDiv">
     <h4>Connectivity:&nbsp;</h4>
-    <button (click)="addConnectivity()" class="add-btn" size="large" nbButton ghost>
-        <nb-icon icon="plus"></nb-icon>
+    <button (click)="addConnectivity()" class="add-btn" mat-mini-fab type="button">
+        <mat-icon>add</mat-icon>
     </button>
 </div>
 
@@ -9,21 +9,21 @@
     <div *ngFor="let conn of connectivity; let i = index" id="contentInside">
         <div class="w3-row">
             <div class="w3-col l6 m6 s6 w3-row-padding">
-                <nb-form-field>
-                    <label class="label">Target Service</label>
-                    <nb-select fullWidth placeholder="target_microservice_id {{ conn.target_microservice_id }}">
-                        <nb-option *ngFor="let s of dropdownServices" [value]="s._id.$oid">
+                <mat-form-field>
+                    <mat-label>target_microservice_id {{ conn.target_microservice_id }}</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let s of dropdownServices" [value]="s._id.$oid">
                             {{ s.microservice_name }}
-                        </nb-option>
-                    </nb-select>
-                </nb-form-field>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
 
-            <button (click)="openDialog(i)" nbButton ghost>
-                <nb-icon icon="settings"></nb-icon>
+            <button (click)="openDialog(i)" mat-icon-button type="button">
+                <mat-icon>settings</mat-icon>
             </button>
-            <button (click)="deleteConnection(i)" nbButton ghost>
-                <nb-icon icon="trash-2"></nb-icon>
+            <button (click)="deleteConnection(i)" mat-icon-button type="button">
+                <mat-icon>delete</mat-icon>
             </button>
         </div>
     </div>

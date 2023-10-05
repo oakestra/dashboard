@@ -9,6 +9,6 @@ export interface ISettings {
 
 export enum ConfigurationType {
     NONE = 'None',
-    CUSTOM = 'Custom',
+    CUSTOME = 'Custome',
     OAKESTRA = 'Oakestra',
 }

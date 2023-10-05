@@ -1,12 +1,10 @@
 <div class="container">
     <div class="row">
         <div *ngFor="let cluster of clusters">
-            <nb-card id="my_card">
-                <nb-card-header>
-                    {{ cluster.cluster_name }}
-                    Cluster ID {{ cluster._id.$oid }}
-                </nb-card-header>
-                <nb-card-body *ngIf="cluster.pairing_complete">
+            <mat-card id="my_card">
+                <mat-card-title>{{ cluster.cluster_name }}</mat-card-title>
+                <mat-card-subtitle>Cluster ID {{ cluster._id.$oid }}</mat-card-subtitle>
+                <mat-card-content *ngIf="cluster.pairing_complete">
                     <div class="map-container">
                         <div class="map-frame">
                             <div id="card_map"></div>
@@ -16,16 +14,16 @@
                             </p>
                         </div>
                     </div>
-                </nb-card-body>
-                <nb-card-footer>
-                    <button *ngIf="!cluster.pairing_complete" nbButton>
+                </mat-card-content>
+                <mat-card-actions align="end">
+                    <button *ngIf="!cluster.pairing_complete" mat-button>
                         <div *ngIf="!cluster.pairing_complete" class="noinstance">
                             <p>NOT YET ACTIVE</p>
                         </div>
                     </button>
-                    <button (click)="deleteCluster(cluster)" nbButton><nb-icon icon="trash-2"></nb-icon></button>
-                </nb-card-footer>
-            </nb-card>
+                    <button (click)="deleteCluster(cluster)" mat-button><mat-icon>delete</mat-icon></button>
+                </mat-card-actions>
+            </mat-card>
         </div>
     </div>
 </div>

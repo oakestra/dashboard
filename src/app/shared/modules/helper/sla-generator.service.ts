@@ -31,6 +31,7 @@ export class SlaGeneratorService {
             ],
             args: [''],
         };
+        // TODO Clear JSON überarbeiten
         return CleanJsonService.deleteEmptyValues(sla);
     }
 }

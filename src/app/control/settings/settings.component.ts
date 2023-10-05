@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
-import { appReducer, setSettings } from '../../root/store';
+import { appReducer, getSettings, setSettings } from '../../root/store';
 import { selectSettings } from '../../root/store/selectors/settings.selector';
 import { ConfigurationType, ISettings } from '../../root/interfaces/settings';
 
@@ -14,13 +14,8 @@ import { ConfigurationType, ISettings } from '../../root/interfaces/settings';
 export class SettingsComponent implements OnInit {
     protected readonly ConfigurationType = ConfigurationType;
     selectedOption: ConfigurationType;
+    options: ConfigurationType[] = [ConfigurationType.NONE, ConfigurationType.CUSTOME, ConfigurationType.OAKESTRA];
     form: FormGroup;
-
-    options = [
-        { value: ConfigurationType.NONE, label: ConfigurationType.NONE, disabled: false },
-        { value: ConfigurationType.CUSTOM, label: ConfigurationType.CUSTOM, disabled: false },
-        { value: ConfigurationType.OAKESTRA, label: ConfigurationType.OAKESTRA, disabled: true },
-    ];
 
     constructor(private fb: FormBuilder, private store: Store<appReducer.AppState>) {}
 
@@ -50,7 +45,7 @@ export class SettingsComponent implements OnInit {
             type: this.selectedOption,
         };
 
-        if (this.selectedOption === ConfigurationType.CUSTOM) {
+        if (this.selectedOption === ConfigurationType.CUSTOME) {
             settings = { ...settings, ...this.form.getRawValue() };
         }
 

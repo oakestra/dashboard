@@ -7,20 +7,6 @@
     left: 0;
     right: 0;
     margin: auto;
-    padding: 20px;
-}
-
-::ng-deep nb-form-field,
-nb-select {
-    padding: 10px 0 10px 0;
-
-    .nb-form-field-addon {
-        align-items: center !important;
-
-        button {
-            margin: 0;
-        }
-    }
 }
 
 .connectingInfo {
@@ -58,10 +44,6 @@ nb-select {
     float: right;
 }
 
-nb-card-body.example-items-col {
-    align-items: stretch;
-}
-
 .info {
     display: flex;
     align-items: center;
@@ -70,7 +52,7 @@ nb-card-body.example-items-col {
 
 @media only screen and (min-width: 801px) {
     .login-form {
-        width: 40%;
+        width: 60%;
     }
 }
 
@@ -78,6 +60,21 @@ nb-card-body.example-items-col {
     .login-form {
         width: 35%;
     }
+}
+
+.mat-mdc-tab-group {
+    display: contents;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+.mat-mdc-tab-body-content {
+    height: 100%;
+    overflow: hidden;
+}
+
+.mat-mdc-tab-body.mat-mdc-tab-body-active {
+    overflow: hidden !important;
 }
 
 hr {

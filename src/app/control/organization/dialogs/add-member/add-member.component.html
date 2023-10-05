@@ -1,33 +1,26 @@
-<nb-card>
-    <nb-card-header>
-        <h2>Add Member</h2>
-    </nb-card-header>
-    <nb-card-body>
-        <div class="w3-row">
-            <div class="w3-col l12 s12 m12">
-                <nb-form-field appearance="fill" class="input-field searchForm">
-                    <input
-                        placeholder="Search user"
-                        (ngModelChange)="search($event)"
-                        nbInput
-                        [(ngModel)]="searchText"
-                    />
-                    <button *ngIf="searchText" nbSuffix nbButton ghost (click)="resetSearch()">
-                        <nb-icon icon="plus-circle-outline"></nb-icon>
-                    </button>
-                </nb-form-field>
-            </div>
+<h2 mat-dialog-title>Add Member</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="w3-row">
+        <div class="w3-col l12 s12 m12">
+            <mat-form-field appearance="fill" class="input-field searchForm">
+                <mat-label>Search user</mat-label>
+                <input (ngModelChange)="search($event)" matInput [(ngModel)]="searchText" type="text" />
+                <button *ngIf="searchText" matSuffix mat-icon-button (click)="resetSearch()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
         </div>
-        <nb-section [formGroup]="selection">
-            <h4>Member</h4>
-            <nb-card-body class="userEntry" *ngFor="let u of userFiltered">
-                <nb-checkbox [formControlName]="u.name"> {{ u.name }}</nb-checkbox>
-            </nb-card-body>
-        </nb-section>
-        <p *ngIf="userFiltered.length === 0">There are no additional users that could be added</p>
-    </nb-card-body>
-    <nb-card-footer class="dialog-footer">
-        <button (click)="doAction()" status="primary" nbButton>Add</button>
-        <button (click)="closeDialog()" status="basic" nbButton>Cancel</button>
-    </nb-card-footer>
-</nb-card>
+    </div>
+    <mat-section [formGroup]="selection">
+        <h4>Member</h4>
+        <mat-option class="userEntry" *ngFor="let u of userFiltered">
+            <mat-checkbox [formControlName]="u.name"> {{ u.name }}</mat-checkbox>
+        </mat-option>
+    </mat-section>
+    <p *ngIf="userFiltered.length === 0">There are no additional users that could be added</p>
+</mat-dialog-content>
+
+<mat-dialog-actions class="alignRight">
+    <button (click)="doAction()" color="primary" mat-flat-button>Add</button>
+    <button (click)="closeDialog()" color="accent" mat-flat-button>Cancel</button>
+</mat-dialog-actions>
