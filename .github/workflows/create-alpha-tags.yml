@@ -7,7 +7,7 @@ on:
 
 jobs:
     create-tag:
-        name: Create Tag
+        name: Create Alpha Tag
         runs-on: ubuntu-latest
 
         steps:
