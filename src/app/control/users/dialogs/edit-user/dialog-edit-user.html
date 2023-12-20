@@ -17,7 +17,14 @@
 
             <div *ngIf="action === DialogAction.ADD">
                 <nb-form-field class="full-width">
-                    <input formControlName="password" placeholder="Password" nbInput required />
+                    <input formControlName="password" placeholder="Password" [type]="hidePassword ? 'password' : 'text'"
+                    formControlName="password" nbInput required />
+                    <button nbSuffix nbButton ghost (click)="togglePasswordVisibility()">
+                        <nb-icon [icon]="hidePassword ? 'eye-outline' : 'eye-off-2-outline'"
+                                 pack="eva"
+                                 [attr.aria-label]="hidePassword ? 'hide password' : 'show password'">
+                        </nb-icon>
+                      </button>
                 </nb-form-field>
             </div>
 

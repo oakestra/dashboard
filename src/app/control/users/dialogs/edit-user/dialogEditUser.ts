@@ -10,11 +10,7 @@ import { IDialogAttribute } from '../../../../root/interfaces/dialogAttribute';
 @Component({
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-edit-user.html',
-    styles: [
-        '.download-credentials{display:flex; flex-direction: row-reverse; padding-right: 8px}',
-        'nb-form-field {padding: 10px 0 10px 0}',
-        'button {margin: 10px 0 0 10px}',
-    ],
+    styleUrls: ['./dialog-edit-user.scss'],
 })
 export class DialogEditUserView implements OnInit {
     DialogAction = DialogAction;
@@ -25,6 +21,7 @@ export class DialogEditUserView implements OnInit {
     form: FormGroup;
     buttonText = '';
     roleOptions: FormGroup;
+    hidePassword = true;
 
     @Input() data: IDialogAttribute;
     @Input() test: any;
@@ -121,6 +118,10 @@ export class DialogEditUserView implements OnInit {
         element.setAttribute('download', fileName);
         const event = new MouseEvent('click');
         element.dispatchEvent(event);
+    }
+
+    togglePasswordVisibility() {
+        this.hidePassword = !this.hidePassword;
     }
 }
 

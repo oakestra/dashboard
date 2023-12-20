@@ -6,3 +6,12 @@
 .map-card {
     padding: 0;
 }
+
+input.code-logs, textarea{
+    font-family: monospace; /* Use a monospace font for code readability */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: black;
+    color: #00ff41
+}

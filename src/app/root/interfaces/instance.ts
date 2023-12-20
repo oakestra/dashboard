@@ -14,6 +14,7 @@ export interface IInstance {
     addresses: IAddresses;
     status_detail: string;
     instance_number: number;
+    logs: string;
 }
 
 export interface IHistoricalData {

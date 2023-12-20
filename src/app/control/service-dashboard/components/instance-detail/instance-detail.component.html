@@ -51,3 +51,14 @@
         </nb-card>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <nb-card>
+            <nb-card-header><h2>Logs</h2></nb-card-header>
+            <nb-card-body>
+                <textarea type="text" class="code-logs" rows="10" cols="100" disabled> {{(instance | async).logs}} </textarea>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
