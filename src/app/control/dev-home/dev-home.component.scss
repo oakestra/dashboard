@@ -169,3 +169,10 @@ mat-card p {
 .servicesList {
     padding: 10px;
 }
+
+code-logs {
+    font-family: monospace; /* Use a monospace font for code readability */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px;
+    border: 1px solid #ccc;
+}

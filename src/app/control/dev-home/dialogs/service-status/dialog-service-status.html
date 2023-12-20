@@ -10,6 +10,8 @@
             <p><b>Disk:</b> {{(instance | async).disk}}</p>
             <p><b>Cluster:</b> {{(instance | async).cluster_id}}</p>
             <p><b>Node IP:</b> {{(instance | async).publicip}}</p>
+            <p><b>Logs:</b></p>
+            <textarea class="code-logs" rows="10" cols="100" disabled> {{(instance | async).logs}} </textarea>
         </div>
     </div>
 </mat-dialog-content>
