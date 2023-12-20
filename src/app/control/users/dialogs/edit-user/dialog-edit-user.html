@@ -20,10 +20,16 @@
             </mat-form-field>
         </div>
 
-        <div *ngIf="action === DialogAction.ADD" class="w3-col l6 s12 m6">
+        <div *ngIf="action === DialogAction.ADD" class="w3-col l6 s12 m6 input">
             <mat-form-field class="full-width">
                 <mat-label>Password</mat-label>
-                <input formControlName="password" matInput required />
+                <div class="d-flex">
+                    <input matInput placeholder="Password" [type]="hidePassword ? 'password' : 'text'"
+                        formControlName="password" required />
+                    <mat-icon class="hide-password-button" (click)="togglePasswordVisibility()">{{ hidePassword ?
+                        'visibility_off' : 'visibility'
+                        }}</mat-icon>
+                </div>
             </mat-form-field>
         </div>
 
