@@ -12,6 +12,7 @@ import { ApplicationEffects, appReducer, OrganizationEffects, SettingsEffects } 
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {
     NbCardModule,
+    NbSpinnerModule,
     NbDatepickerModule,
     NbDialogModule,
     NbMenuModule,
@@ -36,6 +37,7 @@ import { ThemeModule } from './@theme/theme.module';
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
+        NbSpinnerModule,
         BrowserAnimationsModule,
         SharedModule.forRoot(),
         RouterModule.forRoot(routes),

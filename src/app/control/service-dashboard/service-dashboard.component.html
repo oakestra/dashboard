@@ -16,13 +16,13 @@
 
 <nb-card>
     <nb-card-header> Service List </nb-card-header>
-    <nb-card-body>
+    <nb-card-body [nbSpinner]="isLoading" nbSpinnerSize="large">
         <div *ngIf="currentApp$ | async">
             <div *ngIf="(services$ | async).length > 0" class="servicesList">
                 <app-service-item
                     *ngFor="let service of services$ | async"
                     [service]="service"
-                    [appId]="appId"
+                    [appId]="(currentApp$ | async)._id.$oid"
                 ></app-service-item>
                 <br />
                 <div>

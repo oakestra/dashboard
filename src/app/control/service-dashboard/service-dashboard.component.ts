@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Observable, take, tap } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
@@ -29,15 +29,8 @@ export class ServiceDashboardComponent implements OnInit {
     appId = '';
     isLoading = false;
 
-    menuItems = [
-        { title: 'Edit', icon: 'edit-2-outline' },
-        { title: 'Delete', icon: 'trash-2' },
-        { title: 'Deploy', icon: 'paper-plane-outline' },
-        { title: 'Download Config', icon: 'download-outline' },
-    ];
-
     selectedItem: IApplication;
-
+    
     constructor(
         private router: Router,
         private api: ApiService,
@@ -69,6 +62,7 @@ export class ServiceDashboardComponent implements OnInit {
 
     setCurrentApplication() {
         this.store.dispatch(setCurrentApplication({ application: this.selectedItem }));
+        this.appId = this.selectedItem._id.$oid;
     }
 
     deployService(service: IService) {
@@ -77,10 +71,10 @@ export class ServiceDashboardComponent implements OnInit {
             .deployService(service)
             .pipe(
                 tap(() => {
-                    if (this.appId !== '') {
+                    if (this.selectedItem._id.$oid !== '') {
                         setTimeout(() => {
                             this.isLoading = false;
-                            this.store.dispatch(getServices({ appId: this.appId }));
+                            this.store.dispatch(getServices({ appId: this.selectedItem._id.$oid }));
                         }, 5000); // delay to wait until the backend has deployed the service
                     }
                 }),

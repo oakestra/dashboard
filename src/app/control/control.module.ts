@@ -11,6 +11,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {
     NbAccordionModule,
     NbButtonModule,
+    NbSpinnerModule,
     NbCardModule,
     NbCheckboxModule,
     NbContextMenuModule,
@@ -137,6 +138,7 @@ import { ChartMemoryLineComponent } from './service-dashboard/components/instanc
         NbMenuModule,
         NbLayoutModule,
         NbSidebarModule,
+        NbSpinnerModule,
         ThemeModule,
         NbListModule,
         NbInputModule,

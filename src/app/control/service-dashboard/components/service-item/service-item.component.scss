@@ -15,6 +15,17 @@
     }
 }
 
+
+.NODE_SCHEDULED, .RUNNING {
+    color: green !important;
+    font-size: 1em;
+}
+.FAILED, .DEAD {
+    color: red !important;
+    font-size: 1em;
+}
+  
+
 .statusField {
     cursor: pointer;
     align-items: center;
