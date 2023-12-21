@@ -1,5 +1,4 @@
 import { Component, Inject, Optional } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
     AbstractControl,
     AbstractControlOptions,
@@ -8,6 +7,7 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
+import { NB_DIALOG_CONFIG, NbDialogRef } from '@nebular/theme';
 import { ApiService } from '../../../../shared/modules/api/api.service';
 import { NotificationService } from '../../../../shared/modules/notification/notification.service';
 import { IUser } from '../../../../root/interfaces/user';
@@ -17,14 +17,15 @@ import { NotificationType } from '../../../../root/interfaces/notification';
 @Component({
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-change-password.html',
+    styles: ['nb-form-field {padding: 10px 0 10px 0}', 'button {margin: 0 5px 0 5px}'],
 })
 export class DialogChangePasswordView {
     user: IUser;
     form: FormGroup;
 
     constructor(
-        public dialogRef: MatDialogRef<DialogChangePasswordView>,
-        @Optional() @Inject(MAT_DIALOG_DATA) public data: IDialogAttribute,
+        public dialogRef: NbDialogRef<DialogChangePasswordView>,
+        @Optional() @Inject(NB_DIALOG_CONFIG) public data: IDialogAttribute,
         private api: ApiService,
         public notifyService: NotificationService,
         private fb: FormBuilder,

@@ -10,19 +10,34 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { ApplicationEffects, appReducer, OrganizationEffects, SettingsEffects } from 'src/app/root/store/index';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import {
+    NbCardModule,
+    NbSpinnerModule,
+    NbDatepickerModule,
+    NbDialogModule,
+    NbMenuModule,
+    NbSidebarModule,
+    NbThemeModule,
+    NbToastrModule,
+    NbWindowModule,
+} from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { environment } from '../environments/environment';
 import { SharedModule } from './shared/sheard.module';
 import { routes } from './app.routes';
 import { AppComponent } from './app.component';
 import { UserEffects } from './root/store';
+import { ThemeModule } from './@theme/theme.module';
 
 @NgModule({
     declarations: [AppComponent],
     imports: [
+        // ControlModule,
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
+        NbSpinnerModule,
         BrowserAnimationsModule,
         SharedModule.forRoot(),
         RouterModule.forRoot(routes),
@@ -32,6 +47,16 @@ import { UserEffects } from './root/store';
         StoreModule.forRoot(appReducer.reducers, {}),
         EffectsModule.forRoot([UserEffects, ApplicationEffects, SettingsEffects, OrganizationEffects]),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
+        NbThemeModule.forRoot(),
+        NbEvaIconsModule,
+        NbSidebarModule.forRoot(),
+        NbMenuModule.forRoot(),
+        NbDatepickerModule.forRoot(),
+        NbDialogModule.forRoot(),
+        NbWindowModule.forRoot(),
+        NbToastrModule.forRoot(),
+        ThemeModule.forRoot(),
+        NbCardModule,
     ],
     providers: [
         // should be empty as we import all global services through "SharedModule.forRoot()"

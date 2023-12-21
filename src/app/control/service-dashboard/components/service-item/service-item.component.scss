@@ -1,0 +1,50 @@
+.service {
+    margin-bottom: 20px;
+
+    nb-accordion-item-header {
+        padding: 0;
+    }
+
+    .service-name,
+    p {
+        margin: 0 0 0 15px;
+    }
+
+    .actions {
+        padding-right: 90px;
+    }
+}
+
+
+.NODE_SCHEDULED,
+.RUNNING {
+    color: green !important;
+    font-size: 1em;
+}
+
+.FAILED,
+.DEAD {
+    color: red !important;
+    font-size: 1em;
+}
+
+
+.statusField {
+    cursor: pointer;
+    align-items: center;
+    display: inline-flex;
+
+    .spinner {
+        align-items: center;
+    }
+}
+
+.noInstance {
+    padding-top: 10px;
+    text-align: center;
+    font-size: large;
+}
+
+.instance-buttons {
+    display: flex;
+}

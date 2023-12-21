@@ -1,11 +1,15 @@
-<h2 mat-dialog-title>Are you sure?</h2>
-<mat-dialog-content class="mat-typography">
-    <div>
-        <p>If you delete the {{type}} it can not be undone.</p>
-        <p>{{text}}</p>
-    </div>
-</mat-dialog-content>
-<mat-dialog-actions>
-    <button (click)="confirm()" color="warn" mat-flat-button>Delete</button>
-    <button (click)="cancel()" color="accent" mat-flat-button>Cancel</button>
-</mat-dialog-actions>
+<nb-card>
+    <nb-card-header>
+        <h2>Are you sure?</h2>
+    </nb-card-header>
+    <nb-card-body>
+        <div>
+            <p>If you delete the {{type}} it can not be undone.</p>
+            <p>{{text}}</p>
+        </div>
+    </nb-card-body>
+    <nb-card-footer class="dialog-footer">
+        <button (click)="confirm()" status="warning" nbButton>Delete</button>
+        <button (click)="cancel()" status="basic" nbButton>Cancel</button>
+    </nb-card-footer>
+</nb-card>

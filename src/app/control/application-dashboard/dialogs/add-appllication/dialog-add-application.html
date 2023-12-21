@@ -1,0 +1,45 @@
+<nb-card>
+    <nb-card-header>
+        <h2>{{title}}</h2>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="w3-col l6 s12 m6">
+            <nb-form-field>
+                <!--      Is disabled on Update because if you make changes you have to rename all ServiceNames in the DB-->
+                <input
+                    placeholder="Application Name"
+                    [(ngModel)]="app.application_name"
+                    [disabled]="action === DialogAction.UPDATE"
+                    nbInput
+                    fullWidth
+                />
+            </nb-form-field>
+        </div>
+
+        <div class="w3-col l6 s12 m6 input">
+            <nb-form-field>
+                <input
+                    placeholder="Application Namespace"
+                    [(ngModel)]="app.application_namespace"
+                    [disabled]="action === DialogAction.UPDATE"
+                    nbInput
+                    fullWidth
+                />
+            </nb-form-field>
+        </div>
+
+        <div class="w3-col l12 s12 m12">
+            <nb-form-field>
+                <textarea placeholder="Description" [(ngModel)]="app.application_desc" cols="2" nbInput fullWidth>
+                </textarea>
+            </nb-form-field>
+        </div>
+    </nb-card-body>
+    <nb-card-footer class="dialog-footer">
+        <button status="primary" (click)="doAction()" nbButton>{{buttonText}}</button>
+        <button status="warning" (click)="deleteApplication()" *ngIf="action === DialogAction.UPDATE" nbButton>
+            Delete
+        </button>
+        <button status="basic" (click)="closeDialog()" nbButton>Cancel</button>
+    </nb-card-footer>
+</nb-card>
