@@ -30,14 +30,14 @@ export class ServiceDashboardComponent implements OnInit {
     isLoading = false;
 
     selectedItem: IApplication;
-    
+
     constructor(
         private router: Router,
         private api: ApiService,
         public dialog: NbDialogService,
         private store: Store<appReducer.AppState>,
         private nbMenuService: NbMenuService,
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.store

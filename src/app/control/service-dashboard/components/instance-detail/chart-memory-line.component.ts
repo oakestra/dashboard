@@ -15,7 +15,7 @@ export class ChartMemoryLineComponent implements OnDestroy, OnInit {
     themeSubscription: any;
     private memoryChart: Chart;
 
-    constructor(private theme: NbThemeService) {}
+    constructor(private theme: NbThemeService) { }
 
     ngOnInit(): void {
         this.createCharts();

@@ -15,7 +15,7 @@ export class ChartCpuLineComponent implements OnDestroy, OnInit {
     themeSubscription: any;
     private cpuChart: Chart;
 
-    constructor(private theme: NbThemeService) {}
+    constructor(private theme: NbThemeService) { }
 
     ngOnInit(): void {
         this.createCharts();

@@ -17,7 +17,7 @@ import { Observable } from 'tinymce';
     templateUrl: './service-item.component.html',
     styleUrls: ['./service-item.component.scss'],
 })
-export class ServiceItemComponent implements OnInit,OnDestroy {
+export class ServiceItemComponent implements OnInit, OnDestroy {
     @Input() service: IService;
     @Input() appId: string;
 
@@ -33,7 +33,7 @@ export class ServiceItemComponent implements OnInit,OnDestroy {
         public dialog: NbDialogService,
         private store: Store<appReducer.AppState>,
         private nbMenuService: NbMenuService,
-    ) {}
+    ) { }
 
     ngOnDestroy(): void {
         console.log('Destroy');
@@ -41,38 +41,38 @@ export class ServiceItemComponent implements OnInit,OnDestroy {
     }
     ngOnInit(): void {
 
-        this.menuTag = 'menu-'+this.service._id?.$oid
+        this.menuTag = 'menu-' + this.service._id?.$oid
 
         this.menuItems = [
             { title: 'Edit', icon: 'edit-2-outline', hidden: true },
             { title: 'Delete', icon: 'trash-2' },
             { title: 'Deploy', icon: 'paper-plane-outline' },
-            { title: 'Download Config', icon: 'download-outline'},
+            { title: 'Download Config', icon: 'download-outline' },
         ];
-        
+
 
         this.menuItemClickSubscription = this.nbMenuService
-                .onItemClick()
-                .pipe(
-                    filter(({ tag }) => tag === this.menuTag),
-                    map(({ item: { title } }) => title),
-                )
-                .subscribe((title) => {
-                    switch (title) {
-                        case 'Edit':
-                            void this.router.navigate(['control/deploy', this.service._id?.$oid]);
-                            break;
-                        case 'Delete':
-                            this.deleteService(this.service);
-                            break;
-                        case 'Deploy':
-                            this.deployServiceWithin(this.service);
-                            break;
-                        case 'Download Config':
-                            this.downloadConfig(this.service);
-                            break;
-                    }
-                });
+            .onItemClick()
+            .pipe(
+                filter(({ tag }) => tag === this.menuTag),
+                map(({ item: { title } }) => title),
+            )
+            .subscribe((title) => {
+                switch (title) {
+                    case 'Edit':
+                        void this.router.navigate(['control/deploy', this.service._id?.$oid]);
+                        break;
+                    case 'Delete':
+                        this.deleteService(this.service);
+                        break;
+                    case 'Deploy':
+                        this.deployServiceWithin(this.service);
+                        break;
+                    case 'Download Config':
+                        this.downloadConfig(this.service);
+                        break;
+                }
+            });
     }
 
     deleteService(service: IService) {
