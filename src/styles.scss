@@ -1,369 +1,66 @@
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
-
-::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-}
-
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: transparent;
-}
-
-.mdc-button__label {
-    color: white;
-}
-
-.mat-mdc-form-field {
-    --mat-mdc-form-field-floating-label-scale: 0.75;
-    display: block !important;
-    flex-direction: column;
-    min-width: 0;
-    text-align: left;
-}
-
-.mat-mdc-dialog-actions {
-    justify-content: end !important;
-}
-
-.mat-mdc-tab-body.mat-mdc-tab-body-active {
-    overflow: hidden !important;
-}
-
-.mat-mdc-tab-body-content {
-    overflow: hidden !important;
-}
-
-.mat-expansion-panel {
-    margin-bottom: 8px !important;
-}
-
-.mat-typography p {
-    margin: 0 !important;
-}
-
-.full-width {
-    width: 100%;
-}
-
-.alignRight {
-    text-align: right;
-}
-
-.input {
-    padding-right: 8px;
-}
-
-.alignRight {
-    text-align: right;
-}
-
-.mdc-button {
-    background-color: transparent;
-}
-
-.mat-dialog-actions {
-    justify-content: flex-end;
-}
-
-.mdc-evolution-chip__text-label {
-    color: white !important;
-}
-
-.mat-mdc-standard-chip .mdc-evolution-chip__action--primary {
-    padding: 0 !important;
+@font-face {
+    font-family: 'Urbanist';
+    src: url('./assets/fonts/ttf/Urbanist-Regular.ttf') format('ttf'),
+        url('./assets/fonts/ttf/Urbanist-Regular.ttf') format('ttf');
+    font-weight: 400;
 }
 
 * {
-    font-family: CMUSansSerif, sans-serif;
-}
-
-/*////////////////////////////////////////////////////*/
-svg {
-    cursor: default;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    /*-o-user-select: none;*/
-    user-select: none;
-}
-
-svg:not(.active):not(.ctrl) {
-    cursor: crosshair;
-}
-
-path.link {
-    fill: none;
-    stroke: #888;
-    stroke-width: 5px;
-    cursor: default;
-}
-
-path.link.selected {
-    stroke: #000000;
-    stroke-dasharray: 10, 5;
-    /*z-index: 2;*/
-}
-
-svg:not(.active):not(.ctrl) path.link {
-    cursor: pointer;
-}
-
-path.link.dragline {
-    pointer-events: none;
-}
-
-path.link.hidden {
-    stroke-width: 0;
-}
-
-circle.node {
-    stroke-width: 0;
-    cursor: pointer;
-    fill: #fff;
-}
-
-text {
-    font: 14px sans-serif;
-    pointer-events: none;
-}
-
-text.id {
-    text-anchor: middle;
-    font-weight: bold;
-}
-
-.error-snackbar {
-    background-color: #a31919;
-}
-
-.success-snackbar {
-    background-color: #28a513;
-}
-
-mat-card {
-    width: 100%;
-    font-size: 1rem;
-    margin-bottom: 10px;
-    display: inline-block;
-    padding-bottom: 0;
-}
-
-mat-card-title {
-    background-color: var(--primary-background);
-    padding: 16px;
-    border-radius: 5px 5px 0 0;
-    color: white;
-    text-align: initial;
-}
-
-mat-card p {
-    margin-bottom: 0;
-}
-
-.mat-expansion-indicator::after {
-    color: white;
-}
-
-.mdc-form-field {
-    display: inline-flex;
-    align-items: flex-end !important;
-    vertical-align: middle;
-}
-
-.content-cards {
-    border-radius: 10px;
-    margin: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-@media only screen and (min-width: 801px) {
-    .content-cards {
-        margin-left: 32px;
-    }
-}
-
-.serviceCard {
-    height: 100%;
-}
-
-.form {
-    min-width: 150px;
-    width: 100%;
-}
-
-.full-width {
-    width: 100%;
-}
-
-.smallInput {
-    width: 10%;
-    padding: 10px;
-}
-
-td {
-    padding-right: 8px;
-}
-
-.constraints {
-    padding-top: 10px;
-}
-
-.settingsButton {
-    float: right;
-    background-color: var(--primary-background) !important;
-}
-
-@media only screen and (max-width: 1000px) {
-    .leftInput {
-        padding-right: 0;
-    }
-
-    .rightInput {
-        padding-left: 0;
-    }
-}
-
-.addButtonDiv {
-    display: inline-block;
-    vertical-align: middle;
-    padding-right: 10px;
-}
-
-.cancel_buttons {
-    margin-left: 8px;
-}
-
-.file-input {
-    display: none;
-}
-
-button:focus {
-    outline: 0;
-}
-
-/*///////////////////////////////////////////////////*/
-/* Style for the User Tour*/
-
-body {
-    /*margin: 0;*/
-    /*display: grid;*/
-    /*font-family: 'Helvetica Neue';*/
-    /*grid-template-areas: inherit;*/
-}
-
-header,
-aside,
-main,
-section {
-    padding: 20px;
-}
-
-header {
-    background: #00c195;
-}
-
-aside {
-    background: #d3d3d3;
-}
-
-section {
-    background: #fff;
-    border-radius: 10px;
-    min-height: 30%;
+    font-family: 'Urbanist', sans-serif !important;
+    font-weight: 400;
+    font-size: 14px;
 }
 
 h1 {
-    margin: 0;
+    font-size: 28px;
 }
 
-nav {
-    justify-self: right;
+h2 {
+    font-size: 22px;
 }
 
-nav ul li {
-    display: inline;
+h3 {
+    font-size: 18px;
 }
 
-nav ul li a {
-    padding: 10px;
-}
+nb-form-field,
+nb-select {
+    padding: 10px 0 10px 0;
 
-aside ul {
-    margin-top: 30px;
-}
-
-aside ul li a {
-    text-transform: uppercase;
-    font-size: 0.7em;
-    padding: 13px 0;
-    display: block;
-    color: #000;
-}
-
-body.shepherd-active::after {
-    content: '';
-    display: block;
-    background-color: #000;
-    opacity: 0.4;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: -1000000;
-}
-
-.arrow {
-    position: absolute;
-    width: 0.75em;
-    height: 0.75em;
-    overflow: hidden;
-}
-
-.arrow::before {
-    content: '';
-    position: absolute;
-    width: 0.75em;
-    height: 0.75em;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(45deg);
-    background: ivory;
-    border: 1px solid black;
-}
-
-.option .mdc-radio__outer-circle {
-    border-color: #000000 !important;
-}
-
-.mat-mdc-radio-button {
-    .mdc-radio .mdc-radio__native-control:enabled:not(:checked) + .mdc-radio__background .mdc-radio__outer-circle {
-        border-color: #fff !important;
-    }
-
-    &.option {
-        .mdc-radio .mdc-radio__native-control:enabled:not(:checked) + .mdc-radio__background .mdc-radio__outer-circle {
-            border-color: #000 !important;
-        }
-    }
-
-    &.radioButton {
-        .mdc-radio .mdc-radio__native-control:enabled:not(:checked) + .mdc-radio__background .mdc-radio__outer-circle {
-            border-color: #fff !important;
-        }
+    .nb-form-field-addon {
+        align-items: flex-end;
     }
 }
 
-.add-btn {
-    background-color: var(--primary-background) !important;
+button {
+    margin-right: 10px;
+}
+
+.dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.orga-layout {
+    nb-layout .layout {
+        min-height: 10vh !important;
+    }
+
+    .scrollable-container {
+        height: 100% !important;
+    }
+}
+
+.mat-mdc-snack-bar-container {
+    &.error-snackbar {
+        --mdc-snackbar-container-color: #a31919 !important;
+    }
+
+    &.success-snackbar {
+        --mdc-snackbar-container-color: #03b413 !important;
+    }
+
+    &.warn-snackbar {
+        --mdc-snackbar-container-color: #a28206 !important;
+    }
 }

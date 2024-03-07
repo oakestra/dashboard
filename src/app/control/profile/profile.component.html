@@ -1,65 +1,42 @@
-<div class="content-cards">
-    <mat-card class="serviceCard">
-        <div>
-            <mat-card-title>Profile</mat-card-title>
-            <mat-card-content>
-                <form (ngSubmit)="onSubmit()" *ngIf="user$ | async" [formGroup]="form" class="form">
-                    <div>
-                        <mat-form-field appearance="fill" class="input-field">
-                            <mat-label>Name</mat-label>
-                            <input [value]="(user$ | async).name" disabled matInput />
-                        </mat-form-field>
-                    </div>
+<nb-card>
+    <nb-card-header>
+        <h1>Profile Management</h1>
+    </nb-card-header>
+    <nb-card-body>
+        <form (ngSubmit)="onSubmit()" *ngIf="user$ | async" [formGroup]="form">
+            <nb-form-field>
+                <input type="text" nbInput [value]="(user$ | async).name" disabled placeholder="Name" />
+            </nb-form-field>
+            <nb-form-field>
+                <input type="email" nbInput formControlName="email" placeholder="E-mail" />
+            </nb-form-field>
 
-                    <div>
-                        <mat-form-field appearance="fill" class="input-field">
-                            <mat-label>E-mail</mat-label>
-                            <input formControlName="email" matInput />
-                        </mat-form-field>
-                    </div>
+            <h5>Your Roles</h5>
+            <nb-tag-list aria-label="roles">
+                <nb-tag
+                    *ngFor="let r of (user$ | async).roles"
+                    [ngStyle]="{ 'background-color': getRoleBackgroundColor(r) }"
+                    selected
+                    appearance="filled"
+                    [text]="r"
+                    status="primary"
+                >
+                </nb-tag>
+            </nb-tag-list>
 
-                    <div>
-                        <h5>Your Roles</h5>
-                        <mat-chip-list aria-label="roles">
-                            <mat-chip
-                                *ngFor="let r of (user$ | async).roles"
-                                [ngStyle]="{
-                                    'background-color':
-                                        r === 'Admin' ? '#DE686B' : r === 'Application_Provider' ? '#3DA23C' : '#ADA23C'
-                                }"
-                                selected
-                            >
-                                {{ r }}
-                            </mat-chip>
-                        </mat-chip-list>
-                    </div>
+            <br />
 
-                    <div class="darkModeToggle">
-                        <mat-slide-toggle
-                            (change)="onDarkModeSwitched($event)"
-                            [checked]="isDarkMode"
-                        ></mat-slide-toggle>
-                        <p>Dark Mode</p>
-                    </div>
+            <h5>Theme</h5>
+            <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)">
+                <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
+            </nb-select>
 
-                    <br />
+            <br />
 
-                    <div class="alignCenter">
-                        <button [disabled]="!form.valid" color="primary" mat-button mat-flat-button type="submit">
-                            Save
-                        </button>
-                        <button
-                            (click)="openDialog(user)"
-                            class="cancel_buttons"
-                            mat-flat-button
-                            type="button"
-                            color="primary"
-                        >
-                            Change Password
-                        </button>
-                    </div>
-                </form>
-            </mat-card-content>
-        </div>
-    </mat-card>
-</div>
+            <div class="alignCenter">
+                <button [disabled]="!form.valid" color="primary" nbButton type="submit">Save</button>
+                <button (click)="openDialog(user)" type="button" nbButton color="primary">Change Password</button>
+            </div>
+        </form>
+    </nb-card-body>
+</nb-card>

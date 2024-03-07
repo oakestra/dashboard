@@ -74,12 +74,10 @@ export class ApiService extends RestService {
     // /////////////////////////////////////////////////////////////////////////
     // /////////////////// Service Functions ///////////////////////////////////
 
-    // TODO: api returns currently {job_id: string} change that to normal string
     addService(service: IService): Observable<any> {
         return this.doPOSTRequest('/service/', service);
     }
 
-    // sla and not service is here the argument? //TODO Why 2 parameters and not one
     updateService(service: any, serviceID: string): Observable<IService> {
         return this.doPUTRequest('/service/' + serviceID, service);
     }

@@ -1,0 +1,50 @@
+<button (click)="multipleFunctions()" class="graph-button" nbButton>
+    {{ showConButton }}
+</button>
+
+<!--// TODO Change the way of data excange between the graph and this component -->
+<div [style.display]="showConnections ? '' : 'none'" class="wrapper full-width">
+    <div class="buttonSide">
+        <h2 #type id="typeText"></h2>
+        <h4 id="testText">Select Service or Connection</h4>
+
+        <div class="hidden">
+            <p #nodeID id="IdText"></p>
+            <p #start id="IdLinkStart"></p>
+            <p #target id="IdLinkTarget"></p>
+            <button
+                (click)="openDialog(start.innerText, target.innerText, 'new')"
+                id="configureLink"
+                nbButton
+                color="primary"
+            ></button>
+        </div>
+
+        <div *ngIf="type.innerText.startsWith('Link'); else nodeButtons">
+            <button (click)="openDialog(start.innerText, target.innerText, 'edit')" color="primary" nbButton>
+                <nb-icon icon="settings-outline"></nb-icon>
+                Configure Connection
+            </button>
+        </div>
+
+        <ng-template #nodeButtons>
+            <button color="primary" id="editElement" nbButton routerLink="deploy/{{ nodeID.innerText }}">
+                <nb-icon icon="settings-outline"></nb-icon>
+                Configure Service
+            </button>
+            <button (click)="delete(nodeID.innerText)" nbButton>
+                <nb-icon icon="trash-2"></nb-icon>
+            </button>
+        </ng-template>
+    </div>
+</div>
+
+<div *ngIf="showConnections" class="alert alert-info">
+    <li>create new connections with drag and drop</li>
+    <li>you can move a service if you hold CTRL</li>
+    <li>use the configure button to edit a service or a connection</li>
+</div>
+
+<div [style.display]="showConnections ? '' : 'none'" class="graphSide" id="graph">
+    <div class="graph"></div>
+</div>

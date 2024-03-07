@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-// import * as L from 'leaflet';
+import { NbDialogService } from '@nebular/theme';
 import { ICluster } from '../../root/interfaces/cluster';
 import { DialogConfirmationView } from '../../root/components/dialogs/confirmation/dialogConfirmation';
 import { NotificationService } from '../../shared/modules/notification/notification.service';
@@ -20,18 +19,9 @@ import { NotificationType } from '../../root/interfaces/notification';
 export class ClusterComponent implements OnInit {
     clusters: ICluster[]; // Make this as input form parent class
 
-    /*
-    private map: any;
-
-    // FMI Garching coordinates
-    private lat = 48.262707753772624;
-    private lon = 11.668009155278707;
-
-   */
-
     constructor(
         private observer: BreakpointObserver,
-        public dialog: MatDialog,
+        public dialog: NbDialogService,
         private api: ApiService,
         public userService: UserService,
         private router: Router,
@@ -39,31 +29,15 @@ export class ClusterComponent implements OnInit {
         private notifyService: NotificationService,
     ) {}
 
-    ngOnInit(): void {
-        // this.initMap();
-    }
-    /*
-    private initMap(): void {
-        this.map = L.map('card_map', {
-            center: [this.lat, this.lon],
-            attributionControl: false,
-            zoom: 14,
-        });
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 13,
-        }).addTo(this.map);
-    }
-
- */
+    ngOnInit(): void {}
 
     deleteCluster(cluster: ICluster) {
         const data = {
             text: 'Delete cluster: ' + cluster.cluster_name,
             type: 'cluster',
         };
-        const dialogRef = this.dialog.open(DialogConfirmationView, { data });
-        dialogRef.afterClosed().subscribe((result) => {
+        const dialogRef = this.dialog.open(DialogConfirmationView, { context: { data } });
+        dialogRef.onClose.subscribe((result) => {
             if (result.event === true) {
                 this.api.deleteCluster(cluster._id.$oid).subscribe({
                     next: () => {

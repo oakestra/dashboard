@@ -23,7 +23,6 @@ export const serviceReducer = createReducer(
     // /////////////////////  GET SERVICE  //////////////////////////////////
     // ///////////////////////////////////////////////////////////////////////////
 
-    // TODO FIX gets called multiple times
     on(serviceActions.getServices, (state) => {
         const servicesOfApp = [] as IService[];
         const loading = false;

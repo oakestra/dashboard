@@ -1,61 +1,36 @@
-.organization-sidenav-side {
-    width: 20vw;
-}
-
 .sidenav-buttons {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 20px;
-    padding-right: 10px;
-}
-
-.mat-drawer-content {
-    background-color: white;
-    padding: 10px;
+    margin: -20px 0 0 -30px;
 }
 
 .organization-list {
     padding-top: 40px;
 }
 
-.organization-entry {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-.organization-entry:hover {
-    background-color: #f3f3f3;
-}
-
-.organization-button {
-    width: 80%;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    text-align: inherit;
-}
-
-.addOrganization {
-    display: flex;
-    align-items: baseline;
-}
-
-.organization-button mat-icon {
-    vertical-align: bottom;
-}
-
-.selected {
-    background-color: #f3f3f3;
-}
-
-.remove {
-    cursor: pointer;
-}
-
 .tab {
     padding: 20px;
 }
 
-.matContainer {
-    min-height: 60vh;
+.addOrganization {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+nb-layout {
+    width: 100%;
+    height: 100%;
+    min-height: 10vh !important;
+
+    .layout {
+        min-height: 10vh !important;
+    }
+}
+
+nb-layout-column:first-child {
+    flex: 30% !important;
+    background-color: var(--card-background-color);
+}
+
+nb-layout-column:last-child {
+    flex: 70% !important;
 }

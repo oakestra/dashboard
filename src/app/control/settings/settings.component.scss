@@ -6,10 +6,12 @@
     padding-bottom: 20px;
 }
 
-.form {
-    width: 50vh;
+nb-form-field,
+.checkbox,
+.button {
+    padding: 10px 0 10px 0;
 }
 
-button {
-    margin-top: 20px;
+.button {
+    margin: 10px 0 10px 0;
 }

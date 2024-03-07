@@ -1,44 +1,50 @@
 <div class="content-cards">
-    <mat-card class="serviceCard">
-        <mat-card-title>User Management</mat-card-title>
-        <mat-card-content>
-            <div class="createDiv">
-                <button (click)="openDialog(DialogAction.ADD)" mat-flat-button color="primary">
-                    <mat-icon>add_circle_outline</mat-icon>
-                    Create New User
-                </button>
-            </div>
-
+    <nb-card class="serviceCard">
+        <nb-card-header>
+            <h1>User Management</h1>
+        </nb-card-header>
+        <nb-card-body>
             <div class="w3-row user-search">
-                <div class="w3-col l4 m5">
-                    <mat-form-field appearance="fill" class="input-field searchForm">
-                        <mat-label>Search by username</mat-label>
-                        <input (ngModelChange)="doFilter($event)" matInput [(ngModel)]="searchText" type="text" />
-                        <button *ngIf="searchText" matSuffix mat-icon-button (click)="resetSearch()">
-                            <mat-icon>close</mat-icon>
+                <div class="w3-col l4 m4">
+                    <nb-form-field>
+                        <input
+                            type="text"
+                            [(ngModel)]="searchText"
+                            fullWidth
+                            nbInput
+                            placeholder="Search by username"
+                            (ngModelChange)="doFilter($event)"
+                        />
+                        <button *ngIf="searchText" nbSuffix nbButton ghost (click)="resetSearch()">
+                            <nb-icon icon="close" pack="eva"> </nb-icon>
                         </button>
-                    </mat-form-field>
+                    </nb-form-field>
                 </div>
 
-                <div class="w3-col l4 m5">
-                    <mat-form-field appearance="fill" class="input-field">
-                        <mat-label>Roles</mat-label>
-                        <mat-select [formControl]="dropdown" multiple>
-                            <mat-select-trigger>
-                                {{ dropdown.value ? dropdown.value : '' }}
-                                <span *ngIf="dropdown.value?.length > 1" class="example-additional-selection">
-                                    (+{{ dropdown.value.length - 1 }}
-                                    {{ dropdown.value?.length === 2 ? 'other' : 'others' }})
-                                </span>
-                            </mat-select-trigger>
-                            <mat-option *ngFor="let dropdown of dropdownList" [value]="dropdown">{{
-                                dropdown
-                            }}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                <div class="w3-col l4 m4">
+                    <nb-card-body>
+                        <nb-select
+                            (selectedChange)="doFilter(searchText)"
+                            [formControl]="dropdown"
+                            fullWidth
+                            multiple
+                            placeholder="Multiple Select"
+                        >
+                            <nb-option *ngFor="let dropdown of dropdownList" [value]="dropdown">
+                                {{ dropdown }}
+                            </nb-option>
+                        </nb-select>
+                    </nb-card-body>
+                </div>
+
+                <div class="w3-col l4 m4 createDiv">
+                    <button (click)="openDialog(DialogAction.ADD)" nbButton status="basic">
+                        <nb-icon icon="plus"></nb-icon>
+                        Create New User
+                    </button>
                 </div>
             </div>
-            <table [dataSource]="searchedUsers" class="mat-elevation-z8 search" mat-table>
+            <table [dataSource]="searchedUsers" mat-table>
                 <ng-container matColumnDef="name">
                     <th *matHeaderCellDef mat-header-cell>Username</th>
                     <td *matCellDef="let element" mat-cell>{{ element.name }}</td>
@@ -52,29 +58,29 @@
                 <ng-container matColumnDef="roles">
                     <th *matHeaderCellDef mat-header-cell>Roles</th>
                     <td *matCellDef="let element" mat-cell>
-                        <mat-chip-list aria-label="roles">
-                            <mat-chip
+                        <nb-tag-list aria-label="roles">
+                            <nb-tag
                                 *ngFor="let e of element.roles"
+                                [text]="e"
                                 [class.admin-chip]="e === 'Admin'"
                                 [class.provider-chip]="e === 'Application_Provider'"
                                 [class.organization-chip]="e === 'Organization_Admin'"
                                 [class.infra-chip]="e === 'Infrastructure_Provider'"
                                 selected
                             >
-                                {{ e }}
-                            </mat-chip>
-                        </mat-chip-list>
+                            </nb-tag>
+                        </nb-tag-list>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="symbol">
                     <th *matHeaderCellDef mat-header-cell class="alignCenter"></th>
                     <td *matCellDef="let element" mat-cell class="alignRight">
-                        <button (click)="openDialog(DialogAction.UPDATE, element)" mat-icon-button>
-                            <span><mat-icon>settings</mat-icon></span>
+                        <button (click)="openDialog(DialogAction.UPDATE, element)" nbButton ghost>
+                            <nb-icon icon="settings" pack="eva"> </nb-icon>
                         </button>
-                        <button (click)="openDeleteDialog(element)" mat-icon-button>
-                            <span><mat-icon>delete</mat-icon></span>
+                        <button (click)="openDeleteDialog(element)" nbButton ghost>
+                            <nb-icon icon="trash" pack="eva"> </nb-icon>
                         </button>
                     </td>
                 </ng-container>
@@ -82,6 +88,6 @@
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
             </table>
-        </mat-card-content>
-    </mat-card>
+        </nb-card-body>
+    </nb-card>
 </div>

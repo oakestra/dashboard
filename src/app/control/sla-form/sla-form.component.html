@@ -1,8 +1,8 @@
-<div class="content-cards">
-    <mat-card class="serviceCard">
-        <mat-card-title>Configure Service</mat-card-title>
-        <mat-tab-group animationDuration="0ms" class="mat-elevation-z4 inputGroup" mat-stretch-tabs>
-            <mat-tab label="FORM">
+<nb-card class="serviceCard">
+    <nb-card-header>Configure Service</nb-card-header>
+    <nb-card-body>
+        <nb-tabset class="inputGroup" fullWidth>
+            <nb-tab tabTitle="FORM">
                 <form-service-info [service]="service" #serviceInfo></form-service-info>
 
                 <form-requirements [service]="service" #requirements></form-requirements>
@@ -17,14 +17,14 @@
 
                 <form-connectivity [service]="service" #connectivity></form-connectivity>
 
-                <button (click)="onSubmit()" mat-flat-button color="primary" type="submit">Save</button>
+                <button (click)="onSubmit()" nbButton status="primary" type="submit">Save</button>
 
-                <button mat-flat-button color="accent" routerLink="/control" type="button">Cancel</button>
-            </mat-tab>
+                <button nbButton status="accent" routerLink="/control/services" type="button">Cancel</button>
+            </nb-tab>
 
-            <mat-tab label="SLA">
+            <nb-tab tabTitle="SLA">
                 <form-file-upload (upload)="slaFromFile($event)"></form-file-upload>
-            </mat-tab>
-        </mat-tab-group>
-    </mat-card>
-</div>
+            </nb-tab>
+        </nb-tabset>
+    </nb-card-body>
+</nb-card>
