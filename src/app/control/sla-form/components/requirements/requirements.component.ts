@@ -31,13 +31,13 @@ export class RequirementsComponent extends SubComponent implements OnInit {
 
     ngOnInit(): void {
         this.form = this.fb.group({
-            memory: [this.service?.memory],
-            vcpus: [this.service?.vcpus],
-            vgpus: [this.service?.vgpus],
-            vtpus: [this.service?.vtpus],
-            bandwidth_in: [this.service?.bandwidth_in],
-            bandwidth_out: [this.service?.bandwidth_out],
-            storage: [this.service?.storage],
+            memory: [this.service?.memory ?? 0],
+            vcpus: [this.service?.vcpus ?? 0],
+            vgpus: [this.service?.vgpus ?? 0],
+            vtpus: [this.service?.vtpus ?? 0],
+            bandwidth_in: [this.service?.bandwidth_in ?? 0],
+            bandwidth_out: [this.service?.bandwidth_out?? 0],
+            storage: [this.service?.storage ?? 0],
             port: [this.service?.port ?? ''],
         });
 
