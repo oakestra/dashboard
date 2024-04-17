@@ -4,7 +4,7 @@
             <p class="w3-col s4 l5 m5 service-name">
                 {{ service.microservice_name }}
             </p>
-            <p class="w3-col s4 l5 m5 service-status">
+            <p class="w3-col s4 l5 m5 service-status" title=" {{ service.status }}">
                 Status: <span class="serviceStatus" [class]="service.status">◉</span>
             </p>
 
