@@ -23,6 +23,7 @@
 }
 
 .FAILED,
+.NoActiveClusterWithCapacity,
 .DEAD {
     color: red !important;
     font-size: 1em;
