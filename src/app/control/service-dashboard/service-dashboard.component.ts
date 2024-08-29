@@ -29,7 +29,8 @@ export class ServiceDashboardComponent implements OnInit {
     appId = '';
     isLoading = false;
 
-    selectedItem: IApplication;
+    selectedItem: IApplication[] = [];
+    nodeDisabled = false; 
 
     constructor(
         private router: Router,
@@ -54,15 +55,17 @@ export class ServiceDashboardComponent implements OnInit {
                 filter((app) => app.length > 0),
                 tap((app) => {
                     this.store.dispatch(setCurrentApplication({ application: app[0] }));
-                    this.selectedItem = app[0];
+                    this.selectedItem = [app[0]];
                 }),
             )
             .subscribe();
     }
 
     setCurrentApplication() {
-        this.store.dispatch(setCurrentApplication({ application: this.selectedItem }));
-        this.appId = this.selectedItem._id.$oid;
+      this.nodeDisabled = this.selectedItems.length > 1;
+        if (this.selectedItems.length === 1) {
+        this.store.dispatch(setCurrentApplication({ application: this.selectedItems[0] }));
+        this.appId = this.selectedItems[0]._id.$oid;
     }
 
     deployService(service: IService) {
@@ -71,10 +74,10 @@ export class ServiceDashboardComponent implements OnInit {
             .deployService(service)
             .pipe(
                 tap(() => {
-                    if (this.selectedItem._id.$oid !== '') {
+                    if (this.selectedItems[0]._id.$oid !== '') {
                         setTimeout(() => {
                             this.isLoading = false;
-                            this.store.dispatch(getServices({ appId: this.selectedItem._id.$oid }));
+                            this.store.dispatch(getServices({ appId: this.selectedItems[0]._id.$oid }));
                         }, 5000); // delay to wait until the backend has deployed the service
                     }
                 }),
