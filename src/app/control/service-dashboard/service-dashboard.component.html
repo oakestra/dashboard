@@ -4,7 +4,7 @@
             <h1>Services</h1>
             <div class="app-select">
                 <h2>Application: &nbsp;</h2>
-                <nb-select [(selected)]="selectedItem" (selectedChange)="setCurrentApplication()">
+                <nb-select [(selected)]="selectedItem" (selectedChange)="setCurrentApplication()"  multiple>
                     <nb-option *ngFor="let app of apps$ | async" [value]="app">
                         {{ app.application_name }}
                     </nb-option>
@@ -26,7 +26,7 @@
                 ></app-service-item>
                 <br />
                 <div>
-                    <button id="createService" nbButton routerLink="/control/deploy" color="primary">
+                    <button id="createService" nbButton routerLink="/control/deploy" color="primary" [disabled]="nodeDisabled">
                         <nb-icon icon="plus"></nb-icon>
                         Create New Service
                     </button>
@@ -40,7 +40,7 @@
                 <p>No Service in this application.</p>
                 <br />
                 <div class="alignEnd">
-                    <button id="createServiceEmpty" nbButton routerLink="/control/deploy" color="primary">
+                    <button id="createServiceEmpty" nbButton routerLink="/control/deploy" color="primary" [disabled]="nodeDisabled">
                         <nb-icon icon="plus"></nb-icon>
                         Create new service
                     </button>
