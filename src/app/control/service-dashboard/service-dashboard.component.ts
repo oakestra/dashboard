@@ -29,7 +29,7 @@ export class ServiceDashboardComponent implements OnInit {
     appId = '';
     isLoading = false;
 
-    selectedItem: IApplication[] = [];
+    selectedItems: IApplication[] = [];
     nodeDisabled = false; 
 
     constructor(
