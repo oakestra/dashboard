@@ -14,6 +14,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { ApplicationsComponent } from './application-dashboard/applications.component';
 import { FaqComponent } from './faq/faq.component';
 import { InstanceDetailComponent } from './service-dashboard/components/instance-detail/instance-detail.component';
+import { ClusterComponent } from './cluster/cluster.component';
 
 export const routes: Routes = [
     {
@@ -86,12 +87,11 @@ export const routes: Routes = [
                     role: 'ADMIN',
                 },
             },
-            /*
             {
-                path: 'cluster',
+                path: 'clusters',
                 component: ClusterComponent,
                 canActivate: [AuthGuardService],
-            },*/
+            },
             { path: '**', component: NotFoundComponent },
         ],
     },

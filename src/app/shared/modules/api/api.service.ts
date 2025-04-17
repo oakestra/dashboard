@@ -59,16 +59,12 @@ export class ApiService extends RestService {
         and implement the store for the cluster data
      */
 
-    deleteCluster(clusterId: string) {
-        return this.doDELRequest('/cluster/' + clusterId);
+    getActiveClusters(): Observable<ICluster[]>  {
+        return this.doGETRequest('/clusters/active');
     }
 
-    getClustersOfUser(userId: string | null): Observable<ICluster[]> {
-        return this.doGETRequest('/clusters/' + userId);
-    }
-
-    getClusterById(clusterId: string) {
-        return this.doGETRequest('/cluster/' + clusterId);
+    getClusters(): Observable<ICluster[]> {
+        return this.doGETRequest('/clusters/');
     }
 
     // /////////////////////////////////////////////////////////////////////////
@@ -165,13 +161,6 @@ export class ApiService extends RestService {
 
     public getSettings(): Observable<ISettings> {
         return this.doGETRequest('/settings');
-    }
-
-    // /////////////////////////////////////////////////////////////////////////
-    // /////////////////// Cluster Functions ///////////////////////////////////
-
-    public getClusters(): Observable<any> {
-        return this.doGETRequest('/clusters/');
     }
 
     // /////////////////////////////////////////////////////////////////////////

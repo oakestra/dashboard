@@ -1,30 +1,24 @@
 <div class="container">
+    Clusters:
     <div class="row">
-        <div *ngFor="let cluster of clusters">
+        <div *ngFor="let cluster of clusters$ | async" class="col-sm-4">
             <nb-card id="my_card">
                 <nb-card-header>
                     {{ cluster.cluster_name }}
-                    Cluster ID {{ cluster._id.$oid }}
                 </nb-card-header>
-                <nb-card-body *ngIf="cluster.pairing_complete">
+                <nb-card-body *ngIf="cluster._id">
+                    Cluster ID {{ cluster._id }}
+                    supported virtualizations: {{ cluster.virtualization }}
                     <div class="map-container">
                         <div class="map-frame">
                             <div id="card_map"></div>
                             <p>
-                                The cluster is located in: [{{ cluster.cluster_latitude }},
-                                {{ cluster.cluster_longitude }}]
+                                The cluster is located in: [{{ cluster.cluster_location }},
+                                {{ cluster.cluster_location }}]
                             </p>
                         </div>
                     </div>
                 </nb-card-body>
-                <nb-card-footer>
-                    <button *ngIf="!cluster.pairing_complete" nbButton>
-                        <div *ngIf="!cluster.pairing_complete" class="noinstance">
-                            <p>NOT YET ACTIVE</p>
-                        </div>
-                    </button>
-                    <button (click)="deleteCluster(cluster)" nbButton><nb-icon icon="trash-2"></nb-icon></button>
-                </nb-card-footer>
             </nb-card>
         </div>
     </div>
