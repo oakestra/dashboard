@@ -7,11 +7,16 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { NB_DIALOG_CONFIG, NbDialogRef } from '@nebular/theme';
+import { UserService } from '../../../../shared/modules/auth/user.service';
 import { ApiService } from '../../../../shared/modules/api/api.service';
 import { NotificationService } from '../../../../shared/modules/notification/notification.service';
 import { IUser } from '../../../../root/interfaces/user';
 import { IDialogAttribute } from '../../../../root/interfaces/dialogAttribute';
+import { appReducer, getUser, updateUser } from '../../../../root/store';
+import { selectCurrentUser } from '../../../../root/store/selectors/user.selector';
 import { NotificationType } from '../../../../root/interfaces/notification';
 
 @Component({
@@ -22,13 +27,19 @@ import { NotificationType } from '../../../../root/interfaces/notification';
 export class DialogChangePasswordView {
     user: IUser;
     form: FormGroup;
+    currentTheme = 'default';
+    private user$: Observable<IUser> = this.store.pipe(select(selectCurrentUser));
 
     constructor(
         public dialogRef: NbDialogRef<DialogChangePasswordView>,
         @Optional() @Inject(NB_DIALOG_CONFIG) public data: IDialogAttribute,
         private api: ApiService,
-        public notifyService: NotificationService,
+        private store: Store<appReducer.AppState>,
+        private userService: UserService,
         private fb: FormBuilder,
+        
+
+        public notifyService: NotificationService,
     ) {
         this.user = data.content as IUser;
 
@@ -40,6 +51,15 @@ export class DialogChangePasswordView {
             },
             [PasswordValidators.oldAndNewPassDifferent, PasswordValidators.newPasswordsSame] as AbstractControlOptions,
         );
+    }
+
+    ngOnInit(): void {
+        this.store.dispatch(getUser({ name: this.userService.getUsername() }));
+    
+        this.user$.subscribe((u: IUser) => {
+            this.user = u;
+            this.form.patchValue({ email: this.user.email });
+        });
     }
 
     get confirmNewPassword() {

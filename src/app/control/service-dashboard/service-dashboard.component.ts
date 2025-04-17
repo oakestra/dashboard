@@ -48,13 +48,31 @@ export class ServiceDashboardComponent implements OnInit {
             )
             .subscribe();
 
+        //populate page with the latest selected application
         this.store
             .select(selectApplications)
             .pipe(
                 filter((app) => app.length > 0),
                 tap((app) => {
-                    this.store.dispatch(setCurrentApplication({ application: app[0] }));
-                    this.selectedItem = app[0];
+                    this.store
+                        .select(selectCurrentApplication)
+                        .pipe(
+                            filter((currentApp) => !!currentApp),
+                            take(1),
+                            tap((currentApp) => {
+                                console.log('currentApp', currentApp);
+                                if (currentApp.application_name !== '') {
+                                    this.selectedItem = currentApp;
+                                    this.appId = this.selectedItem._id.$oid;
+                                }
+                            }),
+                        ).subscribe();
+                        if (this.selectedItem === undefined) {
+                            this.store.dispatch(setCurrentApplication({ application: app[0] }));
+                            this.selectedItem = app[0];
+                        }else{
+                            this.store.dispatch(setCurrentApplication({ application: this.selectedItem }));
+                        }
                 }),
             )
             .subscribe();

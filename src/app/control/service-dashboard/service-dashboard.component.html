@@ -4,7 +4,7 @@
             <h1>Services</h1>
             <div class="app-select">
                 <h2>Application: &nbsp;</h2>
-                <nb-select [(selected)]="selectedItem" (selectedChange)="setCurrentApplication()">
+                <nb-select [(selected)]="selectedItem" (selectedChange)="setCurrentApplication()" placeholder="{{selectedItem?.application_name}}">
                     <nb-option *ngFor="let app of apps$ | async" [value]="app">
                         {{ app.application_name }}
                     </nb-option>
