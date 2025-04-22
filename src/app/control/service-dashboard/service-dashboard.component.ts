@@ -60,7 +60,6 @@ export class ServiceDashboardComponent implements OnInit {
                             filter((currentApp) => !!currentApp),
                             take(1),
                             tap((currentApp) => {
-                                console.log('currentApp', currentApp);
                                 if (currentApp.application_name !== '') {
                                     this.selectedItem = currentApp;
                                     this.appId = this.selectedItem._id.$oid;
