@@ -115,7 +115,6 @@ import { NbProgressBarModule } from '@nebular/theme';
         LatencyConstraintsComponent,
         GeoConstraintsComponent,
         ClusterConstraintsComponent,
-        ClusterComponent,
         ClusterMapComponent,
         ApplicationsComponent,
         FaqComponent,
