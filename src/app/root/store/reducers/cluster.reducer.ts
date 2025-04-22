@@ -36,10 +36,10 @@ export const clusterReducer = createReducer(
     }),
 
     on(clusterActions.getClustersError, (state, action) => {
-        const applications = [] as ICluster[];
+        const clusters = [] as ICluster[];
         const loading = false;
         const error = action.error;
-        return { ...state, applications, loading, error };
+        return { ...state, clusters, loading, error };
     }),
 
 );
