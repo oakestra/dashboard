@@ -10,6 +10,11 @@ effectively manage cluster resources, and troubleshoot any issues that may arise
 
 First download the files and then run `npm i` to install all necessary packages
 
+Set the Angular environment variables in `src/environments/environment.ts` as follows:
+```
+apiUrl: 'http://<<YOUR_ROOT_ORCHESTRATOR_URL_HERE>>:10000/api',
+```
+
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
