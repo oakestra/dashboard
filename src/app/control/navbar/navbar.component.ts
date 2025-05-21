@@ -27,6 +27,11 @@ export class NavbarComponent implements OnInit {
                 link: '/control/services',
             },
             {
+                title: 'Available Clusters',
+                icon: 'globe',
+                link: '/control/clusters',
+            },
+            {
                 title: 'Infrastructure Dashboard',
                 icon: 'monitor',
                 link: '/control/infrastructure',

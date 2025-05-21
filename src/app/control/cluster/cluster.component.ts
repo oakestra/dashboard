@@ -1,64 +1,54 @@
-import { Component, OnInit } from '@angular/core';
-import { BreakpointObserver } from '@angular/cdk/layout';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
 import { NbDialogService } from '@nebular/theme';
 import { ICluster } from '../../root/interfaces/cluster';
-import { DialogConfirmationView } from '../../root/components/dialogs/confirmation/dialogConfirmation';
-import { NotificationService } from '../../shared/modules/notification/notification.service';
-import { ApiService } from '../../shared/modules/api/api.service';
+import { selectAllClusters } from '../../root/store/selectors/cluster.selector';
+import { filter,tap } from 'rxjs/operators';
 import { UserService } from '../../shared/modules/auth/user.service';
-import { AuthService } from '../../shared/modules/auth/auth.service';
-import { NotificationType } from '../../root/interfaces/notification';
+import { Observable } from 'rxjs';
+import * as L from 'leaflet';
+import { map } from 'rxjs/operators';
+import { ClusterMapComponent } from './clustermap/clustermap.component';
+import {
+    appReducer,
+    getActiveClusters,
+    getClusters,
+} from '../../root/store';
+
 
 @Component({
     selector: 'app-cluster',
     templateUrl: './cluster.component.html',
     styleUrls: ['./cluster.component.scss'],
 })
-// TODO is currently not used, refactor before using it
-export class ClusterComponent implements OnInit {
-    clusters: ICluster[]; // Make this as input form parent class
 
+export class ClusterComponent implements OnInit {
+
+    public clusters$: Observable<ICluster[]> = this.store.pipe(select(selectAllClusters));
+    private clusterListHtml: string;
     constructor(
-        private observer: BreakpointObserver,
         public dialog: NbDialogService,
-        private api: ApiService,
         public userService: UserService,
         private router: Router,
-        private authService: AuthService,
-        private notifyService: NotificationService,
+        private store: Store<appReducer.AppState>,
     ) {}
 
-    ngOnInit(): void {}
-
-    deleteCluster(cluster: ICluster) {
-        const data = {
-            text: 'Delete cluster: ' + cluster.cluster_name,
-            type: 'cluster',
-        };
-        const dialogRef = this.dialog.open(DialogConfirmationView, { context: { data } });
-        dialogRef.onClose.subscribe((result) => {
-            if (result.event === true) {
-                this.api.deleteCluster(cluster._id.$oid).subscribe({
-                    next: () => {
-                        this.notifyService.notify(
-                            NotificationType.success,
-                            'Cluster ' + cluster.cluster_name + ' deleted successfully!',
-                        );
-                        this.redirectTo('/control');
-                    },
-                    error: () => {
-                        this.notifyService.notify(
-                            NotificationType.error,
-                            'Error: Deleting cluster ' + cluster.cluster_name,
-                        );
-                    },
-                });
-            }
-        });
+    ngOnInit(): void {
+        this.store.dispatch(getClusters());
     }
 
     redirectTo(uri: string) {
         void this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate([uri]));
     }
+
+    convertMemoryToGB(memory: number): number {
+        return Math.round(memory / 1024 );
+      }
+
+    convertCpuToPercentage(cpu_usage: number, cores: number): number {
+        return Math.round(cpu_usage*100 / cores );
+    }
+
 }
+
