@@ -2,7 +2,7 @@
     <nb-layout-column>
         <nb-card class="login-form">
             <img alt="Oakestra Logo" src="../../../../assets/img/color-full.png" />
-            <form [formGroup]="form" accept-charset="UTF-8" role="form">
+            <form [formGroup]="form" (ngSubmit)="submitLogin()" accept-charset="UTF-8" role="form">
                 <div class="info">
                     <nb-checkbox (checkedChange)="tabChanged($event)" status="basic">Organization login</nb-checkbox>
                     <nb-icon nbSuffix icon="info" nbTooltip="{{ sm_ip }}" pack="eva"></nb-icon>
@@ -32,7 +32,7 @@
                         [type]="getInputType()"
                         nbInput
                     />
-                    <button nbSuffix nbButton ghost (click)="toggleShowPassword()">
+                    <button type="button" nbSuffix nbButton ghost (click)="toggleShowPassword()">
                         <nb-icon
                             [icon]="showPassword ? 'eye-outline' : 'eye-off-2-outline'"
                             pack="eva"
@@ -41,13 +41,15 @@
                         </nb-icon>
                     </button>
                 </nb-form-field>
-                <span (click)="forgotPassword()" class="pull-right text-primary link">Forgot password?</span>
+                <div class="forgot">
+                    <span (click)="forgotPassword()" class="text-primary link">Forgot password?</span>
+                </div>
+                <div class="centerButton">
+                    <button type="submit" [disabled]="form.invalid" nbButton outline status="primary">
+                        Sign in
+                    </button>
+                </div>
             </form>
-            <div class="centerButton">
-                <button [disabled]="form.invalid" (click)="submitLogin()" nbButton outline status="primary">
-                    Sign in
-                </button>
-            </div>
         </nb-card>
     </nb-layout-column>
 </nb-layout>
