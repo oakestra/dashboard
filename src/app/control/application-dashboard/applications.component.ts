@@ -93,7 +93,6 @@ export class ApplicationsComponent {
                 });
                 this.store.dispatch(deleteApplication({ application: result.data }));
             }
-            // TODO remove this and get the id form the api response
             this.store.dispatch(getApplication({ id: this.userID }));
         });
     }
