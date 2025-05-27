@@ -40,6 +40,7 @@ export class ServiceDashboardComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        // get current user
         this.store
             .select(selectCurrentUser)
             .pipe(
