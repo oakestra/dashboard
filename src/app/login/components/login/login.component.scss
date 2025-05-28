@@ -68,6 +68,11 @@ nb-card-body.example-items-col {
     justify-content: space-between;
 }
 
+.forgot {
+    display: flex;
+    justify-content: right;
+}
+
 @media only screen and (min-width: 801px) {
     .login-form {
         width: 40%;

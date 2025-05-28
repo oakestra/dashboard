@@ -82,9 +82,17 @@ export class ApplicationsComponent {
             } else if (result.event === DialogAction.UPDATE) {
                 this.store.dispatch(updateApplication({ application: result.data }));
             } else if (result.event === DialogAction.DELETE) {
+                //get different app form apps$ to set as current
+                this.apps$.subscribe((app) => {
+                    var activeApps = app.filter((a) => a._id.$oid !== result.data._id.$oid)
+                    if (activeApps.length > 0) {
+                        this.store.dispatch(setCurrentApplication({ application: activeApps[0] }));
+                    } else {
+                        this.store.dispatch(setCurrentApplication({ application: undefined }));
+                    }
+                });
                 this.store.dispatch(deleteApplication({ application: result.data }));
             }
-            // TODO remove this and get the id form the api response
             this.store.dispatch(getApplication({ id: this.userID }));
         });
     }
