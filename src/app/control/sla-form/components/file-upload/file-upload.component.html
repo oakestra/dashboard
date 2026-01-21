@@ -1,4 +1,4 @@
-<div (click)="fileUpload.click()" class="content">
+<div class="content">
     {{ filename }}
     <div class="sample-code">
         <p>The file can be a full SLA descriptor (CLI/API standard) or a microservice list.</p>
@@ -10,6 +10,9 @@
     <div class="file-upload">
         <input #fileUpload (change)="loadFile($event)" accept="application/JSON" class="file-input" type="file" />
     </div>
+    <button (click)="fileUpload.click()" nbButton status="info" type="button" style="margin-right: 10px">
+        Select File
+    </button>
     <button (click)="uploadDocument()" [disabled]="file === undefined" color="primary" nbButton type="button">
         Upload Config
     </button>
