@@ -3,16 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../shared/modules/api/api.service';
-import { NotificationService } from '../../shared/modules/notification/notification.service';
-import { NotificationType } from '../../root/interfaces/notification';
-import { UserService } from '../../shared/modules/auth/user.service';
+import { SlaGeneratorService } from '../../shared/modules/helper/sla-generator.service';
+import { ServiceGeneratorService } from '../../shared/modules/helper/service-generator.service';
+import { ParsedSlaResult } from '../../shared/modules/helper/sla-parser.service';
 import { IApplication } from '../../root/interfaces/application';
 import { IService } from '../../root/interfaces/service';
 import { appReducer, postService, updateServiceSuccess } from '../../root/store';
 import { selectCurrentApplication } from '../../root/store/selectors/application.selector';
-import { SlaGeneratorService } from '../../shared/modules/helper/sla-generator.service';
-import { ServiceGeneratorService } from '../../shared/modules/helper/service-generator.service';
-import { ParsedSlaResult } from '../../shared/modules/helper/sla-parser.service';
 import { IUser } from '../../root/interfaces/user';
 import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 import { selectCurrentServices } from '../../root/store/selectors/service.selector';
@@ -55,11 +52,9 @@ export class SlaFormComponent implements OnInit {
         private route: ActivatedRoute,
         private api: ApiService,
         private router: Router,
-        private notifyService: NotificationService,
         private store: Store<appReducer.AppState>,
         private slaGenerator: SlaGeneratorService,
         private serviceGenerator: ServiceGeneratorService,
-        private userService: UserService,
     ) {
         this.app$.subscribe((app) => {
             console.log(app);
@@ -104,52 +99,20 @@ export class SlaFormComponent implements OnInit {
     }
 
     slaFromFile(result: ParsedSlaResult) {
+        const generatedData = this.slaGenerator.validateAndGenerateFromFile(
+            result,
+            this.currentApplication,
+            this.currentUser,
+        );
+
+        if (!generatedData) {
+            return;
+        }
+
         if (result.type === 'v2') {
-            const data = result.data;
-            // Auto-fill IDs if missing and context is available
-            if (this.currentApplication && this.currentUser) {
-                const org = this.userService.getOrganization();
-                const customer = org === 'root' ? this.currentUser._id.$oid : org;
-
-                if (!data.customerID) {
-                    data.customerID = customer;
-                } else if (data.customerID !== customer) {
-                    this.notifyService.notify(
-                        NotificationType.error,
-                        `SLA Error: File customerID "${data.customerID}" does not match current user "${customer}".`,
-                    );
-                    return;
-                }
-
-                if (data.applications && data.applications.length > 0) {
-                    const app = data.applications[0];
-                    if (!app.applicationID) {
-                        app.applicationID = this.currentApplication._id.$oid;
-                    } else if (app.applicationID !== this.currentApplication._id.$oid) {
-                        this.notifyService.notify(
-                            NotificationType.error,
-                            `SLA Error: File applicationID "${app.applicationID}" does not match current application "${this.currentApplication._id.$oid}".`,
-                        );
-                        return;
-                    }
-                }
-            }
-            this.addService(data);
+            this.addService(generatedData);
         } else if (result.type === 'v1_microservices') {
-            if (!this.currentApplication) {
-                this.notifyService.notify(NotificationType.error, 'No application selected. Cannot generate SLA from legacy format.');
-                return;
-            }
-            if (!this.currentUser) {
-                this.notifyService.notify(NotificationType.error, 'User session not loaded. Please try again.');
-                return;
-            }
-            const microservices = result.data as IService[];
-            microservices.forEach((service) => {
-                console.log(service);
-                const sla = this.slaGenerator.generateSLA(service, this.currentApplication, this.currentUser);
-                this.addService(sla);
-            });
+            generatedData.forEach((sla: any) => this.addService(sla));
         }
     }
 
