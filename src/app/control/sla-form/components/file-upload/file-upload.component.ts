@@ -15,7 +15,7 @@ export class FileUploadComponent extends SubComponent {
     @Input() service: IService;
     @Input() applicationName: string;
 
-    file: File | undefined;
+    jsonContent = '';
     filename = 'Select File to Upload';
 
     sampleService: any = {
@@ -33,32 +33,31 @@ export class FileUploadComponent extends SubComponent {
         private notifyService: NotificationService,
     ) {
         super();
+        this.jsonContent = JSON.stringify(this.sampleService, null, 4);
     }
 
     loadFile(event: any) {
-        this.file = event.target.files[0] as File;
-        console.log(this.file);
-        this.filename = this.file.name;
+        const file = event.target.files[0] as File;
+        console.log(file);
+        if (file) {
+            this.filename = file.name;
+            const fileReader = new FileReader();
+            fileReader.onload = () => {
+                this.jsonContent = (fileReader.result ?? '').toString();
+            };
+            fileReader.readAsText(file);
+        }
     }
 
     uploadDocument() {
-        if (this.file) {
-            const fileReader = new FileReader();
-            fileReader.onload = () => {
-                try {
-                    const rawJson = JSON.parse((fileReader.result ?? '').toString());
-
-                   
-                    const result = this.slaParser.parse(rawJson, this.applicationName);
-
-                    console.log(result);
-                    this.upload.emit(result);
-                } catch (error) {
-                    console.error(error);
-                    this.notifyService.notify(NotificationType.error, (error as any).message || 'Error parsing SLA file');
-                }
-            };
-            fileReader.readAsText(this.file);
+        try {
+            const rawJson = JSON.parse(this.jsonContent);
+            const result = this.slaParser.parse(rawJson, this.applicationName);
+            console.log(result);
+            this.upload.emit(result);
+        } catch (error) {
+            console.error(error);
+            this.notifyService.notify(NotificationType.error, (error as any).message || 'Error parsing SLA content');
         }
     }
 

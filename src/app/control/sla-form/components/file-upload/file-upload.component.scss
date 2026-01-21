@@ -1,35 +1,43 @@
-.content {
-    height: 50vh;
+.upload-container {
+    padding: 2rem;
     display: flex;
-    justify-content: center;
     flex-direction: column;
     align-items: center;
-    font-size: 2rem;
-    color: lightgray;
-    padding-top: 20px;
 
-    .sample-code {
-        padding-top: 40px;
-        display: flex;
-        flex-direction: column;
+    .filename-header {
         font-size: 1.5rem;
+        color: lightgray;
+        margin-bottom: 1rem;
+    }
 
-        pre,
+    .editor-area {
+        width: 100%;
+        margin-bottom: 2rem;
+
         p {
-            font-size: 1rem;
             color: lightgray;
+            margin-bottom: 0.5rem;
+        }
+
+        textarea {
+            font-family: monospace;
         }
     }
-}
 
-.file-upload-div {
-    text-align: center;
+    .actions-area {
+        text-align: center;
 
-    .file-upload {
-        display: none;
-    }
+        .file-input {
+            display: none;
+        }
 
-    button {
-        margin-bottom: 10px;
+        button {
+            margin-right: 1rem;
+        }
+
+        p {
+            color: lightgray;
+            margin-top: 1rem;
+        }
     }
 }

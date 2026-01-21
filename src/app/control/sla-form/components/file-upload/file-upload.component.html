@@ -1,20 +1,22 @@
-<div class="content">
-    {{ filename }}
-    <div class="sample-code">
-        <p>The file can be a full SLA descriptor (CLI/API standard) or a microservice list.</p>
-        <pre>{{ sampleService | json }}</pre>
+<div class="upload-container">
+    <div class="filename-header">
+        {{ filename }}
     </div>
-</div>
 
-<div class="file-upload-div">
-    <div class="file-upload">
-        <input #fileUpload (change)="loadFile($event)" accept="application/JSON" class="file-input" type="file" />
+    <div class="editor-area">
+        <p>The file can be a full SLA descriptor (CLI/API standard) or a microservice list. Also it can be edited before uploading.</p>
+        <textarea [(ngModel)]="jsonContent" nbInput fullWidth rows="20"></textarea>
     </div>
-    <button (click)="fileUpload.click()" nbButton status="info" type="button" style="margin-right: 10px">
-        Select File
-    </button>
-    <button (click)="uploadDocument()" [disabled]="file === undefined" color="primary" nbButton type="button">
-        Upload Config
-    </button>
-    <p>Supported formats: CLI/API SLA (v2.0) or legacy microservice array.</p>
+
+    <div class="actions-area">
+        <input #fileUpload (change)="loadFile($event)" accept="application/JSON" class="file-input" type="file" />
+
+        <button (click)="fileUpload.click()" nbButton status="info" type="button">Select File</button>
+
+        <button (click)="uploadDocument()" [disabled]="!jsonContent" color="primary" nbButton type="button">
+            Upload Config
+        </button>
+
+        <p>Supported formats: CLI/API SLA (v2.0) or legacy microservice array.</p>
+    </div>
 </div>
