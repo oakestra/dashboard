@@ -1,7 +1,7 @@
 <div (click)="fileUpload.click()" class="content">
     {{ filename }}
     <div class="sample-code">
-        <p>The file must be formatted as follows:</p>
+        <p>The file can be a full SLA descriptor (CLI/API standard) or a microservice list.</p>
         <pre>{{ sampleService | json }}</pre>
     </div>
 </div>
@@ -13,5 +13,5 @@
     <button (click)="uploadDocument()" [disabled]="file === undefined" color="primary" nbButton type="button">
         Upload Config
     </button>
-    <p>The file should contain only the microservice array</p>
+    <p>Supported formats: CLI/API SLA (v2.0) or legacy microservice array.</p>
 </div>
