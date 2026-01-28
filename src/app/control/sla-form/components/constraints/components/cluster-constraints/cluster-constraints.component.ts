@@ -23,16 +23,35 @@ export class ClusterConstraintsComponent implements OnInit {
         this.apiService.getClusters().subscribe((x) => {
             console.log(x);
             this.clusterOptions = x.map((cluster: any) => cluster.cluster_name);
+            this.clusterOptions.push('I am a fake cluster');
+            this.clusterOptions.push('Another fake cluster');
             console.log(this.clusterOptions);
         });
 
         this.parentForm = this.parent.form;
-        this.parentForm.addControl(
-            this.formGroupName,
-            this.fb.group({
-                node: [''],
-                cluster: [],
-            }),
-        );
+        
+        const constraintsGroup = this.fb.group({
+            node: [''],
+            cluster: [],
+        });
+
+        this.parentForm.addControl(this.formGroupName, constraintsGroup);
+
+        constraintsGroup.get('cluster')?.valueChanges.subscribe((selectedClusters: string[]) => {
+            const nodeControl = constraintsGroup.get('node');
+
+            if (Array.isArray(selectedClusters) && selectedClusters.length > 1) {
+                nodeControl?.setValue('');    
+                nodeControl?.disable();    
+            } else {
+                nodeControl?.enable();     
+            }
+        });
+
+    }
+
+    get showNodeWarning(): boolean {
+        const clusters = this.parentForm.get(this.formGroupName)?.get('cluster')?.value;
+        return Array.isArray(clusters) && clusters.length > 1;
     }
 }
