@@ -23,8 +23,6 @@ export class ClusterConstraintsComponent implements OnInit {
         this.apiService.getClusters().subscribe((x) => {
             console.log(x);
             this.clusterOptions = x.map((cluster: any) => cluster.cluster_name);
-            this.clusterOptions.push('I am a fake cluster');
-            this.clusterOptions.push('Another fake cluster');
             console.log(this.clusterOptions);
         });
 
