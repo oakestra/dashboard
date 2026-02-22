@@ -131,7 +131,7 @@ export class ApiService extends RestService {
     // //////////////////////////////////////////////////////////////////////////
     // /////////////////// Organization Functions ///////////////////////////////
 
-    addOrganization(org: IOrganization): Observable<string> {
+    addOrganization(org: IOrganization): Observable<any> {
         return this.doPOSTRequest('/organization/', org);
     }
 

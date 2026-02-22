@@ -61,6 +61,7 @@ export class EditOrganizationComponent implements OnInit {
     }
 
     changeSelected(organization: IOrganization) {
+        this.selected = organization;
         this.name = organization.name;
         this.getMemberNames();
     }

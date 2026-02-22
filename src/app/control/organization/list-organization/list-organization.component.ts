@@ -24,6 +24,8 @@ export class ListOrganizationComponent implements OnInit {
     searchedOrganizations: Array<IOrganization> = [];
     searchText = '';
 
+    allOrganizations: Array<IOrganization> = [];
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -35,15 +37,20 @@ export class ListOrganizationComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        // Subscribe ONCE to keep the raw list updated
         this.organizations$.subscribe((o) => {
-            this.searchedOrganizations = o.filter((organization) => this.nameFilter(organization, ''));
+            this.allOrganizations = o;
+            this.searchedOrganizations = this.allOrganizations.filter((org) =>
+                this.nameFilter(org, this.searchText)
+            );
         });
     }
 
     search(event: any): void {
-        this.organizations$.subscribe((o) => {
-            this.searchedOrganizations = o.filter((organization) => this.nameFilter(organization, event));
-        });
+        this.searchText = event;
+        this.searchedOrganizations = this.allOrganizations.filter((org) =>
+            this.nameFilter(org, this.searchText)
+        );
     }
 
     nameFilter(organization: IOrganization, searchText: string): boolean {
@@ -64,7 +71,6 @@ export class ListOrganizationComponent implements OnInit {
             member: [],
         };
         this.store.dispatch(postOrganization({ organization }));
-        this.editOrganization(organization);
     }
 
     openDeleteDialog(organization: IOrganization) {

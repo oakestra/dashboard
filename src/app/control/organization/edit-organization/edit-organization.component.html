@@ -10,14 +10,15 @@
             <div class="organization-list">
                 <nb-radio-group
                     (ngModelChange)="changeSelected($event)"
-                    [(ngModel)]="selected"
-                    *ngFor="let o of organizations$ | async"
-                >
-                    <nb-radio [value]="o">
-                        {{ o.name }}
-                    </nb-radio>
-                </nb-radio-group>
-            </div>
+                    [(ngModel)]="selected">
+                <nb-radio 
+                    *ngFor="let o of organizations$ | async" 
+                 [value]="o">
+
+                  {{ o.name }}
+             </nb-radio>
+            </nb-radio-group>
+        </div>
         </nb-layout-column>
         <nb-layout-column>
             <div>
