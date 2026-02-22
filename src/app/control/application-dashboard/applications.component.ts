@@ -27,7 +27,7 @@ import { DialogAddApplicationView } from './dialogs/add-appllication/dialogAddAp
     templateUrl: './applications.component.html',
     styleUrls: ['./applications.component.scss'],
 })
-export class ApplicationsComponent {
+export class ApplicationsComponent{
     @Input() userID: string;
     DialogAction = DialogAction;
     activeAppId: IId;
@@ -45,13 +45,15 @@ export class ApplicationsComponent {
 
     ngOnInit(): void {
         this.store.select(selectCurrentUser).subscribe((u) => {
-            this.userID = u._id.$oid;
-            this.store.dispatch(getApplication({ id: this.userID }));
+            if (u && u._id) {
+                this.userID = u._id;
+                this.store.dispatch(getApplication({ id: this.userID }));
+            }
         });
 
         this.apps$.subscribe((apps) => {
-            console.log(apps);
-            const active = apps.filter((a) => a._id.$oid === sessionStorage.getItem('id'))[0];
+            console.log('Hi, I\'m the applications component and I have apps: ', apps);
+            const active = apps.filter((a) => a._id === sessionStorage.getItem('id'))[0];
             if (active) {
                 this.store.dispatch(setCurrentApplication({ application: active }));
                 this.activeAppId = active._id;
@@ -62,7 +64,7 @@ export class ApplicationsComponent {
     openDialogApp(action: DialogAction, app: IApplication | undefined) {
         if (action === DialogAction.ADD) {
             app = {
-                _id: { $oid: '' },
+                _id: '',
                 application_name: '',
                 application_namespace: '',
                 application_desc: '',
@@ -84,7 +86,7 @@ export class ApplicationsComponent {
             } else if (result.event === DialogAction.DELETE) {
                 //get different app form apps$ to set as current
                 this.apps$.subscribe((app) => {
-                    var activeApps = app.filter((a) => a._id.$oid !== result.data._id.$oid)
+                    var activeApps = app.filter((a) => a._id !== result.data._id)
                     if (activeApps.length > 0) {
                         this.store.dispatch(setCurrentApplication({ application: activeApps[0] }));
                     } else {

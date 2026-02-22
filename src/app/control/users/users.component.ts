@@ -86,6 +86,9 @@ export class UsersComponent implements OnInit {
     }
 
     nameFilter(user: IUser): boolean {
+        if (!user || !user.name) {
+            return false;
+        }
         console.log(this.searchText);
         return (
             !this.searchText ||
@@ -93,7 +96,6 @@ export class UsersComponent implements OnInit {
             user.name.toLowerCase().indexOf(this.searchText.toLowerCase()) !== -1
         );
     }
-
     roleFilter(user: IUser): boolean {
         return (
             !this.selectedItems ||
@@ -129,7 +131,7 @@ export class UsersComponent implements OnInit {
         if (action === DialogAction.ADD) {
             user = {
                 // New UserEntity
-                _id: { $oid: '' },
+                _id: '',
                 created_at: '',
                 email: '',
                 name: '',
@@ -142,11 +144,13 @@ export class UsersComponent implements OnInit {
             content: user,
             action,
         };
-        console.log(data);
+        console.log('Dialog data (to dialog):', data);
         const dialogRef = this.dialog.open(DialogEditUserView, { context: { data } });
 
         dialogRef.onClose.subscribe((result) => {
+            console.log('Dialog result (from dialog):', result);
             if (result.event === DialogAction.ADD) {
+                console.log('Dispatching postUser with:', result.data);
                 this.store.dispatch(postUser({ user: result.data }));
             } else if (result.event === DialogAction.UPDATE) {
                 this.store.dispatch(updateUser({ user: result.data }));

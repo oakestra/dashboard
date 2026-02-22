@@ -12,7 +12,7 @@
                 <nb-form-field>
                     <label class="label">Target Service</label>
                     <nb-select fullWidth placeholder="target_microservice_id {{ conn.target_microservice_id }}">
-                        <nb-option *ngFor="let s of dropdownServices" [value]="s._id.$oid">
+                        <nb-option *ngFor="let s of dropdownServices" [value]="s._id">
                             {{ s.microservice_name }}
                         </nb-option>
                     </nb-select>

@@ -68,7 +68,7 @@ export class SlaFormComponent implements OnInit {
         this.currentUser$.subscribe((user) => (this.currentUser = user));
         this.services$.subscribe({
             next: (services: IService[]) => {
-                const s = services.filter((s: IService) => s._id?.$oid === this.serviceId);
+                const s = services.filter((s: IService) => s._id === this.serviceId);
                 this.service = s.length === 0 ? null : s[0];
             },
             error: (err) => {

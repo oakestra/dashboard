@@ -54,7 +54,7 @@ export const applicationReducer = createReducer(
     }),
 
     on(applicationActions.deleteApplicationSuccess, (state, action) => {
-        const applications = state.applications.filter((app) => app._id.$oid !== action.application._id.$oid);
+        const applications = state.applications.filter((app) => app._id !== action.application._id);
         const loading = false;
         return { ...state, applications, loading };
     }),
@@ -75,7 +75,7 @@ export const applicationReducer = createReducer(
     }),
 
     on(applicationActions.updateApplicationSuccess, (state, action) => {
-        const applications = state.applications.filter((app) => app._id.$oid !== action.application._id.$oid);
+        const applications = state.applications.filter((app) => app._id !== action.application._id);
         applications.push(action.application);
         const loading = false;
         return { ...state, applications, loading };

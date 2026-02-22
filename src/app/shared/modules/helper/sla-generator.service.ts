@@ -15,14 +15,14 @@ export class SlaGeneratorService {
 
     public generateSLA(s: IService, app: IApplication, user: IUser) {
         const org = this.userService.getOrganization();
-        const customer = org === 'root' ? user._id.$oid : org;
+        const customer = org === 'root' ? user._id : org;
         const service = s === undefined ? [] : [s];
         const sla = {
             sla_version: 'v2.0',
             customerID: customer,
             applications: [
                 {
-                    applicationID: app._id.$oid,
+                    applicationID: app._id,
                     application_name: app.application_name,
                     application_namespace: app.application_namespace,
                     application_desc: app.application_desc,

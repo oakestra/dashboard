@@ -47,10 +47,10 @@ export class EditOrganizationComponent implements OnInit {
     private getMemberNames() {
         const mem: IUser[] = [];
         const user_ids = this.selected.member.map((entry) => entry.user_id);
-        this.member = this.user.filter((u) => user_ids.includes(u._id.$oid));
+        this.member = this.user.filter((u) => user_ids.includes(u._id));
 
         this.member.forEach((m) => {
-            const roleEntry = this.selected.member.find((s) => s.user_id === m._id.$oid);
+            const roleEntry = this.selected.member.find((s) => s.user_id === m._id);
             mem.push({
                 ...m,
                 roles: roleEntry.roles,
@@ -74,7 +74,7 @@ export class EditOrganizationComponent implements OnInit {
                 const user = result.data;
                 user.forEach((u: IUser) => {
                     const entry: RoleEntry = {
-                        user_id: u._id.$oid,
+                        user_id: u._id,
                         roles: [] as any[],
                     };
                     member.push(entry);
@@ -103,10 +103,10 @@ export class EditOrganizationComponent implements OnInit {
 
     updateOrganization(user: IUser) {
         const newRoleEntry: RoleEntry = {
-            user_id: user._id.$oid,
+            user_id: user._id,
             roles: user.roles,
         };
-        const member = this.selected.member.filter((m) => m.user_id !== user._id.$oid);
+        const member = this.selected.member.filter((m) => m.user_id !== user._id);
         const organization: IOrganization = {
             ...this.selected,
             member: [...member, newRoleEntry],
@@ -128,7 +128,7 @@ export class EditOrganizationComponent implements OnInit {
     remove(member: IUser) {
         const newOrga = {
             ...this.selected,
-            member: this.selected.member.filter((u) => u.user_id !== member._id.$oid),
+            member: this.selected.member.filter((u) => u.user_id !== member._id),
         };
         this.store.dispatch(updateOrganization({ organization: newOrga }));
         this.store.dispatch(getOrganization());
