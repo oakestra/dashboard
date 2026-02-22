@@ -98,7 +98,7 @@ export class NavbarComponent implements OnInit {
         this.marketplaceService.isReachable().subscribe(isAvailable => {
             if (isAvailable) {
                 const marketplaceItem: NbMenuItem = {
-                    title: 'Marketplace UI',
+                    title: 'Addons Marketplace',
                     icon: 'shopping-cart-outline',
                     url: this.marketplaceService.getMarketplaceUrl(),
                     target: '_blank',
