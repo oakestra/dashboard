@@ -56,6 +56,7 @@ export interface IConstraints {
     cluster: string;
     node: string;
     location: string;
+    allowed?: string[];
     threshold: 0;
     rigidness: 0;
     convergence_time: 0;

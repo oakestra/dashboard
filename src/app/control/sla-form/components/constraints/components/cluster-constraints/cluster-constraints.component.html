@@ -4,10 +4,11 @@
             <nb-form-field>
                 <label class="label">Cluster</label>
                 <nb-select
+                    multiple
                     fullWidth
                     placeholder="Cluster"
                     formControlName="cluster"
-                    nbTooltip="Specifies the cluster in which the constraint is in effect"
+                    nbTooltip="Specifies the cluster(s) in which the constraint is in effect"
                 >
                     <nb-option *ngFor="let option of clusterOptions" [value]="option">{{ option }}</nb-option>
                 </nb-select>
@@ -18,6 +19,12 @@
                 <label class="label">Node</label>
                 <input fullWidth placeholder="Node" nbInput formControlName="node" nbTooltip="Node" />
             </nb-form-field>
+        </div>
+    </div>
+
+    <div *ngIf="showNodeWarning" class="w3-row w3-padding">
+        <div class = "note-box">
+            <small><strong>Note:</strong> You can choose a target node only if you specify a single target cluster.</small>
         </div>
     </div>
 </form>
