@@ -16,8 +16,8 @@ export class MarketplaceService {
         try {
             const url = new URL(environment.apiUrl);
             return `http://${url.hostname}:11103`;
-        } catch (e) {
-        // Fallback if URL parsing fails
+        } catch {
+            // Fallback if URL parsing fails
             return 'http://localhost:11103';
         }
     }
