@@ -36,15 +36,25 @@ export class EditOrganizationComponent implements OnInit {
         });
         this.name = this.selected.name;
 
-        if (!this.selected._id) {
-            const n = this.selected.name;
-            this.organizations$.subscribe((organizations) => {
-                this.selected = organizations.find((o) => o.name === n) ?? this.selected;
-            });
-        }
+        this.organizations$.subscribe((organizations) => {
+            if (!this.selected) {
+                return;
+            }
+            const selectedId = this.selected._id;
+            const selectedName = this.selected.name;
+            const refreshed = organizations.find((o) => (selectedId ? o._id === selectedId : o.name === selectedName));
+            if (refreshed) {
+                this.selected = refreshed;
+                this.name = refreshed.name;
+                this.getMemberNames();
+            }
+        });
     }
 
     private getMemberNames() {
+        if (!this.selected || !this.user) {
+            return;
+        }
         const mem: IUser[] = [];
         const user_ids = this.selected.member.map((entry) => entry.user_id);
         this.member = this.user.filter((u) => user_ids.includes(u._id));
@@ -70,6 +80,9 @@ export class EditOrganizationComponent implements OnInit {
         const dialogRef = this.dialog.open(AddMemberComponent, { context: { data: { currentMember: this.member } } });
 
         dialogRef.onClose.subscribe((result) => {
+            if (!result) {
+                return;
+            }
             const member = [...this.selected.member];
             if (result.event === DialogAction.ADD) {
                 const user = result.data;
@@ -85,10 +98,11 @@ export class EditOrganizationComponent implements OnInit {
                     member,
                 };
                 this.selected = organization;
+                this.getMemberNames();
                 // TODO avoid two dispatch and update the organization in the first dispatch (with the answer of the api)
                 this.store.dispatch(updateOrganization({ organization }));
                 this.store.dispatch(getOrganization());
-                this.search('');
+                this.search(this.searchText);
             }
         });
     }
@@ -112,6 +126,9 @@ export class EditOrganizationComponent implements OnInit {
             ...this.selected,
             member: [...member, newRoleEntry],
         };
+        this.selected = organization;
+        this.getMemberNames();
+        this.search(this.searchText);
         this.store.dispatch(updateOrganization({ organization }));
     }
 
@@ -131,9 +148,10 @@ export class EditOrganizationComponent implements OnInit {
             ...this.selected,
             member: this.selected.member.filter((u) => u.user_id !== member._id),
         };
+        this.selected = newOrga;
+        this.getMemberNames();
         this.store.dispatch(updateOrganization({ organization: newOrga }));
         this.store.dispatch(getOrganization());
-        this.member = this.member.filter((m) => m !== member);
         this.search(this.searchText);
     }
 }

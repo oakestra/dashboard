@@ -6,11 +6,11 @@
         </div>
         <div class="w3-col l6 m6 roleSelect">
             <p *ngIf="!editItem[index]">{{ m.roles }}</p>
-            <nb-form-field *ngIf="editItem[index]" class="roleSelectField">
+            <nb-form-field *ngIf="editItem[index] && roles[index]" class="roleSelectField">
                 <nb-select [formControl]="roles[index]" multiple name="roleSelect_{{index}}">
                     <nb-option *ngFor="let role of rolesList" [value]="role">{{ role }}</nb-option>
                 </nb-select>
-        </nb-form-field>
+            </nb-form-field>
         </div>
         <div class="w3-col l3 m3 editButtons">
             <button (click)="saveRoles(index)" *ngIf="editItem[index]" nbButton ghost>

@@ -4,7 +4,6 @@ import { FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators'; // Added this
 import { NbDialogService } from '@nebular/theme';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { NotificationService } from '../../shared/modules/notification/notification.service';
@@ -30,6 +29,7 @@ export class UsersComponent implements OnInit {
     selectedItems: string[] = [];
     dropdown = new FormControl([]);
     dropdownList: string[] = [];
+    allUsers: IUser[] = [];
 
     public users$: Observable<IUser[]> = this.store.pipe(select(selectAllUser));
 
@@ -48,6 +48,11 @@ export class UsersComponent implements OnInit {
         this.dropdownList = Object.values(Role);
         const organization_id = this.userService.getOrganization();
         this.store.dispatch(getAllUser({ organization_id }));
+
+        this.users$.subscribe((users) => {
+            this.allUsers = users || [];
+            this.applyFilter();
+        });
 
         // Load data from URL params first, then do initial filter
         this.loadData();
@@ -69,9 +74,7 @@ export class UsersComponent implements OnInit {
 
     // New helper method to handle the actual filtering logic
     applyFilter(): void {
-        this.users$.pipe(take(1)).subscribe((u) => {
-            this.searchedUsers = u.filter((user) => this.nameFilter(user) && this.roleFilter(user));
-        });
+        this.searchedUsers = this.allUsers.filter((user) => this.nameFilter(user) && this.roleFilter(user));
     }
 
     doFilter(value: any): void {
