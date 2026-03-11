@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SubComponent } from '../../../../root/classes/subComponent';
 import { IService } from '../../../../root/interfaces/service';
+import { ParsedSlaResult, SlaParserService } from '../../../../shared/modules/helper/sla-parser.service';
+import { NotificationService } from '../../../../shared/modules/notification/notification.service';
+import { NotificationType } from '../../../../root/interfaces/notification';
 
 @Component({
     selector: 'form-file-upload',
@@ -8,30 +11,53 @@ import { IService } from '../../../../root/interfaces/service';
     styleUrls: ['./file-upload.component.scss'],
 })
 export class FileUploadComponent extends SubComponent {
-    @Output() upload = new EventEmitter<IService[]>();
+    @Output() upload = new EventEmitter<ParsedSlaResult>();
     @Input() service: IService;
-    file: File | undefined;
+    @Input() applicationName: string;
+
+    jsonContent = '';
     filename = 'Select File to Upload';
 
     sampleService: any = {
-        microservices: [{ microservice_name: 'name', microservice_namespace: 'namespace', '...': '...' }],
+        sla_version: 'v2.0',
+        applications: [
+            {
+                application_name: 'myapp',
+                microservices: [{ microservice_name: 'name', '...': '...' }],
+            },
+        ],
     };
 
+    constructor(
+        private slaParser: SlaParserService,
+        private notifyService: NotificationService,
+    ) {
+        super();
+        this.jsonContent = JSON.stringify(this.sampleService, null, 4);
+    }
+
     loadFile(event: any) {
-        this.file = event.target.files[0] as File;
-        console.log(this.file);
-        this.filename = this.file.name;
+        const file = event.target.files[0] as File;
+        console.log(file);
+        if (file) {
+            this.filename = file.name;
+            const fileReader = new FileReader();
+            fileReader.onload = () => {
+                this.jsonContent = (fileReader.result ?? '').toString();
+            };
+            fileReader.readAsText(file);
+        }
     }
 
     uploadDocument() {
-        if (this.file) {
-            const fileReader = new FileReader();
-            fileReader.onload = () => {
-                const sla = JSON.parse((fileReader.result ?? '').toString());
-                console.log(sla);
-                this.upload.emit(sla.microservices as IService[]);
-            };
-            fileReader.readAsText(this.file);
+        try {
+            const rawJson = JSON.parse(this.jsonContent);
+            const result = this.slaParser.parse(rawJson, this.applicationName);
+            console.log(result);
+            this.upload.emit(result);
+        } catch (error) {
+            console.error(error);
+            this.notifyService.notify(NotificationType.error, (error as any).message || 'Error parsing SLA content');
         }
     }
 

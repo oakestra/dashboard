@@ -23,7 +23,10 @@
             </nb-tab>
 
             <nb-tab tabTitle="SLA">
-                <form-file-upload (upload)="slaFromFile($event)"></form-file-upload>
+                <form-file-upload
+                    [applicationName]="currentApplication?.application_name"
+                    (upload)="slaFromFile($event)"
+                ></form-file-upload>
             </nb-tab>
         </nb-tabset>
     </nb-card-body>

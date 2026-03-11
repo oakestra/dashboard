@@ -3,13 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../shared/modules/api/api.service';
-import { NotificationService } from '../../shared/modules/notification/notification.service';
+import { SlaGeneratorService } from '../../shared/modules/helper/sla-generator.service';
+import { ServiceGeneratorService } from '../../shared/modules/helper/service-generator.service';
+import { ParsedSlaResult } from '../../shared/modules/helper/sla-parser.service';
 import { IApplication } from '../../root/interfaces/application';
 import { IService } from '../../root/interfaces/service';
 import { appReducer, postService, updateServiceSuccess } from '../../root/store';
 import { selectCurrentApplication } from '../../root/store/selectors/application.selector';
-import { SlaGeneratorService } from '../../shared/modules/helper/sla-generator.service';
-import { ServiceGeneratorService } from '../../shared/modules/helper/service-generator.service';
 import { IUser } from '../../root/interfaces/user';
 import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 import { selectCurrentServices } from '../../root/store/selectors/service.selector';
@@ -52,7 +52,6 @@ export class SlaFormComponent implements OnInit {
         private route: ActivatedRoute,
         private api: ApiService,
         private router: Router,
-        private notifyService: NotificationService,
         private store: Store<appReducer.AppState>,
         private slaGenerator: SlaGeneratorService,
         private serviceGenerator: ServiceGeneratorService,
@@ -99,12 +98,22 @@ export class SlaFormComponent implements OnInit {
         }
     }
 
-    slaFromFile(microservices: IService[]) {
-        microservices.map((service) => {
-            console.log(service);
-            const sla = this.slaGenerator.generateSLA(service, this.currentApplication, this.currentUser);
-            this.addService(sla);
-        });
+    slaFromFile(result: ParsedSlaResult) {
+        const generatedData = this.slaGenerator.validateAndGenerateFromFile(
+            result,
+            this.currentApplication,
+            this.currentUser,
+        );
+
+        if (!generatedData) {
+            return;
+        }
+
+        if (result.type === 'v2') {
+            this.addService(generatedData);
+        } else if (result.type === 'v1_microservices') {
+            generatedData.forEach((sla: any) => this.addService(sla));
+        }
     }
 
     updateService(sla: any) {
