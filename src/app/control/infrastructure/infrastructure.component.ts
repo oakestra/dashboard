@@ -12,8 +12,7 @@ export class InfrastructureComponent {
     public grafanaApi: string = "";
 
     ngOnInit() {
-        let parts: string[] = environment.apiUrl.split(":");
-        this.grafanaApi = "http:" + parts[1] + ":3000" ;
+        this.grafanaApi = environment.grafanaUrl;
         window.open(this.grafanaApi, "_blank");
         window.location.href = "/control";
     }

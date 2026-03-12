@@ -5,4 +5,6 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
+ENV GRAFANA_ADDRESS=localhost:3000
+
 CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.config.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]
