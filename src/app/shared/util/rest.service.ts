@@ -40,13 +40,9 @@ export class RestService {
     public doGETRequest<T>(url: string): Observable<T> {
         const request = this.http.get(this.baseURL + url, this.requestOptions).pipe(
             map((res: any) => {
-                console.log('BEFORE: \n' + res);
                 if (typeof res === 'string') {
-                    console.log('AFTER (INSIDE THE IF): \n' + res);
-                    console.log('AFTER PARSING: \n', JSON.parse(res));
                     return JSON.parse(res);
                 }
-                console.log('AFTER: \n' + res);
                 return res;
             }),
             catchError((error) => {

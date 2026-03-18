@@ -57,7 +57,6 @@ export class SlaFormComponent implements OnInit {
         private serviceGenerator: ServiceGeneratorService,
     ) {
         this.app$.subscribe((app) => {
-            console.log('The app is: ' + JSON.stringify(app));
             this.currentApplication = app;
         });
     }

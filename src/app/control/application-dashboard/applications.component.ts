@@ -52,7 +52,7 @@ export class ApplicationsComponent{
         });
 
         this.apps$.subscribe((apps) => {
-            console.log('Hi, I\'m the applications component and I have apps: ', apps);
+            console.log('Apps: ', apps);
             const active = apps.filter((a) => a._id === sessionStorage.getItem('id'))[0];
             if (active) {
                 this.store.dispatch(setCurrentApplication({ application: active }));
