@@ -1,5 +1,6 @@
 <div class="container">
     <h1>Available Oakestra Clusters</h1>
+
     <div class="row">
         <div *ngFor="let cluster of clusters$ | async" class="col-sm-6">
             <nb-card id="my_card">
@@ -48,5 +49,55 @@
             <h2> No clusters available in your infrastructure. </h2>
             <h3> Please contact your administrator to add a cluster or follow these <a href="https://www.oakestra.io/docs/getting-started/welcome-to-oakestra-docs/">wiki steps</a>. </h3>
 
+        </div>
     </div>
+
+    <nb-card class="create-token-card">
+        <nb-card-header>Create Cluster Token</nb-card-header>
+        <nb-card-body>
+            <form class="create-token-form" (ngSubmit)="createClusterToken()">
+                <input
+                    nbInput
+                    fullWidth
+                    placeholder="Enter cluster name"
+                    name="clusterNameForToken"
+                    [(ngModel)]="clusterNameForToken"
+                    [disabled]="creatingClusterToken"
+                />
+                <button
+                    nbButton
+                    status="primary"
+                    type="submit"
+                    [disabled]="creatingClusterToken || !clusterNameForToken.trim()"
+                >
+                    {{ creatingClusterToken ? 'Creating...' : 'Create Cluster Token' }}
+                </button>
+            </form>
+
+            <div *ngIf="generatedClusterToken" class="token-result">
+                <div class="token-result-header">
+                    <b>Generated token:</b>
+                </div>
+                <div class="token-output-wrapper">
+                    <button
+                        nbButton
+                        size="tiny"
+                        status="primary"
+                        type="button"
+                        class="copy-token-icon"
+                        nbTooltip="Copy token"
+                        (click)="copyClusterToken()"
+                    >
+                        <nb-icon icon="copy"></nb-icon>
+                    </button>
+                    <textarea nbInput fullWidth readonly rows="3" [value]="generatedClusterToken"></textarea>
+                </div>
+            </div>
+
+            <div *ngIf="clusterTokenError" class="token-error">
+                {{ clusterTokenError }}
+            </div>
+        </nb-card-body>
+    </nb-card>
+
 </div>

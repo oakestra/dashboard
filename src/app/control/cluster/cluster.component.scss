@@ -1,0 +1,65 @@
+.create-token-card {
+	margin-bottom: 1rem;
+}
+
+.create-token-form {
+	display: flex;
+	gap: 0.75rem;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.token-result {
+	margin-top: 1rem;
+
+	.token-output-wrapper {
+		position: relative;
+	}
+
+	.copy-token-icon {
+		position: absolute;
+		top: 0.4rem;
+		right: 0.4rem;
+		z-index: 2;
+		min-width: 2rem;
+		width: 2rem;
+		height: 2rem;
+		padding: 0.15rem;
+		border: 1px solid #0b1f3a;
+		box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.55) inset;
+
+		nb-icon {
+			font-size: 1.2rem;
+			width: 1.2rem;
+			height: 1.2rem;
+		}
+	}
+
+	textarea {
+		margin-top: 0.5rem;
+		padding: 0.75rem;
+		padding-right: 2.5rem;
+		border-radius: 6px;
+		background: #ffffff;
+		color: #1f2937;
+		opacity: 1;
+		white-space: pre-wrap;
+		word-break: break-all;
+		min-height: 5.5rem;
+		max-height: 7rem;
+		resize: vertical;
+	}
+}
+
+.token-result-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 0.75rem;
+	margin-bottom: 0.35rem;
+}
+
+.token-error {
+	margin-top: 0.75rem;
+	color: #d32f2f;
+}
