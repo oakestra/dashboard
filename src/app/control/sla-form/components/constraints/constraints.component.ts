@@ -66,6 +66,7 @@ export class ConstraintsComponent extends SubComponent implements OnInit {
             convergence_time: 0,
             location: '',
             node: '',
+            allowed: [],
             rigidness: 0,
             threshold: 0,
             type,
@@ -109,7 +110,27 @@ export class ConstraintsComponent extends SubComponent implements OnInit {
             console.log(k);
             console.log(constrains[k]);
             const name = this.getConstraintsName(k);
-            if (name) {
+            
+            if (name === ConstraintType.DIRECT) {
+                const data = constrains[k];
+
+                //only one cluster with specific node
+                if (data.node && data.node.trim() !== '') {
+                    result.push({
+                        type: ConstraintType.DIRECT,
+                        cluster: Array.isArray(data.cluster) ? data.cluster[0] : data.cluster, 
+                        node: data.node
+                    });
+                } 
+                // cluster list
+                else if (data.cluster && data.cluster.length > 0) {
+                    result.push({
+                        type: ConstraintType.CLUSTERS, 
+                        allowed: Array.isArray(data.cluster) ? data.cluster : [data.cluster] 
+                    });
+                }
+            } 
+            else if (name) {
                 result.push({
                     type: name,
                     ...constrains[k],

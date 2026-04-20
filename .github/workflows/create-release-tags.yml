@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   create_tag:
     name: Create Release Tag
@@ -14,8 +17,6 @@ jobs:
 
     - name: Checkout code
       uses: actions/checkout@v2
-      with:
-        token: ${{ secrets.PACKAGES_TOKEN }}
 
     - name: Get tag version
       id: tag_version
