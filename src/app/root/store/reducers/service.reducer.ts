@@ -55,7 +55,7 @@ export const serviceReducer = createReducer(
         // Get the service form the sla.
         const id = action.serviceId.job_id;
         const service = {
-            _id: { $oid: id },
+            _id: id,
             ...action.service.applications[0].microservices[0],
         };
         service.microserviceID = id;
@@ -83,7 +83,7 @@ export const serviceReducer = createReducer(
     }),
 
     on(serviceActions.updateServiceSuccess, (state, action) => {
-        const servicesOfApp = state.servicesOfApp.filter((s: IService) => s._id.$oid !== action.service._id.$oid);
+        const servicesOfApp = state.servicesOfApp.filter((s: IService) => s._id !== action.service._id);
         servicesOfApp.push(action.service);
         const loading = false;
         return { ...state, servicesOfApp, loading };
@@ -105,7 +105,7 @@ export const serviceReducer = createReducer(
     }),
 
     on(serviceActions.deleteServiceSuccess, (state, action) => {
-        const servicesOfApp = state.servicesOfApp.filter((s: IService) => s._id.$oid !== action.service._id.$oid);
+        const servicesOfApp = state.servicesOfApp.filter((s: IService) => s._id !== action.service._id);
         const loading = false;
         return { ...state, servicesOfApp, loading };
     }),
@@ -127,7 +127,7 @@ export const serviceReducer = createReducer(
 
     on(serviceActions.getSingleServiceSuccess, (state, action) => {
         const servicesOfApp: IService[] = state.servicesOfApp.filter(
-            (s: IService) => s._id.$oid !== action.service._id.$oid,
+            (s: IService) => s._id !== action.service._id,
         );
         servicesOfApp.push(action.service);
         const loading = false;

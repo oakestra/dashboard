@@ -45,7 +45,7 @@ export class ServiceDashboardComponent implements OnInit {
             .select(selectCurrentUser)
             .pipe(
                 filter((u) => !!u),
-                tap((u) => this.store.dispatch(getApplication({ id: u._id.$oid }))),
+                tap((u) => this.store.dispatch(getApplication({ id: u._id}))),
             )
             .subscribe();
 
@@ -63,7 +63,7 @@ export class ServiceDashboardComponent implements OnInit {
                             tap((currentApp) => {
                                 if (currentApp.application_name !== '') {
                                     this.selectedItem = currentApp;
-                                    this.appId = this.selectedItem._id.$oid;
+                                    this.appId = this.selectedItem._id;
                                 }
                             }),
                         ).subscribe();
@@ -80,7 +80,7 @@ export class ServiceDashboardComponent implements OnInit {
 
     setCurrentApplication() {
         this.store.dispatch(setCurrentApplication({ application: this.selectedItem }));
-        this.appId = this.selectedItem._id.$oid;
+        this.appId = this.selectedItem._id;
     }
 
     deployService(service: IService) {
@@ -89,10 +89,10 @@ export class ServiceDashboardComponent implements OnInit {
             .deployService(service)
             .pipe(
                 tap(() => {
-                    if (this.selectedItem._id.$oid !== '') {
+                    if (this.selectedItem._id !== '') {
                         setTimeout(() => {
                             this.isLoading = false;
-                            this.store.dispatch(getServices({ appId: this.selectedItem._id.$oid }));
+                            this.store.dispatch(getServices({ appId: this.selectedItem._id }));
                         }, 5000); // delay to wait until the backend has deployed the service
                     }
                 }),

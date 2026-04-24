@@ -22,7 +22,7 @@
                 <app-service-item
                     *ngFor="let service of services$ | async"
                     [service]="service"
-                    [appId]="(currentApp$ | async)._id.$oid"
+                    [appId]="(currentApp$ | async)._id"
                 ></app-service-item>
                 <br />
                 <div>

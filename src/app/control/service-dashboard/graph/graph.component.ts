@@ -122,7 +122,7 @@ export class GraphComponent implements OnChanges {
             customerID: '',
             applications: [
                 {
-                    // "applicationID": this.currentApplication._id.$oid,
+                    // "applicationID": this.currentApplication._id,
                     // "application_name": this.currentApplication.application_name,
                     // "application_namespace": this.currentApplication.application_namespace,
                     // "application_desc": this.currentApplication.application_desc,
@@ -147,7 +147,7 @@ export class GraphComponent implements OnChanges {
         for (const service of this.services) {
             this.nodes.push({
                 id: service.microservice_name,
-                idNumber: service._id.$oid,
+                idNumber: service._id,
             });
         }
         this.calculateLinks();
@@ -158,7 +158,7 @@ export class GraphComponent implements OnChanges {
             if (service.connectivity !== undefined) {
                 for (const targetService of service.connectivity) {
                     this.links.push({
-                        source: service._id.$oid,
+                        source: service._id,
                         target: targetService.target_microservice_id,
                     });
                 }

@@ -41,11 +41,11 @@ export class ApiService extends RestService {
     }
 
     updateApplication(app: IApplication) {
-        return this.doPUTRequest('/application/' + app._id.$oid, app);
+        return this.doPUTRequest('/application/' + app._id, app);
     }
 
     deleteApplication(app: IApplication) {
-        return this.doDELRequest('/application/' + app._id.$oid);
+        return this.doDELRequest('/application/' + app._id);
     }
 
     getApplicationsOfUser(userId: string): Observable<IApplication[]> {
@@ -55,7 +55,7 @@ export class ApiService extends RestService {
     // /////////////////////////////////////////////////////////////////////////
     // /////////////////// Cluster Functions ///////////////////////////////
 
-    getActiveClusters(): Observable<ICluster[]>  {
+    getActiveClusters(): Observable<ICluster[]> {
         return this.doGETRequest('/clusters/active');
     }
 
@@ -75,7 +75,7 @@ export class ApiService extends RestService {
     }
 
     deleteService(service: IService) {
-        return this.doDELRequest('/service/' + service._id?.$oid);
+        return this.doDELRequest('/service/' + service._id);
     }
 
     getServiceByID(serviceID: string): Observable<IService> {
@@ -87,11 +87,11 @@ export class ApiService extends RestService {
     }
 
     deployService(service: IService) {
-        return this.doPOSTRequest('/service/' + service._id?.$oid + '/instance', service);
+        return this.doPOSTRequest('/service/' + service._id + '/instance', service);
     }
 
     deleteInstance(service: IService, instance: any) {
-        return this.doDELRequest('/service/' + service._id?.$oid + '/instance/' + instance.instance_number);
+        return this.doDELRequest('/service/' + service._id + '/instance/' + instance.instance_number);
     }
 
     // /////////////////////////////////////////////////////////////////////////
@@ -131,16 +131,16 @@ export class ApiService extends RestService {
     // //////////////////////////////////////////////////////////////////////////
     // /////////////////// Organization Functions ///////////////////////////////
 
-    addOrganization(org: IOrganization): Observable<string> {
+    addOrganization(org: IOrganization): Observable<any> {
         return this.doPOSTRequest('/organization/', org);
     }
 
     updateOrganization(app: IOrganization) {
-        return this.doPUTRequest('/organization/' + app._id.$oid, app);
+        return this.doPUTRequest('/organization/' + app._id, app);
     }
 
     deleteOrganization(app: IOrganization) {
-        return this.doDELRequest('/organization/' + app._id.$oid);
+        return this.doDELRequest('/organization/' + app._id);
     }
 
     getOrganization(): Observable<IOrganization[]> {
