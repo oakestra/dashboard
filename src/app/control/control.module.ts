@@ -76,6 +76,10 @@ import { InstanceDetailComponent } from './service-dashboard/components/instance
 import { ChartCpuLineComponent } from './service-dashboard/components/instance-detail/chart-cpu-line.component';
 import { ChartMemoryLineComponent } from './service-dashboard/components/instance-detail/chart-memory-line.component';
 import { NbProgressBarModule } from '@nebular/theme';
+import { AddonsMarketplaceComponent } from './addons/components/addons-marketplace/addons-marketplace.component';
+import { InstalledAddonsComponent } from './addons/components/installed-addons/installed-addons.component';
+import { HooksComponent } from './addons/components/hooks/hooks.component';
+import { CustomResourcesComponent } from './addons/components/custom-resources/custom-resources.component';
 
 @NgModule({
     declarations: [
@@ -122,6 +126,10 @@ import { NbProgressBarModule } from '@nebular/theme';
         InstanceDetailComponent,
         ChartCpuLineComponent,
         ChartMemoryLineComponent,
+        AddonsMarketplaceComponent,
+        InstalledAddonsComponent,
+        HooksComponent,
+        CustomResourcesComponent,
     ],
     imports: [
         NbProgressBarModule,

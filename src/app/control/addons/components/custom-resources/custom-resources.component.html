@@ -1,0 +1,170 @@
+<div class="addons-page">
+    <div class="addons-title">
+        <h1>Custom Resources</h1>
+        <div class="addons-actions">
+            <button nbButton size="small" [status]="mode === 'definitions' ? 'primary' : 'basic'" (click)="switchMode('definitions')">
+                Definitions
+            </button>
+            <button nbButton size="small" [status]="mode === 'instances' ? 'primary' : 'basic'" (click)="switchMode('instances')">
+                Instances
+            </button>
+        </div>
+    </div>
+
+    <ng-container *ngIf="mode === 'definitions'">
+        <div class="addons-actions definitions-toolbar">
+            <button nbButton size="small" status="basic" (click)="loadDefinitions()">
+                <nb-icon icon="refresh-outline"></nb-icon>
+                Refresh
+            </button>
+            <button nbButton size="small" status="primary" (click)="showDefinitionForm = !showDefinitionForm">
+                <nb-icon [icon]="showDefinitionForm ? 'close-outline' : 'plus-outline'"></nb-icon>
+                {{ showDefinitionForm ? 'Cancel' : 'Create Definition' }}
+            </button>
+        </div>
+
+        <nb-card class="addons-form" *ngIf="showDefinitionForm">
+            <nb-card-header>Create Definition</nb-card-header>
+            <nb-card-body>
+                <div class="field">
+                    <label for="resourceType">Resource Type</label>
+                    <input nbInput fullWidth id="resourceType" [(ngModel)]="definitionResourceType" />
+                </div>
+                <div class="field">
+                    <label for="definitionSchema">JSON Schema</label>
+                    <textarea nbInput fullWidth id="definitionSchema" [(ngModel)]="definitionSchema"></textarea>
+                </div>
+                <button nbButton size="small" status="success" (click)="submitDefinition()">Create</button>
+            </nb-card-body>
+        </nb-card>
+
+        <nb-card class="loading-state" *ngIf="loading$ | async">
+            <nb-card-body><nb-spinner size="medium"></nb-spinner></nb-card-body>
+        </nb-card>
+
+        <nb-card class="error-state" status="danger" *ngIf="(error$ | async) as error">
+            <nb-card-body *ngIf="error">{{ error }}</nb-card-body>
+        </nb-card>
+
+        <ng-container *ngIf="resources$ | async as resources">
+            <nb-card class="empty-state" *ngIf="!(loading$ | async) && resources.length === 0">
+                <nb-card-body>No custom resource definitions found.</nb-card-body>
+            </nb-card>
+            <div class="addons-grid" *ngIf="resources.length > 0">
+                <div class="addon-card" *ngFor="let resource of resources">
+                    <nb-card>
+                        <nb-card-header>{{ resource.resource_type }}</nb-card-header>
+                        <nb-card-body>
+                            <div class="addon-meta">ID: {{ resource._id || 'pending' }}</div>
+                            <div class="card-actions">
+                                <button nbButton size="tiny" status="basic" (click)="selectedDefinition = resource">Schema</button>
+                                <button nbButton size="tiny" status="info" (click)="selectType(resource.resource_type)">Instances</button>
+                                <button nbButton size="tiny" status="danger" (click)="deleteDefinition(resource.resource_type)">Delete</button>
+                            </div>
+                        </nb-card-body>
+                    </nb-card>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="mode === 'instances'">
+        <div class="resource-toolbar">
+            <div class="field">
+                <label for="resourceTypeSelect">Resource Type</label>
+                <nb-select fullWidth id="resourceTypeSelect" [(ngModel)]="selectedResourceType" (selectedChange)="selectType($event)">
+                    <nb-option *ngFor="let resource of resources$ | async" [value]="resource.resource_type">
+                        {{ resource.resource_type }}
+                    </nb-option>
+                </nb-select>
+            </div>
+            <div class="addons-actions">
+                <button nbButton size="small" status="basic" (click)="loadInstances()" [disabled]="!selectedResourceType">
+                    <nb-icon icon="refresh-outline"></nb-icon>
+                    Refresh
+                </button>
+                <button nbButton size="small" status="primary" (click)="showCreateInstance()" [disabled]="!selectedResourceType">
+                    <nb-icon icon="plus-outline"></nb-icon>
+                    Create Instance
+                </button>
+            </div>
+        </div>
+
+        <nb-card class="addons-form" *ngIf="selectedResourceType">
+            <nb-card-body>
+                <div class="addons-filters">
+                    <input nbInput placeholder="Field" [(ngModel)]="filterField" />
+                    <input nbInput placeholder="Value" [(ngModel)]="filterValue" (keyup.enter)="addFilter()" />
+                    <button nbButton size="tiny" status="success" (click)="addFilter()">Add Filter</button>
+                    <button nbButton size="tiny" status="basic" (click)="clearFilters()" *ngIf="getFilterKeys().length > 0">Clear</button>
+                </div>
+                <div class="addon-meta" *ngIf="getFilterKeys().length > 0">
+                    Filters:
+                    <span *ngFor="let key of getFilterKeys()">{{ key }}={{ filters[key] }} </span>
+                </div>
+            </nb-card-body>
+        </nb-card>
+
+        <nb-card class="addons-form" *ngIf="showInstanceForm">
+            <nb-card-header>{{ showInstanceForm === 'edit' ? 'Edit' : 'Create' }} Instance</nb-card-header>
+            <nb-card-body>
+                <div class="field">
+                    <label for="instanceJson">Instance JSON</label>
+                    <textarea nbInput fullWidth id="instanceJson" [(ngModel)]="instanceJson"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button nbButton size="small" status="success" (click)="submitInstance()">Submit</button>
+                    <button nbButton size="small" status="basic" (click)="showInstanceForm = null">Cancel</button>
+                </div>
+            </nb-card-body>
+        </nb-card>
+
+        <ng-container *ngIf="instances$ | async as instances">
+            <nb-card class="empty-state" *ngIf="selectedResourceType && !(loading$ | async) && instances.length === 0">
+                <nb-card-body>No {{ selectedResourceType }} instances found.</nb-card-body>
+            </nb-card>
+            <div class="addons-grid" *ngIf="instances.length > 0">
+                <div class="addon-card" *ngFor="let instance of instances">
+                    <nb-card>
+                        <nb-card-header>{{ getInstanceTitle(instance) }}</nb-card-header>
+                        <nb-card-body>
+                            <div class="addon-meta" *ngFor="let key of getInstanceKeys(instance)">
+                                {{ key }}: {{ formatValue(read(instance, key)) }}
+                            </div>
+                            <div class="addon-meta">ID: {{ getInstanceId(instance) }}</div>
+                            <div class="card-actions">
+                                <button nbButton size="tiny" status="basic" (click)="selectedInstance = instance">View</button>
+                                <button nbButton size="tiny" status="warning" (click)="showEditInstance(instance)">Edit</button>
+                                <button nbButton size="tiny" status="danger" (click)="deleteInstance(instance)">Delete</button>
+                            </div>
+                        </nb-card-body>
+                    </nb-card>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>
+
+<div class="modal-backdrop" *ngIf="selectedDefinition" (click)="selectedDefinition = null">
+    <nb-card class="modal-card" (click)="$event.stopPropagation()">
+        <nb-card-header>
+            {{ selectedDefinition.resource_type }}
+            <button nbButton ghost size="tiny" (click)="selectedDefinition = null"><nb-icon icon="close-outline"></nb-icon></button>
+        </nb-card-header>
+        <nb-card-body>
+            <pre class="details">{{ format(selectedDefinition.schema) }}</pre>
+        </nb-card-body>
+    </nb-card>
+</div>
+
+<div class="modal-backdrop" *ngIf="selectedInstance" (click)="selectedInstance = null">
+    <nb-card class="modal-card" (click)="$event.stopPropagation()">
+        <nb-card-header>
+            {{ getInstanceTitle(selectedInstance) }}
+            <button nbButton ghost size="tiny" (click)="selectedInstance = null"><nb-icon icon="close-outline"></nb-icon></button>
+        </nb-card-header>
+        <nb-card-body>
+            <pre class="details">{{ format(selectedInstance) }}</pre>
+        </nb-card-body>
+    </nb-card>
+</div>

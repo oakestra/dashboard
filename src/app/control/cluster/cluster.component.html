@@ -4,7 +4,13 @@
         <div *ngFor="let cluster of clusters$ | async" class="col-sm-6">
             <nb-card id="my_card">
                 <nb-card-header>
-                    {{ cluster.cluster_name }}
+                    <div class="cluster-header">
+                        <span>{{ cluster.cluster_name }}</span>
+                        <button nbButton size="tiny" status="primary" (click)="openClusterAddons(cluster)">
+                            <nb-icon icon="cube-outline"></nb-icon>
+                            Addons
+                        </button>
+                    </div>
                 </nb-card-header>
                 <nb-card-body *ngIf="cluster._id">
                     <b>ID</b> {{ cluster._id }}

@@ -1,0 +1,79 @@
+import { createAction, props } from '@ngrx/store';
+import { CustomResource, Hook, InstalledAddon, MarketplaceAddon } from '../../interfaces/addon';
+
+export const checkAddonsAvailability = createAction('[Addons] check availability');
+export const checkAddonsAvailabilitySuccess = createAction(
+    '[Addons] check availability success',
+    props<{ addonsAvailable: boolean; customResourcesAvailable: boolean }>(),
+);
+export const checkAddonsAvailabilityError = createAction('[Addons] check availability error');
+
+export const loadMarketplaceAddons = createAction('[Addons] load marketplace addons');
+export const loadMarketplaceAddonsSuccess = createAction(
+    '[Addons] load marketplace addons success',
+    props<{ addons: MarketplaceAddon[] }>(),
+);
+export const loadMarketplaceAddonsError = createAction(
+    '[Addons] load marketplace addons error',
+    props<{ error: string }>(),
+);
+
+export const createMarketplaceAddon = createAction(
+    '[Addons] create marketplace addon',
+    props<{ addon: MarketplaceAddon }>(),
+);
+export const deleteMarketplaceAddon = createAction(
+    '[Addons] delete marketplace addon',
+    props<{ id: string }>(),
+);
+
+export const loadInstalledAddons = createAction('[Addons] load installed addons', props<{ status?: string }>());
+export const loadInstalledAddonsSuccess = createAction(
+    '[Addons] load installed addons success',
+    props<{ addons: InstalledAddon[] }>(),
+);
+export const loadInstalledAddonsError = createAction(
+    '[Addons] load installed addons error',
+    props<{ error: string }>(),
+);
+
+export const installAddon = createAction('[Addons] install addon', props<{ marketplaceId: string }>());
+export const disableAddon = createAction('[Addons] disable addon', props<{ id: string }>());
+
+export const loadHooks = createAction('[Addons] load hooks');
+export const loadHooksSuccess = createAction('[Addons] load hooks success', props<{ hooks: Hook[] }>());
+export const loadHooksError = createAction('[Addons] load hooks error', props<{ error: string }>());
+export const createHook = createAction('[Addons] create hook', props<{ hook: Hook }>());
+export const deleteHook = createAction('[Addons] delete hook', props<{ id: string }>());
+
+export const loadCustomResources = createAction('[Addons] load custom resources');
+export const loadCustomResourcesSuccess = createAction(
+    '[Addons] load custom resources success',
+    props<{ resources: CustomResource[] }>(),
+);
+export const loadCustomResourcesError = createAction('[Addons] load custom resources error', props<{ error: string }>());
+export const createCustomResource = createAction('[Addons] create custom resource', props<{ resource: CustomResource }>());
+export const deleteCustomResource = createAction('[Addons] delete custom resource', props<{ resourceType: string }>());
+
+export const selectCustomResourceType = createAction('[Addons] select custom resource type', props<{ resourceType: string }>());
+export const loadResourceInstances = createAction(
+    '[Addons] load resource instances',
+    props<{ resourceType: string; filters?: Record<string, string> }>(),
+);
+export const loadResourceInstancesSuccess = createAction(
+    '[Addons] load resource instances success',
+    props<{ resourceType: string; instances: unknown[] }>(),
+);
+export const loadResourceInstancesError = createAction('[Addons] load resource instances error', props<{ error: string }>());
+export const createResourceInstance = createAction(
+    '[Addons] create resource instance',
+    props<{ resourceType: string; data: unknown }>(),
+);
+export const updateResourceInstance = createAction(
+    '[Addons] update resource instance',
+    props<{ resourceType: string; id: string; data: unknown }>(),
+);
+export const deleteResourceInstance = createAction(
+    '[Addons] delete resource instance',
+    props<{ resourceType: string; id: string }>(),
+);

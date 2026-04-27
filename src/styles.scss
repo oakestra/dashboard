@@ -53,14 +53,37 @@ button {
 
 .mat-mdc-snack-bar-container {
     &.error-snackbar {
-        --mdc-snackbar-container-color: #a31919 !important;
+        --mdc-snackbar-container-color: #b42318 !important;
+        --mdc-snackbar-supporting-text-color: #ffffff !important;
+        color: #ffffff !important;
     }
 
     &.success-snackbar {
-        --mdc-snackbar-container-color: #03b413 !important;
+        --mdc-snackbar-container-color: #16833a !important;
+        --mdc-snackbar-supporting-text-color: #ffffff !important;
+        color: #ffffff !important;
     }
 
     &.warn-snackbar {
-        --mdc-snackbar-container-color: #a28206 !important;
+        --mdc-snackbar-container-color: #a15c07 !important;
+        --mdc-snackbar-supporting-text-color: #ffffff !important;
+        color: #ffffff !important;
+    }
+
+    &.warning-snackbar {
+        --mdc-snackbar-container-color: #a15c07 !important;
+        --mdc-snackbar-supporting-text-color: #ffffff !important;
+        color: #ffffff !important;
+    }
+
+    &.info-snackbar {
+        --mdc-snackbar-container-color: #1565c0 !important;
+        --mdc-snackbar-supporting-text-color: #ffffff !important;
+        color: #ffffff !important;
+    }
+
+    .mdc-snackbar__surface,
+    .mat-mdc-snack-bar-label {
+        color: inherit !important;
     }
 }

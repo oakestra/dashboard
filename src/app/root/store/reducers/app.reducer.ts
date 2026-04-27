@@ -5,6 +5,7 @@ import * as fromApplication from './application.reducer';
 import * as fromOrganization from './organization.reducer';
 import * as fromSettings from './settings.reducer';
 import * as fromCluster from './cluster.reducer';
+import * as fromAddons from './addons.reducer';
 
 
 export interface AppState {
@@ -14,6 +15,7 @@ export interface AppState {
     organizations: fromOrganization.State;
     settings: fromSettings.State;
     clusters: fromCluster.State;
+    addons: fromAddons.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -23,4 +25,5 @@ export const reducers: ActionReducerMap<AppState> = {
     organizations: fromOrganization.organizationReducer,
     settings: fromSettings.settingsReducer,
     clusters: fromCluster.clusterReducer,
+    addons: fromAddons.addonsReducer,
 };

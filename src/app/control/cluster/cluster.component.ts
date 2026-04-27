@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 import { select, Store } from '@ngrx/store';
 import { NbDialogService } from '@nebular/theme';
 import { ICluster } from '../../root/interfaces/cluster';
@@ -18,6 +19,7 @@ import {
 
 
 @Component({
+  standalone: false,
     selector: 'app-cluster',
     templateUrl: './cluster.component.html',
     styleUrls: ['./cluster.component.scss'],
@@ -50,5 +52,24 @@ export class ClusterComponent implements OnInit {
         return Math.round(cpu_usage*100 / cores );
     }
 
-}
+    openClusterAddons(cluster: ICluster): void {
+        const root = this.getApiRoot();
+        void this.router.navigate(['/control/addons/installed'], {
+            queryParams: {
+                cluster: cluster._id?.$oid || cluster.cluster_name,
+                clusterName: cluster.cluster_name,
+                addonsEngineUrl: `${root.protocol}//${root.hostname}:11101`,
+                resourceAbstractorUrl: `${root.protocol}//${root.hostname}:11012`,
+            },
+        });
+    }
 
+    private getApiRoot(): URL {
+        try {
+            return new URL(environment.apiUrl);
+        } catch {
+            return new URL('http://localhost:10000/api');
+        }
+    }
+
+}

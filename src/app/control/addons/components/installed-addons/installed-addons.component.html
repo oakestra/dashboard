@@ -1,0 +1,96 @@
+<div class="addons-page">
+    <div class="addons-title">
+        <h1>{{ clusterContext ? 'Cluster Addons' : 'Installed Addons' }}</h1>
+        <div class="addons-actions">
+            <button nbButton size="small" status="basic" (click)="loadAddons()">
+                <nb-icon icon="refresh-outline"></nb-icon>
+                Refresh
+            </button>
+            <button nbButton size="small" status="primary" (click)="showInstallForm = !showInstallForm">
+                <nb-icon icon="download-outline"></nb-icon>
+                Install
+            </button>
+        </div>
+    </div>
+    <div class="addon-meta" *ngIf="clusterContext">Cluster: {{ clusterContext }}</div>
+
+    <nb-card class="addons-form" *ngIf="showInstallForm">
+        <nb-card-header>Install From Marketplace</nb-card-header>
+        <nb-card-body>
+            <div class="field">
+                <label for="marketplaceId">Marketplace Addon ID</label>
+                <input nbInput fullWidth id="marketplaceId" [(ngModel)]="marketplaceId" />
+            </div>
+            <div class="form-actions">
+                <button nbButton size="small" status="success" (click)="install()">Install</button>
+            </div>
+        </nb-card-body>
+    </nb-card>
+
+    <div class="addons-filters">
+        <button nbButton size="tiny" [status]="statusFilter === 'all' ? 'primary' : 'basic'" (click)="setFilter('all')">All</button>
+        <button nbButton size="tiny" [status]="statusFilter === 'installing' ? 'primary' : 'basic'" (click)="setFilter('installing')">
+            Installing
+        </button>
+        <button nbButton size="tiny" [status]="statusFilter === 'active' ? 'primary' : 'basic'" (click)="setFilter('active')">
+            Running
+        </button>
+        <button nbButton size="tiny" [status]="statusFilter === 'enabled' ? 'primary' : 'basic'" (click)="setFilter('enabled')">
+            Enabled
+        </button>
+        <button nbButton size="tiny" [status]="statusFilter === 'disabled' ? 'primary' : 'basic'" (click)="setFilter('disabled')">
+            Disabled
+        </button>
+        <button nbButton size="tiny" [status]="statusFilter === 'failed' ? 'primary' : 'basic'" (click)="setFilter('failed')">Failed</button>
+        <button nbButton size="tiny" [status]="statusFilter === 'error' ? 'primary' : 'basic'" (click)="setFilter('error')">Error</button>
+        <button nbButton size="tiny" [status]="statusFilter === 'disabling' ? 'primary' : 'basic'" (click)="setFilter('disabling')">
+            Disabling
+        </button>
+    </div>
+
+    <nb-card class="loading-state" *ngIf="loading$ | async">
+        <nb-card-body><nb-spinner size="medium"></nb-spinner></nb-card-body>
+    </nb-card>
+
+    <nb-card class="error-state" status="danger" *ngIf="(error$ | async) as error">
+        <nb-card-body *ngIf="error">{{ error }}</nb-card-body>
+    </nb-card>
+
+    <ng-container *ngIf="addons$ | async as addons">
+        <nb-card class="empty-state" *ngIf="!(loading$ | async) && addons.length === 0">
+            <nb-card-body>No installed addons found.</nb-card-body>
+        </nb-card>
+
+        <div class="addons-grid" *ngIf="addons.length > 0">
+            <div class="addon-card" *ngFor="let addon of addons">
+                <nb-card>
+                    <nb-card-header>{{ addon.name || 'Unknown addon' }}</nb-card-header>
+                    <nb-card-body>
+                        <span class="status-pill" [ngClass]="getStatusClass(addon.status.toString())">{{ addon.status }}</span>
+                        <p>{{ addon.description || 'No description available' }}</p>
+                        <div class="addon-meta">ID: {{ addon._id }}</div>
+                        <div class="addon-meta">Marketplace: {{ addon.marketplace_id }}</div>
+                        <div class="card-actions">
+                            <button nbButton size="tiny" status="basic" (click)="viewDetails(addon)">Details</button>
+                            <button nbButton size="tiny" status="warning" (click)="disable(addon._id)">
+                                {{ getDisableActionLabel(addon.status.toString()) }}
+                            </button>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<div class="modal-backdrop" *ngIf="selectedAddon" (click)="closeDetails()">
+    <nb-card class="modal-card" (click)="$event.stopPropagation()">
+        <nb-card-header>
+            {{ selectedAddon.name || selectedAddon._id }}
+            <button nbButton ghost size="tiny" (click)="closeDetails()"><nb-icon icon="close-outline"></nb-icon></button>
+        </nb-card-header>
+        <nb-card-body>
+            <pre class="details">{{ format(selectedAddon) }}</pre>
+        </nb-card-body>
+    </nb-card>
+</div>

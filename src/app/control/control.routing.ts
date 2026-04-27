@@ -15,6 +15,10 @@ import { ApplicationsComponent } from './application-dashboard/applications.comp
 import { FaqComponent } from './faq/faq.component';
 import { InstanceDetailComponent } from './service-dashboard/components/instance-detail/instance-detail.component';
 import { ClusterComponent } from './cluster/cluster.component';
+import { AddonsMarketplaceComponent } from './addons/components/addons-marketplace/addons-marketplace.component';
+import { InstalledAddonsComponent } from './addons/components/installed-addons/installed-addons.component';
+import { HooksComponent } from './addons/components/hooks/hooks.component';
+import { CustomResourcesComponent } from './addons/components/custom-resources/custom-resources.component';
 
 export const routes: Routes = [
     {
@@ -90,6 +94,26 @@ export const routes: Routes = [
             {
                 path: 'clusters',
                 component: ClusterComponent,
+                canActivate: [AuthGuardService],
+            },
+            {
+                path: 'addons/marketplace',
+                component: AddonsMarketplaceComponent,
+                canActivate: [AuthGuardService],
+            },
+            {
+                path: 'addons/installed',
+                component: InstalledAddonsComponent,
+                canActivate: [AuthGuardService],
+            },
+            {
+                path: 'custom-resources/hooks',
+                component: HooksComponent,
+                canActivate: [AuthGuardService],
+            },
+            {
+                path: 'custom-resources/resources',
+                component: CustomResourcesComponent,
                 canActivate: [AuthGuardService],
             },
             { path: '**', component: NotFoundComponent },

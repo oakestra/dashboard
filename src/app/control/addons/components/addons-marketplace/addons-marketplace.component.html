@@ -1,0 +1,396 @@
+<div class="addons-page">
+    <div class="addons-title">
+        <h1>Marketplace</h1>
+        <div class="addons-actions">
+            <button nbButton size="small" status="basic" (click)="loadAddons()">
+                <nb-icon icon="refresh-outline"></nb-icon>
+                Refresh
+            </button>
+            <button nbButton size="small" status="primary" (click)="toggleForm()">
+                <nb-icon [icon]="showForm ? 'close-outline' : 'plus-outline'"></nb-icon>
+                {{ showForm ? 'Cancel' : 'Add Addon' }}
+            </button>
+        </div>
+    </div>
+
+    <nb-card class="addons-form" *ngIf="showForm">
+        <nb-card-header>
+            <div class="form-header">
+                <span>Add Addon</span>
+                <div class="addons-actions">
+                    <button nbButton size="tiny" [status]="!useJsonMode ? 'primary' : 'basic'" (click)="useJsonMode = false">
+                        Manual
+                    </button>
+                    <button nbButton size="tiny" [status]="useJsonMode ? 'primary' : 'basic'" (click)="useJsonMode = true">
+                        JSON
+                    </button>
+                </div>
+            </div>
+        </nb-card-header>
+        <nb-card-body>
+            <ng-container *ngIf="useJsonMode">
+                <div class="field">
+                    <label for="addonJson">Addon JSON</label>
+                    <textarea nbInput fullWidth id="addonJson" [(ngModel)]="addonJson"></textarea>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="!useJsonMode">
+                <div class="field">
+                    <label for="addonName">Name</label>
+                    <input nbInput fullWidth id="addonName" [(ngModel)]="newAddon.name" />
+                </div>
+                <div class="field">
+                    <label for="addonDescription">Description</label>
+                    <textarea nbInput fullWidth id="addonDescription" class="compact-textarea" [(ngModel)]="newAddon.description"></textarea>
+                </div>
+
+                <div class="section-divider">
+                    <h3>Services</h3>
+                    <span class="addon-meta">{{ newAddon.services.length }} added</span>
+                </div>
+
+                <div class="items-list" *ngIf="newAddon.services.length > 0">
+                    <div class="item-card" *ngFor="let service of newAddon.services; let i = index">
+                        <div class="item-header">
+                            <strong>{{ service.service_name }}</strong>
+                            <div class="icon-actions">
+                                <button nbButton ghost size="tiny" status="basic" *ngIf="editingServiceIndex !== i" (click)="editService(i)" nbTooltip="Edit service">
+                                    <nb-icon icon="edit-2-outline"></nb-icon>
+                                </button>
+                                <button nbButton ghost size="tiny" status="basic" *ngIf="editingServiceIndex === i" (click)="cancelServiceEdit()" nbTooltip="Cancel edit">
+                                    <nb-icon icon="undo-outline"></nb-icon>
+                                </button>
+                                <button nbButton ghost size="tiny" status="danger" (click)="removeService(i)" nbTooltip="Delete service">
+                                    <nb-icon icon="trash-2-outline"></nb-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="item-details">
+                            <div><strong>Image:</strong> {{ service.image }}</div>
+                            <div *ngIf="service.command"><strong>Command:</strong> {{ service.command }}</div>
+                            <div *ngIf="getObjectAsArray(service.ports).length"><strong>Ports:</strong> {{ formatKeyValue(service.ports, ':') }}</div>
+                            <div *ngIf="service.volumes?.length"><strong>Volumes:</strong> {{ service.volumes?.join(', ') }}</div>
+                            <div *ngIf="service.networks?.length"><strong>Networks:</strong> {{ service.networks?.join(', ') }}</div>
+                        </div>
+                        <div class="nested-form" *ngIf="editingServiceIndex === i">
+                            <h4>Edit Service</h4>
+                            <ng-container *ngTemplateOutlet="serviceEditor; context: { actionLabel: 'Update Service' }"></ng-container>
+                        </div>
+                    </div>
+                </div>
+
+                <button nbButton size="small" status="primary" *ngIf="!showServiceForm && editingServiceIndex === -1" (click)="showAddServiceForm()">
+                    <nb-icon icon="plus-outline"></nb-icon>
+                    Add Service
+                </button>
+
+                <div class="nested-form" *ngIf="showServiceForm">
+                    <div class="form-header-inline">
+                        <h4>Add Service</h4>
+                        <button nbButton size="tiny" status="basic" (click)="hideAddServiceForm()">Cancel</button>
+                    </div>
+                    <ng-container *ngTemplateOutlet="serviceEditor; context: { actionLabel: 'Add Service' }"></ng-container>
+                </div>
+
+                <ng-template #serviceEditor let-actionLabel="actionLabel">
+                    <div class="manual-grid">
+                        <div class="field">
+                            <label for="serviceName">Service Name</label>
+                            <input nbInput fullWidth id="serviceName" [(ngModel)]="currentService.service_name" />
+                        </div>
+                        <div class="field">
+                            <label for="serviceImage">Image</label>
+                            <input nbInput fullWidth id="serviceImage" [(ngModel)]="currentService.image" />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="serviceCommand">Command</label>
+                        <input nbInput fullWidth id="serviceCommand" [(ngModel)]="currentService.command" />
+                    </div>
+
+                    <div class="manual-grid">
+                        <div class="field">
+                            <label>Ports</label>
+                            <div class="list-editor">
+                                <div class="list-row" *ngFor="let item of getObjectAsArray(currentService.ports)">
+                                    <span>{{ item.key }}:{{ item.value }}</span>
+                                    <button nbButton ghost size="tiny" status="danger" (click)="removePort(item.key)" nbTooltip="Remove port">
+                                        <nb-icon icon="close-outline"></nb-icon>
+                                    </button>
+                                </div>
+                                <div class="pair-input">
+                                    <input nbInput fullWidth placeholder="Host port" #portKey />
+                                    <span>:</span>
+                                    <input nbInput fullWidth placeholder="Container port" #portValue (keyup.enter)="addPort({ key: portKey.value, value: portValue.value }); portKey.value = ''; portValue.value = ''" />
+                                    <button nbButton size="tiny" status="primary" (click)="addPort({ key: portKey.value, value: portValue.value }); portKey.value = ''; portValue.value = ''">Add</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label>Environment</label>
+                            <div class="list-editor">
+                                <div class="list-row" *ngFor="let item of getObjectAsArray(currentService.environment)">
+                                    <span>{{ item.key }}={{ item.value }}</span>
+                                    <button nbButton ghost size="tiny" status="danger" (click)="removeEnvironment(item.key)" nbTooltip="Remove environment variable">
+                                        <nb-icon icon="close-outline"></nb-icon>
+                                    </button>
+                                </div>
+                                <div class="pair-input">
+                                    <input nbInput fullWidth placeholder="Variable" #envKey />
+                                    <span>=</span>
+                                    <input nbInput fullWidth placeholder="Value" #envValue (keyup.enter)="addEnvironment({ key: envKey.value, value: envValue.value }); envKey.value = ''; envValue.value = ''" />
+                                    <button nbButton size="tiny" status="primary" (click)="addEnvironment({ key: envKey.value, value: envValue.value }); envKey.value = ''; envValue.value = ''">Add</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label>Volume Mounts</label>
+                            <div class="list-editor">
+                                <div class="list-row" *ngFor="let item of currentService.volumes || []; let mountIndex = index">
+                                    <span>{{ item }}</span>
+                                    <button nbButton ghost size="tiny" status="danger" (click)="removeServiceVolume(mountIndex)" nbTooltip="Remove mount">
+                                        <nb-icon icon="close-outline"></nb-icon>
+                                    </button>
+                                </div>
+                                <div class="single-input">
+                                    <input nbInput fullWidth placeholder="volume1:/data or /host:/container" #mountValue (keyup.enter)="addServiceVolume(mountValue.value); mountValue.value = ''" />
+                                    <button nbButton size="tiny" status="primary" (click)="addServiceVolume(mountValue.value); mountValue.value = ''">Add</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label>Networks</label>
+                            <div class="list-editor">
+                                <div class="list-row" *ngFor="let item of currentService.networks || []; let networkIndex = index">
+                                    <span>{{ item }}</span>
+                                    <button nbButton ghost size="tiny" status="danger" (click)="removeServiceNetwork(networkIndex)" nbTooltip="Remove network">
+                                        <nb-icon icon="close-outline"></nb-icon>
+                                    </button>
+                                </div>
+                                <div class="single-input">
+                                    <input nbInput fullWidth placeholder="network1" #serviceNetworkValue (keyup.enter)="addServiceNetwork(serviceNetworkValue.value); serviceNetworkValue.value = ''" />
+                                    <button nbButton size="tiny" status="primary" (click)="addServiceNetwork(serviceNetworkValue.value); serviceNetworkValue.value = ''">Add</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label>Labels</label>
+                            <div class="list-editor">
+                                <div class="list-row" *ngFor="let item of getObjectAsArray(currentService.labels)">
+                                    <span>{{ item.key }}={{ item.value }}</span>
+                                    <button nbButton ghost size="tiny" status="danger" (click)="removeLabel(item.key)" nbTooltip="Remove label">
+                                        <nb-icon icon="close-outline"></nb-icon>
+                                    </button>
+                                </div>
+                                <div class="pair-input">
+                                    <input nbInput fullWidth placeholder="Label" #labelKey />
+                                    <span>=</span>
+                                    <input nbInput fullWidth placeholder="Value" #labelValue (keyup.enter)="addLabel({ key: labelKey.value, value: labelValue.value }); labelKey.value = ''; labelValue.value = ''" />
+                                    <button nbButton size="tiny" status="primary" (click)="addLabel({ key: labelKey.value, value: labelValue.value }); labelKey.value = ''; labelValue.value = ''">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button nbButton size="small" status="success" (click)="addService()">{{ actionLabel }}</button>
+                    </div>
+                </ng-template>
+
+                <div class="section-divider">
+                    <h3>Volumes</h3>
+                    <span class="addon-meta">{{ newAddon.volumes?.length || 0 }} added</span>
+                </div>
+
+                <div class="items-list" *ngIf="newAddon.volumes?.length">
+                    <div class="item-card" *ngFor="let volume of newAddon.volumes; let i = index">
+                        <div class="item-header">
+                            <strong>{{ volume.name }}</strong>
+                            <div class="icon-actions">
+                                <button nbButton ghost size="tiny" status="basic" *ngIf="editingVolumeIndex !== i" (click)="editVolume(i)" nbTooltip="Edit volume">
+                                    <nb-icon icon="edit-2-outline"></nb-icon>
+                                </button>
+                                <button nbButton ghost size="tiny" status="basic" *ngIf="editingVolumeIndex === i" (click)="cancelVolumeEdit()" nbTooltip="Cancel edit">
+                                    <nb-icon icon="undo-outline"></nb-icon>
+                                </button>
+                                <button nbButton ghost size="tiny" status="danger" (click)="removeVolume(i)" nbTooltip="Delete volume">
+                                    <nb-icon icon="trash-2-outline"></nb-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="item-details">
+                            <div><strong>Driver:</strong> {{ volume.driver || 'local' }}</div>
+                            <div *ngIf="getObjectAsArray(volume.driver_opts).length"><strong>Options:</strong> {{ formatKeyValue(volume.driver_opts, '=') }}</div>
+                        </div>
+                        <div class="nested-form" *ngIf="editingVolumeIndex === i">
+                            <h4>Edit Volume</h4>
+                            <ng-container *ngTemplateOutlet="volumeEditor; context: { actionLabel: 'Update Volume' }"></ng-container>
+                        </div>
+                    </div>
+                </div>
+
+                <button nbButton size="small" status="primary" *ngIf="!showVolumeForm && editingVolumeIndex === -1" (click)="showAddVolumeForm()">
+                    <nb-icon icon="plus-outline"></nb-icon>
+                    Add Volume
+                </button>
+
+                <div class="nested-form" *ngIf="showVolumeForm">
+                    <div class="form-header-inline">
+                        <h4>Add Volume</h4>
+                        <button nbButton size="tiny" status="basic" (click)="hideAddVolumeForm()">Cancel</button>
+                    </div>
+                    <ng-container *ngTemplateOutlet="volumeEditor; context: { actionLabel: 'Add Volume' }"></ng-container>
+                </div>
+
+                <ng-template #volumeEditor let-actionLabel="actionLabel">
+                    <div class="manual-grid">
+                        <div class="field">
+                            <label for="volumeName">Volume Name</label>
+                            <input nbInput fullWidth id="volumeName" [(ngModel)]="currentVolume.name" />
+                        </div>
+                        <div class="field">
+                            <label for="volumeDriver">Driver</label>
+                            <input nbInput fullWidth id="volumeDriver" [(ngModel)]="currentVolume.driver" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Driver Options</label>
+                        <div class="list-editor">
+                            <div class="list-row" *ngFor="let item of getObjectAsArray(currentVolume.driver_opts)">
+                                <span>{{ item.key }}={{ item.value }}</span>
+                                <button nbButton ghost size="tiny" status="danger" (click)="removeVolumeOption(item.key)" nbTooltip="Remove option">
+                                    <nb-icon icon="close-outline"></nb-icon>
+                                </button>
+                            </div>
+                            <div class="pair-input">
+                                <input nbInput fullWidth placeholder="Option" #optionKey />
+                                <span>=</span>
+                                <input nbInput fullWidth placeholder="Value" #optionValue (keyup.enter)="addVolumeOption({ key: optionKey.value, value: optionValue.value }); optionKey.value = ''; optionValue.value = ''" />
+                                <button nbButton size="tiny" status="primary" (click)="addVolumeOption({ key: optionKey.value, value: optionValue.value }); optionKey.value = ''; optionValue.value = ''">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button nbButton size="small" status="success" (click)="addVolume()">{{ actionLabel }}</button>
+                    </div>
+                </ng-template>
+
+                <div class="section-divider">
+                    <h3>Networks</h3>
+                    <span class="addon-meta">{{ newAddon.networks?.length || 0 }} added</span>
+                </div>
+
+                <div class="items-list" *ngIf="newAddon.networks?.length">
+                    <div class="item-card" *ngFor="let network of newAddon.networks; let i = index">
+                        <div class="item-header">
+                            <strong>{{ network.name }}</strong>
+                            <div class="icon-actions">
+                                <button nbButton ghost size="tiny" status="basic" *ngIf="editingNetworkIndex !== i" (click)="editNetwork(i)" nbTooltip="Edit network">
+                                    <nb-icon icon="edit-2-outline"></nb-icon>
+                                </button>
+                                <button nbButton ghost size="tiny" status="basic" *ngIf="editingNetworkIndex === i" (click)="cancelNetworkEdit()" nbTooltip="Cancel edit">
+                                    <nb-icon icon="undo-outline"></nb-icon>
+                                </button>
+                                <button nbButton ghost size="tiny" status="danger" (click)="removeNetwork(i)" nbTooltip="Delete network">
+                                    <nb-icon icon="trash-2-outline"></nb-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="item-details">
+                            <div><strong>Driver:</strong> {{ network.driver || 'bridge' }}</div>
+                            <div><strong>IPv6:</strong> {{ network.enable_ipv6 ? 'Enabled' : 'Disabled' }}</div>
+                        </div>
+                        <div class="nested-form" *ngIf="editingNetworkIndex === i">
+                            <h4>Edit Network</h4>
+                            <ng-container *ngTemplateOutlet="networkEditor; context: { actionLabel: 'Update Network' }"></ng-container>
+                        </div>
+                    </div>
+                </div>
+
+                <button nbButton size="small" status="primary" *ngIf="!showNetworkForm && editingNetworkIndex === -1" (click)="showAddNetworkForm()">
+                    <nb-icon icon="plus-outline"></nb-icon>
+                    Add Network
+                </button>
+
+                <div class="nested-form" *ngIf="showNetworkForm">
+                    <div class="form-header-inline">
+                        <h4>Add Network</h4>
+                        <button nbButton size="tiny" status="basic" (click)="hideAddNetworkForm()">Cancel</button>
+                    </div>
+                    <ng-container *ngTemplateOutlet="networkEditor; context: { actionLabel: 'Add Network' }"></ng-container>
+                </div>
+
+                <ng-template #networkEditor let-actionLabel="actionLabel">
+                    <div class="manual-grid">
+                        <div class="field">
+                            <label for="networkName">Network Name</label>
+                            <input nbInput fullWidth id="networkName" [(ngModel)]="currentNetwork.name" />
+                        </div>
+                        <div class="field">
+                            <label for="networkDriver">Driver</label>
+                            <input nbInput fullWidth id="networkDriver" [(ngModel)]="currentNetwork.driver" />
+                        </div>
+                    </div>
+                    <nb-checkbox [(ngModel)]="currentNetwork.enable_ipv6">Enable IPv6</nb-checkbox>
+                    <div class="form-actions">
+                        <button nbButton size="small" status="success" (click)="addNetwork()">{{ actionLabel }}</button>
+                    </div>
+                </ng-template>
+            </ng-container>
+
+            <div class="form-actions">
+                <button nbButton size="small" status="success" (click)="submitAddon()">Submit</button>
+            </div>
+        </nb-card-body>
+    </nb-card>
+
+    <nb-card class="loading-state" *ngIf="loading$ | async">
+        <nb-card-body><nb-spinner size="medium"></nb-spinner></nb-card-body>
+    </nb-card>
+
+    <nb-card class="error-state" status="danger" *ngIf="(error$ | async) as error">
+        <nb-card-body *ngIf="error">{{ error }}</nb-card-body>
+    </nb-card>
+
+    <ng-container *ngIf="addons$ | async as addons">
+        <nb-card class="empty-state" *ngIf="!(loading$ | async) && addons.length === 0">
+            <nb-card-body>No marketplace addons found.</nb-card-body>
+        </nb-card>
+
+        <div class="addons-grid" *ngIf="addons.length > 0">
+            <div class="addon-card" *ngFor="let addon of addons">
+                <nb-card>
+                    <nb-card-header>{{ addon.name }}</nb-card-header>
+                    <nb-card-body>
+                        <p>{{ addon.description || 'No description provided' }}</p>
+                        <div class="addon-meta">Services: {{ addon.services?.length || 0 }}</div>
+                        <div class="addon-meta">ID: {{ addon._id || 'pending' }}</div>
+                        <div class="card-actions">
+                            <button nbButton size="tiny" status="basic" (click)="viewDetails(addon)">Details</button>
+                            <button nbButton size="tiny" status="success" (click)="installAddon(addon._id)">Install</button>
+                            <button nbButton size="tiny" status="danger" (click)="deleteAddon(addon._id)">Delete</button>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<div class="modal-backdrop" *ngIf="selectedAddon" (click)="closeDetails()">
+    <nb-card class="modal-card" (click)="$event.stopPropagation()">
+        <nb-card-header>
+            {{ selectedAddon.name }}
+            <button nbButton ghost size="tiny" (click)="closeDetails()"><nb-icon icon="close-outline"></nb-icon></button>
+        </nb-card-header>
+        <nb-card-body>
+            <pre class="details">{{ formatAddon(selectedAddon) }}</pre>
+        </nb-card-body>
+    </nb-card>
+</div>
