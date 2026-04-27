@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NbMenuService } from '@nebular/theme';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'app-not-found',
     templateUrl: 'not-found.component.html',
     styleUrls: ['./not-found.component.scss'],

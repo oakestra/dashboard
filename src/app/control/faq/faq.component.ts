@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'app-faq',
     templateUrl: './faq.component.html',
     styleUrls: ['./faq.component.scss'],

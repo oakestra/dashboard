@@ -15,7 +15,7 @@ import { DialogAction } from '../../root/enums/dialogAction';
 import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'dev-home',
     templateUrl: './service-dashboard.component.html',
     styleUrls: ['./service-dashboard.component.scss'],
@@ -50,7 +50,7 @@ export class ServiceDashboardComponent implements OnInit {
             )
             .subscribe();
 
-        //populate page with the latest selected application
+        // populate page with the latest selected application
         this.store
             .select(selectApplications)
             .pipe(
@@ -68,12 +68,12 @@ export class ServiceDashboardComponent implements OnInit {
                                 }
                             }),
                         ).subscribe();
-                        if (this.selectedItem === undefined) {
-                            this.store.dispatch(setCurrentApplication({ application: app[0] }));
-                            this.selectedItem = app[0];
-                        }else{
-                            this.store.dispatch(setCurrentApplication({ application: this.selectedItem }));
-                        }
+                    if (this.selectedItem === undefined) {
+                        this.store.dispatch(setCurrentApplication({ application: app[0] }));
+                        this.selectedItem = app[0];
+                    } else {
+                        this.store.dispatch(setCurrentApplication({ application: this.selectedItem }));
+                    }
                 }),
             )
             .subscribe();

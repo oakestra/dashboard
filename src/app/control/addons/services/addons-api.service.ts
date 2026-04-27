@@ -126,11 +126,13 @@ export class AddonsApiService {
             resourceAbstractor: this.ping(this.endpoints.resourceAbstractorUrl),
             marketplaceUi: this.ping(this.endpoints.marketplaceUiUrl),
         }).pipe(
-            map(({ marketplace, engine, resourceAbstractor, marketplaceUi }) => ({
-                addons: marketplace && engine,
-                customResources: resourceAbstractor,
-                marketplaceUi,
-            })),
+            map(({ marketplace, engine, resourceAbstractor, marketplaceUi }) => {
+                return {
+                    addons: marketplace && engine,
+                    customResources: resourceAbstractor,
+                    marketplaceUi,
+                };
+            }),
             catchError(() => of({ addons: false, customResources: false, marketplaceUi: false })),
         );
     }

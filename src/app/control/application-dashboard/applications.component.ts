@@ -23,7 +23,7 @@ import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 import { DialogAddApplicationView } from './dialogs/add-appllication/dialogAddApplication';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'app-applications',
     templateUrl: './applications.component.html',
     styleUrls: ['./applications.component.scss'],
@@ -86,9 +86,9 @@ export class ApplicationsComponent {
             } else if (result.event === DialogAction.UPDATE) {
                 this.store.dispatch(updateApplication({ application: result.data }));
             } else if (result.event === DialogAction.DELETE) {
-                //get different app form apps$ to set as current
+                // get different app form apps$ to set as current
                 this.apps$.subscribe((app) => {
-                    var activeApps = app.filter((a) => a._id.$oid !== result.data._id.$oid)
+                    const activeApps = app.filter((a) => a._id.$oid !== result.data._id.$oid);
                     if (activeApps.length > 0) {
                         this.store.dispatch(setCurrentApplication({ application: activeApps[0] }));
                     } else {

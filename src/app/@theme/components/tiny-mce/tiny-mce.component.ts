@@ -3,7 +3,7 @@ import { LocationStrategy } from '@angular/common';
 import tinymce from 'tinymce';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'ngx-tiny-mce',
     template: '',
 })

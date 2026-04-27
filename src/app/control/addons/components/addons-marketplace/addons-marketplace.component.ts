@@ -13,7 +13,7 @@ import { NotificationService } from 'src/app/shared/modules/notification/notific
 import { AddonsApiService } from '../../services/addons-api.service';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'app-addons-marketplace',
     templateUrl: './addons-marketplace.component.html',
     styleUrls: ['../../addons.scss'],
@@ -336,7 +336,9 @@ export class AddonsMarketplaceComponent implements OnInit {
     }
 
     getObjectAsArray(obj: Record<string, string> | undefined): { key: string; value: string }[] {
-        return Object.entries(obj || {}).map(([key, value]) => ({ key, value }));
+        return Object.entries(obj || {}).map(([key, value]) => {
+            return { key, value };
+        });
     }
 
     formatKeyValue(obj: Record<string, string> | undefined, separator: ':' | '='): string {
@@ -589,7 +591,7 @@ export class AddonsMarketplaceComponent implements OnInit {
                         service_name: 'my-service',
                         image: 'alpine:latest',
                         command: 'echo hello',
-                        ports: { '8080': '80' },
+                        ports: { 8080: '80' },
                         environment: { KEY: 'value' },
                         volumes: ['volume1:/data'],
                         networks: ['network1'],

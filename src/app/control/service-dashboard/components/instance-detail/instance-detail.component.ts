@@ -9,7 +9,7 @@ import { IService } from '../../../../root/interfaces/service';
 import { appReducer, getSingleService } from '../../../../root/store';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'app-instance-detail',
     templateUrl: './instance-detail.component.html',
     styleUrls: ['./instance-detail.component.scss'],

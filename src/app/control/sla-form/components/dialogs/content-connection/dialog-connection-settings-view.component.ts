@@ -3,7 +3,7 @@ import { NbDialogRef } from '@nebular/theme';
 import { DialogGraphConnectionView } from '../../../../service-dashboard/dialogs/graph-content-connection/dialog-graph-connection-view.component';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-content-connection-settings.html',
     styles: [

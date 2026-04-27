@@ -11,7 +11,7 @@ type serviceInfo = {
 };
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'form-service-info',
     templateUrl: './service-info.component.html',
     styleUrls: ['./service-info.component.scss'],

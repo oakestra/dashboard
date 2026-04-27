@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'ngx-three-columns-layout',
     styleUrls: ['./three-columns.layout.scss'],
     template: `

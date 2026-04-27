@@ -6,7 +6,7 @@ import { NotificationService } from '../../../shared/modules/notification/notifi
 import { NotificationType } from '../../../root/interfaces/notification';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'app-reset-password',
     templateUrl: './reset-password.component.html',
     styleUrls: ['./reset-password.component.scss'],

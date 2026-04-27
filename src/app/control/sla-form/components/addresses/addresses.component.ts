@@ -4,7 +4,7 @@ import { SubComponent } from '../../../../root/classes/subComponent';
 import { IInstanceAddress, IService } from '../../../../root/interfaces/service';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'form-addresses',
     templateUrl: './addresses.component.html',
     styleUrls: ['./addresses.component.scss'],

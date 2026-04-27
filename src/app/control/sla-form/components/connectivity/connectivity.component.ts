@@ -10,7 +10,7 @@ import { selectCurrentServices } from '../../../../root/store/selectors/service.
 import { appReducer } from '../../../../root/store';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'form-connectivity',
     templateUrl: './connectivity.component.html',
     styleUrls: ['./connectivity.component.scss'],

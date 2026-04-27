@@ -8,7 +8,7 @@ declare function start(nodes: any, links: any): void;
 declare function deleteLink(): void;
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'graph',
     templateUrl: './graph.component.html',
     styleUrls: ['./graph.component.scss'],

@@ -3,7 +3,7 @@ import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective } from '@a
 // import * as uuid from 'uuid';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'app-geo-constraints',
     templateUrl: './geo-constraints.component.html',
     styleUrls: ['./geo-constraints.component.scss'],

@@ -8,7 +8,7 @@ interface ConformationText {
 }
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'dialog-conformation-dialog',
     templateUrl: 'dialog-confirmation.html',
 })

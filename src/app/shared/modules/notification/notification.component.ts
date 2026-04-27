@@ -3,7 +3,7 @@ import { NotificationType } from '../../../root/interfaces/notification';
 import { NotificationService } from './notification.service';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'app-notification',
     template: `
         <div class="center">

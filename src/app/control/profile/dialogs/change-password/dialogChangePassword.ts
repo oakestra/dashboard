@@ -20,7 +20,7 @@ import { selectCurrentUser } from '../../../../root/store/selectors/user.selecto
 import { NotificationType } from '../../../../root/interfaces/notification';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-change-password.html',
     styles: ['nb-form-field {padding: 10px 0 10px 0}', 'button {margin: 0 5px 0 5px}'],
@@ -38,7 +38,7 @@ export class DialogChangePasswordView {
         private store: Store<appReducer.AppState>,
         private userService: UserService,
         private fb: FormBuilder,
-        
+
 
         public notifyService: NotificationService,
     ) {
@@ -56,7 +56,7 @@ export class DialogChangePasswordView {
 
     ngOnInit(): void {
         this.store.dispatch(getUser({ name: this.userService.getUsername() }));
-    
+
         this.user$.subscribe((u: IUser) => {
             this.user = u;
             this.form.patchValue({ email: this.user.email });

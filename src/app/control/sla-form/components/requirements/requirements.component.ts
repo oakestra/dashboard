@@ -16,7 +16,7 @@ type requirementsType = {
 };
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'form-requirements',
     templateUrl: './requirements.component.html',
     styleUrls: ['./requirements.component.scss'],
@@ -37,7 +37,7 @@ export class RequirementsComponent extends SubComponent implements OnInit {
             vgpus: [this.service?.vgpus ?? 0],
             vtpus: [this.service?.vtpus ?? 0],
             bandwidth_in: [this.service?.bandwidth_in ?? 0],
-            bandwidth_out: [this.service?.bandwidth_out?? 0],
+            bandwidth_out: [this.service?.bandwidth_out ?? 0],
             storage: [this.service?.storage ?? 0],
             port: [this.service?.port ?? ''],
         });

@@ -6,7 +6,7 @@ import { NotificationService } from '../../../../shared/modules/notification/not
 import { NotificationType } from '../../../../root/interfaces/notification';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'form-file-upload',
     templateUrl: './file-upload.component.html',
     styleUrls: ['./file-upload.component.scss'],
@@ -24,7 +24,7 @@ export class FileUploadComponent extends SubComponent {
         applications: [
             {
                 application_name: 'myapp',
-                microservices: [{ microservice_name: 'name', '...': '...' }],
+                microservices: [{ 'microservice_name': 'name', '...': '...' }],
             },
         ],
     };

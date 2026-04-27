@@ -55,7 +55,7 @@ export class ApiService extends RestService {
     // /////////////////////////////////////////////////////////////////////////
     // /////////////////// Cluster Functions ///////////////////////////////
 
-    getActiveClusters(): Observable<ICluster[]>  {
+    getActiveClusters(): Observable<ICluster[]> {
         return this.doGETRequest('/clusters/active');
     }
 

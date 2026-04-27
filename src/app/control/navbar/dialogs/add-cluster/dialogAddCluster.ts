@@ -5,7 +5,7 @@ import { NotificationService } from '../../../../shared/modules/notification/not
 import { NotificationType } from '../../../../root/interfaces/notification';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'dialog-content-example-dialog',
     templateUrl: './dialog-add-cluster.html',
     styleUrls: ['./dialog-add-cluster.scss'],

@@ -3,7 +3,7 @@ import { NbThemeService } from '@nebular/theme';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'app-root',
     template: ' <div class="content light"><router-outlet></router-outlet></div>',
     styles: ['.content{ width: 100vw;  height: 100vh;}'],

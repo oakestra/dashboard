@@ -32,63 +32,83 @@ export const initialState: State = {
 
 export const addonsReducer = createReducer(
     initialState,
-    on(addonsActions.checkAddonsAvailabilitySuccess, (state, action) => ({
-        ...state,
-        addonsAvailable: action.addonsAvailable,
-        customResourcesAvailable: action.customResourcesAvailable,
-    })),
-    on(addonsActions.checkAddonsAvailabilityError, (state) => ({
-        ...state,
-        addonsAvailable: false,
-        customResourcesAvailable: false,
-    })),
+    on(addonsActions.checkAddonsAvailabilitySuccess, (state, action) => {
+        return {
+            ...state,
+            addonsAvailable: action.addonsAvailable,
+            customResourcesAvailable: action.customResourcesAvailable,
+        };
+    }),
+    on(addonsActions.checkAddonsAvailabilityError, (state) => {
+        return {
+            ...state,
+            addonsAvailable: false,
+            customResourcesAvailable: false,
+        };
+    }),
     on(
         addonsActions.loadMarketplaceAddons,
         addonsActions.loadInstalledAddons,
         addonsActions.loadHooks,
         addonsActions.loadCustomResources,
         addonsActions.loadResourceInstances,
-        (state) => ({ ...state, loading: true, error: '' }),
+        (state) => {
+            return { ...state, loading: true, error: '' };
+        },
     ),
-    on(addonsActions.loadMarketplaceAddonsSuccess, (state, action) => ({
-        ...state,
-        marketplaceAddons: action.addons,
-        loading: false,
-    })),
-    on(addonsActions.loadInstalledAddonsSuccess, (state, action) => ({
-        ...state,
-        installedAddons: action.addons,
-        loading: false,
-    })),
-    on(addonsActions.loadHooksSuccess, (state, action) => ({
-        ...state,
-        hooks: action.hooks,
-        loading: false,
-    })),
-    on(addonsActions.loadCustomResourcesSuccess, (state, action) => ({
-        ...state,
-        customResources: action.resources,
-        selectedResourceType: state.selectedResourceType || action.resources[0]?.resource_type || '',
-        loading: false,
-    })),
-    on(addonsActions.selectCustomResourceType, (state, action) => ({
-        ...state,
-        selectedResourceType: action.resourceType,
-        resourceInstances: [] as any[],
-    })),
-    on(addonsActions.loadResourceInstancesSuccess, (state, action) => ({
-        ...state,
-        selectedResourceType: action.resourceType,
-        resourceInstances: action.instances,
-        loading: false,
-    })),
+    on(addonsActions.loadMarketplaceAddonsSuccess, (state, action) => {
+        return {
+            ...state,
+            marketplaceAddons: action.addons,
+            loading: false,
+        };
+    }),
+    on(addonsActions.loadInstalledAddonsSuccess, (state, action) => {
+        return {
+            ...state,
+            installedAddons: action.addons,
+            loading: false,
+        };
+    }),
+    on(addonsActions.loadHooksSuccess, (state, action) => {
+        return {
+            ...state,
+            hooks: action.hooks,
+            loading: false,
+        };
+    }),
+    on(addonsActions.loadCustomResourcesSuccess, (state, action) => {
+        return {
+            ...state,
+            customResources: action.resources,
+            selectedResourceType: state.selectedResourceType || action.resources[0]?.resource_type || '',
+            loading: false,
+        };
+    }),
+    on(addonsActions.selectCustomResourceType, (state, action) => {
+        return {
+            ...state,
+            selectedResourceType: action.resourceType,
+            resourceInstances: [] as any[],
+        };
+    }),
+    on(addonsActions.loadResourceInstancesSuccess, (state, action) => {
+        return {
+            ...state,
+            selectedResourceType: action.resourceType,
+            resourceInstances: action.instances,
+            loading: false,
+        };
+    }),
     on(
         addonsActions.loadMarketplaceAddonsError,
         addonsActions.loadInstalledAddonsError,
         addonsActions.loadHooksError,
         addonsActions.loadCustomResourcesError,
         addonsActions.loadResourceInstancesError,
-        (state, action) => ({ ...state, loading: false, error: action.error }),
+        (state, action) => {
+            return { ...state, loading: false, error: action.error };
+        },
     ),
 );
 

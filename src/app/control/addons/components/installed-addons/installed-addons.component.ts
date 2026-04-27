@@ -14,7 +14,7 @@ import { NotificationService } from 'src/app/shared/modules/notification/notific
 import { AddonsApiService } from '../../services/addons-api.service';
 
 @Component({
-  standalone: false,
+    standalone: false,
     selector: 'app-installed-addons',
     templateUrl: './installed-addons.component.html',
     styleUrls: ['../../addons.scss'],
