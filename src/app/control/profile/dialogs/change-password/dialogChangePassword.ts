@@ -20,6 +20,7 @@ import { selectCurrentUser } from '../../../../root/store/selectors/user.selecto
 import { NotificationType } from '../../../../root/interfaces/notification';
 
 @Component({
+  standalone: false,
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-change-password.html',
     styles: ['nb-form-field {padding: 10px 0 10px 0}', 'button {margin: 0 5px 0 5px}'],

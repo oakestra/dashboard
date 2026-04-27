@@ -12,6 +12,7 @@ import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 import { DialogChangePasswordView } from './dialogs/change-password/dialogChangePassword';
 
 @Component({
+  standalone: false,
     selector: 'app-profile',
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss'],

@@ -6,6 +6,7 @@ import { IUser } from '../../../../root/interfaces/user';
 import { DialogConfirmationView } from '../../../../root/components/dialogs/confirmation/dialogConfirmation';
 
 @Component({
+  standalone: false,
     selector: 'app-member-item',
     templateUrl: './member-item.component.html',
     styleUrls: ['./member-item.component.scss'],

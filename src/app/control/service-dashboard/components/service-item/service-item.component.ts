@@ -13,6 +13,7 @@ import { ConfigDownloadService } from '../../../../shared/modules/helper/config-
 import { Observable } from 'tinymce';
 
 @Component({
+    standalone: false,
     selector: 'app-service-item',
     templateUrl: './service-item.component.html',
     styleUrls: ['./service-item.component.scss'],

@@ -6,6 +6,7 @@ import { NotificationService } from '../../../../shared/modules/notification/not
 import { NotificationType } from '../../../../root/interfaces/notification';
 
 @Component({
+  standalone: false,
     selector: 'form-file-upload',
     templateUrl: './file-upload.component.html',
     styleUrls: ['./file-upload.component.scss'],

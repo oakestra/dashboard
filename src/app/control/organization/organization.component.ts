@@ -6,6 +6,7 @@ import { IOrganization } from '../../root/interfaces/organization';
 import { selectOrganization } from '../../root/store/selectors/organization.selector';
 
 @Component({
+  standalone: false,
     selector: 'app-organization',
     templateUrl: './organization.component.html',
     styleUrls: ['./organization.component.scss'],

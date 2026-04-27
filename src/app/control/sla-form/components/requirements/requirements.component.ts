@@ -16,6 +16,7 @@ type requirementsType = {
 };
 
 @Component({
+  standalone: false,
     selector: 'form-requirements',
     templateUrl: './requirements.component.html',
     styleUrls: ['./requirements.component.scss'],

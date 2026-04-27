@@ -7,6 +7,7 @@ import { IService } from '../../../../root/interfaces/service';
 import { FileSelectorType } from '../../../../root/interfaces/fileSelector';
 
 @Component({
+  standalone: false,
     selector: 'form-file-select',
     templateUrl: './file-select.component.html',
     styleUrls: ['./file-select.component.scss'],

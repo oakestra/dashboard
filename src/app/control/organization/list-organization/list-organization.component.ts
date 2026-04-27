@@ -12,6 +12,7 @@ import { appReducer, deleteOrganization, postOrganization } from '../../../root/
 import { DialogConfirmationView } from '../../../root/components/dialogs/confirmation/dialogConfirmation';
 
 @Component({
+  standalone: false,
     selector: 'app-list-organization',
     templateUrl: './list-organization.component.html',
     styleUrls: ['./list-organization.component.scss'],

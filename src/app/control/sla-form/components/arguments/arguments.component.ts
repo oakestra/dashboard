@@ -3,6 +3,7 @@ import { SubComponent } from '../../../../root/classes/subComponent';
 import { IService } from '../../../../root/interfaces/service';
 
 @Component({
+  standalone: false,
     selector: 'form-arguments',
     templateUrl: './arguments.component.html',
     styleUrls: ['./arguments.component.scss'],

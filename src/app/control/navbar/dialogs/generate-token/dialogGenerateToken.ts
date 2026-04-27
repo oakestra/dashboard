@@ -4,6 +4,7 @@ import { NbDialogRef } from '@nebular/theme';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
+  standalone: false,
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-generate-token.html',
     styleUrls: ['./dialog-generate-token.scss'],

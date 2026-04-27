@@ -18,6 +18,7 @@ import { UserService } from '../../shared/modules/auth/user.service';
 import { DialogEditUserView } from './dialogs/edit-user/dialogEditUser';
 
 @Component({
+  standalone: false,
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss'],
 })

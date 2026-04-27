@@ -8,6 +8,7 @@ import { ApiService } from '../../../../shared/modules/api/api.service';
 import { ConstraintType } from '../../../../root/enums/constraint';
 
 @Component({
+  standalone: false,
     selector: 'form-constraints',
     templateUrl: './constraints.component.html',
     styleUrls: ['./constraints.component.scss'],

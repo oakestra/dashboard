@@ -9,6 +9,7 @@ import { IUser } from '../../../../root/interfaces/user';
 import { selectAllUser } from '../../../../root/store/selectors/user.selector';
 
 @Component({
+  standalone: false,
     selector: 'app-add-member',
     templateUrl: './add-member.component.html',
     styleUrls: ['./add-member.component.scss'],

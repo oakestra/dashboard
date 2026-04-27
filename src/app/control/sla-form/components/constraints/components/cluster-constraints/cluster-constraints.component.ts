@@ -3,6 +3,7 @@ import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective } from '@a
 import { ApiService } from '../../../../../../shared/modules/api/api.service';
 
 @Component({
+  standalone: false,
     selector: 'app-cluster-constraints',
     templateUrl: './cluster-constraints.component.html',
     styleUrls: ['./cluster-constraints.component.scss'],

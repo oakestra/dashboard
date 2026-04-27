@@ -2,6 +2,7 @@ import { Component, Input, AfterViewInit, ElementRef, ViewChild, OnInit } from '
 import * as L from 'leaflet';
 
 @Component({
+  standalone: false,
   selector: 'app-cluster-map',
   template: '<div class="map" id="map-{{mapId}}" ></div>',
   styleUrls: ['./clustermap.component.scss'],

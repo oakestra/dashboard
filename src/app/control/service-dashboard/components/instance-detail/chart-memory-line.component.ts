@@ -5,6 +5,7 @@ import { Chart } from 'chart.js';
 import { IHistoricalData, IInstance } from '../../../../root/interfaces/instance';
 
 @Component({
+  standalone: false,
     selector: 'chart-memory-line',
     template: ' <canvas id="myChartMemory"></canvas> ',
 })

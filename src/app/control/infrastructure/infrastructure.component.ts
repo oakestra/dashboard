@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
+  standalone: false,
     selector: 'app-infrastructure',
     templateUrl: './infrastructure.component.html',
     styleUrls: ['./infrastructure.component.scss'],

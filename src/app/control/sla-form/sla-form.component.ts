@@ -22,6 +22,7 @@ import { ConstraintsComponent } from './components/constraints/constraints.compo
 import { ConnectivityComponent } from './components/connectivity/connectivity.component';
 
 @Component({
+  standalone: false,
     selector: 'sla-form',
     templateUrl: './sla-form.component.html',
     styleUrls: ['./sla-form.component.scss'],

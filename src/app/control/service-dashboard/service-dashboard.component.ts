@@ -15,6 +15,7 @@ import { DialogAction } from '../../root/enums/dialogAction';
 import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 
 @Component({
+  standalone: false,
     selector: 'dev-home',
     templateUrl: './service-dashboard.component.html',
     styleUrls: ['./service-dashboard.component.scss'],

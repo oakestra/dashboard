@@ -10,6 +10,7 @@ import { ILoginRequest } from '../../../root/interfaces/user';
 import { NotificationType } from '../../../root/interfaces/notification';
 
 @Component({
+  standalone: false,
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],

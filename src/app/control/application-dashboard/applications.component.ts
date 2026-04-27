@@ -23,6 +23,7 @@ import { selectCurrentUser } from '../../root/store/selectors/user.selector';
 import { DialogAddApplicationView } from './dialogs/add-appllication/dialogAddApplication';
 
 @Component({
+  standalone: false,
     selector: 'app-applications',
     templateUrl: './applications.component.html',
     styleUrls: ['./applications.component.scss'],
@@ -45,6 +46,9 @@ export class ApplicationsComponent {
 
     ngOnInit(): void {
         this.store.select(selectCurrentUser).subscribe((u) => {
+            if (!u?._id?.$oid) {
+                return;
+            }
             this.userID = u._id.$oid;
             this.store.dispatch(getApplication({ id: this.userID }));
         });

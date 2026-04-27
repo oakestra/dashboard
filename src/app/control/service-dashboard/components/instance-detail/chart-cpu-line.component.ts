@@ -5,6 +5,7 @@ import Chart from 'chart.js/auto';
 import { IHistoricalData, IInstance } from '../../../../root/interfaces/instance';
 
 @Component({
+  standalone: false,
     selector: 'chart-cpu-line',
     template: ' <canvas id="myChartCPU"></canvas> ',
 })
