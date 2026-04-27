@@ -1,5 +1,4 @@
 .addons-page {
-    display: block;
     padding: 0 1rem 1.5rem;
 }
 
@@ -74,8 +73,10 @@
     color: var(--color-warning-default);
 }
 
-.addons-form {
-    margin-bottom: 1rem;
+.addons-form,
+.addons-filters,
+.definitions-toolbar {
+    margin-bottom: 1.25rem;
 }
 
 .field {
@@ -203,7 +204,7 @@
     font-weight: 700;
 }
 
-.addons-form > nb-card-body > .form-actions:last-child {
+.addons-form .form-actions:last-child {
     margin-top: 1rem;
 }
 
@@ -250,10 +251,6 @@ textarea {
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-}
-
-.modal-card nb-card-body {
-    overflow: auto;
 }
 
 .resource-toolbar {
