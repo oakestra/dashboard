@@ -1,25 +1,25 @@
-import { Component, Input, AfterViewInit, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 
 @Component({
     standalone: false,
     selector: 'app-cluster-map',
-    template: '<div class="map" id="map-{{mapId}}" ></div>',
+    template: '<div class="map" #mapContainer></div>',
     styleUrls: ['./clustermap.component.scss'],
 })
-export class ClusterMapComponent implements AfterViewInit, OnInit {
+export class ClusterMapComponent implements AfterViewInit, OnDestroy {
 
     @Input() location: string;
-    @Input() mapId: string;
+    @ViewChild('mapContainer') mapContainer: ElementRef<HTMLDivElement>;
 
-    constructor() {}
-
-    ngOnInit(): void {
-        console.log(this.mapId);
-    }
+    private map?: L.Map;
 
     ngAfterViewInit(): void {
         this.setLocationToMap(this.location);
+    }
+
+    ngOnDestroy(): void {
+        this.map?.remove();
     }
 
     private setLocationToMap(locationString: string): void {
@@ -32,18 +32,19 @@ export class ClusterMapComponent implements AfterViewInit, OnInit {
             const longitude = parseFloat(array[0]);
             const latitude = parseFloat(array[1]);
             const radius = parseFloat(array[2]);
-            const map = L.map('map-' + this.mapId).setView([longitude, latitude], 14);
+            this.map?.remove();
+            this.map = L.map(this.mapContainer.nativeElement).setView([longitude, latitude], 14);
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap contributors',
-            }).addTo(map);
+            }).addTo(this.map);
 
             const circle = L.circle([longitude, latitude], {
                 color: 'blue',
                 fillColor: 'lightblue',
                 fillOpacity: 0.5,
                 radius,
-            }).addTo(map);
+            }).addTo(this.map);
 
             circle.bindPopup('A Circle on the Map.');
 

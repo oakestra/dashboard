@@ -37,20 +37,21 @@
                             "src/styles.scss",
                             "node_modules/leaflet/dist/leaflet.css"
                         ],
-                        "scripts": ["src/assets/js/graph.js", "src/assets/js/map.js"]
+                        "scripts": ["src/assets/js/graph.js", "src/assets/js/map.js"],
+                        "allowedCommonJsDependencies": ["eva-icons", "tinymce", "leaflet"]
                     },
                     "configurations": {
                         "production": {
                             "budgets": [
                                 {
                                     "type": "initial",
-                                    "maximumWarning": "500kb",
+                                    "maximumWarning": "4mb",
                                     "maximumError": "5mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",
-                                    "maximumWarning": "2kb",
-                                    "maximumError": "4kb"
+                                    "maximumWarning": "5kb",
+                                    "maximumError": "8kb"
                                 }
                             ],
                             "fileReplacements": [

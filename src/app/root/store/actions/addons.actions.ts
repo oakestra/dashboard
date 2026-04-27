@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { CustomResource, Hook, InstalledAddon, MarketplaceAddon } from '../../interfaces/addon';
+import { AddonsEndpoints, CustomResource, Hook, InstalledAddon, MarketplaceAddon } from '../../interfaces/addon';
 
 export const checkAddonsAvailability = createAction('[Addons] check availability');
 export const checkAddonsAvailabilitySuccess = createAction(
@@ -27,7 +27,10 @@ export const deleteMarketplaceAddon = createAction(
     props<{ id: string }>(),
 );
 
-export const loadInstalledAddons = createAction('[Addons] load installed addons', props<{ status?: string }>());
+export const loadInstalledAddons = createAction(
+    '[Addons] load installed addons',
+    props<{ status?: string; endpoints?: Partial<AddonsEndpoints> }>(),
+);
 export const loadInstalledAddonsSuccess = createAction(
     '[Addons] load installed addons success',
     props<{ addons: InstalledAddon[] }>(),
@@ -37,28 +40,43 @@ export const loadInstalledAddonsError = createAction(
     props<{ error: string }>(),
 );
 
-export const installAddon = createAction('[Addons] install addon', props<{ marketplaceId: string }>());
-export const disableAddon = createAction('[Addons] disable addon', props<{ id: string }>());
+export const installAddon = createAction(
+    '[Addons] install addon',
+    props<{
+        marketplaceId: string;
+        endpoints?: Partial<AddonsEndpoints>;
+        reloadInstalled?: boolean;
+        refreshEndpoints?: Partial<AddonsEndpoints>;
+    }>(),
+);
+export const installAddonSuccess = createAction('[Addons] install addon success');
+export const disableAddon = createAction('[Addons] disable addon', props<{ id: string; endpoints?: Partial<AddonsEndpoints> }>());
 
-export const loadHooks = createAction('[Addons] load hooks');
+export const loadHooks = createAction('[Addons] load hooks', props<{ endpoints?: Partial<AddonsEndpoints> }>());
 export const loadHooksSuccess = createAction('[Addons] load hooks success', props<{ hooks: Hook[] }>());
 export const loadHooksError = createAction('[Addons] load hooks error', props<{ error: string }>());
-export const createHook = createAction('[Addons] create hook', props<{ hook: Hook }>());
-export const deleteHook = createAction('[Addons] delete hook', props<{ id: string }>());
+export const createHook = createAction('[Addons] create hook', props<{ hook: Hook; endpoints?: Partial<AddonsEndpoints> }>());
+export const deleteHook = createAction('[Addons] delete hook', props<{ id: string; endpoints?: Partial<AddonsEndpoints> }>());
 
-export const loadCustomResources = createAction('[Addons] load custom resources');
+export const loadCustomResources = createAction('[Addons] load custom resources', props<{ endpoints?: Partial<AddonsEndpoints> }>());
 export const loadCustomResourcesSuccess = createAction(
     '[Addons] load custom resources success',
     props<{ resources: CustomResource[] }>(),
 );
 export const loadCustomResourcesError = createAction('[Addons] load custom resources error', props<{ error: string }>());
-export const createCustomResource = createAction('[Addons] create custom resource', props<{ resource: CustomResource }>());
-export const deleteCustomResource = createAction('[Addons] delete custom resource', props<{ resourceType: string }>());
+export const createCustomResource = createAction(
+    '[Addons] create custom resource',
+    props<{ resource: CustomResource; endpoints?: Partial<AddonsEndpoints> }>(),
+);
+export const deleteCustomResource = createAction(
+    '[Addons] delete custom resource',
+    props<{ resourceType: string; endpoints?: Partial<AddonsEndpoints> }>(),
+);
 
 export const selectCustomResourceType = createAction('[Addons] select custom resource type', props<{ resourceType: string }>());
 export const loadResourceInstances = createAction(
     '[Addons] load resource instances',
-    props<{ resourceType: string; filters?: Record<string, string> }>(),
+    props<{ resourceType: string; filters?: Record<string, string>; endpoints?: Partial<AddonsEndpoints> }>(),
 );
 export const loadResourceInstancesSuccess = createAction(
     '[Addons] load resource instances success',
@@ -67,13 +85,13 @@ export const loadResourceInstancesSuccess = createAction(
 export const loadResourceInstancesError = createAction('[Addons] load resource instances error', props<{ error: string }>());
 export const createResourceInstance = createAction(
     '[Addons] create resource instance',
-    props<{ resourceType: string; data: unknown }>(),
+    props<{ resourceType: string; data: unknown; endpoints?: Partial<AddonsEndpoints> }>(),
 );
 export const updateResourceInstance = createAction(
     '[Addons] update resource instance',
-    props<{ resourceType: string; id: string; data: unknown }>(),
+    props<{ resourceType: string; id: string; data: unknown; endpoints?: Partial<AddonsEndpoints> }>(),
 );
 export const deleteResourceInstance = createAction(
     '[Addons] delete resource instance',
-    props<{ resourceType: string; id: string }>(),
+    props<{ resourceType: string; id: string; endpoints?: Partial<AddonsEndpoints> }>(),
 );

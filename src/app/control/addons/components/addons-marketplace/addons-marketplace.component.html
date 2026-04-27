@@ -373,7 +373,7 @@
                         <div class="addon-meta">ID: {{ addon._id || 'pending' }}</div>
                         <div class="card-actions">
                             <button nbButton size="tiny" status="basic" (click)="viewDetails(addon)">Details</button>
-                            <button nbButton size="tiny" status="success" (click)="installAddon(addon._id)">Install</button>
+                            <button nbButton size="tiny" status="success" (click)="installAddon(addon)">Install</button>
                             <button nbButton size="tiny" status="danger" (click)="deleteAddon(addon._id)">Delete</button>
                         </div>
                     </nb-card-body>
@@ -381,6 +381,36 @@
             </div>
         </div>
     </ng-container>
+</div>
+
+<div class="modal-backdrop" *ngIf="pendingInstallAddon" (click)="cancelInstall()">
+    <nb-card class="modal-card" (click)="$event.stopPropagation()">
+        <nb-card-header>
+            Install {{ pendingInstallAddon.name }}
+            <button nbButton ghost size="tiny" (click)="cancelInstall()"><nb-icon icon="close-outline"></nb-icon></button>
+        </nb-card-header>
+        <nb-card-body>
+            <div class="field">
+                <label>Install Target</label>
+                <nb-radio-group [(ngModel)]="installTarget" (ngModelChange)="onInstallTargetChange($event)">
+                    <nb-radio value="root">Root orchestrator</nb-radio>
+                    <nb-radio value="cluster">Cluster orchestrator</nb-radio>
+                </nb-radio-group>
+            </div>
+            <div class="field" *ngIf="installTarget === 'cluster'">
+                <label for="marketplaceInstallCluster">Cluster</label>
+                <nb-select fullWidth id="marketplaceInstallCluster" placeholder="Select cluster" [(ngModel)]="selectedInstallCluster">
+                    <nb-option *ngFor="let cluster of clusters$ | async" [value]="getClusterKey(cluster)">
+                        {{ cluster.cluster_name }}
+                    </nb-option>
+                </nb-select>
+            </div>
+            <div class="form-actions">
+                <button nbButton size="small" status="success" (click)="confirmInstall()">Install</button>
+                <button nbButton size="small" status="basic" (click)="cancelInstall()">Cancel</button>
+            </div>
+        </nb-card-body>
+    </nb-card>
 </div>
 
 <div class="modal-backdrop" *ngIf="selectedAddon" (click)="closeDetails()">

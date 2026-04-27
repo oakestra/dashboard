@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { InstalledAddon } from 'src/app/root/interfaces/addon';
+import { take } from 'rxjs/operators';
+import { AddonsEndpoints, InstalledAddon } from 'src/app/root/interfaces/addon';
+import { ICluster } from 'src/app/root/interfaces/cluster';
 import { NotificationType } from 'src/app/root/interfaces/notification';
-import { appReducer, disableAddon, installAddon, loadInstalledAddons } from 'src/app/root/store';
+import { appReducer, disableAddon, getClusters, installAddon, loadInstalledAddons } from 'src/app/root/store';
 import {
     selectAddonsError,
     selectAddonsLoading,
     selectInstalledAddons,
 } from 'src/app/root/store/selectors/addons.selector';
+import { selectAllClusters } from 'src/app/root/store/selectors/cluster.selector';
 import { NotificationService } from 'src/app/shared/modules/notification/notification.service';
 import { AddonsApiService } from '../../services/addons-api.service';
 
@@ -19,41 +21,63 @@ import { AddonsApiService } from '../../services/addons-api.service';
     templateUrl: './installed-addons.component.html',
     styleUrls: ['../../addons.scss'],
 })
-export class InstalledAddonsComponent implements OnInit {
+export class InstalledAddonsComponent implements OnChanges, OnInit {
+    @Input() scope: 'root' | 'cluster' = 'root';
+    @Input() cluster?: ICluster;
+
     addons$: Observable<InstalledAddon[]> = this.store.pipe(select(selectInstalledAddons));
     loading$: Observable<boolean> = this.store.pipe(select(selectAddonsLoading));
     error$: Observable<string> = this.store.pipe(select(selectAddonsError));
+    clusters$: Observable<ICluster[]> = this.store.pipe(select(selectAllClusters));
 
     statusFilter = 'all';
     marketplaceId = '';
     showInstallForm = false;
     selectedAddon: InstalledAddon | null = null;
     clusterContext = '';
+    installTarget: 'root' | 'cluster' = 'root';
+    selectedInstallCluster = '';
+    private scopedEndpoints?: Partial<AddonsEndpoints>;
+    private initialized = false;
 
     constructor(
         private store: Store<appReducer.AppState>,
-        private route: ActivatedRoute,
         private addonsApi: AddonsApiService,
         private notifyService: NotificationService,
     ) {}
 
     ngOnInit(): void {
-        this.clusterContext = this.route.snapshot.queryParamMap.get('cluster') || '';
-        const addonsEngineUrl = this.route.snapshot.queryParamMap.get('addonsEngineUrl');
-        const resourceAbstractorUrl = this.route.snapshot.queryParamMap.get('resourceAbstractorUrl');
-        if (addonsEngineUrl || resourceAbstractorUrl) {
-            this.addonsApi.setEndpointOverrides({
-                addonsEngineUrl: addonsEngineUrl || undefined,
-                resourceAbstractorUrl: resourceAbstractorUrl || undefined,
-            });
-        } else {
-            this.addonsApi.clearEndpointOverrides();
-        }
+        this.initialized = true;
+        this.store.dispatch(getClusters());
+        this.configureScope();
         this.loadAddons();
     }
 
+    toggleInstallForm(): void {
+        this.showInstallForm = !this.showInstallForm;
+        if (this.showInstallForm && this.scope === 'root') {
+            this.store.dispatch(getClusters());
+            this.preselectFirstCluster();
+        }
+    }
+
+    onInstallTargetChange(target: 'root' | 'cluster'): void {
+        this.installTarget = target;
+        if (target === 'cluster') {
+            this.store.dispatch(getClusters());
+            this.preselectFirstCluster();
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (this.initialized && (changes.cluster || changes.scope)) {
+            this.configureScope();
+            this.loadAddons();
+        }
+    }
+
     loadAddons(): void {
-        this.store.dispatch(loadInstalledAddons({ status: this.statusFilter }));
+        this.store.dispatch(loadInstalledAddons({ status: this.statusFilter, endpoints: this.scopedEndpoints }));
     }
 
     setFilter(status: string): void {
@@ -63,9 +87,17 @@ export class InstalledAddonsComponent implements OnInit {
 
     install(): void {
         if (this.marketplaceId.trim()) {
-            this.store.dispatch(installAddon({ marketplaceId: this.marketplaceId.trim() }));
-            this.marketplaceId = '';
-            this.showInstallForm = false;
+            this.resolveInstallTarget((endpoints) => {
+                this.store.dispatch(
+                    installAddon({
+                        marketplaceId: this.marketplaceId.trim(),
+                        endpoints,
+                        refreshEndpoints: this.scopedEndpoints,
+                    }),
+                );
+                this.marketplaceId = '';
+                this.showInstallForm = false;
+            });
         } else {
             this.notifyService.notify(NotificationType.error, 'Marketplace addon ID is required.');
         }
@@ -73,7 +105,7 @@ export class InstalledAddonsComponent implements OnInit {
 
     disable(id: string): void {
         if (window.confirm('Disable or uninstall this addon?')) {
-            this.store.dispatch(disableAddon({ id }));
+            this.store.dispatch(disableAddon({ id, endpoints: this.scopedEndpoints }));
         }
     }
 
@@ -95,5 +127,58 @@ export class InstalledAddonsComponent implements OnInit {
 
     format(value: unknown): string {
         return JSON.stringify(value, null, 2);
+    }
+
+    getClusterKey(cluster: ICluster): string {
+        return cluster._id?.$oid || cluster.cluster_name;
+    }
+
+    private configureScope(): void {
+        if (this.scope === 'cluster' && this.cluster) {
+            this.clusterContext = this.cluster.cluster_name;
+            this.installTarget = 'cluster';
+            this.selectedInstallCluster = this.getClusterKey(this.cluster);
+            this.scopedEndpoints = this.addonsApi.getClusterEndpoints(this.cluster);
+            return;
+        }
+
+        this.clusterContext = '';
+        this.installTarget = 'root';
+        this.scopedEndpoints = undefined;
+    }
+
+    private resolveInstallTarget(install: (endpoints: Partial<AddonsEndpoints> | undefined) => void): void {
+        if (this.scope === 'cluster') {
+            install(this.scopedEndpoints);
+            return;
+        }
+
+        if (this.installTarget === 'root') {
+            install(undefined);
+            return;
+        }
+
+        this.clusters$.pipe(take(1)).subscribe((clusters) => {
+            const cluster = clusters.find((item) => this.getClusterKey(item) === this.selectedInstallCluster);
+            if (!cluster) {
+                this.notifyService.notify(NotificationType.error, 'Select a cluster before installing.');
+                return;
+            }
+
+            install(this.addonsApi.getClusterEndpoints(cluster));
+        });
+    }
+
+    private preselectFirstCluster(): void {
+        if (this.selectedInstallCluster) {
+            return;
+        }
+
+        this.clusters$.pipe(take(1)).subscribe((clusters) => {
+            const firstCluster = clusters[0];
+            if (firstCluster) {
+                this.selectedInstallCluster = this.getClusterKey(firstCluster);
+            }
+        });
     }
 }

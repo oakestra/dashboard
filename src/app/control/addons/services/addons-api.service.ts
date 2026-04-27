@@ -4,6 +4,7 @@ import { Observable, forkJoin, from, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AddonsEndpoints, CustomResource, Hook, InstalledAddon, MarketplaceAddon } from 'src/app/root/interfaces/addon';
+import { ICluster } from 'src/app/root/interfaces/cluster';
 
 @Injectable({
     providedIn: 'root',
@@ -14,6 +15,10 @@ export class AddonsApiService {
     constructor(private http: HttpClient) {}
 
     get endpoints(): AddonsEndpoints {
+        return this.getEndpoints();
+    }
+
+    getRootEndpoints(): AddonsEndpoints {
         const root = this.getApiRoot();
         const env = (window as unknown as { env?: Record<string, string> }).env || {};
 
@@ -24,7 +29,21 @@ export class AddonsApiService {
             marketplaceUiUrl: env.ADDONS_DASHBOARD_URL || `${root.protocol}//${root.hostname}:11103`,
         };
 
-        return { ...defaults, ...this.endpointOverrides };
+        return defaults;
+    }
+
+    getClusterEndpoints(cluster?: Partial<ICluster>): AddonsEndpoints {
+        const root = this.getApiRoot();
+        const rootEndpoints = this.getRootEndpoints();
+        const host = this.getClusterHost(cluster, root.hostname) || root.hostname;
+
+        return {
+            marketplaceUrl: rootEndpoints.marketplaceUrl,
+            addonsEngineUrl: cluster?.addonsEngineUrl || cluster?.addons_engine_url || cluster?.addons_manager_url || `${root.protocol}//${host}:11201`,
+            resourceAbstractorUrl:
+                cluster?.resourceAbstractorUrl || cluster?.resource_abstractor_url || `${root.protocol}//${host}:11012`,
+            marketplaceUiUrl: rootEndpoints.marketplaceUiUrl,
+        };
     }
 
     setEndpointOverrides(overrides: Partial<AddonsEndpoints>): void {
@@ -35,19 +54,19 @@ export class AddonsApiService {
         this.endpointOverrides = {};
     }
 
-    getMarketplaceAddons(): Observable<MarketplaceAddon[]> {
-        return this.http.get<MarketplaceAddon[]>(`${this.endpoints.marketplaceUrl}/api/v1/marketplace/addons`);
+    getMarketplaceAddons(endpoints?: Partial<AddonsEndpoints>): Observable<MarketplaceAddon[]> {
+        return this.http.get<MarketplaceAddon[]>(`${this.getEndpoints(endpoints).marketplaceUrl}/api/v1/marketplace/addons`);
     }
 
-    createMarketplaceAddon(addon: MarketplaceAddon): Observable<MarketplaceAddon> {
-        return this.http.post<MarketplaceAddon>(`${this.endpoints.marketplaceUrl}/api/v1/marketplace/addons`, addon);
+    createMarketplaceAddon(addon: MarketplaceAddon, endpoints?: Partial<AddonsEndpoints>): Observable<MarketplaceAddon> {
+        return this.http.post<MarketplaceAddon>(`${this.getEndpoints(endpoints).marketplaceUrl}/api/v1/marketplace/addons`, addon);
     }
 
-    deleteMarketplaceAddon(id: string): Observable<void> {
-        return this.http.delete<void>(`${this.endpoints.marketplaceUrl}/api/v1/marketplace/addons/${id}`);
+    deleteMarketplaceAddon(id: string, endpoints?: Partial<AddonsEndpoints>): Observable<void> {
+        return this.http.delete<void>(`${this.getEndpoints(endpoints).marketplaceUrl}/api/v1/marketplace/addons/${id}`);
     }
 
-    getInstalledAddons(query?: Record<string, string>): Observable<InstalledAddon[]> {
+    getInstalledAddons(query?: Record<string, string>, endpoints?: Partial<AddonsEndpoints>): Observable<InstalledAddon[]> {
         let params = new HttpParams();
         const filters = query || {};
         Object.keys(filters).forEach((key) => {
@@ -56,44 +75,44 @@ export class AddonsApiService {
                 params = params.set(key, value);
             }
         });
-        return this.http.get<InstalledAddon[]>(`${this.endpoints.addonsEngineUrl}/api/v1/addons`, { params });
+        return this.http.get<InstalledAddon[]>(`${this.getEndpoints(endpoints).addonsEngineUrl}/api/v1/addons`, { params });
     }
 
-    installAddon(marketplaceId: string): Observable<InstalledAddon> {
-        return this.http.post<InstalledAddon>(`${this.endpoints.addonsEngineUrl}/api/v1/addons`, {
+    installAddon(marketplaceId: string, endpoints?: Partial<AddonsEndpoints>): Observable<InstalledAddon> {
+        return this.http.post<InstalledAddon>(`${this.getEndpoints(endpoints).addonsEngineUrl}/api/v1/addons`, {
             marketplace_id: marketplaceId,
         });
     }
 
-    disableAddon(id: string): Observable<InstalledAddon> {
-        return this.http.delete<InstalledAddon>(`${this.endpoints.addonsEngineUrl}/api/v1/addons/${id}`);
+    disableAddon(id: string, endpoints?: Partial<AddonsEndpoints>): Observable<InstalledAddon> {
+        return this.http.delete<InstalledAddon>(`${this.getEndpoints(endpoints).addonsEngineUrl}/api/v1/addons/${id}`);
     }
 
-    getHooks(): Observable<Hook[]> {
-        return this.http.get<Hook[]>(`${this.endpoints.resourceAbstractorUrl}/api/v1/hooks`);
+    getHooks(endpoints?: Partial<AddonsEndpoints>): Observable<Hook[]> {
+        return this.http.get<Hook[]>(`${this.getEndpoints(endpoints).resourceAbstractorUrl}/api/v1/hooks`);
     }
 
-    createHook(hook: Hook): Observable<Hook> {
-        return this.http.post<Hook>(`${this.endpoints.resourceAbstractorUrl}/api/v1/hooks`, hook);
+    createHook(hook: Hook, endpoints?: Partial<AddonsEndpoints>): Observable<Hook> {
+        return this.http.post<Hook>(`${this.getEndpoints(endpoints).resourceAbstractorUrl}/api/v1/hooks`, hook);
     }
 
-    deleteHook(id: string): Observable<void> {
-        return this.http.delete<void>(`${this.endpoints.resourceAbstractorUrl}/api/v1/hooks/${id}`);
+    deleteHook(id: string, endpoints?: Partial<AddonsEndpoints>): Observable<void> {
+        return this.http.delete<void>(`${this.getEndpoints(endpoints).resourceAbstractorUrl}/api/v1/hooks/${id}`);
     }
 
-    getCustomResources(): Observable<CustomResource[]> {
-        return this.http.get<CustomResource[]>(`${this.endpoints.resourceAbstractorUrl}/api/v1/custom-resources`);
+    getCustomResources(endpoints?: Partial<AddonsEndpoints>): Observable<CustomResource[]> {
+        return this.http.get<CustomResource[]>(`${this.getEndpoints(endpoints).resourceAbstractorUrl}/api/v1/custom-resources`);
     }
 
-    createCustomResource(resource: CustomResource): Observable<CustomResource> {
-        return this.http.post<CustomResource>(`${this.endpoints.resourceAbstractorUrl}/api/v1/custom-resources`, resource);
+    createCustomResource(resource: CustomResource, endpoints?: Partial<AddonsEndpoints>): Observable<CustomResource> {
+        return this.http.post<CustomResource>(`${this.getEndpoints(endpoints).resourceAbstractorUrl}/api/v1/custom-resources`, resource);
     }
 
-    deleteCustomResource(resourceType: string): Observable<void> {
-        return this.http.delete<void>(`${this.endpoints.resourceAbstractorUrl}/api/v1/custom-resources/${resourceType}`);
+    deleteCustomResource(resourceType: string, endpoints?: Partial<AddonsEndpoints>): Observable<void> {
+        return this.http.delete<void>(`${this.getEndpoints(endpoints).resourceAbstractorUrl}/api/v1/custom-resources/${resourceType}`);
     }
 
-    getResourcesByType(resourceType: string, filters?: Record<string, string>): Observable<unknown[]> {
+    getResourcesByType(resourceType: string, filters?: Record<string, string>, endpoints?: Partial<AddonsEndpoints>): Observable<unknown[]> {
         let params = new HttpParams();
         const activeFilters = filters || {};
         Object.keys(activeFilters).forEach((key) => {
@@ -102,21 +121,21 @@ export class AddonsApiService {
                 params = params.set(key, value);
             }
         });
-        return this.http.get<unknown[]>(`${this.endpoints.resourceAbstractorUrl}/api/v1/custom-resources/${resourceType}`, {
+        return this.http.get<unknown[]>(`${this.getEndpoints(endpoints).resourceAbstractorUrl}/api/v1/custom-resources/${resourceType}`, {
             params,
         });
     }
 
-    createResourceInstance(resourceType: string, data: unknown): Observable<unknown> {
-        return this.http.post<unknown>(`${this.endpoints.resourceAbstractorUrl}/api/v1/custom-resources/${resourceType}`, data);
+    createResourceInstance(resourceType: string, data: unknown, endpoints?: Partial<AddonsEndpoints>): Observable<unknown> {
+        return this.http.post<unknown>(`${this.getEndpoints(endpoints).resourceAbstractorUrl}/api/v1/custom-resources/${resourceType}`, data);
     }
 
-    updateResourceInstance(resourceType: string, id: string, data: unknown): Observable<unknown> {
-        return this.http.patch<unknown>(`${this.endpoints.resourceAbstractorUrl}/api/v1/custom-resources/${resourceType}/${id}`, data);
+    updateResourceInstance(resourceType: string, id: string, data: unknown, endpoints?: Partial<AddonsEndpoints>): Observable<unknown> {
+        return this.http.patch<unknown>(`${this.getEndpoints(endpoints).resourceAbstractorUrl}/api/v1/custom-resources/${resourceType}/${id}`, data);
     }
 
-    deleteResourceInstance(resourceType: string, id: string): Observable<void> {
-        return this.http.delete<void>(`${this.endpoints.resourceAbstractorUrl}/api/v1/custom-resources/${resourceType}/${id}`);
+    deleteResourceInstance(resourceType: string, id: string, endpoints?: Partial<AddonsEndpoints>): Observable<void> {
+        return this.http.delete<void>(`${this.getEndpoints(endpoints).resourceAbstractorUrl}/api/v1/custom-resources/${resourceType}/${id}`);
     }
 
     checkAvailability(): Observable<{ addons: boolean; customResources: boolean; marketplaceUi: boolean }> {
@@ -143,6 +162,43 @@ export class AddonsApiService {
         } catch {
             return new URL('http://localhost:10000/api');
         }
+    }
+
+    private getEndpoints(overrides?: Partial<AddonsEndpoints>): AddonsEndpoints {
+        return { ...this.getRootEndpoints(), ...this.endpointOverrides, ...overrides };
+    }
+
+    private getClusterHost(cluster: Partial<ICluster> | undefined, fallbackHost: string): string {
+        const host =
+            cluster?.ip ||
+            cluster?.cluster_ip ||
+            cluster?.public_ip ||
+            cluster?.node_ip ||
+            cluster?.host ||
+            cluster?.hostname ||
+            cluster?.address ||
+            cluster?.cluster_address ||
+            '';
+
+        if (!host) {
+            return '';
+        }
+
+        if (this.isDockerBridgeHost(host)) {
+            return fallbackHost;
+        }
+
+        try {
+            const hostname = new URL(host.includes('://') ? host : `http://${host}`).hostname;
+            return this.isDockerBridgeHost(hostname) ? fallbackHost : hostname;
+        } catch {
+            const hostname = host.split(':')[0];
+            return this.isDockerBridgeHost(hostname) ? fallbackHost : hostname;
+        }
+    }
+
+    private isDockerBridgeHost(host: string): boolean {
+        return /^172\.(1[6-9]|2\d|3[0-1])\./.test(host);
     }
 
     private ping(url: string): Observable<boolean> {

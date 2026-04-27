@@ -1,21 +1,15 @@
-import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { NbDialogService } from '@nebular/theme';
-import { filter, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import * as L from 'leaflet';
-import { map } from 'rxjs/operators';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { selectAllClusters } from '../../root/store/selectors/cluster.selector';
 import { ICluster } from '../../root/interfaces/cluster';
-import { environment } from '../../../environments/environment';
 import {
     appReducer,
-    getActiveClusters,
     getClusters,
 } from '../../root/store';
-import { ClusterMapComponent } from './clustermap/clustermap.component';
 
 
 @Component({
@@ -28,7 +22,7 @@ import { ClusterMapComponent } from './clustermap/clustermap.component';
 export class ClusterComponent implements OnInit {
 
     public clusters$: Observable<ICluster[]> = this.store.pipe(select(selectAllClusters));
-    private clusterListHtml: string;
+
     constructor(
         public dialog: NbDialogService,
         public userService: UserService,
@@ -52,24 +46,12 @@ export class ClusterComponent implements OnInit {
         return Math.round(cpu_usage * 100 / cores);
     }
 
-    openClusterAddons(cluster: ICluster): void {
-        const root = this.getApiRoot();
-        void this.router.navigate(['/control/addons/installed'], {
-            queryParams: {
-                cluster: cluster._id?.$oid || cluster.cluster_name,
-                clusterName: cluster.cluster_name,
-                addonsEngineUrl: `${root.protocol}//${root.hostname}:11101`,
-                resourceAbstractorUrl: `${root.protocol}//${root.hostname}:11012`,
-            },
-        });
+    openCluster(cluster: ICluster): void {
+        void this.router.navigate(['/control/clusters', cluster._id?.$oid || cluster.cluster_name]);
     }
 
-    private getApiRoot(): URL {
-        try {
-            return new URL(environment.apiUrl);
-        } catch {
-            return new URL('http://localhost:10000/api');
-        }
+    getClusterId(cluster: ICluster): string {
+        return cluster._id?.$oid || cluster.cluster_name;
     }
 
 }

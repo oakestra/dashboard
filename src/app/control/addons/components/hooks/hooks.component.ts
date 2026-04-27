@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Hook, HookEvent } from 'src/app/root/interfaces/addon';
+import { AddonsEndpoints, Hook, HookEvent } from 'src/app/root/interfaces/addon';
+import { ICluster } from 'src/app/root/interfaces/cluster';
 import { NotificationType } from 'src/app/root/interfaces/notification';
 import { appReducer, createHook, deleteHook, loadHooks } from 'src/app/root/store';
 import { selectAddonsError, selectAddonsLoading, selectHooks } from 'src/app/root/store/selectors/addons.selector';
@@ -14,7 +15,10 @@ import { AddonsApiService } from '../../services/addons-api.service';
     templateUrl: './hooks.component.html',
     styleUrls: ['../../addons.scss'],
 })
-export class HooksComponent implements OnInit {
+export class HooksComponent implements OnChanges, OnInit {
+    @Input() scope: 'root' | 'cluster' = 'root';
+    @Input() cluster?: ICluster;
+
     hooks$: Observable<Hook[]> = this.store.pipe(select(selectHooks));
     loading$: Observable<boolean> = this.store.pipe(select(selectAddonsLoading));
     error$: Observable<string> = this.store.pipe(select(selectAddonsError));
@@ -24,6 +28,8 @@ export class HooksComponent implements OnInit {
     availableEvents = Object.values(HookEvent);
     selectedEvents: Record<string, boolean> = {};
     newHook: Hook = this.emptyHook();
+    private scopedEndpoints?: Partial<AddonsEndpoints>;
+    private initialized = false;
 
     constructor(
         private store: Store<appReducer.AppState>,
@@ -32,12 +38,20 @@ export class HooksComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.addonsApi.clearEndpointOverrides();
+        this.initialized = true;
+        this.configureScope();
         this.loadHooks();
     }
 
+    ngOnChanges(changes: SimpleChanges): void {
+        if (this.initialized && (changes.cluster || changes.scope)) {
+            this.configureScope();
+            this.loadHooks();
+        }
+    }
+
     loadHooks(): void {
-        this.store.dispatch(loadHooks());
+        this.store.dispatch(loadHooks({ endpoints: this.scopedEndpoints }));
     }
 
     submitHook(): void {
@@ -51,7 +65,7 @@ export class HooksComponent implements OnInit {
             return;
         }
 
-        this.store.dispatch(createHook({ hook: { ...this.newHook, events } }));
+        this.store.dispatch(createHook({ hook: { ...this.newHook, events }, endpoints: this.scopedEndpoints }));
         this.newHook = this.emptyHook();
         this.selectedEvents = {};
         this.showForm = false;
@@ -59,7 +73,7 @@ export class HooksComponent implements OnInit {
 
     deleteHook(id: string | undefined): void {
         if (id && window.confirm('Delete this hook?')) {
-            this.store.dispatch(deleteHook({ id }));
+            this.store.dispatch(deleteHook({ id, endpoints: this.scopedEndpoints }));
         }
     }
 
@@ -82,5 +96,9 @@ export class HooksComponent implements OnInit {
             entity: '',
             events: [],
         };
+    }
+
+    private configureScope(): void {
+        this.scopedEndpoints = this.scope === 'cluster' && this.cluster ? this.addonsApi.getClusterEndpoints(this.cluster) : undefined;
     }
 }

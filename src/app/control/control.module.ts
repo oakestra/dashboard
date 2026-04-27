@@ -51,6 +51,7 @@ import { ServiceDashboardComponent } from './service-dashboard/service-dashboard
 import { SlaFormComponent } from './sla-form/sla-form.component';
 import { routes } from './control.routing';
 import { ClusterComponent } from './cluster/cluster.component';
+import { ClusterDetailComponent } from './cluster/cluster-detail/cluster-detail.component';
 import { ClusterMapComponent } from './cluster/clustermap/clustermap.component';
 import { ConnectivityComponent } from './sla-form/components/connectivity/connectivity.component';
 import { ConstraintsComponent } from './sla-form/components/constraints/constraints.component';
@@ -100,6 +101,7 @@ import { CustomResourcesComponent } from './addons/components/custom-resources/c
         HelpComponent,
         DialogConfirmationView,
         ClusterComponent,
+        ClusterDetailComponent,
         ClusterMapComponent,
         ConnectivityComponent,
         ConstraintsComponent,

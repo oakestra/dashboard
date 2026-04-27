@@ -1,0 +1,50 @@
+.cluster-detail-page {
+    padding: 0 1rem 1.5rem;
+}
+
+.cluster-detail-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.cluster-detail-header h1 {
+    margin: 0.5rem 0;
+}
+
+.cluster-meta,
+.cluster-tabs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.cluster-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.status-pill {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    color: var(--color-success-default);
+    font-weight: 600;
+}
+
+.status-pill.failed {
+    color: var(--color-danger-default);
+}
+
+.map-card {
+    min-height: 15rem;
+}

@@ -49,6 +49,9 @@ export class ResetPasswordComponent implements OnInit {
                 void this.router.navigate(['/']);
             },
             (e) => console.log(e),
+            () => {
+                this.notifyService.notify(NotificationType.error, 'Could not save new password.');
+            },
         );
     }
 }

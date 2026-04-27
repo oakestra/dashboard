@@ -67,8 +67,8 @@ export class AddonsEffects {
     loadInstalledAddons$ = createEffect(() =>
         this.actions$.pipe(
             ofType(addonsActions.loadInstalledAddons),
-            switchMap(({ status }) =>
-                this.addonsApi.getInstalledAddons(status && status !== 'all' ? { status } : undefined).pipe(
+            switchMap(({ status, endpoints }) =>
+                this.addonsApi.getInstalledAddons(status && status !== 'all' ? { status } : undefined, endpoints).pipe(
                     map((addons) => addonsActions.loadInstalledAddonsSuccess({ addons })),
                     catchError((error) => of(addonsActions.loadInstalledAddonsError({ error: this.reportError(error) }))),
                 ),
@@ -79,10 +79,14 @@ export class AddonsEffects {
     installAddon$ = createEffect(() =>
         this.actions$.pipe(
             ofType(addonsActions.installAddon),
-            mergeMap(({ marketplaceId }) =>
-                this.addonsApi.installAddon(marketplaceId).pipe(
+            mergeMap(({ marketplaceId, endpoints, reloadInstalled, refreshEndpoints }) =>
+                this.addonsApi.installAddon(marketplaceId, endpoints).pipe(
                     tap(() => this.notificationService.notify(NotificationType.success, 'Addon installation started')),
-                    map(() => addonsActions.loadInstalledAddons({})),
+                    map(() =>
+                        reloadInstalled === false
+                            ? addonsActions.installAddonSuccess()
+                            : addonsActions.loadInstalledAddons({ endpoints: refreshEndpoints ?? endpoints }),
+                    ),
                     catchError((error) => of(addonsActions.loadInstalledAddonsError({ error: this.reportError(error) }))),
                 ),
             ),
@@ -92,10 +96,10 @@ export class AddonsEffects {
     disableAddon$ = createEffect(() =>
         this.actions$.pipe(
             ofType(addonsActions.disableAddon),
-            mergeMap(({ id }) =>
-                this.addonsApi.disableAddon(id).pipe(
+            mergeMap(({ id, endpoints }) =>
+                this.addonsApi.disableAddon(id, endpoints).pipe(
                     tap(() => this.notificationService.notify(NotificationType.success, 'Addon disable requested')),
-                    map(() => addonsActions.loadInstalledAddons({})),
+                    map(() => addonsActions.loadInstalledAddons({ endpoints })),
                     catchError((error) => of(addonsActions.loadInstalledAddonsError({ error: this.reportError(error) }))),
                 ),
             ),
@@ -105,8 +109,8 @@ export class AddonsEffects {
     loadHooks$ = createEffect(() =>
         this.actions$.pipe(
             ofType(addonsActions.loadHooks),
-            switchMap(() =>
-                this.addonsApi.getHooks().pipe(
+            switchMap(({ endpoints }) =>
+                this.addonsApi.getHooks(endpoints).pipe(
                     map((hooks) => addonsActions.loadHooksSuccess({ hooks })),
                     catchError((error) => of(addonsActions.loadHooksError({ error: this.reportError(error) }))),
                 ),
@@ -117,10 +121,10 @@ export class AddonsEffects {
     createHook$ = createEffect(() =>
         this.actions$.pipe(
             ofType(addonsActions.createHook),
-            mergeMap(({ hook }) =>
-                this.addonsApi.createHook(hook).pipe(
+            mergeMap(({ hook, endpoints }) =>
+                this.addonsApi.createHook(hook, endpoints).pipe(
                     tap(() => this.notificationService.notify(NotificationType.success, 'Hook created')),
-                    map(() => addonsActions.loadHooks()),
+                    map(() => addonsActions.loadHooks({ endpoints })),
                     catchError((error) => of(addonsActions.loadHooksError({ error: this.reportError(error) }))),
                 ),
             ),
@@ -130,10 +134,10 @@ export class AddonsEffects {
     deleteHook$ = createEffect(() =>
         this.actions$.pipe(
             ofType(addonsActions.deleteHook),
-            mergeMap(({ id }) =>
-                this.addonsApi.deleteHook(id).pipe(
+            mergeMap(({ id, endpoints }) =>
+                this.addonsApi.deleteHook(id, endpoints).pipe(
                     tap(() => this.notificationService.notify(NotificationType.success, 'Hook deleted')),
-                    map(() => addonsActions.loadHooks()),
+                    map(() => addonsActions.loadHooks({ endpoints })),
                     catchError((error) => of(addonsActions.loadHooksError({ error: this.reportError(error) }))),
                 ),
             ),
@@ -143,8 +147,8 @@ export class AddonsEffects {
     loadCustomResources$ = createEffect(() =>
         this.actions$.pipe(
             ofType(addonsActions.loadCustomResources),
-            switchMap(() =>
-                this.addonsApi.getCustomResources().pipe(
+            switchMap(({ endpoints }) =>
+                this.addonsApi.getCustomResources(endpoints).pipe(
                     map((resources) => addonsActions.loadCustomResourcesSuccess({ resources })),
                     catchError((error) => of(addonsActions.loadCustomResourcesError({ error: this.reportError(error) }))),
                 ),
@@ -155,10 +159,10 @@ export class AddonsEffects {
     createCustomResource$ = createEffect(() =>
         this.actions$.pipe(
             ofType(addonsActions.createCustomResource),
-            mergeMap(({ resource }) =>
-                this.addonsApi.createCustomResource(resource).pipe(
+            mergeMap(({ resource, endpoints }) =>
+                this.addonsApi.createCustomResource(resource, endpoints).pipe(
                     tap(() => this.notificationService.notify(NotificationType.success, 'Custom resource created')),
-                    map(() => addonsActions.loadCustomResources()),
+                    map(() => addonsActions.loadCustomResources({ endpoints })),
                     catchError((error) => of(addonsActions.loadCustomResourcesError({ error: this.reportError(error) }))),
                 ),
             ),
@@ -168,10 +172,10 @@ export class AddonsEffects {
     deleteCustomResource$ = createEffect(() =>
         this.actions$.pipe(
             ofType(addonsActions.deleteCustomResource),
-            mergeMap(({ resourceType }) =>
-                this.addonsApi.deleteCustomResource(resourceType).pipe(
+            mergeMap(({ resourceType, endpoints }) =>
+                this.addonsApi.deleteCustomResource(resourceType, endpoints).pipe(
                     tap(() => this.notificationService.notify(NotificationType.success, 'Custom resource deleted')),
-                    map(() => addonsActions.loadCustomResources()),
+                    map(() => addonsActions.loadCustomResources({ endpoints })),
                     catchError((error) => of(addonsActions.loadCustomResourcesError({ error: this.reportError(error) }))),
                 ),
             ),
@@ -181,8 +185,8 @@ export class AddonsEffects {
     loadResourceInstances$ = createEffect(() =>
         this.actions$.pipe(
             ofType(addonsActions.loadResourceInstances),
-            switchMap(({ resourceType, filters }) =>
-                this.addonsApi.getResourcesByType(resourceType, filters).pipe(
+            switchMap(({ resourceType, filters, endpoints }) =>
+                this.addonsApi.getResourcesByType(resourceType, filters, endpoints).pipe(
                     map((instances) => addonsActions.loadResourceInstancesSuccess({ resourceType, instances })),
                     catchError((error) => of(addonsActions.loadResourceInstancesError({ error: this.reportError(error) }))),
                 ),
@@ -193,10 +197,10 @@ export class AddonsEffects {
     createResourceInstance$ = createEffect(() =>
         this.actions$.pipe(
             ofType(addonsActions.createResourceInstance),
-            mergeMap(({ resourceType, data }) =>
-                this.addonsApi.createResourceInstance(resourceType, data).pipe(
+            mergeMap(({ resourceType, data, endpoints }) =>
+                this.addonsApi.createResourceInstance(resourceType, data, endpoints).pipe(
                     tap(() => this.notificationService.notify(NotificationType.success, 'Resource instance created')),
-                    map(() => addonsActions.loadResourceInstances({ resourceType })),
+                    map(() => addonsActions.loadResourceInstances({ resourceType, endpoints })),
                     catchError((error) => of(addonsActions.loadResourceInstancesError({ error: this.reportError(error) }))),
                 ),
             ),
@@ -206,10 +210,10 @@ export class AddonsEffects {
     updateResourceInstance$ = createEffect(() =>
         this.actions$.pipe(
             ofType(addonsActions.updateResourceInstance),
-            mergeMap(({ resourceType, id, data }) =>
-                this.addonsApi.updateResourceInstance(resourceType, id, data).pipe(
+            mergeMap(({ resourceType, id, data, endpoints }) =>
+                this.addonsApi.updateResourceInstance(resourceType, id, data, endpoints).pipe(
                     tap(() => this.notificationService.notify(NotificationType.success, 'Resource instance updated')),
-                    map(() => addonsActions.loadResourceInstances({ resourceType })),
+                    map(() => addonsActions.loadResourceInstances({ resourceType, endpoints })),
                     catchError((error) => of(addonsActions.loadResourceInstancesError({ error: this.reportError(error) }))),
                 ),
             ),
@@ -219,10 +223,10 @@ export class AddonsEffects {
     deleteResourceInstance$ = createEffect(() =>
         this.actions$.pipe(
             ofType(addonsActions.deleteResourceInstance),
-            mergeMap(({ resourceType, id }) =>
-                this.addonsApi.deleteResourceInstance(resourceType, id).pipe(
+            mergeMap(({ resourceType, id, endpoints }) =>
+                this.addonsApi.deleteResourceInstance(resourceType, id, endpoints).pipe(
                     tap(() => this.notificationService.notify(NotificationType.success, 'Resource instance deleted')),
-                    map(() => addonsActions.loadResourceInstances({ resourceType })),
+                    map(() => addonsActions.loadResourceInstances({ resourceType, endpoints })),
                     catchError((error) => of(addonsActions.loadResourceInstancesError({ error: this.reportError(error) }))),
                 ),
             ),

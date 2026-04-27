@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { AddonNetwork, AddonService, AddonVolume, MarketplaceAddon } from 'src/app/root/interfaces/addon';
+import { ICluster } from 'src/app/root/interfaces/cluster';
 import { NotificationType } from 'src/app/root/interfaces/notification';
-import { appReducer, createMarketplaceAddon, deleteMarketplaceAddon, installAddon, loadMarketplaceAddons } from 'src/app/root/store';
+import { appReducer, createMarketplaceAddon, deleteMarketplaceAddon, getClusters, installAddon, loadMarketplaceAddons } from 'src/app/root/store';
 import {
     selectAddonsError,
     selectAddonsLoading,
     selectMarketplaceAddons,
 } from 'src/app/root/store/selectors/addons.selector';
+import { selectAllClusters } from 'src/app/root/store/selectors/cluster.selector';
 import { NotificationService } from 'src/app/shared/modules/notification/notification.service';
 import { AddonsApiService } from '../../services/addons-api.service';
 
@@ -22,6 +25,7 @@ export class AddonsMarketplaceComponent implements OnInit {
     addons$: Observable<MarketplaceAddon[]> = this.store.pipe(select(selectMarketplaceAddons));
     loading$: Observable<boolean> = this.store.pipe(select(selectAddonsLoading));
     error$: Observable<string> = this.store.pipe(select(selectAddonsError));
+    clusters$: Observable<ICluster[]> = this.store.pipe(select(selectAllClusters));
 
     showForm = false;
     useJsonMode = false;
@@ -31,6 +35,9 @@ export class AddonsMarketplaceComponent implements OnInit {
     currentService: AddonService = this.getEmptyService();
     currentVolume: AddonVolume = this.getEmptyVolume();
     currentNetwork: AddonNetwork = this.getEmptyNetwork();
+    pendingInstallAddon: MarketplaceAddon | null = null;
+    installTarget: 'root' | 'cluster' = 'root';
+    selectedInstallCluster = '';
     editingServiceIndex = -1;
     editingVolumeIndex = -1;
     editingNetworkIndex = -1;
@@ -46,6 +53,7 @@ export class AddonsMarketplaceComponent implements OnInit {
 
     ngOnInit(): void {
         this.addonsApi.clearEndpointOverrides();
+        this.store.dispatch(getClusters());
         this.loadAddons();
     }
 
@@ -317,10 +325,54 @@ export class AddonsMarketplaceComponent implements OnInit {
         }
     }
 
-    installAddon(id: string | undefined): void {
-        if (id) {
-            this.store.dispatch(installAddon({ marketplaceId: id }));
+    installAddon(addon: MarketplaceAddon): void {
+        if (addon._id) {
+            this.store.dispatch(getClusters());
+            this.pendingInstallAddon = addon;
+            this.installTarget = 'root';
+            this.selectedInstallCluster = '';
         }
+    }
+
+    onInstallTargetChange(target: 'root' | 'cluster'): void {
+        this.installTarget = target;
+        if (target === 'cluster') {
+            this.store.dispatch(getClusters());
+            this.preselectFirstCluster();
+        }
+    }
+
+    confirmInstall(): void {
+        if (!this.pendingInstallAddon?._id) {
+            return;
+        }
+
+        if (this.installTarget === 'root') {
+            this.store.dispatch(installAddon({ marketplaceId: this.pendingInstallAddon._id, reloadInstalled: false }));
+            this.pendingInstallAddon = null;
+            return;
+        }
+
+        this.clusters$.pipe(take(1)).subscribe((clusters) => {
+            const cluster = clusters.find((item) => this.getClusterKey(item) === this.selectedInstallCluster);
+            if (!cluster) {
+                this.notifyService.notify(NotificationType.error, 'Select a cluster before installing.');
+                return;
+            }
+
+            this.store.dispatch(
+                installAddon({
+                    marketplaceId: this.pendingInstallAddon?._id || '',
+                    endpoints: this.addonsApi.getClusterEndpoints(cluster),
+                    reloadInstalled: false,
+                }),
+            );
+            this.pendingInstallAddon = null;
+        });
+    }
+
+    cancelInstall(): void {
+        this.pendingInstallAddon = null;
     }
 
     viewDetails(addon: MarketplaceAddon): void {
@@ -338,6 +390,23 @@ export class AddonsMarketplaceComponent implements OnInit {
     getObjectAsArray(obj: Record<string, string> | undefined): { key: string; value: string }[] {
         return Object.entries(obj || {}).map(([key, value]) => {
             return { key, value };
+        });
+    }
+
+    getClusterKey(cluster: ICluster): string {
+        return cluster._id?.$oid || cluster.cluster_name;
+    }
+
+    private preselectFirstCluster(): void {
+        if (this.selectedInstallCluster) {
+            return;
+        }
+
+        this.clusters$.pipe(take(1)).subscribe((clusters) => {
+            const firstCluster = clusters[0];
+            if (firstCluster) {
+                this.selectedInstallCluster = this.getClusterKey(firstCluster);
+            }
         });
     }
 

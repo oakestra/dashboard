@@ -1,12 +1,12 @@
 <div class="addons-page">
     <div class="addons-title">
-        <h1>{{ clusterContext ? 'Cluster Addons' : 'Installed Addons' }}</h1>
+        <h1>{{ clusterContext ? 'Cluster Addons' : 'Root Addons' }}</h1>
         <div class="addons-actions">
             <button nbButton size="small" status="basic" (click)="loadAddons()">
                 <nb-icon icon="refresh-outline"></nb-icon>
                 Refresh
             </button>
-            <button nbButton size="small" status="primary" (click)="showInstallForm = !showInstallForm">
+            <button nbButton size="small" status="primary" (click)="toggleInstallForm()">
                 <nb-icon icon="download-outline"></nb-icon>
                 Install
             </button>
@@ -17,6 +17,21 @@
     <nb-card class="addons-form" *ngIf="showInstallForm">
         <nb-card-header>Install From Marketplace</nb-card-header>
         <nb-card-body>
+            <div class="field" *ngIf="scope === 'root'">
+                <label>Install Target</label>
+                <nb-radio-group [(ngModel)]="installTarget" (ngModelChange)="onInstallTargetChange($event)">
+                    <nb-radio value="root">Root orchestrator</nb-radio>
+                    <nb-radio value="cluster">Cluster orchestrator</nb-radio>
+                </nb-radio-group>
+            </div>
+            <div class="field" *ngIf="scope === 'root' && installTarget === 'cluster'">
+                <label for="installCluster">Cluster</label>
+                <nb-select fullWidth id="installCluster" placeholder="Select cluster" [(ngModel)]="selectedInstallCluster">
+                    <nb-option *ngFor="let cluster of clusters$ | async" [value]="getClusterKey(cluster)">
+                        {{ cluster.cluster_name }}
+                    </nb-option>
+                </nb-select>
+            </div>
             <div class="field">
                 <label for="marketplaceId">Marketplace Addon ID</label>
                 <input nbInput fullWidth id="marketplaceId" [(ngModel)]="marketplaceId" />

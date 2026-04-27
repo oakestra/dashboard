@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { CustomResource } from 'src/app/root/interfaces/addon';
+import { AddonsEndpoints, CustomResource } from 'src/app/root/interfaces/addon';
+import { ICluster } from 'src/app/root/interfaces/cluster';
 import { NotificationType } from 'src/app/root/interfaces/notification';
 import {
     appReducer,
@@ -30,7 +31,10 @@ import { AddonsApiService } from '../../services/addons-api.service';
     templateUrl: './custom-resources.component.html',
     styleUrls: ['../../addons.scss'],
 })
-export class CustomResourcesComponent implements OnInit {
+export class CustomResourcesComponent implements OnChanges, OnInit {
+    @Input() scope: 'root' | 'cluster' = 'root';
+    @Input() cluster?: ICluster;
+
     resources$: Observable<CustomResource[]> = this.store.pipe(select(selectCustomResources));
     instances$: Observable<unknown[]> = this.store.pipe(select(selectResourceInstances));
     selectedResourceType$: Observable<string> = this.store.pipe(select(selectSelectedResourceType));
@@ -59,6 +63,8 @@ export class CustomResourcesComponent implements OnInit {
         2,
     );
     instanceJson = JSON.stringify({ name: 'my-resource' }, null, 2);
+    private scopedEndpoints?: Partial<AddonsEndpoints>;
+    private initialized = false;
 
     constructor(
         private store: Store<appReducer.AppState>,
@@ -67,13 +73,21 @@ export class CustomResourcesComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.addonsApi.clearEndpointOverrides();
+        this.initialized = true;
+        this.configureScope();
         this.loadDefinitions();
         this.selectedResourceType$.subscribe((resourceType) => (this.selectedResourceType = resourceType));
     }
 
+    ngOnChanges(changes: SimpleChanges): void {
+        if (this.initialized && (changes.cluster || changes.scope)) {
+            this.configureScope();
+            this.loadDefinitions();
+        }
+    }
+
     loadDefinitions(): void {
-        this.store.dispatch(loadCustomResources());
+        this.store.dispatch(loadCustomResources({ endpoints: this.scopedEndpoints }));
     }
 
     switchMode(mode: 'definitions' | 'instances'): void {
@@ -95,7 +109,7 @@ export class CustomResourcesComponent implements OnInit {
                 resource_type: this.definitionResourceType.trim(),
                 schema: JSON.parse(this.definitionSchema),
             };
-            this.store.dispatch(createCustomResource({ resource }));
+            this.store.dispatch(createCustomResource({ resource, endpoints: this.scopedEndpoints }));
             this.definitionResourceType = '';
             this.showDefinitionForm = false;
         } catch (error) {
@@ -105,7 +119,7 @@ export class CustomResourcesComponent implements OnInit {
 
     deleteDefinition(resourceType: string): void {
         if (window.confirm(`Delete ${resourceType} definition and all instances?`)) {
-            this.store.dispatch(deleteCustomResource({ resourceType }));
+            this.store.dispatch(deleteCustomResource({ resourceType, endpoints: this.scopedEndpoints }));
         }
     }
 
@@ -119,7 +133,13 @@ export class CustomResourcesComponent implements OnInit {
 
     loadInstances(): void {
         if (this.selectedResourceType) {
-            this.store.dispatch(loadResourceInstances({ resourceType: this.selectedResourceType, filters: { ...this.filters } }));
+            this.store.dispatch(
+                loadResourceInstances({
+                    resourceType: this.selectedResourceType,
+                    filters: { ...this.filters },
+                    endpoints: this.scopedEndpoints,
+                }),
+            );
         }
     }
 
@@ -148,10 +168,11 @@ export class CustomResourcesComponent implements OnInit {
                         resourceType: this.selectedResourceType,
                         id: this.editingInstanceId,
                         data: updateData,
+                        endpoints: this.scopedEndpoints,
                     }),
                 );
             } else {
-                this.store.dispatch(createResourceInstance({ resourceType: this.selectedResourceType, data }));
+                this.store.dispatch(createResourceInstance({ resourceType: this.selectedResourceType, data, endpoints: this.scopedEndpoints }));
             }
             this.showInstanceForm = null;
         } catch (error) {
@@ -162,7 +183,7 @@ export class CustomResourcesComponent implements OnInit {
     deleteInstance(instance: unknown): void {
         const id = this.getInstanceId(instance);
         if (id && window.confirm(`Delete ${this.selectedResourceType} instance?`)) {
-            this.store.dispatch(deleteResourceInstance({ resourceType: this.selectedResourceType, id }));
+            this.store.dispatch(deleteResourceInstance({ resourceType: this.selectedResourceType, id, endpoints: this.scopedEndpoints }));
         }
     }
 
@@ -222,5 +243,9 @@ export class CustomResourcesComponent implements OnInit {
 
     private getErrorMessage(error: unknown, fallback: string): string {
         return error instanceof Error ? error.message : fallback;
+    }
+
+    private configureScope(): void {
+        this.scopedEndpoints = this.scope === 'cluster' && this.cluster ? this.addonsApi.getClusterEndpoints(this.cluster) : undefined;
     }
 }
