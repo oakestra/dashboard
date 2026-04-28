@@ -399,11 +399,32 @@
             </div>
             <div class="field" *ngIf="installTarget === 'cluster'">
                 <label for="marketplaceInstallCluster">Cluster</label>
-                <nb-select fullWidth id="marketplaceInstallCluster" placeholder="Select cluster" [(ngModel)]="selectedInstallCluster">
-                    <nb-option *ngFor="let cluster of clusters$ | async" [value]="getClusterKey(cluster)">
-                        {{ cluster.cluster_name }}
-                    </nb-option>
-                </nb-select>
+                <ng-container *ngIf="clusters$ | async as clusters">
+                    <div class="cluster-picker" [class.open]="isInstallClusterDropdownOpen">
+                        <button
+                            id="marketplaceInstallCluster"
+                            type="button"
+                            class="cluster-picker-button"
+                            [disabled]="clusters.length === 0"
+                            (click)="toggleInstallClusterDropdown()"
+                        >
+                            <span>{{ getSelectedInstallClusterName(clusters) }}</span>
+                            <nb-icon icon="chevron-down-outline" pack="nebular-essentials"></nb-icon>
+                        </button>
+                        <div class="cluster-option-list" *ngIf="isInstallClusterDropdownOpen">
+                            <button
+                                type="button"
+                                class="cluster-option"
+                                *ngFor="let cluster of clusters"
+                                [class.selected]="getClusterKey(cluster) === selectedInstallCluster"
+                                (click)="selectInstallCluster(getClusterKey(cluster))"
+                            >
+                                {{ cluster.cluster_name }}
+                            </button>
+                            <div class="cluster-option disabled" *ngIf="clusters.length === 0">No clusters found</div>
+                        </div>
+                    </div>
+                </ng-container>
             </div>
             <div class="form-actions">
                 <button nbButton size="small" status="success" (click)="confirmInstall()">Install</button>

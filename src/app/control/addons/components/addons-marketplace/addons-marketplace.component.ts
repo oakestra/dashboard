@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { AddonNetwork, AddonService, AddonVolume, MarketplaceAddon } from 'src/app/root/interfaces/addon';
 import { ICluster } from 'src/app/root/interfaces/cluster';
 import { NotificationType } from 'src/app/root/interfaces/notification';
@@ -38,6 +38,7 @@ export class AddonsMarketplaceComponent implements OnInit {
     pendingInstallAddon: MarketplaceAddon | null = null;
     installTarget: 'root' | 'cluster' = 'root';
     selectedInstallCluster = '';
+    isInstallClusterDropdownOpen = false;
     editingServiceIndex = -1;
     editingVolumeIndex = -1;
     editingNetworkIndex = -1;
@@ -331,11 +332,13 @@ export class AddonsMarketplaceComponent implements OnInit {
             this.pendingInstallAddon = addon;
             this.installTarget = 'root';
             this.selectedInstallCluster = '';
+            this.isInstallClusterDropdownOpen = false;
         }
     }
 
     onInstallTargetChange(target: 'root' | 'cluster'): void {
         this.installTarget = target;
+        this.isInstallClusterDropdownOpen = false;
         if (target === 'cluster') {
             this.store.dispatch(getClusters());
             this.preselectFirstCluster();
@@ -350,6 +353,7 @@ export class AddonsMarketplaceComponent implements OnInit {
         if (this.installTarget === 'root') {
             this.store.dispatch(installAddon({ marketplaceId: this.pendingInstallAddon._id, reloadInstalled: false }));
             this.pendingInstallAddon = null;
+            this.isInstallClusterDropdownOpen = false;
             return;
         }
 
@@ -368,11 +372,13 @@ export class AddonsMarketplaceComponent implements OnInit {
                 }),
             );
             this.pendingInstallAddon = null;
+            this.isInstallClusterDropdownOpen = false;
         });
     }
 
     cancelInstall(): void {
         this.pendingInstallAddon = null;
+        this.isInstallClusterDropdownOpen = false;
     }
 
     viewDetails(addon: MarketplaceAddon): void {
@@ -397,16 +403,28 @@ export class AddonsMarketplaceComponent implements OnInit {
         return cluster._id?.$oid || cluster.cluster_name;
     }
 
+    getSelectedInstallClusterName(clusters: ICluster[]): string {
+        const cluster = clusters.find((item) => this.getClusterKey(item) === this.selectedInstallCluster);
+        return cluster?.cluster_name || 'Select cluster';
+    }
+
+    toggleInstallClusterDropdown(): void {
+        this.isInstallClusterDropdownOpen = !this.isInstallClusterDropdownOpen;
+    }
+
+    selectInstallCluster(clusterKey: string): void {
+        this.selectedInstallCluster = clusterKey;
+        this.isInstallClusterDropdownOpen = false;
+    }
+
     private preselectFirstCluster(): void {
         if (this.selectedInstallCluster) {
             return;
         }
 
-        this.clusters$.pipe(take(1)).subscribe((clusters) => {
+        this.clusters$.pipe(filter((clusters) => clusters.length > 0), take(1)).subscribe((clusters) => {
             const firstCluster = clusters[0];
-            if (firstCluster) {
-                this.selectedInstallCluster = this.getClusterKey(firstCluster);
-            }
+            this.selectedInstallCluster = this.getClusterKey(firstCluster);
         });
     }
 
