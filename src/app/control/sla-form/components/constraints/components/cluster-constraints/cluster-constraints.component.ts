@@ -3,6 +3,7 @@ import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective } from '@a
 import { ApiService } from '../../../../../../shared/modules/api/api.service';
 
 @Component({
+    standalone: false,
     selector: 'app-cluster-constraints',
     templateUrl: './cluster-constraints.component.html',
     styleUrls: ['./cluster-constraints.component.scss'],
@@ -27,7 +28,7 @@ export class ClusterConstraintsComponent implements OnInit {
         });
 
         this.parentForm = this.parent.form;
-        
+
         const constraintsGroup = this.fb.group({
             node: [''],
             cluster: [],
@@ -39,10 +40,10 @@ export class ClusterConstraintsComponent implements OnInit {
             const nodeControl = constraintsGroup.get('node');
 
             if (Array.isArray(selectedClusters) && selectedClusters.length > 1) {
-                nodeControl?.setValue('');    
-                nodeControl?.disable();    
+                nodeControl?.setValue('');
+                nodeControl?.disable();
             } else {
-                nodeControl?.enable();     
+                nodeControl?.enable();
             }
         });
 

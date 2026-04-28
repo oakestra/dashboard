@@ -4,15 +4,16 @@ import { Store } from '@ngrx/store';
 import { NbDialogService, NbMenuBag, NbMenuService } from '@nebular/theme';
 import { Subscription, tap } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { Observable } from 'tinymce';
 import { IService } from '../../../../root/interfaces/service';
 import { ApiService } from '../../../../shared/modules/api/api.service';
 import { appReducer, deleteService, getServices } from '../../../../root/store';
 import { IInstance } from '../../../../root/interfaces/instance';
-import { Subject } from 'rxjs';
 import { ConfigDownloadService } from '../../../../shared/modules/helper/config-download.service';
-import { Observable } from 'tinymce';
 
 @Component({
+    standalone: false,
     selector: 'app-service-item',
     templateUrl: './service-item.component.html',
     styleUrls: ['./service-item.component.scss'],
@@ -41,7 +42,7 @@ export class ServiceItemComponent implements OnInit, OnDestroy {
     }
     ngOnInit(): void {
 
-        this.menuTag = 'menu-' + this.service._id?.$oid
+        this.menuTag = 'menu-' + this.service._id?.$oid;
 
         this.menuItems = [
             { title: 'Edit', icon: 'edit-2-outline', hidden: true },

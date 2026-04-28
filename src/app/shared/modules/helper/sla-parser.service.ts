@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 export interface ParsedSlaResult {
     type: 'v2' | 'v1_microservices';
-    data: any; 
-    appName?: string; 
+    data: any;
+    appName?: string;
 }
 
 @Injectable({
@@ -37,7 +37,7 @@ export class SlaParserService {
 
             return {
                 type: 'v2',
-                data: data,
+                data,
                 appName: app.application_name,
             };
         }

@@ -9,12 +9,13 @@ import { IService } from '../../../../root/interfaces/service';
 import { appReducer, getSingleService } from '../../../../root/store';
 
 @Component({
+    standalone: false,
     selector: 'app-instance-detail',
     templateUrl: './instance-detail.component.html',
     styleUrls: ['./instance-detail.component.scss'],
 })
 export class InstanceDetailComponent implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild('map', { static: false }) mapContainer: ElementRef;
+    @ViewChild('mapContainer') mapContainer: ElementRef<HTMLDivElement>;
     serviceId: string;
     instanceId: string;
 
@@ -28,9 +29,14 @@ export class InstanceDetailComponent implements OnInit, AfterViewInit, OnDestroy
 
     private alive = true;
     private timerSubscription: Subscription;
+    private map?: L.Map;
+    private circle?: L.Circle;
 
     instance = this.store.select(selectCurrentServices).pipe(
         map((services: IService[]) => {
+            if (!this.service?._id?.$oid) {
+                return null;
+            }
             const myService: IService = services.find((service) => service._id.$oid === this.service._id.$oid);
             if (myService && myService.instance_list.length > 0) {
                 return myService.instance_list.find(
@@ -55,7 +61,6 @@ export class InstanceDetailComponent implements OnInit, AfterViewInit, OnDestroy
                 this.service = s.length === 0 ? null : s[0];
             },
         });
-        console.log(this.instance);
 
         this.refreshData();
         this.timerSubscription = timer(15000, 15000)
@@ -63,27 +68,42 @@ export class InstanceDetailComponent implements OnInit, AfterViewInit, OnDestroy
             .subscribe(() => this.refreshData());
 
         this.instance.subscribe((i) => {
-            const location = i.cluster_location.length > 0 ? i.cluster_location : '48.1624064,11.5977288,12';
+            if (!i) {
+                return;
+            }
+            const location = i.cluster_location?.length > 0 ? i.cluster_location : '48.1624064,11.5977288,12';
             this.setLocation(location);
-            console.log(i);
+            this.renderMap();
         });
     }
 
     ngAfterViewInit() {
-        const map = L.map('map').setView([this.longitude, this.latitude], 14);
+        this.renderMap();
+    }
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors',
-        }).addTo(map);
+    private renderMap(): void {
+        if (!this.mapContainer?.nativeElement || this.textLocation) {
+            return;
+        }
 
-        const circle = L.circle([this.longitude, this.latitude], {
+        if (!this.map) {
+            this.map = L.map(this.mapContainer.nativeElement);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
+            }).addTo(this.map);
+        }
+
+        this.map.setView([this.longitude, this.latitude], 14);
+        this.circle?.remove();
+        this.circle = L.circle([this.longitude, this.latitude], {
             color: 'blue',
             fillColor: 'lightblue',
             fillOpacity: 0.5,
             radius: this.radius,
-        }).addTo(map);
+        }).addTo(this.map);
 
-        circle.bindPopup('A Circle on the Map.');
+        this.circle.bindPopup('A Circle on the Map.');
     }
 
     private setLocation(locationString: string): void {
@@ -95,12 +115,11 @@ export class InstanceDetailComponent implements OnInit, AfterViewInit, OnDestroy
             /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?),\s*([-+]?(?:\d+)(?:\.\d+)?)$/;
 
         if (regex.test(locationString)) {
-            console.log('Test');
+            this.textLocation = null;
             const array = locationString.split(',');
             this.longitude = parseFloat(array[0]);
             this.latitude = parseFloat(array[1]);
             this.radius = parseFloat(array[2]);
-            console.log(this.radius);
         } else {
             this.textLocation = locationString;
         }
@@ -109,10 +128,12 @@ export class InstanceDetailComponent implements OnInit, AfterViewInit, OnDestroy
     ngOnDestroy() {
         this.alive = false;
         this.timerSubscription.unsubscribe();
+        this.map?.remove();
     }
 
     refreshData() {
-        this.store.dispatch(getSingleService({ serviceId: this.service._id.$oid }));
-        console.log('Update');
+        if (this.service?._id?.$oid) {
+            this.store.dispatch(getSingleService({ serviceId: this.service._id.$oid }));
+        }
     }
 }

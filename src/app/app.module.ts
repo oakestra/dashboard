@@ -8,7 +8,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { ApplicationEffects, appReducer, OrganizationEffects, SettingsEffects } from 'src/app/root/store/index';
+import { AddonsEffects, ApplicationEffects, appReducer, OrganizationEffects, SettingsEffects } from 'src/app/root/store/index';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {
     NbCardModule,
@@ -45,7 +45,7 @@ import { ThemeModule } from './@theme/theme.module';
         MatIconModule,
         StoreDevtoolsModule,
         StoreModule.forRoot(appReducer.reducers, {}),
-        EffectsModule.forRoot([UserEffects, ApplicationEffects, SettingsEffects, OrganizationEffects]),
+        EffectsModule.forRoot([UserEffects, ApplicationEffects, SettingsEffects, OrganizationEffects, AddonsEffects]),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
         NbThemeModule.forRoot(),
         NbEvaIconsModule,

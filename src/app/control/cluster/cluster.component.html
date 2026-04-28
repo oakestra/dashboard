@@ -1,13 +1,19 @@
 <div class="container">
     <h1>Available Oakestra Clusters</h1>
-    <div class="row">
-        <div *ngFor="let cluster of clusters$ | async" class="col-sm-6">
+    <div class="row" *ngIf="clusters$ | async as clusters">
+        <div *ngFor="let cluster of clusters" class="col-sm-6">
             <nb-card id="my_card">
                 <nb-card-header>
-                    {{ cluster.cluster_name }}
+                    <div class="cluster-header">
+                        <span>{{ cluster.cluster_name }}</span>
+                        <button nbButton size="tiny" status="primary" (click)="openCluster(cluster)">
+                            <nb-icon icon="external-link-outline"></nb-icon>
+                            Open
+                        </button>
+                    </div>
                 </nb-card-header>
                 <nb-card-body *ngIf="cluster._id">
-                    <b>ID</b> {{ cluster._id }}
+                    <b>ID</b> {{ getClusterId(cluster) }}
                     <div *ngIf="cluster.active" >  <b>Status:</b> 🟢 Active 
 
                     <nb-progress-bar
@@ -35,15 +41,14 @@
                     <div class="map-card" id="map-card">
                         <div *ngIf="cluster.cluster_location"> 
                             <app-cluster-map
-                                [location]=cluster.cluster_location 
-                                [mapId]=cluster._id.toString()
+                                [location]="cluster.cluster_location"
                             ></app-cluster-map>
                         </div>
                     </div>
                 </nb-card-body>
             </nb-card>
         </div>
-        <div *ngIf="(clusters$ | async)?.length === 0" class="col-sm-6">
+        <div *ngIf="clusters.length === 0" class="col-sm-6">
 
             <h2> No clusters available in your infrastructure. </h2>
             <h3> Please contact your administrator to add a cluster or follow these <a href="https://www.oakestra.io/docs/getting-started/welcome-to-oakestra-docs/">wiki steps</a>. </h3>

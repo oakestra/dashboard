@@ -8,6 +8,7 @@ import { Role } from '../../../../root/enums/roles';
 import { IDialogAttribute } from '../../../../root/interfaces/dialogAttribute';
 
 @Component({
+    standalone: false,
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-edit-user.html',
     styleUrls: ['./dialog-edit-user.scss'],

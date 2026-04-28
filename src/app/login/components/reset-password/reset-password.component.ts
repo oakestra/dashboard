@@ -6,6 +6,7 @@ import { NotificationService } from '../../../shared/modules/notification/notifi
 import { NotificationType } from '../../../root/interfaces/notification';
 
 @Component({
+    standalone: false,
     selector: 'app-reset-password',
     templateUrl: './reset-password.component.html',
     styleUrls: ['./reset-password.component.scss'],
@@ -48,6 +49,9 @@ export class ResetPasswordComponent implements OnInit {
                 void this.router.navigate(['/']);
             },
             (e) => console.log(e),
+            () => {
+                this.notifyService.notify(NotificationType.error, 'Could not save new password.');
+            },
         );
     }
 }
