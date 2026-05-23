@@ -63,10 +63,6 @@ export class ApiService extends RestService {
         return this.doGETRequest('/clusters/');
     }
 
-    createClusterToken(cluster_name: string): Observable<any> {
-        return this.doPOSTRequest('/token/cluster', { cluster_name });
-    }
-
     // /////////////////////////////////////////////////////////////////////////
     // /////////////////// Service Functions ///////////////////////////////////
 
