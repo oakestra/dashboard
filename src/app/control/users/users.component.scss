@@ -2,6 +2,37 @@ nb-tag {
     border: none;
 }
 
+:host {
+    color: var(--text-basic-color, #ffffff);
+}
+
+:host ::ng-deep {
+    .mat-mdc-table,
+    .mat-mdc-header-row,
+    .mat-mdc-row,
+    .mat-mdc-header-cell,
+    .mat-mdc-cell,
+    .mdc-data-table__header-cell,
+    .mdc-data-table__cell {
+        background: transparent !important;
+        color: var(--text-basic-color, #ffffff) !important;
+    }
+
+    .mat-mdc-table {
+        --mat-table-header-headline-color: var(--text-basic-color, #ffffff);
+        --mat-table-row-item-label-text-color: var(--text-basic-color, #ffffff);
+    }
+
+    nb-card,
+    nb-card-body,
+    nb-card-header,
+    h1,
+    th,
+    td {
+        color: var(--text-basic-color, #ffffff) !important;
+    }
+}
+
 @media only screen and (max-width: 450px) {
     .registeredRow {
         display: none;

@@ -1,0 +1,83 @@
+<div class="addons-page">
+    <div class="addons-title">
+        <h1>Hooks</h1>
+        <div class="addons-actions">
+            <button nbButton size="small" status="basic" (click)="loadHooks()">
+                <nb-icon icon="refresh-outline"></nb-icon>
+                Refresh
+            </button>
+            <button nbButton size="small" status="primary" (click)="showForm = !showForm">
+                <nb-icon [icon]="showForm ? 'close-outline' : 'plus-outline'"></nb-icon>
+                {{ showForm ? 'Cancel' : 'Add Hook' }}
+            </button>
+        </div>
+    </div>
+
+    <nb-card class="addons-form" *ngIf="showForm">
+        <nb-card-header>Add Hook</nb-card-header>
+        <nb-card-body>
+            <div class="field">
+                <label for="hookName">Name</label>
+                <input nbInput fullWidth id="hookName" [(ngModel)]="newHook.hook_name" />
+            </div>
+            <div class="field">
+                <label for="hookEntity">Entity</label>
+                <input nbInput fullWidth id="hookEntity" [(ngModel)]="newHook.entity" />
+            </div>
+            <div class="field">
+                <label for="webhookUrl">Webhook URL</label>
+                <input nbInput fullWidth id="webhookUrl" [(ngModel)]="newHook.webhook_url" />
+            </div>
+            <div class="field">
+                <label>Events</label>
+                <nb-checkbox *ngFor="let event of availableEvents" [(ngModel)]="selectedEvents[event]">{{ event }}</nb-checkbox>
+            </div>
+            <div class="form-actions">
+                <button nbButton size="small" status="success" (click)="submitHook()">Submit</button>
+            </div>
+        </nb-card-body>
+    </nb-card>
+
+    <nb-card class="loading-state" *ngIf="loading$ | async">
+        <nb-card-body><nb-spinner size="medium"></nb-spinner></nb-card-body>
+    </nb-card>
+
+    <nb-card class="error-state" status="danger" *ngIf="(error$ | async) as error">
+        <nb-card-body *ngIf="error">{{ error }}</nb-card-body>
+    </nb-card>
+
+    <ng-container *ngIf="hooks$ | async as hooks">
+        <nb-card class="empty-state" *ngIf="!(loading$ | async) && hooks.length === 0">
+            <nb-card-body>No hooks configured.</nb-card-body>
+        </nb-card>
+
+        <div class="addons-grid" *ngIf="hooks.length > 0">
+            <div class="addon-card" *ngFor="let hook of hooks">
+                <nb-card>
+                    <nb-card-header>{{ hook.hook_name }}</nb-card-header>
+                    <nb-card-body>
+                        <div class="addon-meta">Entity: {{ hook.entity }}</div>
+                        <div class="addon-meta">Webhook: {{ hook.webhook_url }}</div>
+                        <div class="addon-meta">Events: {{ hook.events.join(', ') }}</div>
+                        <div class="card-actions">
+                            <button nbButton size="tiny" status="basic" (click)="viewDetails(hook)">Details</button>
+                            <button nbButton size="tiny" status="danger" (click)="deleteHook(hook._id)">Delete</button>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<div class="modal-backdrop" *ngIf="selectedHook" (click)="closeDetails()">
+    <nb-card class="modal-card" (click)="$event.stopPropagation()">
+        <nb-card-header>
+            {{ selectedHook.hook_name }}
+            <button nbButton ghost size="tiny" (click)="closeDetails()"><nb-icon icon="close-outline"></nb-icon></button>
+        </nb-card-header>
+        <nb-card-body>
+            <pre class="details">{{ format(selectedHook) }}</pre>
+        </nb-card-body>
+    </nb-card>
+</div>

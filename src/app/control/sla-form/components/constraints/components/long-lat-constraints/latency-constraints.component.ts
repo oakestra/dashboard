@@ -4,6 +4,7 @@ import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective } from '@a
 import { ApiService } from '../../../../../../shared/modules/api/api.service';
 
 @Component({
+    standalone: false,
     selector: 'app-latency-constraints',
     templateUrl: './latency-constraints.component.html',
     styleUrls: ['./latency-constraints.component.scss'],

@@ -1,23 +1,19 @@
-import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { NbDialogService } from '@nebular/theme';
-import { ICluster } from '../../root/interfaces/cluster';
-import { selectAllClusters } from '../../root/store/selectors/cluster.selector';
-import { filter,tap } from 'rxjs/operators';
-import { UserService } from '../../shared/modules/auth/user.service';
 import { Observable } from 'rxjs';
-import * as L from 'leaflet';
-import { map } from 'rxjs/operators';
-import { ClusterMapComponent } from './clustermap/clustermap.component';
+import { UserService } from '../../shared/modules/auth/user.service';
+import { selectAllClusters } from '../../root/store/selectors/cluster.selector';
+import { ICluster } from '../../root/interfaces/cluster';
 import {
     appReducer,
-    getActiveClusters,
     getClusters,
 } from '../../root/store';
 
 
 @Component({
+    standalone: false,
     selector: 'app-cluster',
     templateUrl: './cluster.component.html',
     styleUrls: ['./cluster.component.scss'],
@@ -26,7 +22,7 @@ import {
 export class ClusterComponent implements OnInit {
 
     public clusters$: Observable<ICluster[]> = this.store.pipe(select(selectAllClusters));
-    private clusterListHtml: string;
+
     constructor(
         public dialog: NbDialogService,
         public userService: UserService,
@@ -43,12 +39,19 @@ export class ClusterComponent implements OnInit {
     }
 
     convertMemoryToGB(memory: number): number {
-        return Math.round(memory / 1024 );
-      }
+        return Math.round(memory / 1024);
+    }
 
     convertCpuToPercentage(cpu_usage: number, cores: number): number {
-        return Math.round(cpu_usage*100 / cores );
+        return Math.round(cpu_usage * 100 / cores);
+    }
+
+    openCluster(cluster: ICluster): void {
+        void this.router.navigate(['/control/clusters', cluster._id?.$oid || cluster.cluster_name]);
+    }
+
+    getClusterId(cluster: ICluster): string {
+        return cluster._id?.$oid || cluster.cluster_name;
     }
 
 }
-

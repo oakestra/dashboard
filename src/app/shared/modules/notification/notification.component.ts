@@ -3,6 +3,7 @@ import { NotificationType } from '../../../root/interfaces/notification';
 import { NotificationService } from './notification.service';
 
 @Component({
+    standalone: false,
     selector: 'app-notification',
     template: `
         <div class="center">
@@ -10,6 +11,11 @@ import { NotificationService } from './notification.service';
             <nb-icon
                 class="notification-icon"
                 *ngIf="type === Type.information"
+                icon="info-outline"
+            ></nb-icon>
+            <nb-icon
+                class="notification-icon"
+                *ngIf="type === Type.warning"
                 icon="alert-triangle-outline"
             ></nb-icon>
             <nb-icon
@@ -27,14 +33,18 @@ import { NotificationService } from './notification.service';
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                color: inherit;
             }
 
             .notification-text {
                 margin: 0;
+                color: inherit;
+                font-weight: 600;
             }
 
             .notification-icon {
                 margin-right: 7px;
+                color: inherit;
             }
         `,
     ],

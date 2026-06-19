@@ -1,7 +1,7 @@
 import { Virtualization } from '../enums/virtualization';
+import { ConstraintType } from '../enums/constraint';
 import { IId } from './id';
 import { IInstance } from './instance';
-import { ConstraintType } from '../enums/constraint';
 
 export interface IService {
     _id?: IId;

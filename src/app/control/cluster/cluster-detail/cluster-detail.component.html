@@ -1,0 +1,70 @@
+<ng-container *ngIf="cluster$ | async as cluster; else missingCluster">
+    <div class="cluster-detail-page">
+        <div class="cluster-detail-header">
+            <div>
+                <button nbButton ghost size="small" status="basic" (click)="backToClusters()">
+                    <nb-icon icon="arrow-back-outline"></nb-icon>
+                    Clusters
+                </button>
+                <h1>{{ cluster.cluster_name }}</h1>
+                <div class="cluster-meta">
+                    <span class="status-pill" [ngClass]="cluster.active ? 'running' : 'failed'">
+                        {{ cluster.active ? 'Active' : 'Offline' }}
+                    </span>
+                    <span>{{ cluster.active_nodes }} nodes</span>
+                    <span>{{ convertMemoryToGB(cluster.memory_in_mb) }}GB available</span>
+                </div>
+            </div>
+            <div class="cluster-tabs">
+                <button nbButton size="small" [status]="activeTab === 'overview' ? 'primary' : 'basic'" (click)="setTab('overview')">
+                    Overview
+                </button>
+                <button nbButton size="small" [status]="activeTab === 'addons' ? 'primary' : 'basic'" (click)="setTab('addons')">
+                    Addons
+                </button>
+                <button nbButton size="small" [status]="activeTab === 'hooks' ? 'primary' : 'basic'" (click)="setTab('hooks')">
+                    Hooks
+                </button>
+                <button nbButton size="small" [status]="activeTab === 'resources' ? 'primary' : 'basic'" (click)="setTab('resources')">
+                    Custom Resources
+                </button>
+            </div>
+        </div>
+
+        <ng-container [ngSwitch]="activeTab">
+            <nb-card *ngSwitchCase="'overview'">
+                <nb-card-header>Overview</nb-card-header>
+                <nb-card-body>
+                    <div class="cluster-overview-grid">
+                        <div><b>ID</b> {{ cluster._id }}</div>
+                        <div><b>CPU Cores</b> {{ cluster.total_cpu_cores }}</div>
+                        <div><b>GPU Cores</b> {{ cluster.total_gpu_cores }}</div>
+                        <div><b>Memory Available</b> {{ convertMemoryToGB(cluster.memory_in_mb) }}GB</div>
+                        <div *ngIf="cluster.virtualization?.length > 0"><b>Virtualizations</b> {{ cluster.virtualization }}</div>
+                        <div><b>Addons API</b> {{ getAddonsEndpoint(cluster) }}</div>
+                        <div><b>Resources API</b> {{ getResourceEndpoint(cluster) }}</div>
+                    </div>
+                    <div class="map-card" *ngIf="cluster.cluster_location">
+                        <app-cluster-map [location]="cluster.cluster_location"></app-cluster-map>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+
+            <app-installed-addons *ngSwitchCase="'addons'" scope="cluster" [cluster]="cluster"></app-installed-addons>
+            <app-hooks *ngSwitchCase="'hooks'" scope="cluster" [cluster]="cluster"></app-hooks>
+            <app-custom-resources *ngSwitchCase="'resources'" scope="cluster" [cluster]="cluster"></app-custom-resources>
+        </ng-container>
+    </div>
+</ng-container>
+
+<ng-template #missingCluster>
+    <nb-card>
+        <nb-card-body>
+            <button nbButton ghost size="small" status="basic" (click)="backToClusters()">
+                <nb-icon icon="arrow-back-outline"></nb-icon>
+                Clusters
+            </button>
+            <h2>Cluster not found.</h2>
+        </nb-card-body>
+    </nb-card>
+</ng-template>

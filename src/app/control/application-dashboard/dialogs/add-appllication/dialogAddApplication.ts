@@ -5,6 +5,7 @@ import { DialogAction } from '../../../../root/enums/dialogAction';
 import { IDialogAttribute } from '../../../../root/interfaces/dialogAttribute';
 
 @Component({
+    standalone: false,
     selector: 'dialog-content-example-dialog',
     templateUrl: 'dialog-add-application.html',
     styleUrls: ['./dialog-add-application.scss'],

@@ -8,6 +8,7 @@ import { ApiService } from '../../../../shared/modules/api/api.service';
 import { ConstraintType } from '../../../../root/enums/constraint';
 
 @Component({
+    standalone: false,
     selector: 'form-constraints',
     templateUrl: './constraints.component.html',
     styleUrls: ['./constraints.component.scss'],
@@ -110,27 +111,26 @@ export class ConstraintsComponent extends SubComponent implements OnInit {
             console.log(k);
             console.log(constrains[k]);
             const name = this.getConstraintsName(k);
-            
+
             if (name === ConstraintType.DIRECT) {
                 const data = constrains[k];
 
-                //only one cluster with specific node
+                // only one cluster with specific node
                 if (data.node && data.node.trim() !== '') {
                     result.push({
                         type: ConstraintType.DIRECT,
-                        cluster: Array.isArray(data.cluster) ? data.cluster[0] : data.cluster, 
+                        cluster: Array.isArray(data.cluster) ? data.cluster[0] : data.cluster,
                         node: data.node
                     });
-                } 
+                }
                 // cluster list
                 else if (data.cluster && data.cluster.length > 0) {
                     result.push({
-                        type: ConstraintType.CLUSTERS, 
-                        allowed: Array.isArray(data.cluster) ? data.cluster : [data.cluster] 
+                        type: ConstraintType.CLUSTERS,
+                        allowed: Array.isArray(data.cluster) ? data.cluster : [data.cluster]
                     });
                 }
-            } 
-            else if (name) {
+            } else if (name) {
                 result.push({
                     type: name,
                     ...constrains[k],

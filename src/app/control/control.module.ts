@@ -29,8 +29,9 @@ import {
     NbTagModule,
     NbTooltipModule,
 } from '@nebular/theme';
+import { NbProgressBarModule } from '@nebular/theme';
 import * as fromService from '../root/store/reducers/service.reducer';
-import { ServiceEffects,ClusterEffects } from '../root/store';
+import { ServiceEffects, ClusterEffects } from '../root/store';
 import { DialogConfirmationView } from '../root/components/dialogs/confirmation/dialogConfirmation';
 import { ThemeModule } from '../@theme/theme.module';
 import { UsersComponent } from './users/users.component';
@@ -50,6 +51,7 @@ import { ServiceDashboardComponent } from './service-dashboard/service-dashboard
 import { SlaFormComponent } from './sla-form/sla-form.component';
 import { routes } from './control.routing';
 import { ClusterComponent } from './cluster/cluster.component';
+import { ClusterDetailComponent } from './cluster/cluster-detail/cluster-detail.component';
 import { ClusterMapComponent } from './cluster/clustermap/clustermap.component';
 import { ConnectivityComponent } from './sla-form/components/connectivity/connectivity.component';
 import { ConstraintsComponent } from './sla-form/components/constraints/constraints.component';
@@ -75,7 +77,10 @@ import { ServiceItemComponent } from './service-dashboard/components/service-ite
 import { InstanceDetailComponent } from './service-dashboard/components/instance-detail/instance-detail.component';
 import { ChartCpuLineComponent } from './service-dashboard/components/instance-detail/chart-cpu-line.component';
 import { ChartMemoryLineComponent } from './service-dashboard/components/instance-detail/chart-memory-line.component';
-import { NbProgressBarModule } from '@nebular/theme';
+import { AddonsMarketplaceComponent } from './addons/components/addons-marketplace/addons-marketplace.component';
+import { InstalledAddonsComponent } from './addons/components/installed-addons/installed-addons.component';
+import { HooksComponent } from './addons/components/hooks/hooks.component';
+import { CustomResourcesComponent } from './addons/components/custom-resources/custom-resources.component';
 
 @NgModule({
     declarations: [
@@ -96,6 +101,7 @@ import { NbProgressBarModule } from '@nebular/theme';
         HelpComponent,
         DialogConfirmationView,
         ClusterComponent,
+        ClusterDetailComponent,
         ClusterMapComponent,
         ConnectivityComponent,
         ConstraintsComponent,
@@ -122,6 +128,10 @@ import { NbProgressBarModule } from '@nebular/theme';
         InstanceDetailComponent,
         ChartCpuLineComponent,
         ChartMemoryLineComponent,
+        AddonsMarketplaceComponent,
+        InstalledAddonsComponent,
+        HooksComponent,
+        CustomResourcesComponent,
     ],
     imports: [
         NbProgressBarModule,
@@ -132,7 +142,7 @@ import { NbProgressBarModule } from '@nebular/theme';
         HttpClientModule,
         MatTableModule,
         StoreModule.forFeature(fromService.serviceFeatureKey, fromService.reducer),
-        EffectsModule.forFeature([ServiceEffects,ClusterEffects]),
+        EffectsModule.forFeature([ServiceEffects, ClusterEffects]),
         MatSlideToggleModule,
         MatProgressSpinnerModule,
         NbCardModule,

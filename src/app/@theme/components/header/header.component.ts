@@ -7,6 +7,7 @@ import { IUser } from '../../../root/interfaces/user';
 import { AuthService } from '../../../shared/modules/auth/auth.service';
 
 @Component({
+    standalone: false,
     selector: 'ngx-header',
     styleUrls: ['./header.component.scss'],
     templateUrl: './header.component.html',

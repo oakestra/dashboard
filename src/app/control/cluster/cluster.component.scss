@@ -1,0 +1,15 @@
+.cluster-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.cluster-header span {
+    font-weight: 700;
+}
+
+.cluster-header button {
+    white-space: nowrap;
+}

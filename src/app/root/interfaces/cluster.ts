@@ -12,4 +12,17 @@ export interface ICluster {
     cluster_location: string;
     pairing_complete: boolean;
     virtualization: string[];
+    addons_engine_url?: string;
+    addonsEngineUrl?: string;
+    addons_manager_url?: string;
+    resource_abstractor_url?: string;
+    resourceAbstractorUrl?: string;
+    ip?: string;
+    cluster_ip?: string;
+    public_ip?: string;
+    node_ip?: string;
+    host?: string;
+    hostname?: string;
+    address?: string;
+    cluster_address?: string;
 }

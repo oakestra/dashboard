@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 
 @Component({
+    standalone: false,
     selector: 'dialog-graph-example-dialog',
     templateUrl: 'dialog-graph-connection-settings.html',
     styles: [
