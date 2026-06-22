@@ -1,20 +1,17 @@
-import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { NbDialogService } from '@nebular/theme';
 import { ICluster } from '../../root/interfaces/cluster';
 import { selectAllClusters } from '../../root/store/selectors/cluster.selector';
-import { filter,tap } from 'rxjs/operators';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { Observable } from 'rxjs';
-import * as L from 'leaflet';
-import { map } from 'rxjs/operators';
-import { ClusterMapComponent } from './clustermap/clustermap.component';
 import {
     appReducer,
-    getActiveClusters,
     getClusters,
 } from '../../root/store';
+import { ApiService } from '../../shared/modules/api/api.service';
+import { DialogClusterTokenComponent } from './dialogs/cluster-token/dialog-cluster-token.component';
 
 
 @Component({
@@ -26,16 +23,72 @@ import {
 export class ClusterComponent implements OnInit {
 
     public clusters$: Observable<ICluster[]> = this.store.pipe(select(selectAllClusters));
-    private clusterListHtml: string;
+    clusters: ICluster[] = [];
+    clusterTokenLoading = false;
+    workerTokenLoading = false;
+    selectedClusterId: string | null = null;
+
     constructor(
         public dialog: NbDialogService,
         public userService: UserService,
         private router: Router,
         private store: Store<appReducer.AppState>,
+        private apiService: ApiService,
     ) {}
 
     ngOnInit(): void {
         this.store.dispatch(getClusters());
+        this.clusters$.subscribe((c) => (this.clusters = c));
+    }
+
+    generateClusterToken() {
+        this.clusterTokenLoading = true;
+        this.apiService.generateClusterToken().subscribe({
+            next: (t) => {
+                this.clusterTokenLoading = false;
+                this.dialog.open(DialogClusterTokenComponent, {
+                    context: {
+                        title: 'Cluster Registration Token',
+                        data: {
+                            token: t.token,
+                            expires_at: t.expires_at,
+                            address: t.root_address,
+                            port: t.root_port,
+                            addressLabel: 'Root address',
+                            suggested_command: t.suggested_command,
+                        },
+                    },
+                    closeOnBackdropClick: true,
+                });
+            },
+            error: () => { this.clusterTokenLoading = false; },
+        });
+    }
+
+    generateWorkerToken() {
+        const clusterId = this.selectedClusterId;
+        if (!clusterId) return;
+        this.workerTokenLoading = true;
+        this.apiService.generateWorkerToken(clusterId).subscribe({
+            next: (t) => {
+                this.workerTokenLoading = false;
+                this.dialog.open(DialogClusterTokenComponent, {
+                    context: {
+                        title: 'Worker Registration Token',
+                        data: {
+                            token: t.token,
+                            expires_at: t.expires_at,
+                            address: t.cluster_address,
+                            port: t.cluster_port,
+                            addressLabel: 'Cluster address',
+                            suggested_command: t.suggested_command,
+                        },
+                    },
+                    closeOnBackdropClick: true,
+                });
+            },
+            error: () => { this.workerTokenLoading = false; },
+        });
     }
 
     redirectTo(uri: string) {
@@ -43,12 +96,11 @@ export class ClusterComponent implements OnInit {
     }
 
     convertMemoryToGB(memory: number): number {
-        return Math.round(memory / 1024 );
-      }
+        return Math.round(memory / 1024);
+    }
 
     convertCpuToPercentage(cpu_usage: number, cores: number): number {
-        return Math.round(cpu_usage*100 / cores );
+        return Math.round(cpu_usage * 100 / cores);
     }
 
 }
-

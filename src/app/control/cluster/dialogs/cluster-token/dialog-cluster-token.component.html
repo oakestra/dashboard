@@ -1,0 +1,43 @@
+<nb-card class="token-dialog-card">
+    <nb-card-header>
+        <span>{{ title }}</span>
+        <button nbButton ghost size="small" (click)="close()" class="close-btn">
+            <nb-icon icon="close-outline"></nb-icon>
+        </button>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="info-row">
+            <span class="label">Expires:</span>
+            <span>{{ data.expires_at | date:'medium' }}</span>
+        </div>
+        <div class="info-row">
+            <span class="label">{{ data.addressLabel }}:</span>
+            <span>{{ data.address }}:{{ data.port }}</span>
+        </div>
+
+        <div class="command-section">
+            <div class="command-header">
+                <span class="label">Token:</span>
+                <button nbButton size="tiny" [status]="tokenCopied ? 'success' : 'primary'" (click)="copyToken()">
+                    <nb-icon [icon]="tokenCopied ? 'checkmark-outline' : 'copy-outline'"></nb-icon>
+                    {{ tokenCopied ? 'Copied!' : 'Copy' }}
+                </button>
+            </div>
+            <pre class="command-box">{{ data.token }}</pre>
+        </div>
+
+        <div class="command-section">
+            <div class="command-header">
+                <span class="label">Suggested registration command:</span>
+                <button nbButton size="tiny" [status]="commandCopied ? 'success' : 'primary'" (click)="copyCommand()">
+                    <nb-icon [icon]="commandCopied ? 'checkmark-outline' : 'copy-outline'"></nb-icon>
+                    {{ commandCopied ? 'Copied!' : 'Copy' }}
+                </button>
+            </div>
+            <pre class="command-box">{{ data.suggested_command }}</pre>
+        </div>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton status="basic" (click)="close()">Close</button>
+    </nb-card-footer>
+</nb-card>

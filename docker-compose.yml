@@ -10,3 +10,4 @@ services:
         container_name: oaekstra-frontend-container
         environment:
             - API_ADDRESS=${API_ADDRESS} #ip of the system manager
+            - HTTPS_ENABLED=${HTTPS_ENABLED:-false}

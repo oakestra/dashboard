@@ -1,5 +1,39 @@
 <div class="container">
     <h1>Available Oakestra Clusters</h1>
+
+    <div class="row token-row">
+        <div class="col-sm-6">
+            <nb-card class="token-card">
+                <nb-card-header>Register a New Cluster</nb-card-header>
+                <nb-card-body>
+                    <p>Generate a one-time registration token to connect a new cluster to this root orchestrator.</p>
+                    <button nbButton status="primary" [nbSpinner]="clusterTokenLoading" nbSpinnerStatus="basic" (click)="generateClusterToken()" [disabled]="clusterTokenLoading">
+                        <nb-icon icon="plus-circle-outline"></nb-icon>
+                        Generate Cluster Token
+                    </button>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="col-sm-6">
+            <nb-card class="token-card">
+                <nb-card-header>Register a New Worker</nb-card-header>
+                <nb-card-body>
+                    <p>Generate a one-time registration token to connect a new worker node to an existing cluster.</p>
+                    <select class="cluster-select" (change)="selectedClusterId = $any($event.target).value || null">
+                        <option value="">Select cluster</option>
+                        <option *ngFor="let cluster of clusters" [value]="$any(cluster._id)">
+                            {{ cluster.cluster_name }}
+                        </option>
+                    </select>
+                    <button nbButton status="primary" [nbSpinner]="workerTokenLoading" nbSpinnerStatus="basic" (click)="generateWorkerToken()" [disabled]="workerTokenLoading || !selectedClusterId" class="generate-btn">
+                        <nb-icon icon="plus-circle-outline"></nb-icon>
+                        Generate Worker Token
+                    </button>
+                </nb-card-body>
+            </nb-card>
+        </div>
+    </div>
+
     <div class="row">
         <div *ngFor="let cluster of clusters$ | async" class="col-sm-6">
             <nb-card id="my_card">
@@ -47,6 +81,6 @@
 
             <h2> No clusters available in your infrastructure. </h2>
             <h3> Please contact your administrator to add a cluster or follow these <a href="https://www.oakestra.io/docs/getting-started/welcome-to-oakestra-docs/">wiki steps</a>. </h3>
-
+        </div>
     </div>
 </div>

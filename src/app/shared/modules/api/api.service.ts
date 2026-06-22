@@ -11,6 +11,8 @@ import { IUser } from '../../../root/interfaces/user';
 import { IApplication } from '../../../root/interfaces/application';
 import { IService } from '../../../root/interfaces/service';
 import { ICluster } from '../../../root/interfaces/cluster';
+import { IClusterToken } from '../../../root/interfaces/cluster-token';
+import { IWorkerToken } from '../../../root/interfaces/worker-token';
 import { IOrganization } from '../../../root/interfaces/organization';
 import { Role } from '../../../root/enums/roles';
 import { SlaGeneratorService } from '../helper/sla-generator.service';
@@ -61,6 +63,14 @@ export class ApiService extends RestService {
 
     getClusters(): Observable<ICluster[]> {
         return this.doGETRequest('/clusters/');
+    }
+
+    generateClusterToken(): Observable<IClusterToken> {
+        return this.doPOSTRequest('/tokens/cluster', {});
+    }
+
+    generateWorkerToken(clusterId: string): Observable<IWorkerToken> {
+        return this.doPOSTRequest('/tokens/worker', { cluster_id: clusterId });
     }
 
     // /////////////////////////////////////////////////////////////////////////
