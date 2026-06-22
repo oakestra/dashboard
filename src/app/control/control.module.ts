@@ -51,6 +51,7 @@ import { SlaFormComponent } from './sla-form/sla-form.component';
 import { routes } from './control.routing';
 import { ClusterComponent } from './cluster/cluster.component';
 import { ClusterMapComponent } from './cluster/clustermap/clustermap.component';
+import { DialogClusterTokenComponent } from './cluster/dialogs/cluster-token/dialog-cluster-token.component';
 import { ConnectivityComponent } from './sla-form/components/connectivity/connectivity.component';
 import { ConstraintsComponent } from './sla-form/components/constraints/constraints.component';
 import { FileSelectComponent } from './sla-form/components/file-select/file-select.component';
@@ -97,6 +98,7 @@ import { NbProgressBarModule } from '@nebular/theme';
         DialogConfirmationView,
         ClusterComponent,
         ClusterMapComponent,
+        DialogClusterTokenComponent,
         ConnectivityComponent,
         ConstraintsComponent,
         FileSelectComponent,
