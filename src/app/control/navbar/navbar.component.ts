@@ -4,6 +4,7 @@ import { appReducer, getOrganization, getUser } from 'src/app/root/store/index';
 import { NbMenuItem } from '@nebular/theme';
 import { UserService } from '../../shared/modules/auth/user.service';
 import { Role } from '../../root/enums/roles';
+import { MarketplaceService } from '../../shared/util/marketplace.service';
 
 @Component({
     selector: 'app-navbar',
@@ -11,9 +12,26 @@ import { Role } from '../../root/enums/roles';
     styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-    menuItems: NbMenuItem[];
+    menuItems: NbMenuItem[] = [];
 
-    constructor(public userService: UserService, public store: Store<appReducer.AppState>) {
+    constructor(
+        public userService: UserService,
+        public store: Store<appReducer.AppState>,
+        private marketplaceService: MarketplaceService
+    ) {
+        this.initMenu();
+    }
+
+    ngOnInit(): void {
+        this.store.dispatch(getUser({ name: this.userService.getUsername() }));
+
+        if (this.userService.hasRole(Role.ADMIN)) {
+            this.store.dispatch(getOrganization());
+            this.checkAndAddMarketplace();
+        }
+    }
+
+    private initMenu(): void {
         this.menuItems = [
             {
                 title: 'Application Dashboard',
@@ -76,10 +94,22 @@ export class NavbarComponent implements OnInit {
         ];
     }
 
-    ngOnInit(): void {
-        this.store.dispatch(getUser({ name: this.userService.getUsername() }));
-        if (this.userService.hasRole(Role.ADMIN)) {
-            this.store.dispatch(getOrganization());
-        }
+    private checkAndAddMarketplace(): void {
+        this.marketplaceService.isReachable().subscribe(isAvailable => {
+            if (isAvailable) {
+                const marketplaceItem: NbMenuItem = {
+                    title: 'Addons Marketplace',
+                    icon: 'shopping-cart-outline',
+                    url: this.marketplaceService.getMarketplaceUrl(),
+                    target: '_blank',
+                };
+
+                const generalIndex = this.menuItems.findIndex(item => item.title === 'MANAGEMENT');
+                if (generalIndex !== -1) {
+                    this.menuItems.splice(generalIndex, 0, marketplaceItem);
+                    this.menuItems = [...this.menuItems];
+                }
+            }
+        });
     }
 }
