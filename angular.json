@@ -98,8 +98,11 @@
                         "tsConfig": "tsconfig.spec.json",
                         "karmaConfig": "karma.conf.js",
                         "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": ["src/styles.css",
-                          "src/app/@theme/styles/styles.scss"
+                        "styles": [
+                            "node_modules/@nebular/theme/styles/prebuilt/default.css",
+                            "src/app/@theme/styles/styles.scss",
+                            "src/styles.scss",
+                            "node_modules/leaflet/dist/leaflet.css"
                         ],
                         "scripts": []
                     }
