@@ -46,6 +46,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
             .pipe(
                 filter(({ tag }) => tag === 'userMenu'),
                 map(({ item: { title } }) => title),
+                takeUntil(this.destroy$),
             )
             .subscribe((title) => {
                 switch (title) {

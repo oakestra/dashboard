@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NbColorHelper, NbThemeService } from '@nebular/theme';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Chart } from 'chart.js';
 import { IHistoricalData, IInstance } from '../../../../root/interfaces/instance';
 
@@ -14,14 +15,14 @@ export class ChartMemoryLineComponent implements OnDestroy, OnInit {
     options: any;
     themeSubscription: any;
     private memoryChart: Chart;
+    private destroy$ = new Subject<void>();
 
     constructor(private theme: NbThemeService) { }
 
     ngOnInit(): void {
         this.createCharts();
-        this.instance$.subscribe((instance: IInstance) => {
+        this.instance$.pipe(takeUntil(this.destroy$)).subscribe((instance: IInstance) => {
             this.updateCharts(instance);
-            console.log(instance);
         });
     }
 
@@ -114,5 +115,7 @@ export class ChartMemoryLineComponent implements OnDestroy, OnInit {
 
     ngOnDestroy(): void {
         this.themeSubscription.unsubscribe();
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 }

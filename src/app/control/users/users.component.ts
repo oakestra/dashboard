@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { NbDialogService } from '@nebular/theme';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { NotificationService } from '../../shared/modules/notification/notification.service';
@@ -21,7 +22,7 @@ import { DialogEditUserView } from './dialogs/edit-user/dialogEditUser';
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss'],
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
     DialogAction = DialogAction;
     displayedColumns: string[] = ['name', 'created_at', 'roles', 'symbol'];
     searchedUsers: Array<IUser> = [];
@@ -31,6 +32,9 @@ export class UsersComponent implements OnInit {
     dropdownList: string[] = [];
 
     public users$: Observable<IUser[]> = this.store.pipe(select(selectAllUser));
+
+    private destroy$ = new Subject<void>();
+    private allUsers: IUser[] = [];
 
     constructor(
         private router: Router,
@@ -48,7 +52,16 @@ export class UsersComponent implements OnInit {
         this.loadData();
         const organization_id = this.userService.getOrganization();
         this.store.dispatch(getAllUser({ organization_id }));
-        this.users$.subscribe((x) => console.log(x));
+
+        this.users$.pipe(takeUntil(this.destroy$)).subscribe((u) => {
+            this.allUsers = u;
+            this.applyFilter();
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     loadData(): void {
@@ -74,15 +87,13 @@ export class UsersComponent implements OnInit {
     }
 
     doFilter($event: any): void {
-        console.log('Filter');
         this.searchText = $event;
-        this.users$.subscribe((u) => {
-            this.searchedUsers = u.filter((user) => this.nameFilter(user) && this.roleFilter(user));
-            console.log(this.searchedUsers);
-        });
-
         this.selectedItems = this.dropdown.value;
-        console.log(this.selectedItems);
+        this.applyFilter();
+    }
+
+    private applyFilter(): void {
+        this.searchedUsers = this.allUsers.filter((user) => this.nameFilter(user) && this.roleFilter(user));
     }
 
     nameFilter(user: IUser): boolean {

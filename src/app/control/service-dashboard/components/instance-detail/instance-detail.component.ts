@@ -49,23 +49,21 @@ export class InstanceDetailComponent implements OnInit, AfterViewInit, OnDestroy
         this.serviceId = this.route.snapshot.paramMap.get('service-id');
         this.instanceId = this.route.snapshot.paramMap.get('instance-id');
 
-        this.services$.subscribe({
+        this.services$.pipe(takeWhile(() => this.alive)).subscribe({
             next: (services: IService[]) => {
                 const s = services.filter((s: IService) => s._id?.$oid === this.serviceId);
                 this.service = s.length === 0 ? null : s[0];
             },
         });
-        console.log(this.instance);
 
         this.refreshData();
         this.timerSubscription = timer(15000, 15000)
             .pipe(takeWhile(() => this.alive))
             .subscribe(() => this.refreshData());
 
-        this.instance.subscribe((i) => {
+        this.instance.pipe(takeWhile(() => this.alive)).subscribe((i) => {
             const location = i.cluster_location.length > 0 ? i.cluster_location : '48.1624064,11.5977288,12';
             this.setLocation(location);
-            console.log(i);
         });
     }
 
