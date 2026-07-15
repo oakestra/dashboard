@@ -86,6 +86,9 @@ export class DialogAddClusterView implements OnInit {
 */
     radiusChange(new_val: any) {
         this.my_radius = new_val.value;
+        if (!this.map) {
+            return;
+        }
         this.map.removeLayer(this.circlemarker);
         // this.circlemarker = L.circleMarker([this.lat, this.lon], { radius: new_val.value });
         this.circlemarker.addTo(this.map).addTo(this.map);
