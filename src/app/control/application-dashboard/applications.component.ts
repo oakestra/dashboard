@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 import { NbDialogService } from '@nebular/theme';
 import { IId } from '../../root/interfaces/id';
@@ -27,12 +28,14 @@ import { DialogAddApplicationView } from './dialogs/add-appllication/dialogAddAp
     templateUrl: './applications.component.html',
     styleUrls: ['./applications.component.scss'],
 })
-export class ApplicationsComponent {
+export class ApplicationsComponent implements OnInit, OnDestroy {
     @Input() userID: string;
     DialogAction = DialogAction;
     activeAppId: IId;
 
     public apps$: Observable<IApplication[]> = this.store.pipe(select(selectApplications));
+
+    private destroy$ = new Subject<void>();
 
     constructor(
         public dialog: NbDialogService,
@@ -44,19 +47,26 @@ export class ApplicationsComponent {
     ) {}
 
     ngOnInit(): void {
-        this.store.select(selectCurrentUser).subscribe((u) => {
-            this.userID = u._id.$oid;
-            this.store.dispatch(getApplication({ id: this.userID }));
-        });
+        this.store
+            .select(selectCurrentUser)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((u) => {
+                this.userID = u._id.$oid;
+                this.store.dispatch(getApplication({ id: this.userID }));
+            });
 
-        this.apps$.subscribe((apps) => {
-            console.log(apps);
+        this.apps$.pipe(takeUntil(this.destroy$)).subscribe((apps) => {
             const active = apps.filter((a) => a._id.$oid === sessionStorage.getItem('id'))[0];
             if (active) {
                 this.store.dispatch(setCurrentApplication({ application: active }));
                 this.activeAppId = active._id;
             }
         });
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     openDialogApp(action: DialogAction, app: IApplication | undefined) {
@@ -83,7 +93,7 @@ export class ApplicationsComponent {
                 this.store.dispatch(updateApplication({ application: result.data }));
             } else if (result.event === DialogAction.DELETE) {
                 //get different app form apps$ to set as current
-                this.apps$.subscribe((app) => {
+                this.apps$.pipe(take(1)).subscribe((app) => {
                     var activeApps = app.filter((a) => a._id.$oid !== result.data._id.$oid)
                     if (activeApps.length > 0) {
                         this.store.dispatch(setCurrentApplication({ application: activeApps[0] }));

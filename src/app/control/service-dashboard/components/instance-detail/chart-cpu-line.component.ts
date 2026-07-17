@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NbColorHelper, NbThemeService } from '@nebular/theme';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import Chart from 'chart.js/auto';
 import { IHistoricalData, IInstance } from '../../../../root/interfaces/instance';
 
@@ -14,12 +15,13 @@ export class ChartCpuLineComponent implements OnDestroy, OnInit {
     options: any;
     themeSubscription: any;
     private cpuChart: Chart;
+    private destroy$ = new Subject<void>();
 
     constructor(private theme: NbThemeService) { }
 
     ngOnInit(): void {
         this.createCharts();
-        this.instance$.subscribe((instance: IInstance) => {
+        this.instance$.pipe(takeUntil(this.destroy$)).subscribe((instance: IInstance) => {
             this.updateCharts(instance);
         });
     }
@@ -113,5 +115,7 @@ export class ChartCpuLineComponent implements OnDestroy, OnInit {
 
     ngOnDestroy(): void {
         this.themeSubscription.unsubscribe();
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 }
