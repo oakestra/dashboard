@@ -72,11 +72,11 @@ export const userReducer = createReducer(
     }),
 
     on(userActions.updateUserSuccess, (state, action) => {
-        const users = state.users.filter((user) => user._id.$oid !== action.user._id.$oid);
+        const users = state.users.filter((user) => user._id !== action.user._id);
         users.push(action.user);
 
         let currentUser = state.currentUser;
-        if (state.currentUser._id.$oid === action.user._id.$oid) {
+        if (state.currentUser._id === action.user._id) {
             currentUser = action.user;
         }
 

@@ -51,7 +51,7 @@ export const organizationReducer = createReducer(
     }),
 
     on(organizationActions.deleteOrganizationSuccess, (state, action) => {
-        const organizations = state.organizations.filter((o) => o._id.$oid !== action.organization._id.$oid);
+        const organizations = state.organizations.filter((o) => o._id !== action.organization._id);
         const loading = false;
         return { ...state, organizations, loading };
     }),
@@ -72,7 +72,7 @@ export const organizationReducer = createReducer(
     }),
 
     on(organizationActions.updateOrganizationSuccess, (state, action) => {
-        const organizations = state.organizations.filter((o) => o._id.$oid !== action.organization._id.$oid);
+        const organizations = state.organizations.filter((o) => o._id !== action.organization._id);
         organizations.push(action.organization);
         const loading = false;
         return { ...state, organizations, loading };
@@ -95,7 +95,7 @@ export const organizationReducer = createReducer(
 
     on(organizationActions.postOrganizationSuccess, (state, action) => {
         const organization = {
-            _id: { $oid: action.id },
+            _id: action.id,
             ...action.organization,
         };
         const organizations = [...state.organizations, organization];

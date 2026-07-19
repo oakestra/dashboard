@@ -31,7 +31,7 @@ export class InstanceDetailComponent implements OnInit, AfterViewInit, OnDestroy
 
     instance = this.store.select(selectCurrentServices).pipe(
         map((services: IService[]) => {
-            const myService: IService = services.find((service) => service._id.$oid === this.service._id.$oid);
+            const myService: IService = services.find((service) => service._id === this.service._id);
             if (myService && myService.instance_list.length > 0) {
                 return myService.instance_list.find(
                     (instance) => instance.instance_number.toString() === this.instanceId,
@@ -51,7 +51,7 @@ export class InstanceDetailComponent implements OnInit, AfterViewInit, OnDestroy
 
         this.services$.subscribe({
             next: (services: IService[]) => {
-                const s = services.filter((s: IService) => s._id?.$oid === this.serviceId);
+                const s = services.filter((s: IService) => s._id === this.serviceId);
                 this.service = s.length === 0 ? null : s[0];
             },
         });
@@ -112,7 +112,7 @@ export class InstanceDetailComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     refreshData() {
-        this.store.dispatch(getSingleService({ serviceId: this.service._id.$oid }));
+        this.store.dispatch(getSingleService({ serviceId: this.service._id }));
         console.log('Update');
     }
 }

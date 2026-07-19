@@ -15,7 +15,7 @@ export class NotificationService {
 
     notify(type: NotificationType, data: any) {
         this.type = type;
-        this.massage = data;
+        this.massage = typeof data === 'string' ? data : data?.message || 'Unexpected error';
 
         if (type === NotificationType.error) {
             this.panelClass = ['error-snackbar'];
@@ -25,9 +25,13 @@ export class NotificationService {
             this.panelClass = ['warn-snackbar'];
         }
 
-        this.snackBar.openFromComponent(NotificationComponent, {
-            panelClass: this.panelClass,
-            duration: 3000,
-        });
+        try {
+            this.snackBar.openFromComponent(NotificationComponent, {
+                panelClass: this.panelClass,
+                duration: 3000,
+            });
+        } catch {
+            // No-op fallback: avoid breaking user flow when an overlay container is unavailable.
+        }
     }
 }

@@ -18,6 +18,7 @@ import {
     NbMenuModule,
     NbSidebarModule,
     NbThemeModule,
+    NbLayoutModule,
     NbToastrModule,
     NbWindowModule,
 } from '@nebular/theme';
@@ -28,7 +29,6 @@ import { routes } from './app.routes';
 import { AppComponent } from './app.component';
 import { UserEffects } from './root/store';
 import { ThemeModule } from './@theme/theme.module';
-
 @NgModule({
     declarations: [AppComponent],
     imports: [
@@ -55,6 +55,7 @@ import { ThemeModule } from './@theme/theme.module';
         NbDialogModule.forRoot(),
         NbWindowModule.forRoot(),
         NbToastrModule.forRoot(),
+        NbLayoutModule,
         ThemeModule.forRoot(),
         NbCardModule,
     ],

@@ -90,7 +90,7 @@ export class ApplicationEffects {
         this.actions$.pipe(
             ofType(applicationActions.setCurrentApplication),
             switchMap(({ application }) =>
-                this.apiService.getServicesOfApplication(application._id.$oid).pipe(
+                this.apiService.getServicesOfApplication(application._id).pipe(
                     map((services) => serviceActions.getServicesSuccess({ services })),
                     catchError((error) => of(serviceActions.getServicesError({ error: error.message }))),
                 ),
