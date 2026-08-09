@@ -32,9 +32,18 @@ export class RestService {
                 return this.userService.renewToken().pipe(mergeMap(() => request));
             } else {
                 this.userService.redirectToLogin();
-                return throwError('Session expired!');
+                return throwError(() => new Error('Session expired!'));
             }
         }
+    }
+
+    private handleError(error: any): Observable<never> {
+        const message =
+            (typeof error?.error === 'string' ? error.error : error?.error?.message) ||
+            error?.message ||
+            'Server error';
+        this.notificationService.notify(NotificationType.error, message);
+        return throwError(() => new Error(message));
     }
 
     public doGETRequest<T>(url: string): Observable<T> {
@@ -45,10 +54,7 @@ export class RestService {
                 }
                 return res;
             }),
-            catchError((error) => {
-                this.notificationService.notify(NotificationType.error, error.error);
-                return throwError(error || 'Server error');
-            }),
+            catchError((error) => this.handleError(error)),
         );
         return this.doRequest(request);
     }
@@ -59,18 +65,13 @@ export class RestService {
         };
         const request = this.http.delete(this.baseURL + url, requestOptions).pipe(
             map((res: any) => {
-                if (res == null) {
-                    throwError('no data');
-                } else if (typeof res === 'string') {
+                // A successful DELETE commonly responds with 204 No Content, so a null body here is not an error.
+                if (typeof res === 'string') {
                     return JSON.parse(res);
-                } else {
-                    return res;
                 }
+                return res;
             }),
-            catchError((error) => {
-                this.notificationService.notify(NotificationType.error, error.error.message);
-                return throwError(error || 'Server error');
-            }),
+            catchError((error) => this.handleError(error)),
         );
         return this.doRequest(request);
     }
@@ -79,28 +80,21 @@ export class RestService {
         const request = this.http.post(this.baseURL + url, object, this.requestOptions).pipe(
             map((res: any) => {
                 if (res == null) {
-                    throwError('no data');
-                    return null;
+                    throw new Error('No data received from server');
                 } else if (typeof res === 'string') {
                     return JSON.parse(res);
                 } else {
                     return res;
                 }
             }),
-            catchError((error) => {
-                this.notificationService.notify(NotificationType.error, error.error.message);
-                return throwError(error || 'Server error');
-            }),
+            catchError((error) => this.handleError(error)),
         );
         return this.doRequest(request);
     }
 
     public doPUTRequest<T>(url: string, object: any): Observable<T> {
         const request = this.http.put<T>(this.baseURL + url, object, this.requestOptions).pipe(
-            catchError((error) => {
-                this.notificationService.notify(NotificationType.error, error.error.message);
-                return throwError(error || 'Server error');
-            }),
+            catchError((error) => this.handleError(error)),
         );
         return this.doRequest(request);
     }
@@ -109,27 +103,20 @@ export class RestService {
         return this.http.post(this.baseURL + url, object, this.requestOptions).pipe(
             map((res: any) => {
                 if (res == null) {
-                    throwError('no data');
-                    return null;
+                    throw new Error('No data received from server');
                 } else if (typeof res === 'string') {
                     return JSON.parse(res);
                 } else {
                     return res;
                 }
             }),
-            catchError((error) => {
-                this.notificationService.notify(NotificationType.error, error.error.message);
-                return throwError(error || 'Server error');
-            }),
+            catchError((error) => this.handleError(error)),
         );
     }
 
     public doPUTPublicRequest<T>(url: string, object: any): Observable<T> {
         return this.http.put<T>(this.baseURL + url, object, this.requestOptions).pipe(
-            catchError((error) => {
-                this.notificationService.notify(NotificationType.error, error.error.message);
-                return throwError(error || 'Server error');
-            }),
+            catchError((error) => this.handleError(error)),
         );
     }
 }
