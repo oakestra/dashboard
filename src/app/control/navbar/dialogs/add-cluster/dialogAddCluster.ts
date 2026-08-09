@@ -38,52 +38,7 @@ export class DialogAddClusterView implements OnInit {
     // FMI Garching coordinates
     private lat = 48.262707753772624;
     private lon = 11.668009155278707;
-    /*
-    private initMap(): void {
 
-      this.map = L.map('map', {
-            center: [this.lat, this.lon],
-            attributionControl: false,
-            zoom: 14,
-        });
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-        }).addTo(this.map);
-
-        // Search location in map
-        const search = GeoSearchControl({
-            provider: new OpenStreetMapProvider(),
-            marker: {
-                draggable: true,
-            },
-        });
-        this.map.addControl(search);
-
-        this.map.on('click', (e: any) => {
-            if (this.marker && this.map.hasLayer(this.marker)) {
-                this.map.removeLayer(this.marker);
-            }
-
-            this.marker = L.marker([e.latlng.lat, e.latlng.lng])
-                .bindPopup('Lat, Lon : ' + e.latlng.lat + ', ' + e.latlng.lng)
-                .openPopup();
-
-            this.marker.addTo(this.map);
-            this.lat_form.setValue(e.latlng.lat.toString());
-            this.lng_form.setValue(e.latlng.lng.toString());
-            this.lat = e.latlng.lat;
-            this.lon = e.latlng.lng;
-
-            if (this.circlemarker && this.map.hasLayer(this.circlemarker)) {
-                this.map.removeLayer(this.circlemarker);
-            }
-
-            this.circlemarker = L.circleMarker([e.latlng.lat, e.latlng.lng], { radius: this.my_radius });
-            this.circlemarker.addTo(this.map).addTo(this.map);
-        });
-    }
-*/
     radiusChange(new_val: any) {
         this.my_radius = new_val.value;
         if (!this.map) {
@@ -94,9 +49,7 @@ export class DialogAddClusterView implements OnInit {
         this.circlemarker.addTo(this.map).addTo(this.map);
     }
 
-    ngOnInit(): void {
-        // this.initMap();
-    }
+    ngOnInit(): void {}
 
     doAction() {
         console.log(this.local_data);
