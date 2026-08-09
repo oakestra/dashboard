@@ -32,7 +32,7 @@ export class RestService {
                 return this.userService.renewToken().pipe(mergeMap(() => request));
             } else {
                 this.userService.redirectToLogin();
-                return throwError('Session expired!');
+                return throwError(() => new Error('Session expired!'));
             }
         }
     }
