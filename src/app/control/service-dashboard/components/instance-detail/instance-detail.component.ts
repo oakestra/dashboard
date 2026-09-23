@@ -70,13 +70,13 @@ export class InstanceDetailComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     ngAfterViewInit() {
-        const map = L.map('map').setView([this.longitude, this.latitude], 14);
+        const map = L.map('map').setView([this.latitude, this.longitude], 14);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors',
         }).addTo(map);
 
-        const circle = L.circle([this.longitude, this.latitude], {
+        const circle = L.circle([this.latitude, this.longitude], {
             color: 'blue',
             fillColor: 'lightblue',
             fillOpacity: 0.5,
@@ -95,12 +95,10 @@ export class InstanceDetailComponent implements OnInit, AfterViewInit, OnDestroy
             /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?),\s*([-+]?(?:\d+)(?:\.\d+)?)$/;
 
         if (regex.test(locationString)) {
-            console.log('Test');
             const array = locationString.split(',');
-            this.longitude = parseFloat(array[0]);
-            this.latitude = parseFloat(array[1]);
+            this.latitude = parseFloat(array[0]);
+            this.longitude = parseFloat(array[1]);
             this.radius = parseFloat(array[2]);
-            console.log(this.radius);
         } else {
             this.textLocation = locationString;
         }
