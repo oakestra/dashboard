@@ -3,14 +3,13 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NbDialogService, NbMenuBag, NbMenuService } from '@nebular/theme';
 import { Subscription, tap } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, finalize, map } from 'rxjs/operators';
 import { IService } from '../../../../root/interfaces/service';
 import { ApiService } from '../../../../shared/modules/api/api.service';
 import { appReducer, deleteService, getServices } from '../../../../root/store';
 import { IInstance } from '../../../../root/interfaces/instance';
 import { Subject } from 'rxjs';
 import { ConfigDownloadService } from '../../../../shared/modules/helper/config-download.service';
-import { Observable } from 'tinymce';
 
 @Component({
     selector: 'app-service-item',
@@ -87,9 +86,12 @@ export class ServiceItemComponent implements OnInit, OnDestroy {
     deleteInstance(service: IService, instance: IInstance) {
         this.showSpinner = true;
         setTimeout(() => {
-            this.api.deleteInstance(service, instance).subscribe();
-            this.store.dispatch(getServices({ appId: this.appId }));
-            this.showSpinner = false;
+            this.api
+                .deleteInstance(service, instance)
+                .pipe(finalize(() => (this.showSpinner = false)))
+                .subscribe(() => {
+                    this.store.dispatch(getServices({ appId: this.appId }));
+                });
         }, 5000);
     }
 
