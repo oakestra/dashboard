@@ -1,3 +1,1 @@
-export interface IId {
-    $oid: string;
-}
+export type IId = string;

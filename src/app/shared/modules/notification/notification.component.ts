@@ -6,17 +6,9 @@ import { NotificationService } from './notification.service';
     selector: 'app-notification',
     template: `
         <div class="center">
-            <nb-icon class="notification-icon" *ngIf="type === Type.error" icon="alert-circle-outline"></nb-icon>
-            <nb-icon
-                class="notification-icon"
-                *ngIf="type === Type.information"
-                icon="alert-triangle-outline"
-            ></nb-icon>
-            <nb-icon
-                class="notification-icon"
-                *ngIf="type === Type.success"
-                icon="checkmark-circle-2-outline"
-            ></nb-icon>
+            <span class="notification-icon" *ngIf="type === Type.error">!</span>
+            <span class="notification-icon" *ngIf="type === Type.information">i</span>
+            <span class="notification-icon" *ngIf="type === Type.success">v</span>
             <p class="notification-text">{{ massage }}</p>
         </div>
     `,

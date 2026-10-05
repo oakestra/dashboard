@@ -26,10 +26,9 @@
         <th *matHeaderCellDef mat-header-cell>Member</th>
         <td *matCellDef="let element" mat-cell>
             <button
-                nbTooltipPlacement="start"
                 nbButton
                 ghost
-                nbTooltip="View members"
+                title="View members"
                 class="member"
                 (click)="editOrganization(element)"
             >

@@ -20,14 +20,14 @@ export class SlaGeneratorService {
 
     public generateSLA(s: IService, app: IApplication, user: IUser) {
         const org = this.userService.getOrganization();
-        const customer = org === 'root' ? user._id.$oid : org;
+        const customer = org === 'root' ? user._id : org;
         const service = s === undefined ? [] : [s];
         const sla = {
             sla_version: 'v2.0',
             customerID: customer,
             applications: [
                 {
-                    applicationID: app._id.$oid,
+                    applicationID: app._id,
                     application_name: app.application_name,
                     application_namespace: app.application_namespace,
                     application_desc: app.application_desc,
@@ -75,7 +75,7 @@ export class SlaGeneratorService {
         currentUser: IUser
     ) {
         const org = this.userService.getOrganization();
-        const customer = org === 'root' ? currentUser._id.$oid : org;
+        const customer = org === 'root' ? currentUser._id : org;
 
         if (!data.customerID) {
             data.customerID = customer;
@@ -90,11 +90,11 @@ export class SlaGeneratorService {
         if (data.applications && data.applications.length > 0) {
             const app = data.applications[0];
             if (!app.applicationID) {
-                app.applicationID = currentApplication._id.$oid;
-            } else if (app.applicationID !== currentApplication._id.$oid) {
+                app.applicationID = currentApplication._id;
+            } else if (app.applicationID !== currentApplication._id) {
                 this.notifyService.notify(
                     NotificationType.error,
-                    `SLA Error: File applicationID "${app.applicationID}" does not match current application "${currentApplication._id.$oid}".`
+                    `SLA Error: File applicationID "${app.applicationID}" does not match current application "${currentApplication._id}".`
                 );
                 return null;
             }

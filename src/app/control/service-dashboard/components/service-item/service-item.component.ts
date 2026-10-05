@@ -41,7 +41,7 @@ export class ServiceItemComponent implements OnInit, OnDestroy {
     }
     ngOnInit(): void {
 
-        this.menuTag = 'menu-' + this.service._id?.$oid
+        this.menuTag = 'menu-' + this.service._id;
 
         this.menuItems = [
             { title: 'Edit', icon: 'edit-2-outline', hidden: true },
@@ -60,7 +60,7 @@ export class ServiceItemComponent implements OnInit, OnDestroy {
             .subscribe((title) => {
                 switch (title) {
                     case 'Edit':
-                        void this.router.navigate(['control/deploy', this.service._id?.$oid]);
+                        void this.router.navigate(['control/deploy', this.service._id]);
                         break;
                     case 'Delete':
                         this.deleteService(this.service);
@@ -96,7 +96,7 @@ export class ServiceItemComponent implements OnInit, OnDestroy {
     routeToInstanceDetail(instance: IInstance) {
         console.log('Go to instance Detail');
         console.log(instance);
-        void this.router.navigate(['control/services', this.service._id?.$oid, instance.instance_number]);
+        void this.router.navigate(['control/services', this.service._id, instance.instance_number]);
     }
 
     deployServiceWithin(service: IService) {

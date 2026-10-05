@@ -47,12 +47,13 @@ export class OrganizationEffects {
             ofType(organizationActions.postOrganization),
             switchMap(({ organization }) =>
                 this.apiService.addOrganization(organization).pipe(
-                    map((id: string) => {
+                    map((response: any) => {
                         this.notifyService.notify(
                             NotificationType.success,
                             `Organization ${organization.name} created successfully!`,
                         );
-                        return organizationActions.postOrganizationSuccess({ organization, id });
+                        // Pull the _id out of the response object
+                        return organizationActions.postOrganizationSuccess({ organization, id: response._id });
                     }),
                     catchError((error) => {
                         this.notifyService.notify(NotificationType.error, 'Organization creation failed');

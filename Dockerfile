@@ -1,6 +1,13 @@
-FROM nginx:1.22-alpine
-LABEL org.opencontainers.image.source = https://github.com/oakestra/dashboard
-COPY dist/oakestra-dashboard /usr/share/nginx/html
+FROM node:18-alpine AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM nginx:1.30-alpine
+LABEL org.opencontainers.image.source="https://github.com/oakestra/dashboard"
+COPY --from=build /app/dist/oakestra-dashboard /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80

@@ -4,7 +4,15 @@ import { CookieService } from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-root',
-    template: ' <div class="content light"><router-outlet></router-outlet></div>',
+    template: `
+        <div class="content light">
+            <nb-layout>
+                <nb-layout-column>
+                    <router-outlet></router-outlet>
+                </nb-layout-column>
+            </nb-layout>
+        </div>
+    `,
     styles: ['.content{ width: 100vw;  height: 100vh;}'],
 })
 export class AppComponent implements AfterViewInit {
