@@ -78,7 +78,7 @@ export class ServiceEffects {
         this.actions$.pipe(
             ofType(serviceActions.updateService),
             switchMap(({ service }) =>
-                this.apiService.updateService(service, service._id.$oid).pipe(
+                this.apiService.updateService(service, service._id).pipe(
                     map((service) => {
                         this.notifyService.notify(
                             NotificationType.success,

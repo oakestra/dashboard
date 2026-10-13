@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NbColorHelper, NbThemeService } from '@nebular/theme';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import Chart from 'chart.js/auto';
 import { IHistoricalData, IInstance } from '../../../../root/interfaces/instance';
 
@@ -14,12 +15,13 @@ export class ChartCpuLineComponent implements OnDestroy, OnInit {
     options: any;
     themeSubscription: any;
     private cpuChart: Chart;
+    private destroy$ = new Subject<void>();
 
     constructor(private theme: NbThemeService) { }
 
     ngOnInit(): void {
         this.createCharts();
-        this.instance$.subscribe((instance: IInstance) => {
+        this.instance$.pipe(takeUntil(this.destroy$)).subscribe((instance: IInstance) => {
             this.updateCharts(instance);
         });
     }
@@ -84,26 +86,25 @@ export class ChartCpuLineComponent implements OnDestroy, OnInit {
     }
 
     private updateCharts(instance: IInstance): void {
-        let timeLables = instance.cpu_history.map((data: IHistoricalData) => {
+        let sampledHistory: IHistoricalData[];
+        if (instance.cpu_history.length === 100) {
+            sampledHistory = [];
+            for (let i = 0; i < 10; i++) {
+                sampledHistory.push(instance.cpu_history[i * 10]);
+            }
+        } else {
+            sampledHistory = instance.cpu_history.slice(Math.max(instance.cpu_history.length - 10, 0));
+        }
+
+        const timeLables = sampledHistory.map((data: IHistoricalData) => {
             const d = new Date(data.timestamp);
             return `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}:${d
                 .getSeconds()
                 .toString()
                 .padStart(2, '0')}`;
         });
+        const cpuData = sampledHistory.map((data) => Number.parseFloat(data.value));
 
-        if (timeLables.length === 100) {
-            const reducedList: any[] = [];
-            for (let i = 0; i < 10; i++) {
-                reducedList.push(timeLables[i * 10]);
-            }
-            timeLables = reducedList;
-        } else {
-            const index = timeLables.length - 1;
-            timeLables = timeLables.slice(index - 10, index);
-        }
-
-        const cpuData = instance.cpu_history.map((data) => Number.parseFloat(data.value));
         this.cpuChart.data.datasets.forEach((dataset) => {
             dataset.data = cpuData;
         });
@@ -113,5 +114,7 @@ export class ChartCpuLineComponent implements OnDestroy, OnInit {
 
     ngOnDestroy(): void {
         this.themeSubscription.unsubscribe();
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 }
