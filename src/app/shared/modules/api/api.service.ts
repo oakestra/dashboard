@@ -144,7 +144,6 @@ export class ApiService extends RestService {
     }
 
     getOrganization(): Observable<IOrganization[]> {
-        this.doGETRequest('/organization/').subscribe((x) => console.log(x));
         return this.doGETRequest('/organization/');
     }
 
