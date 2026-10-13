@@ -84,26 +84,25 @@ export class ChartCpuLineComponent implements OnDestroy, OnInit {
     }
 
     private updateCharts(instance: IInstance): void {
-        let timeLables = instance.cpu_history.map((data: IHistoricalData) => {
+        let sampledHistory: IHistoricalData[];
+        if (instance.cpu_history.length === 100) {
+            sampledHistory = [];
+            for (let i = 0; i < 10; i++) {
+                sampledHistory.push(instance.cpu_history[i * 10]);
+            }
+        } else {
+            sampledHistory = instance.cpu_history.slice(Math.max(instance.cpu_history.length - 10, 0));
+        }
+
+        const timeLables = sampledHistory.map((data: IHistoricalData) => {
             const d = new Date(data.timestamp);
             return `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}:${d
                 .getSeconds()
                 .toString()
                 .padStart(2, '0')}`;
         });
+        const cpuData = sampledHistory.map((data) => Number.parseFloat(data.value));
 
-        if (timeLables.length === 100) {
-            const reducedList: any[] = [];
-            for (let i = 0; i < 10; i++) {
-                reducedList.push(timeLables[i * 10]);
-            }
-            timeLables = reducedList;
-        } else {
-            const index = timeLables.length - 1;
-            timeLables = timeLables.slice(index - 10, index);
-        }
-
-        const cpuData = instance.cpu_history.map((data) => Number.parseFloat(data.value));
         this.cpuChart.data.datasets.forEach((dataset) => {
             dataset.data = cpuData;
         });
