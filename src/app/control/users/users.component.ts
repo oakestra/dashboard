@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { NbDialogService } from '@nebular/theme';
 import { ApiService } from '../../shared/modules/api/api.service';
 import { NotificationService } from '../../shared/modules/notification/notification.service';
@@ -21,7 +22,7 @@ import { DialogEditUserView } from './dialogs/edit-user/dialogEditUser';
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss'],
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
     DialogAction = DialogAction;
     displayedColumns: string[] = ['name', 'created_at', 'roles', 'symbol'];
     searchedUsers: Array<IUser> = [];
@@ -32,6 +33,8 @@ export class UsersComponent implements OnInit {
     allUsers: IUser[] = [];
 
     public users$: Observable<IUser[]> = this.store.pipe(select(selectAllUser));
+
+    private destroy$ = new Subject<void>();
 
     constructor(
         private router: Router,
@@ -49,7 +52,7 @@ export class UsersComponent implements OnInit {
         const organization_id = this.userService.getOrganization();
         this.store.dispatch(getAllUser({ organization_id }));
 
-        this.users$.subscribe((users) => {
+        this.users$.pipe(takeUntil(this.destroy$)).subscribe((users) => {
             this.allUsers = users || [];
             this.applyFilter();
         });
@@ -58,8 +61,13 @@ export class UsersComponent implements OnInit {
         this.loadData();
     }
 
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
     loadData(): void {
-        this.route.queryParams.subscribe((params) => {
+        this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe((params) => {
             this.searchText = params.searchText || '';
             this.selectedItems = [];
 
@@ -72,7 +80,6 @@ export class UsersComponent implements OnInit {
         });
     }
 
-    // New helper method to handle the actual filtering logic
     applyFilter(): void {
         this.searchedUsers = this.allUsers.filter((user) => this.nameFilter(user) && this.roleFilter(user));
     }
