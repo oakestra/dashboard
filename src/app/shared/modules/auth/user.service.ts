@@ -173,8 +173,7 @@ export class UserService {
         if (this.checkIfTokenExists(key)) {
             return localStorage.getItem(key) ?? '';
         } else {
-            throwError('No refresh token found');
-            return '';
+            throw new Error('No refresh token found');
         }
     }
 
@@ -220,16 +219,13 @@ export class UserService {
                 if (!this.isTokenExpired(key)) {
                     return key;
                 } else {
-                    throwError('The token is already expired');
-                    return '';
+                    throw new Error('The token is already expired');
                 }
             } else {
-                throwError('No cluster token found');
-                return '';
+                throw new Error('No cluster token found');
             }
         }
-        throwError('Session expired, please log in again');
-        return '';
+        throw new Error('Session expired, please log in again');
     }
 
     addCluster(cluster_info: any): Observable<string> {
